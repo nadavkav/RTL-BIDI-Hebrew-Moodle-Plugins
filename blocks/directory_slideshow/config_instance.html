@@ -1,0 +1,76 @@
+<?php
+
+  global $CFG,$COURSE;
+  require_once($CFG->libdir.'/moodlelib.php');
+
+	$coursefolders = get_directory_list("$CFG->dataroot/$COURSE->id", $CFG->moddata,true,true,false);
+	$coursefolders_fixed['/'] = get_string('maincoursefolder','block_directory_slideshow');
+	foreach($coursefolders as $folder) {
+		$coursefolders_fixed[$folder] = $folder."/";
+	}
+
+?>
+
+<table cellpadding="9" cellspacing="0">
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtitle', 'block_directory_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="title" size="30" value="<?php echo $this->config->title; ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configcontent', 'block_directory_slideshow'); ?>:
+    </td>
+    <td>
+      <?php print_textarea(true, 10, 50, 0, 0, 'text', $this->config->text); ?>
+    </td>
+  </tr>
+
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configimagedir', 'block_directory_slideshow'); ?>:
+    </td>
+    <td>
+      <?php if (empty($this->config->imagedir) or $this->config->imagedir == '' ) {
+			choose_from_menu ($coursefolders_fixed, "imagedir", "/", "", "", "");
+	      } else {
+			choose_from_menu ($coursefolders_fixed, "imagedir", $this->config->imagedir, "", "", "");
+	    }
+		echo "<a target=\"_new\" href=\"$CFG->wwwroot/files/index.php?id=$COURSE->id\">".get_string('openinnewwindow','lightboxgallery')."</a>";
+      ?>
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configwidth', 'block_directory_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="width" size="5" value="<?php if (isset($this->config->width)) { echo $this->config->width; } else { echo '220'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configheight', 'block_directory_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="height" size="5" value="<?php if (isset($this->config->height)) { echo $this->config->height; } else { echo '180'; } ?>" />
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+
+</table>
+
+<?php use_html_editor(); ?>
