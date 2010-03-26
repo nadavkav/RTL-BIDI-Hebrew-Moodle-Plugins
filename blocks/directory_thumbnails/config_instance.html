@@ -1,0 +1,101 @@
+<?php
+
+  global $CFG,$COURSE;
+  require_once($CFG->libdir.'/moodlelib.php');
+
+  $coursefolders = get_directory_list("$CFG->dataroot/$COURSE->id", $CFG->moddata,true,true,false);
+  foreach($coursefolders as $folder) {
+    $coursefolders_fixed[$folder] = $folder;
+  }
+
+  $randomize['0'] = get_string('no');
+  $randomize['1'] = get_string('yes');
+?>
+
+<table cellpadding="9" cellspacing="0">
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtitle', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <input type="text" name="title" size="30" value="<?php echo $this->config->title; ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configcontent', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <?php print_textarea(true, 10, 50, 0, 0, 'text', $this->config->text); ?>
+    </td>
+  </tr>
+
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configimagedir', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <?php if (isset($this->config->folder)) {
+	      choose_from_menu ($coursefolders_fixed, "folder", $this->config->folder, "", "", "");
+	      } else {
+	      choose_from_menu ($coursefolders_fixed, "folder", "/", "", "", "");
+	    }
+		echo "<a target=\"_new\" href=\"$CFG->wwwroot/files/index.php?id=$COURSE->id\">".get_string('openinnewwindow','lightboxgallery')."</a>";
+      ?>
+
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configrandomize', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <?php if (isset($this->config->randomize)) {
+        choose_from_menu ($randomize, "randomize", $this->config->randomize, "", "", "");
+        } else {
+        choose_from_menu ($randomize, "randomize", "0", "", "", "");
+      }
+      ?>
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configwidth', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <input type="text" name="width" size="5" value="<?php if (isset($this->config->width)) { echo $this->config->width; } else { echo '220'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configheight', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <input type="text" name="height" size="5" value="<?php if (isset($this->config->height)) { echo $this->config->height; } else { echo '180'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configcount', 'block_directory_thumbnails'); ?>:
+    </td>
+    <td>
+      <input type="text" name="maxcount" size="5" value="<?php if (isset($this->config->maxcount)) { echo $this->config->maxcount; } else { echo '5'; } ?>" />
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+
+</table>
+
+<?php use_html_editor(); ?>
