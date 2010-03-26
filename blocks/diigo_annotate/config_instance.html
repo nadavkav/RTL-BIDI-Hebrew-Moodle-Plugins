@@ -1,0 +1,32 @@
+<div>
+<?php print_string('configinstructions', 'block_diigo_annotate'); ?>
+</div>
+<table cellpadding="9" cellspacing="0">
+
+
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configusername', 'block_diigo_annotate'); ?>:
+    </td>
+    <td>
+      <input type="text" name="username" size="15" value="<?php if (isset($this->config->username)) { echo $this->config->username; } else { echo 'username'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configpassword', 'block_diigo_annotate'); ?>:
+    </td>
+    <td>
+      <input type="text" name="password" size="15" value="<?php if (isset($this->config->password)) { echo $this->config->password; } else { echo 'password'; } ?>" />
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+
+</table>
