@@ -1,9 +1,9 @@
 
   Welcome to the git repository of the RTL/BIDI/Hebrew Moodle project
 
-All files in this repository are placed in the same directory structure of the
-original ("vanilla") Moodle development tree. ie. cvs.moodle.org
-so you can always sync it directly onto your local copy of Moodle
+All files in this repository are palced in the same directory structure of the
+original ("vanila") Moodle development tree. ie. cvs.moodle.org
+so you can allways sync it directly to your local copy of Moodle
 
 as Admin user, do not forget to navigate to the Site Menu: Admin -> Notification
 link, after each pull from this git repository to have the new changes apply
