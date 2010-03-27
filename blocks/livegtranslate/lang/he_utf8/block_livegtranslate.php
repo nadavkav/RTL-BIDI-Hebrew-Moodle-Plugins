@@ -1,0 +1,9 @@
+<?php
+
+$string['blockname'] = 'חלון תרגומון';
+$string['livegtranslate'] = 'תרגומון';
+$string['instructions'] = 'הקליקו על כפתור [הצגה] כדי לחשוף את החלון וכפתור [הסתרה] כדי להסתיר אותו';
+$string['show'] = 'הצגה';
+$string['hide'] = 'הסתרה';
+
+?>
