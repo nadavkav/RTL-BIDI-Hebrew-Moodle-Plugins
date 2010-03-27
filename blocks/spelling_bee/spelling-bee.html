@@ -1,0 +1,29 @@
+<style> #TfdBee {text-align:left; width:100%;font-size:smaller;} #TfdBee .spell_word {direction:ltr;text-align:left;font-size:110%;clear:all;margin-bottom:5px}
+#tfd_bee_difficulty {text-align:left;margin-bottom:10px} #tfd_bee_sound {float:left;width:40px;height:40px;margin-right:5px}
+#tfd_bee_sound IMG {width:100%;height:100%;border:none} #tfd_bee_def {direction:ltr;text-align:left;font-size:85%;}
+#tfd_bee_score {font-size:110%;margin:0 0 5px 2px} .tfd_bee_correct {background-color: lightgreen}
+.tfd_bee_wrong {background-color: pink} .tfd_bee_na , .tfd_bee_uword {direction:ltr;background-color: white;text-align:left !important;} </style>
+<div id="TfdBee"> <form name="tfd_bee_f" style="margin: 0pt; display: inline;">
+  <div id="tfd_bee_difficulty"> difficulty level: <span style="white-space: nowrap;">
+	<input type="radio" id="tfd_bee_level1" name="level" onclick="tfd_level_click(this);" value="1" /><label for="tfd_bee_level1">easy</label>
+	<input type="radio" checked="true" id="tfd_bee_level2" name="level" onclick="tfd_level_click(this);" value="2" /><label for="tfd_bee_level2">hard</label>
+	<input type="radio" id="tfd_bee_level3" name="level" onclick="tfd_level_click(this);" value="3" /><label for="tfd_bee_level3">expert</label></span>
+  </div>
+  <div id="tfd_bee_score">score: -</div>
+  <div id="tfd_bee_sound">
+    <object width="100%" height="100%" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+		<param value="http://img.tfd.com/m/sound.swf" name="movie" />
+		<param value="false" name="menu" /><param value="transparent" name="wmode" />
+		<param value="sound_src=http://img.tfd.com/hm/mp3/K0060700.mp3&image_src=http://img.tfd.com/m/flags/40_plain.jpg" name="FlashVars" />
+		<embed width="100%" height="100%" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent" menu="false" flashvars="sound_src=http://img.tfd.com/hm/mp3/K0060700.mp3&image_src=http://img.tfd.com/m/flags/40_plain.jpg" src="http://img.tfd.com/m/sound.swf" />
+			<a href="http://img.tfd.com/m/sound.swf" class="tpacqaqeqzocsjfwxtwp"></a>
+	</object>
+  </div>
+  <div id="tfd_bee_def">n. A unit of computer memory or data storage capacity equal to 1,024 (210) bytes</div>
+  <div id="tfd_bee_answ"> </div>
+  <div class="spell_word">spell the word: <input type="text" class="tfd_bee_na" id="tfd_bee_uword" size="12" /></div>
+	<input type="button" onclick="tfd_bee_answer(); " value="answer" />
+	<input type="button" onclick="tfd_bee_new(); " value="new word" /> </form>
+  </div>
+<script src="http://img.tfd.com/daily/spellbee-top.js" type="text/javascript"></script>
+<iframe width="1" height="1" frameborder="0" style="position: absolute;" id="sound_frame"></iframe>
