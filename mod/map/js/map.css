@@ -1,0 +1,34 @@
+@CHARSET "ISO-8859-1";
+.multi-loc{
+    height: 200px;
+    }
+
+.map_info_text{
+    height:200px;
+    overflow: auto;
+    }
+.multi-loc .map_info_text{
+height:190px;
+}
+#map .student-title{
+    font-size:16px;
+    color:#0000ff;
+    font-weight:bold;
+    }
+#map .student-title a{
+    text-decoration: none;
+    }   
+#map .student-pic{
+    float: left;
+    }
+#map .olPopupContent{
+    z-index: 9999;
+    }    
+.mapouter{
+    margin-left:auto;
+margin-right:auto;    
+width: 800px;
+}
+.googlemap .multi-loc .inner-loc{
+    height:200px;
+}

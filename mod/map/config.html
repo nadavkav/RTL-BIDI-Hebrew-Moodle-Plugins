@@ -1,0 +1,66 @@
+<form method="post" action="module.php" id="form">
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+<div>
+<table cellpadding="9" cellspacing="0" >
+
+<tr>
+  <td colspan="3" align="center">
+     <div><b><?php print_string('generalconfig', 'map')?></b></div>
+     <div style="font-size: 0.8em;">(<?php print_string('explaingeneralconfig', 'map')?>)</div>
+  </td>
+</tr>
+<tr valign="top">
+  <td align="right">Map Provider:</td>
+  <td>
+    <select name="map_provider">
+         <option value="choose" <?php if(isset($CFG->map_provider) && $CFG->map_provider=="choose"){print 'selected="true"';} ?> >Choose on Map</option>
+         <?php $providers = map_get_provider_array();
+		foreach($providers as $key => $provider){ ?>
+            <option value="<?php print $key; ?>" <?php if(isset($CFG->map_provider) && $CFG->map_provider==$key){print 'selected="true"';} ?> ><?php print $provider ?></option>
+        <?php } ?>
+    </select>
+ 
+   </td>
+    <td>
+    <?php print_string("configmapprovider", "map") ?>
+    </td>   
+</tr>
+<tr valign="top">
+  <td align="right">Force Map Provider:</td>
+  <td>
+    <select name="map_force_provider" >
+        <option value='0'<?php if(isset($CFG->map_force_provider) && $CFG->map_force_provider == 0):?>selected="true"<?php endif;?> >No</option>
+        <option value='1'<?php if(isset($CFG->map_force_provider) && $CFG->map_force_provider == 1):?>selected="true"<?php endif;?> >Yes</option>        
+    </select>
+    
+ 
+   </td>
+    <td>
+    <?php print_string("configmapforceprovider", "map") ?>
+    </td>   
+</tr>
+<tr valign="top">
+  <td align="right">map_google_api_key:</td>
+  <td>
+    <input name="map_google_api_key" type="text" size="50" value="<?php if(isset($CFG->map_google_api_key)){ p($CFG->map_google_api_key);} ?>" />
+   </td>
+    <td>
+    <?php print_string("configapikey", "map") ?>
+    </td>   
+</tr>
+<tr valign="top">
+  <td align="right"><?php print_string("profilestatefield","map") ?>:</td>
+  <td>
+    <input name="map_state_profile_field" type="text" size="50" value="<?php if(isset($CFG->map_state_profile_field)){ p($CFG->map_state_profile_field);} ?>" />
+   </td>
+    <td>
+    <?php print_string("profilestatefield_info", "map") ?>
+    </td>   
+</tr>
+<tr>
+  <td colspan="3" align="center">
+     <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>
+</div>
+</form>
