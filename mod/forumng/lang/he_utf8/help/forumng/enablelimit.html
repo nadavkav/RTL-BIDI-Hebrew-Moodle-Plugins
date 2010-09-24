@@ -1,0 +1,28 @@
+<h1>ForumNG</h1>
+
+<h2>Limit user posting</h2>
+
+<p>
+In some specialised forum use it might be helpful to limit the number of posts
+by an individual user. This feature provides that option.
+</p>
+
+<p>
+You can choose the number of posts a user is limited to, and the time period
+(day, 2 days, week, or fortnight). The time period is always considered from
+current rather than as discrete units; for example, if you are limited to 
+10 posts per one day and you make 10 posts on 23:00 one day, you cannot make 
+another post until 23:00 the next day.
+</p>
+
+<p>
+When users have 3 or fewer 'remaining' posts and go to make a new one, 
+a warning displays. When they have no remaining posts, an error appears 
+instead. The error tells them the date and time at which they will next be 
+allowed to post.
+</p>
+
+<p>
+Users with the <tt>mod/forumng:ignorethrottling</tt> capability are not
+affected by post limits.
+</p>

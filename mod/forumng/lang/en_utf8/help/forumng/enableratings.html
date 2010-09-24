@@ -1,0 +1,47 @@
+<h1>ForumNG</h1>
+
+<h2>Enable ratings</h2>
+
+<p>
+If enabled, forum posts can be given ratings, either numeric (0-N) or using 
+custom textual scales defined in Moodle settings. Numeric ratings are displayed
+as stars if the range is 0-5 or less.
+</p>
+
+<p>
+Even if you enable ratings, the capabilities system controls who is allowed to 
+rate posts and who is allowed to see the ratings. By default, students cannot 
+rate posts, and cannot see ratings except on their own posts.  
+</p>
+
+<p>
+If enabled, multiple people can rate a single post. The displayed rating for
+a post is the average (mean) of these ratings.	
+</p>
+
+<p>
+There are three common use cases for the rating system:
+</p>
+
+<ul>
+<li>Teachers rate posts for assessment purposes. The ratings might be visible
+to the student being assessed, or might be entirely hidden.
+(See <a href="grading.html">Grading</a> setting.)</li>
+<li>Teachers rate posts to indicate when students make an important (or
+unhelpful) contribution to the discussion.</li>
+<li>Students rate each others' posts to 
+<span style="text-decoration:line-through">start flame wars</span> help improve
+the quality of discussion.</li>
+</ul>
+
+<p>
+The three capabilities involved in the rating system might be set differently
+for each of these cases. They are:
+</p>
+
+<ul>
+<li>mod/forumng:rate - Able to rate posts.</li>
+<li>mod/forumng:viewrating - Able to view the rating of your own posts.
+(By default, students have this capability.)</li>
+<li>mod/forumng:viewanyrating - Able to view the rating of all posts.</li>
+</ul>
