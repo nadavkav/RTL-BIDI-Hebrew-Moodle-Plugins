@@ -1,0 +1,2 @@
+# How does someone uninstall an assignment type?
+# How does someone hide a specific assignment type and show it in specific courses only?

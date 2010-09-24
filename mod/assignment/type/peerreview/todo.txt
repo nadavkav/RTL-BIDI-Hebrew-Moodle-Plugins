@@ -1,0 +1,49 @@
+Add more help files to answer questions below.
+
+Mass mark skipping some students, why?
+
+Show review stats to reviewers, incl. flags, comment length rating, distance to instructor review, time spent reviewing.
+
+Add self-reflection phase
+
+Consider assignments in groups
+
+Output tidy HTML
+
+Add better code comments
+
+Improve logging
+
+Factorise code
+
+Follow compliance guidelines
+
+Prepare for Moodle 2.0
+
+Allow "accidental" teacher reviews to be deleted.
+
+Allow table ordering other than submission order.
+
+---
+
+Questions
+
+Q: Do pre-saved comments appear to students?
+A: No, students do not have the luxury of using pre-saved comments. I think it is part of their task write such comments. For teachers, the pre-saved comments are useful for quick and consistent moderation.
+
+Q: On the teacher review form, how does the button 'Save changes to pre-existing reviews only' differ from the button 'Save changes'?
+A: If you wish to correct a student's review (students cannot edit their own reviews) you can do so without saving a new review. You can also edit past teacher reviews if necessary. I might have to think about making that clearer somehow.
+
+Q: How many reviewers are allocated to review one task? I thought that it would be two but I see that there are 3 or 4.
+A: Students are allocated 2 reviews each to do. Because of the initial pooling, students who submit early (the first four), will receive up to 4 or 5 reviews. After this, students are reviewing submissions that arrived before theirs, so generally students will receive two reviews. Students who submit at the "tail-end" may receive one review or no reviews and it's up to the teacher to supply reviews for those students.
+
+Q: I see there is a 'Resubmit' link on the submissions list for each submission. Does one use that if you want the student to redo the task? If used, does that nullify the previous submission and reviews?
+A: This link allows a teacher to resubmit a student's file (or online text). This does not change any other details about the student's submission, or their reviews, or reviews they have received. As students can't resubmit themselves (this would break review relationships) a teacher can resubmit for them. If other students have reviewed the submitting student's file, the teacher should complete a moderation review to override the earlier reviews of the student's original file. Usually a student only realises they've submitted the wrong file after they receive peer reviews.
+
+---
+
+Ideas
+
+Value student's reviews according to their performance on the current task and possibly past performance and review accuracy.
+
+Use good students to do (additional) moderation reviews instead of instructors.

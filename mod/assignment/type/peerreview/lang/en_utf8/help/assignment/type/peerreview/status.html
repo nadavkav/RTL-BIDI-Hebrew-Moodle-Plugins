@@ -1,0 +1,23 @@
+﻿<h1>Status</h1>
+
+<p>The status of a submission indicates whether a submission moderation by a teacher.</p>
+<p>The status will be one of the following.</p>
+<?php
+require_once($CFG->dirroot.'/mod/assignment/type/peerreview/styles.php');
+?>
+<table cellpadding="5" cellspacing="0" border"1" style="border:1px solid black">
+	<tr><td><span class="errorStatus">&lt;2 Reviews</span><br />
+	Fewer than two reviews have been conducted on this students submission. If it is unlikely that more reviews will be made in future, the teacher may need to create a moderation review.</td>
+	<td rowspan="4">Moderation is required</td></tr>
+	<tr><td><span class="errorStatus">Conflicting</span><br />
+	Two or more reviews have been conducted, but they do not agree on one or more criteria.</td></tr>
+	<tr><td><span class="errorStatus">Flagged</span><br />
+	The student who submitted the submission is unhappy about one of the reviews they have recieved and believes teacher attention is needed.</td></tr>
+	<tr><td><span class="errorStatus">Conflicting, Flagged</span><br />
+	A combination of the above two.</td></tr>
+	<tr><td><span class="goodStatus">Concensus</span><br />
+	Two or more reviews have been conducted and they are in agreement.</td>
+	<td rowspan="2">Moderation is not required</td></tr>
+	<tr><td><span class="goodStatus">Overridden</span><br />
+	A teacher has created a moderation review (which overrides other reviews).</td></tr>
+</table>
