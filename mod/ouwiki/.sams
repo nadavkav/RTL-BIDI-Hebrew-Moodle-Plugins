@@ -1,0 +1,9 @@
+<Files remotesearch.php>
+DISABLE_SAMS
+</Files>
+<Files feed-*.php>
+DISABLE_SAMS
+</Files>
+<Files feed.xsl>
+DISABLE_SAMS
+</Files>
