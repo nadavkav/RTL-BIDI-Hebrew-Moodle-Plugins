@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/db" VERSION="20100414" COMMENT="XMLDB file for Moodle team assignment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd"
+>
+<TABLES>
+	<TABLE NAME="team" COMMENT="table to store team information"  NEXT="team_student">
+		<FIELDS>
+			<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="assignment" />
+			<FIELD NAME="assignment" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name" />
+			<FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true"
+				SEQUENCE="false" ENUM="false" PREVIOUS="assignment" NEXT="membershipopen" />
+			<FIELD NAME="membershipopen" TYPE="int" LENGTH="1" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="name"
+				NEXT="timemodified" />
+			<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="membershipopen" />
+		</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="assignment" />
+			<KEY NAME="assignment" TYPE="foreign" FIELDS="assignment"
+				REFTABLE="assignment" REFFIELDS="id" PREVIOUS="primary" />
+		</KEYS>
+	</TABLE>
+	<TABLE NAME="team_student" COMMENT="table to store students that are members of a team"
+		PREVIOUS="team">
+		<FIELDS>
+			<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="student" />
+			<FIELD NAME="student" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="team" />
+			<FIELD NAME="team" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="student"
+				NEXT="timemodified" />
+			<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"
+				UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="team" />
+		</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="student" />
+			<KEY NAME="student" TYPE="foreign" FIELDS="student" REFTABLE="user"
+				REFFIELDS="id" PREVIOUS="primary" NEXT="team" />
+			<KEY NAME="team" TYPE="foreign" FIELDS="team" REFTABLE="team"
+				REFFIELDS="id" PREVIOUS="student" />
+		</KEYS>
+		<INDEXES>
+			<INDEX NAME="student-team" UNIQUE="true" FIELDS="student, team" />
+		</INDEXES>
+	</TABLE>
+</TABLES>
+</XMLDB>
