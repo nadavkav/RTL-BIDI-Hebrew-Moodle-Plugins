@@ -1,0 +1,836 @@
+/*
+	File: forms.css
+	Description: form styles
+*/
+
+/*------------------------------------------------------------------------------------
+  MAIN FORM STYLES
+------------------------------------------------------------------------------------*/
+
+input, textarea, select, button, label {
+	font-family: "Trebuchet MS", "Lucida Grande", Arial, Helvetica, Verdana, sans-serif;
+	font-size: 1.181em;
+	color: #3f3f3f;
+	vertical-align: middle;
+}
+
+input, button, label {
+	padding: 1px 0;
+}
+
+input[type='submit'], input[type='button'], button {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+textarea {
+	overflow: auto;
+	display: block;
+}
+
+label {
+	vertical-align: middle;
+	font-size: 1.0909em;
+	color: #545454;
+}
+
+input#fileToUpload{
+	display:block;
+}
+
+label.incorrect {color: #c00 !important}
+
+fieldset {
+	border-color: #d9d9d9;
+	border-style: solid;
+	border-width: 1px;
+	padding: .5em;
+	margin-bottom: .5em;
+	}
+	
+legend {
+	padding: 0 .4em;
+	margin-left: 5px;
+	letter-spacing: 0px;
+	letter-spacing: 1px; 
+	}
+	
+fieldset.important {
+	background-color: #f5f5f5;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+
+ul.form label,
+label.block {display: block}
+
+ul.form .label label,
+p.inline-form label {display: inline}
+
+ul.form .choice fieldset {
+	padding: 0;
+	margin: 0;
+}
+
+ul.form .choice legend {
+	letter-spacing: 0;
+	margin: -.5em 0 -.5em .2em;
+	padding: 0 .35em;
+	text-transform: capitalize;
+	word-spacing: 1px;
+	font-size: .90909em;
+	color: #8bb13f;
+	padding-top: .3em;
+	padding-bottom: .5em;
+}
+
+ul.form .choice fieldset div {
+	margin: 0 3px;
+	padding:6px 10px;
+	background: #fff url('../scimg/grayBox-bg.png') repeat-x;
+}
+
+ul.form .choice input {
+	width: auto;
+	margin: 0 2px 0 0;
+}
+
+ul.form .choice label {
+	display: inline;
+	margin-right: 20px;
+}
+
+.checkbox,
+.checkbox-inline {
+	margin: 0 4px 0 0;
+	float: left;
+	width: auto !important;
+}
+
+.checkbox-inline {
+	float: none;
+	vertical-align: middle;
+}
+
+.mainDiv textarea,
+.mainDiv input,
+.halfSizeDiv textarea,
+.halfSizeDiv input {
+	width: 98%;
+}
+
+.normalize input,
+.last input {width: auto}
+
+ul.form .element select,
+ul.form .elements select {margin-right: 4px}
+
+.mSelect {min-width: 9em}
+	
+.dSelect {min-width: 4em}
+
+.ySelect {min-width: 5em}
+
+.langSelect {min-width: 15em}
+
+.multipleSelect {
+	width: 100%;
+	height: 7em;
+}
+
+#message{
+	margin:0 0 .5em;
+}
+p.counter{
+	float:left;
+}
+#button-write{
+	float:right;
+	margin-right:5px;
+}
+
+/*------------------------------------------------------------------------------------
+  SIDEBAR PUBLIC
+------------------------------------------------------------------------------------*/
+
+#sidebar-menu div.section select {width: 99%}
+
+#sidebar-menu div.section label {color: #808080}
+
+#sidebar-menu div.section li label {
+	float: right;
+	width: 167px;
+}
+
+#sidebar-menu div.section li > label {width: 169px}
+
+/*------------------------------------------------------------------------------------
+  PENDING CLASSES
+------------------------------------------------------------------------------------*/
+
+.pending-action div.dating select {
+	margin-right: 10px;
+	font-size: 1.08333em;
+}
+
+.pending-action div.dating label {
+	display: inline;
+	margin-right: 4px;
+}
+
+.pending-action div.dating input {
+	width: 1.5em;
+}
+
+/*------------------------------------------------------------------------------------
+  SCLIPO MAPS
+------------------------------------------------------------------------------------*/
+
+#mapSidebar .section #search {
+	vertical-align: top;
+	width: 173px;
+	margin-bottom: 3px;
+}
+	
+#mapSidebar .section #submit {
+	display: inline;
+	vertical-align: middle;
+	width: 29px;
+	height: 21px;
+	margin-left: 0;
+}
+	
+#mapSidebar .section label {
+	font-size: 1.272em;
+	display: inline;
+	margin-left: 5px;
+}
+	
+#mapSidebar .section label img {margin-right: 5px}
+	
+#mapSidebar .section label img,
+#mapSidebar .section input {
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+/*------------------------------------------------------------------------------------
+  EMBED FIELDS STYLES
+------------------------------------------------------------------------------------*/
+
+#embeds label {
+	width: 18%;
+	display: -moz-inline-box;
+	display: inline-block;
+	}
+
+#embeds input {width: 80%}
+		
+/*------------------------------------------------------------------------------------
+  MISCELLANOUS
+------------------------------------------------------------------------------------*/
+
+#brands-select label img {
+	vertical-align: middle;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+#brands-select label img:hover {
+	-moz-opacity: .65;
+	opacity: .65
+}
+
+#search_header input {
+	background: none;
+	width: 180px;
+	margin: 0 0 0 5px;
+	border-width: 0;
+	font-size: 12px;
+	padding: 0;
+	color: #666;
+}
+
+#search_header > input {margin-top: 3px}
+
+#search-sidebar {
+	width: 155px;
+	text-indent: 2px;
+	background-color: #f5f5f5;
+	color: #666;
+}
+
+#search_header input:focus,
+#search-sidebar:focus {
+	color: #3f3f3f;
+	outline: none;
+}
+
+#search_submit {
+	position: absolute;
+	top: 2px;
+	right: 4px;
+}
+
+.page-options input,
+.page-options-top input {width: auto !important}
+	
+#myMessages fieldset,
+#search fieldset {
+	border-width:0;
+	padding: 0;
+	}
+	
+#search fieldset { margin-top:-1em; }
+	
+#search legend {
+	text-indent:-999em;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	}
+	
+#myMessages legend {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	color: #808080;
+	font-style: normal;
+	}
+
+.rEntries li textarea {width: 99%}
+
+.rEntries li input {margin-top: .5em}
+
+.rEntries li input.text {
+	margin: 0 0 .5em;
+	width: 99%;
+}
+
+/*------------------------------------------------------------------------------------
+  LOGIN HEADER & LOGIN JOIN
+------------------------------------------------------------------------------------*/
+#login ul label {
+	display: inline;
+	margin: 0 5px 0 0;
+	overflow: auto;
+	font-size: 1em;
+}
+
+#login input {
+	font-size: 1.181em;
+	padding: 0;
+}
+
+#login input[type='submit'] {padding: 0 2px}
+	
+#userLogin .colGroup.last input {
+	width: 100%;
+	margin-top: 14px;
+}
+	
+#userLogin label {
+	display: inline;
+	color: #3f3f3f;
+}
+
+label.remember-me {
+	font-size: .909em;
+	cursor: pointer;
+	margin-left: 5px !important;
+}
+
+#login label.remember-me {color: #fff}
+	
+/* :videoForms */
+.optionContent input,
+.optionContent textarea,
+#comment input, #replyComment input,
+#comment textarea, #replyComment  textarea{ width:430px; }
+
+.optionContent .submit,
+#comment .submit, #replyComment .submit  {
+	width: auto;
+	background: #326fa3 url('../scimg/submitBG.png') repeat-x;
+	border: 1px solid #537a09;
+	color: #fff;
+	/**padding: .1em .5em;*/
+	cursor: pointer;
+	}
+
+/* :sclipoLive */
+div.check input {height: 13px}
+
+#slRegister {
+	background: url('../scimg/slRegisterBG.png') no-repeat;
+	width: 145px;
+	height: 35px;
+	padding: 0;
+	font-size: 1.3em;
+	border: 1px solid #405e07;
+	color: #fff;
+	padding: .15em .8em;
+	cursor: pointer;
+	}
+	
+#slRegister:hover {border-color: #333}
+
+.sLiveSetup div.field textarea {width: 328px;}
+	
+.sLiveSetup div.field > textarea {max-width: 332px}
+	
+#addNewClass .sLiveSetup div.field textarea,
+#addNewClass .sLiveSetup div.field input {
+	width: 300px;
+	float: left;
+	}
+	
+.sLiveSetup div.fields input,
+.sLiveSetup div.fields select {
+	height: auto;
+	width: 79%;
+	margin-bottom: .2em;
+	}
+	
+.sLiveSetup div.fields select {width: 83.5%}
+	
+.sLiveSetup label,
+div.classModel label {
+	color: #3f3f3f;
+	font-weight: bold;
+	}
+	
+.sLiveSetup button {
+	margin: 1.5em 0 0
+}
+
+
+/* :other */
+label.overlabel-apply {
+	left: .4em;
+	padding-top: .3em;
+	position: absolute;
+	z-index: 1;
+	color: #888;
+}
+	
+#main label.overlabel-apply {
+	left: .3em;
+	font-size: 1.181em;
+}
+
+/*------------------------------------------------------------------------------------
+  SIGN IN
+------------------------------------------------------------------------------------*/
+
+#nav #remember_me {
+	margin-left: 20px;
+}
+
+
+/*------------------------------------------------------------------------------------
+  SCHEDULE TABLE
+------------------------------------------------------------------------------------*/
+
+#schedule table#hours td input {
+	padding: 0;
+	font-weight: normal;
+	font-size: .909em;
+	height: 14px;
+	width: 90%;
+	}
+
+#schedule .col1 select {width: 100%}
+
+#schedule .col2 textarea {
+	width: 99%;
+	padding: 0;
+	font-size: 1em;
+	float: left;
+	}
+
+#schedule #foot label,
+#content legend label {
+	color: #87af3c;
+	font-style: normal;
+	}
+
+#schedule #foot label.outstanding {
+	margin-left: 4px;
+	display: inline;
+	color: #3f3f3f;
+	font-weight: bold;
+	line-height: 100%;
+	}
+
+#agreeTerms input,
+legend input {margin-right: .5em}
+
+#agreeTerms label {display: inline-block}
+
+#agreeTerms > label {display: inline}
+
+#agreeTerms label:hover {color: #3f3f3f}
+
+/*------------------------------------------------------------------------------------
+  MODEL OF CLASS
+------------------------------------------------------------------------------------*/
+
+label.classModel {
+	display: inline;
+	color: #3f3f3f;
+	font-weight: bold;
+	font-size: 1.181em;
+	margin-left: 4px;
+	cursor: pointer;
+	line-height: 2em;
+	margin-left: 4px;
+}
+
+label.classModel:hover,
+label.classModel.active {background: #fafcce}
+
+div.classModel .right label {
+	color: #65a72c;
+	margin-top: .6em;
+	}
+
+div.classModel input {
+	width: 40px;
+	text-align: right;
+	margin-top: .15em;
+	}
+	
+div.classModel .left input {margin-top: .7em}
+
+div.classModel .right input {
+	background: #fff;
+	color: #b3b2b6;
+	border: 2px solid #c1bfc4;
+	border:0;
+	}
+	
+#content input.waived {
+	text-decoration: line-through;
+	color: #f20000;
+	}
+
+#submitSearchPending {
+	position: absolute;
+	right: 0;
+	padding-right: 3px;
+	bottom: 2px;
+	width: 1.42em;
+	height: 1.42em;
+	}
+	
+.scheduleAction textarea {
+	width: 580px;
+	float: left;
+	font-size: 1em;
+	height: 4em;
+	margin-bottom: 10px;
+	}
+	
+.scheduleAction select,
+.scheduleAction .time input {font-size: 1em}
+
+.scheduleAction .time input {
+	width: 30px;
+	text-align:right;
+	}
+	
+#content .scheduleAction .formActions :hover {border-color: #333}
+
+#content .classAccept {
+	background: url('../scimg/classAcceptBT.png') no-repeat;
+	width: 117px;
+	height: 28px;
+	padding: 0;
+	font-size: 1.181em;
+	border: 1px solid #405e07;
+	color: #fff;
+	cursor: pointer;
+	}
+
+#content .classCancel {
+	background: url('../scimg/classCancelBT.png') no-repeat;
+	width: 115px;
+	height: 28px;
+	padding: 0;
+	font-size: 1.181em;
+	border: 1px solid #5e5e5e;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	text-align: center;
+	}
+	
+#content a.classCancel,
+#content button.classCancel {
+	height: 26px;
+	line-height: 26px;
+	}
+	
+#content .classRemove {
+	background: url('../scimg/classRemoveBT.png') no-repeat;
+	width: 117px;
+	height: 28px;
+	padding: 0;
+	font-size: 1.181em;
+	border: 1px solid #af260d;
+	color: #fff;
+	cursor: pointer;
+	}
+	
+#content .classBlock {
+	background: url('../scimg/classBlockBT.png') no-repeat;
+	width: 117px;
+	height: 28px;
+	padding: 0;
+	font-size: 1.181em;
+	border: 1px solid #1b8da5;
+	color: #fff;
+	cursor: pointer;
+	}
+	
+/*------------------------------------------------------------------------------------
+  PAYMENT OF CLASS
+------------------------------------------------------------------------------------*/
+
+.paymentStep textarea.step2 {width: 832px;}
+
+.paymentStep textarea.step3 {width: 682px;  margin-left: 186px;}
+	
+#classRating label {
+	display: inline;
+	padding-left: 3px;
+	}
+
+#classRating input {vertical-align: middle}
+
+#sendDispute {
+	background: rgb(227,0,0) url('../scimg/option2BG.png') repeat-x 0 0;
+	border-color: #777;
+	color: #fff;
+}
+
+/* Standard forms */
+form.standard fieldset{
+	border: 0;	
+}
+
+form.standard legend{
+	letter-spacing: 0;
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0 0 5px;
+	color: #787878;
+}
+
+form.standard p{
+	margin-top: -5px;
+	margin-bottom: 15px;
+}
+
+form.standard p.normal{
+	margin: 0 0 10px 0;	
+}
+
+form.standard input[type=text]{
+	width: 100%;
+}
+
+/* fucking IE */
+form.standard input.text{
+	width: 99.5%;
+}
+
+form.standard textarea{
+	width: 100%;
+}
+
+form.standard select.fixed{
+	width: 338px;
+}
+
+form.standard input[type=text]{
+	margin-bottom: 15px;
+	margin-top: 3px;
+}
+
+form.standard input.text, /* fucking IE */
+form.standard textarea,
+form.standard select{
+	margin-bottom: 15px;
+	margin-top: 3px;
+}
+
+form.standard p.note{
+	margin-top: -12px;
+	margin-bottom: 15px;
+}
+
+form.standard label{
+	display: block;
+}
+
+form.standard label em,
+form.standard p.label em{
+	color: red;
+}
+
+form.standard p.label{
+	color: #545454;
+	font-size: 1.0909em;
+	vertical-align: middle;
+	margin: 15px 0 10px 0;		
+}
+
+
+form.standard input.number{
+	width: 25px;
+}
+
+form.standard input.price,select.currency{
+	width: 60px;
+	vertical-align: baseline;
+}
+
+form.standard input.zipcode{
+    width: 60px;
+    vertical-align: baseline;
+}
+
+form.standard input.date{
+	width: 80px;
+}
+
+form.standard .inline div{
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+form.standard .inline input,
+form.standard .inline textarea,
+form.standard .inline select{
+	margin: 0 10px 0 0;
+}
+
+form.standard .inline label{
+	float: left;
+	width: 100px;
+	margin-right: 10px;
+}
+
+form.standard .inline input,
+form.standard .inline select{
+	float: left;
+}
+
+.receiver{
+	width: 335px;
+	height: 115px;
+	/*overflow-y: scroll;
+	overflow-x: hidden;*/
+	overflow: auto;
+	border: 1px solid #999;
+}
+
+form.standard .receiver li{
+	/*float: left;*/
+	position: relative;
+	/*width: 312px;*/
+	padding: 4px;
+	border-bottom: 1px solid #ccc;
+}
+
+form.standard .receiver li a{
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+
+form.standard .options input{
+	float: left;
+	margin-right: 15px;
+}
+
+form.standard .options div{
+	float: left;
+	width: 500px;
+}
+
+form.standard .options div div{
+	float: none;
+	width: auto;
+}
+
+form.standard .options div img{	
+	display: block;
+}
+
+form.standard .options div p{
+	margin: 5px 0;
+}
+
+form.standard .options input div input{
+	float: none;
+	margin: 0;
+}
+
+form.standard div.container-error{
+	display: none;
+	padding: 5px 5px 0;
+	background: #FCF8C9;
+	border:1px solid #F0E579;
+	color:#c00;
+	text-align: left;
+	margin-bottom: 15px;
+}
+
+form.standard div.container-error li{
+	margin-bottom: 5px;
+	list-style: disc;
+	margin-left: 20px;
+}
+
+form.standard div.container-error li label.error{
+	border: 0;
+	padding: 0;
+	text-align: left;
+	margin: 0 !important;
+}
+
+
+form.standard input.error,
+form.standard textarea.error{
+	text-align: left;
+	color: black;
+	background: #fff;
+	border: 1px solid #c00;
+	padding: 1px 0;
+	clear: none;
+	font-size:1.181em;
+}
+
+
+.options-form{
+	text-align: right;
+}
+
+.options-form input,
+.options-form select,
+.options-form button{
+	font-size: 11px;
+	margin: 0 auto !important;
+}
+
+.options-form label{
+	display: inline !important;
+	margin: 0 3px 0 10px;
+	color: #999;
+}
