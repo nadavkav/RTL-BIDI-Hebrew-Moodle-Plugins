@@ -1,0 +1,57 @@
+<?php
+
+/**
+* @package brainstorm
+* @author Valery Fremaux / 1.8
+* @date 22/12/2007
+*
+* This page shows view for importing inputs. 
+* Inputs can be imported uploading a text file with one idea per line
+* empty lines are ignored, so are lines starting with !, / or #
+*/
+include_once '../../lib/uploadlib.php';
+
+print_heading(get_string('importideas', 'brainstorm'));
+print_simple_box(get_string('utf8advice', 'brainstorm'));
+print_simple_box_start('center');
+
+/// display the import form
+?>
+<form name="importform" method="post" action="view.php" enctype="multipart/form-data">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="what" value="doimport" />
+<table align="center" width="80%" cellspacing="5">
+    <tr>
+        <td align="right"><b><?php print_string('importfile', 'brainstorm') ?>:</b></td>
+        <td align="left">
+            <?php upload_print_form_fragment(1, array('inputs')) ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right"><b><?php print_string('clearallprevious', 'brainstorm') ?>:</b></td>
+        <td align="left">
+            <input type="checkbox" name="clearall" value="1" /> <?php print_string('yes') ?>
+        </td>
+    </tr>
+<?php 
+if (has_capability('mod/brainstorm:manage', $context)){
+?>
+    <tr>
+        <td align="right"><b><?php print_string('allusersclear', 'brainstorm') ?>:</b></td>
+        <td align="left">
+            <input type="checkbox" name="allusersclear" value="1" /> <?php print_string('yes') ?>
+        </td>
+    </tr>
+<?php
+}
+?>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="submit" name="go_btn" value="<?php print_string('upload') ?>" />
+        </td>
+    </tr>
+</table>
+</form>
+<?php
+print_simple_box_end();
+?>

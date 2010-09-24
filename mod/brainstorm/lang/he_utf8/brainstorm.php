@@ -1,0 +1,122 @@
+<?PHP // $Id: brainstorm.php,v 1.2 2004/08/24 16:36:19 cmcclean Exp $
+      // brainstorm.php - created with Moodle 1.8 development (2007122600)
+
+$string['addmoreresponses'] = 'הוסיפו עוד רעיונות';
+$string['allopdata'] = 'רישומי סידור (מידע למפעילים) ';
+$string['allresponses'] = 'מספר רעיונות ';
+$string['allusersclear'] = 'איפוס כל המשתתפים';
+$string['absolute'] = 'סידור מוחלט';
+$string['brainstormname'] = 'כותרת';
+$string['brainstormtext'] = 'תיאור';
+$string['blindness'] = 'הסתרה';
+$string['chooseoperatornotice'] = '\"סמל־יחס\": מתאר את הקשרים בין הרעיונות השונים שאספתם <br/><br/>להפעלה או ביטול של \"סמל־יחס\", לחצו על הסמל המתאימה. תוכלו להגדיר מאפיינים לכל \"סמל־יחס\" על ידי תתי התפריט שלהעיל. כאשר מבטלים \"סמל־יחס\", אוסף המאפיינים האחרון שלו נשמר.';
+$string['chooseoperators'] = 'בחרו \"סמל־יחס\"';
+$string['clearallprevious'] = 'נקו מידע קודם';
+$string['clearall'] = 'מחיקת כל הרעיונות';
+$string['collect'] = 'איסוף רעיונות';
+$string['collectingideas'] = 'אוסף רעיונות';
+$string['commands'] = 'פקודות';
+$string['category'] = 'סיווג';
+$string['data'] = 'מידע הסיעור מוחות';
+$string['deleteselection'] = 'מחיקת נבחרים';
+$string['display'] = 'הצגה';
+$string['dograde'] = 'עדכון ציון';
+$string['feedback'] = 'משוב/דוח';
+$string['feedbackweight'] = 'משקל הציון למשוב';
+$string['finalgrade'] = 'סהכ';
+$string['float'] = 'נקודה עשרונית ';
+$string['flowcontrol'] = 'בקרת זרימת פעולה ';
+$string['flowmode'] = 'מצב זרימת פעולה ';
+$string['foradminsonly'] = 'הגדרות נוספות. (מנהלים בלבד)';
+$string['editareport'] = 'רשמו דוח';
+$string['grade'] = 'ציון ';
+$string['gradesummary'] = 'דוח ציונים';
+$string['ungraded'] = 'טרם קיבלו ציון';
+$string['grades'] = 'ציונים';
+$string['graded'] = 'קיבלו ציון ';
+$string['gradeforfeedback'] = 'ציון עבור עבודת משוב';
+$string['gradefororganisation'] = 'ציון עבור עבודת סידור';
+$string['gradeforparticipation'] = 'ציון עבור רעיונות';
+$string['gradeforpreparing'] = 'ציון עבור עבודת הכנה';
+$string['grading'] = 'הענקת ציון ';
+$string['gradingof'] = 'הענקת ציון ';
+$string['havereport'] = 'פירסם דוח';
+$string['heightresponse'] = 'גובה שדה קלט';
+$string['helptext'] = 'עזרה על מבנה';
+$string['importfile'] = 'ייבוא קובץ';
+$string['importideas'] = 'ייבוא רעיונות ';
+$string['integer'] = 'מספר שלם (חיובי) ';
+$string['manager'] = 'מנהל ';
+$string['modulename'] = 'סיעור־מוחות';
+$string['modulenameplural'] = 'סיעורי־מוחות';
+$string['multiple'] = 'כימות מורכב ';
+$string['mustentercategory'] = 'עליכם להכניס לפחות סיווג אחד לפני השמירה';
+$string['mustentersomething'] = 'עליכם להכניס לפחות קלט אחד לפני השמירה';
+$string['myresponses'] = 'הרעיונות שלי';
+$string['myreport'] = 'הדוח שלי';
+$string['notabletodisplayfor'] = 'לא מסוגל להציג תוצאות עבור המפעיל <b>$a</b>';
+$string['notimplemented'] = 'לא ממומש עדיין';
+$string['notresponded'] = 'אין קלט עד כה';
+$string['noreports'] = 'אף דוח לא פורסם';
+$string['numcolumns'] = 'טורים מוצגים';
+$string['numresponses'] = 'קלט לכל משתתף';
+$string['numresponsesinform'] = 'שדות קלט בטופס איסוף';
+$string['opdatainallgroups'] = 'רשומות סידור (כל הקבוצות)';
+$string['opdatainyourgroup'] = 'רשומות סידור (קבוצה נוכחית)';
+$string['operators'] = 'מפעילים';
+$string['oprequirementtype'] = 'סוג שדה הזנת \"דרישה\" של סמל־יחס ';
+$string['organizations'] = 'סידורים';
+$string['organize'] = 'סידור';
+$string['organizeideas'] = 'סידור רעיונות';
+$string['organizeweight'] = 'משקל הציון לסידור';
+$string['otherresponses'] = 'רעיונות של משתתפים אחרים';
+$string['parallel'] = 'זרימה מקבילה';
+$string['participant'] = 'משתתף ';
+$string['participation'] = 'השתתפות';
+$string['participationweight'] = 'משקל הציון להשתתפות';
+$string['preparations'] = 'הכנה';
+$string['prepare'] = 'הכנה';
+$string['preparingweight'] = 'משקל הציון להכנה';
+$string['privacy'] = 'פרטיות משתמש';
+$string['procedure'] = 'תהליך ';
+$string['publishing'] = 'פירסום';
+$string['report'] = 'דוח';
+$string['reportless'] = 'לא פורסם';
+$string['requirement'] = 'דרישה';
+$string['responded'] = 'רעיונות';
+$string['responses'] = 'רעיונות';
+$string['responsesinallgroups'] = 'מספר רעיונות (כל הקבוצות)';
+$string['responsesinyourgroup'] = 'מספר רעיונות (קבוצה נוכחית)';
+$string['seefeedback'] = 'תצוגת משוב';
+$string['saveconfig'] = 'שמרו את התצורה ';
+$string['savemyresponse'] = 'שמירת הרעיון/ות שלי';
+$string['scale'] = 'סולם';
+$string['select'] = 'בחירת סמליי ־ יחס';
+$string['sequential'] = 'זרימה סדרתית (בשלבים)';
+$string['sequentialaccess'] = 'היצמדות לזרימה סידרתית בלבד ';
+$string['singlegrade'] = 'ציון יחיד / מופרד';
+$string['splittedgrade'] = 'ציון מפוצל';
+$string['summary'] = 'סיכום';
+$string['teacherfeedback'] = 'משוב מאייר/ים';
+$string['textarea'] = 'אזור תמליל';
+$string['textfield'] = 'שדה תמליל (משפט)';
+$string['unlimited'] = 'בלתי מוגבל';
+$string['utf8advice'] = 'יש להמיר את תוכן הקובץ לקידוד UTF8, כל קידוד אחר יכול להגרום לבעיות יבוא לא צפויות.';
+$string['userdata'] = 'מידע מתוחם של משתמש';
+$string['warnclear'] = 'הזהרה: אם תעדכנו ערך זה, כל מידע קיים עבור מפעיל זה\\\\n עלול להיות לא מתאים והוא יימחק.\\\\n אם אתם צריכים לשמור מידע ישן, אל תשמרו את הטופס הזה ודפדפו ישירות לכל מסך אחר !';
+$string['whysiwhygtextarea'] = 'עורך תוכן מעוצב';
+$string['widthresponse'] = 'רוחב שדה קלט';
+
+///get all operators lang files
+global $CFG, $USER, $SITE;
+$DIR = opendir($CFG->dirroot.'/mod/brainstorm/operators');
+$lang = current_language();
+while($opname = readdir($DIR)){
+    if (!is_dir($CFG->dirroot.'/mod/brainstorm/operators/'.$opname)) continue;
+    if (ereg("^\\.", $opname)) continue;
+    if (file_exists("{$CFG->dirroot}/mod/brainstorm/operators/{$opname}/lang/{$lang}/operator.php")){
+        include "{$CFG->dirroot}/mod/brainstorm/operators/{$opname}/lang/{$lang}/operator.php";
+    }
+}
+
+?>

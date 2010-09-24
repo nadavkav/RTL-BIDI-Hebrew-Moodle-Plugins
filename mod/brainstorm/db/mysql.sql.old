@@ -1,0 +1,83 @@
+# phpMyAdmin MySQL-Dump
+# version 2.2.1
+# http://phpwizard.net/phpMyAdmin/
+# http://phpmyadmin.sourceforge.net/ (download page)
+#
+# Host: localhost
+# Generation Time: Nov 14, 2001 at 04:44 PM
+# Server version: 3.23.36
+# PHP Version: 4.0.6
+# Database : `moodle`
+# --------------------------------------------------------
+
+#
+# Table structure for table `brainstorm`
+#
+
+CREATE TABLE prefix_brainstorm (
+  id int(10) unsigned NOT NULL auto_increment,
+  course int(10) unsigned NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  text text NOT NULL,
+  numresponses tinyint(4) NOT NULL default '1',
+  numcolumns tinyint(4) NOT NULL default '1',
+  timemodified int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY id (id)
+) TYPE=MyISAM COMMENT='Available brainstorms are stored here.';
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `brainstorm_responses`
+#
+
+CREATE TABLE prefix_brainstorm_responses (
+  id int(10) unsigned NOT NULL auto_increment,
+  brainstorm int(10) unsigned NOT NULL default '0',
+  userid int(10) unsigned NOT NULL default '0',
+  response varchar(255) NOT NULL default '',
+  categorytitle varchar(255) NOT NULL default '',
+  timemodified int(10) NOT NULL default '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY id (id)
+) TYPE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `mdl_brainstorm_responses` (
+  `brainstormid` int(10) unsigned NOT NULL default '0',
+  `userid` int(10) unsigned NOT NULL default '0',
+  `groupid` int(10) unsigned default '0',
+  `response` varchar(255) NOT NULL default '',
+  `timemodified` int(10) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `brainstorm_categories`
+#
+
+CREATE TABLE prefix_brainstorm_categories (
+  id int(10) unsigned NOT NULL auto_increment,
+  brainstorm int(10) unsigned NOT NULL default '0',
+  categorynumber tinyint(4) NOT NULL default '0',
+  title varchar(255) NOT NULL default '',
+  timemodified int(10) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  UNIQUE KEY id (id)
+) TYPE=MyISAM;
+
+
+#
+# Dumping data for table `log_display`
+#
+
+INSERT INTO prefix_log_display (module, action, mtable, field) VALUES ('brainstorm', 'view', 'brainstorm', 'name');
+INSERT INTO prefix_log_display (module, action, mtable, field) VALUES ('brainstorm', 'update', 'brainstorm', 'name');
+INSERT INTO prefix_log_display (module, action, mtable, field) VALUES ('brainstorm', 'add', 'brainstorm', 'name');
+INSERT INTO prefix_log_display (module, action, mtable, field) VALUES ('brainstorm', 'report', 'brainstorm', 'name');
+INSERT INTO prefix_log_display (module, action, mtable, field) VALUES ('brainstorm', 'respond', 'brainstorm', 'name');
+
+

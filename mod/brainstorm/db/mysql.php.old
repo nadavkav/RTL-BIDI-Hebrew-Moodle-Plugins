@@ -1,0 +1,24 @@
+<?PHP // $Id: mysql.php,v 1.2 2004/08/24 16:36:19 cmcclean Exp $
+
+function brainstorm_upgrade($oldversion) {
+// This function does what's necessary to upgrade
+// older versions to match current functionality
+    if ($oldversion < 2004082401) {
+        global $CFG;
+
+        table_column("brainstorm", "", "numresponses", "integer", "4", "unsigned", "1", "not null", "text");
+        table_column("brainstorm", "", "numcolumns", "integer", "4", "unsigned", "1", "not null", "numresponses");
+
+        table_column("brainstorm_responses", "", "categorytitle", "varchar", "255", "", "", "not null", "response");
+
+        execute_sql(" CREATE TABLE `{$CFG->prefix}brainstorm_categories` (
+            id INT(10) unsigned NOT NULL auto_increment PRIMARY KEY UNIQUE KEY,
+            title VARCHAR(255) DEFAULT '' NOT NULL,
+            brainstorm INT(10) unsigned NOT NULL,
+            timemodified INT(10) DEFAULT '0' NOT NULL)");
+    }
+
+    return true;
+}
+
+?>

@@ -1,0 +1,184 @@
+<?PHP  // $Id: categorise.php,v 1.1 2004/08/24 16:40:57 cmcclean Exp $
+
+/**
+* Module Brainstorm V2
+* Operator : categorize
+* @author Valery Fremaux
+* @package Brainstorm
+* @date 20/12/2007
+*/
+include_once("$CFG->dirroot/mod/brainstorm/operators/operator.class.php");
+include_once ($CFG->dirroot."/mod/brainstorm/operators/{$page}/locallib.php");
+
+if (!brainstorm_legal_include()){
+    error("The way you loaded this page is not the way this script is done for.");
+}
+
+$currentoperator = new BrainstormOperator($brainstorm->id, $page);
+$responses = brainstorm_get_responses($brainstorm->id, 0, 0);
+$userrestriction = ($brainstorm->privacy) ? null : 0 ;
+$categories = categorize_get_categories($brainstorm->id, $userrestriction, $currentgroup);
+$usehtmleditor = can_use_html_editor();
+
+$strcategories = get_string('categories', 'brainstorm');
+$strcommands = get_string('commands', 'brainstorm');
+
+print_heading(get_string('categories', 'brainstorm'));
+?>
+<center>
+<img src="<?php echo "$CFG->wwwroot/mod/brainstorm/operators/{$page}/pix/enabled.gif" ?>" align="left" />
+<?php
+
+if (count($categories)){
+    $table->head = array("<b>$strcategories</b>", "<b>$strcommands</b>");
+    $table->width = '80%';
+    $table->align = array('left', 'left');
+    $table->size = array('70%', '20%');
+    foreach($categories as $category){
+        if (($USER->id == $category->userid) || !$brainstorm->privacy){
+            $action = "<a href=\"view.php?id={$cm->id}&amp;operator=categorize&amp;categoryid={$category->id}&amp;what=update\"><img src=\"{$CFG->pixpath}/t/edit.gif\" /></a>";
+            $action .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;operator=categorize&amp;categoryid={$category->id}&amp;what=delete\"><img src=\"{$CFG->pixpath}/t/delete.gif\" /></a>";
+        }
+        else{
+            $action = '';
+        }
+        $table->data[] = array(format_string($category->title), $action);
+    }
+    print_table($table);
+}
+else{
+    print_simple_box_start('center');
+    print_string('nocategories', 'brainstorm');
+    print_simple_box_end();
+}
+?>
+<form name="addform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="operator" value="categorize" />
+<input type="hidden" name="what" value="add" />
+<table width="80%">
+    <tr>
+        <td>
+            <br/><input type="submit" name="go_btn" value="<?php print_string('addcategory', 'brainstorm') ?>" /><br/>
+        </td>
+    </tr>
+</table>
+</form>
+<?php
+
+if (!isset($currentoperator->configdata->blindness)){
+    $currentoperator->configdata->blindness = $brainstorm->privacy;
+}
+if (!isset($currentoperator->configdata->allowmultiple)){
+    $currentoperator->configdata->allowmultiple = 0;
+}
+if (!isset($currentoperator->configdata->categoriesoncollect)){
+    $currentoperator->configdata->categoriesoncollect = 0;
+}
+if (!isset($currentoperator->configdata->requirement)){
+    $currentoperator->configdata->requirement = '';
+}
+
+$noselected0 = (!$currentoperator->configdata->allowmultiple) ? 'checked="checked"' : '' ;
+$yesselected0 = ($currentoperator->configdata->allowmultiple) ? 'checked="checked"' : '' ;
+$noselected1 = (!$currentoperator->configdata->blindness) ? 'checked="checked"' : '' ;
+$yesselected1 = ($currentoperator->configdata->blindness) ? 'checked="checked"' : '' ;
+$noselected2 = (!$currentoperator->configdata->categoriesoncollect) ? 'checked="checked"' : '' ;
+$yesselected2 = ($currentoperator->configdata->categoriesoncollect) ? 'checked="checked"' : '' ;
+print_heading(get_string("{$page}settings", 'brainstorm'));
+?>
+<form name="addform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="operator" value="<?php echo $page ?>" />
+<input type="hidden" name="what" value="saveconfig" />
+<table cellspacing="5" width="80%">
+    <tr valign="top">
+        <td align="left"><b><?php print_string('requirement', 'brainstorm') ?>:</b></td>
+        <td align="right">
+<?php
+if ($brainstorm->oprequirementtype == 0){
+?>
+            <input type="text" size="80" name="config_requirement" value="<?php echo stripslashes($currentoperator->configdata->requirement); ?>" />
+<?php
+}
+elseif ($brainstorm->oprequirementtype == 2){
+    print_textarea($usehtmleditor, 20, 50, 680, 400, 'config_requirement', stripslashes($currentoperator->configdata->requirement));
+    if (!$usehtmleditor){
+        $brainstorm->oprequirementtype = 1;
+    }
+    else{
+        $htmleditorneeded = true;
+    }
+}
+elseif ($brainstorm->oprequirementtype == 1){
+?>
+            <textarea style="width:100%;height:150px" name="config_requirement"><?php echo stripslashes($currentoperator->configdata->requirement); ?></textarea>
+<?php
+}
+?>
+            <?php helpbutton('requirement', get_string('requirement', 'brainstorm'), 'brainstorm'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="left"><b><?php print_string('allowmultiple', 'brainstorm') ?>:</b></td>
+        <td align="right">
+            <input type="radio" name="config_allowmultiple" value="0" <?php echo $noselected0 ?> /> <?php print_string('no') ?>&nbsp;-&nbsp;
+            <input type="radio" name="config_allowmultiple" value="1" <?php echo $yesselected0 ?> /> <?php print_string('yes') ?>
+            <?php helpbutton('operatorrouter.html&amp;operator=categorize&amp;helpitem=allowmultiple', get_string('allowmultiple', 'brainstorm'), 'brainstorm'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="left"><b><?php print_string('maxitemspercategory', 'brainstorm') ?>:</b></td>
+        <td align="right">
+            <?php
+            $maxitems_options[0] = get_string('unlimited', 'brainstorm');
+            for($i = 1 ; $i <= count($responses) ; $i++){
+                $maxitems_options[$i] = $i;
+            }
+            choose_from_menu($maxitems_options, 'config_maxitemspercategory', 0 + @$currentoperator->configdata->maxitemspercategory);
+            helpbutton('operatorrouter.html&amp;operator=categorize&amp;helpitem=maxitemspercategory', get_string('maxitemspercategory', 'brainstorm'), 'brainstorm');
+            ?>
+        </td>
+    </tr>
+</table>
+<?php
+if (has_capability('mod/brainstorm:manage', $context)){
+?>
+<fieldset class="privateform">
+<legend><?php print_string('foradminsonly', 'brainstorm') ?></legend>
+<table width="80%" cellspacing="5">
+    <tr>
+        <td align="left"><b><?php print_string('blindness', 'brainstorm') ?>:</b></td>
+        <td align="right">
+            <input type="radio" name="config_blindness" value="0" <?php echo $noselected1 ?> /> <?php print_string('no') ?>&nbsp;-&nbsp;
+            <input type="radio" name="config_blindness" value="1" <?php echo $yesselected1 ?> /> <?php print_string('yes') ?>
+            <?php helpbutton('blindness', get_string('blindness', 'brainstorm'), 'brainstorm'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="left"><b><?php print_string('publishcategoriesoncollect', 'brainstorm') ?>:</b></td>
+        <td align="right">
+            <input type="radio" name="config_categoriesoncollect" value="0" <?php echo $noselected2 ?> /> <?php print_string('no') ?>&nbsp;-&nbsp;
+            <input type="radio" name="config_categoriesoncollect" value="1" <?php echo $yesselected2 ?> /> <?php print_string('yes') ?>
+            <?php helpbutton('operatorrouter.html&amp;operator=categorize&amp;helpitem=categoriesoncollect', get_string('publishcategoriesoncollect', 'brainstorm'), 'brainstorm'); ?>
+        </td>
+    </tr>
+</table>
+</fieldset>
+<?php
+}
+else{
+?>
+<input type="hidden" name="config_blindness" value="<?php echo 0 + @$currentoperator->configdata->blindness ?>" />
+<?php
+}
+?>
+<table width="80%" cellspacing="5">
+    <tr>
+        <td colspan="2">
+            <br/><input type="submit" name="go_btn" value="<?php print_string('saveconfig', 'brainstorm') ?>" />
+        </td>
+    </tr>
+</table>
+</form>
+</center>

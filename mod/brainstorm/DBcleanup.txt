@@ -1,0 +1,19 @@
+Using Moodle since 1.6 the installation of older Brainstrom versions
+fails. Do not try to overwrite such installation before cleaning up
+the Database using the following instructions:
+
+1. Delete all Tables named prefix_brainstom* in your moodle Database
+
+brainstorm
+brainstorm_responses
+brainstorm_categories
+
+
+
+2. Delete all entries in the table "prefix_log_display" where
+"module" has value "brainstorm" in your moodle database.
+
+
+
+Now your Database ist prepared for the new version of the brainstorm
+activity module.

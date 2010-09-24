@@ -1,0 +1,7 @@
+<?php
+$operator = required_param('operator', PARAM_TEXT);
+$helpitem = required_param('helpitem', PARAM_TEXT);
+$helpfile = "{$CFG->dirroot}/mod/brainstorm/operators/$operator/lang/{$lang}/help/brainstorm_{$operator}/{$helpitem}";
+// echo $helpfile;
+include $helpfile;
+?>

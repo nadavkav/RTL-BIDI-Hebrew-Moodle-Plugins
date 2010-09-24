@@ -1,0 +1,53 @@
+<?php
+/**
+* Module Brainstorm V2
+* Operator : map
+* @author Martin Ellermann
+* @reengineering Valery Fremaux
+* @package Brainstorm 
+* @date 20/12/2007
+*/
+
+print_heading(get_string('editmultiplemapentry', 'brainstorm'));
+$itemsource = get_record('brainstorm_responses', 'id', $form->itemsource);
+$itemdest = get_record('brainstorm_responses', 'id', $form->itemdest);
+print_simple_box("{$itemsource->response} => {$itemdest->response}");
+
+$moreparams = $form->numparam + 3;
+?>
+<center>
+<form name="multipleform" action="view.php" method="POST">
+<input type="hidden" name="id" value="<?php p($cm->id); ?>" />
+<input type="hidden" name="operator" value="map" />
+<input type="hidden" name="source" value="<?php p($form->itemsource); ?>" />
+<input type="hidden" name="dest" value="<?php p($form->itemdest); ?>" />
+<input type="hidden" name="numparam" value="<?php p($form->numparam); ?>" />
+<input type="hidden" name="what" value="doinputmultiple" />
+<table width="100%">
+<?php
+for ($i = 0 ; $i < $form->numparam ; $i++){
+    $keykey = 'item_name'.$i;
+    $valuekey = 'item_value'.$i;
+?>
+    <tr valign="top">
+        <td width="30%">
+            <b><?php echo get_string('fieldname', 'brainstorm').' '.($i + 1) ?>:</b> <input type="text" name="item_name<?php echo $i ?>" value="<?php p(@$form->$keykey) ?>"  size="20" />
+        </td>
+        <td width="70%">
+            <b><?php echo get_string('fieldvalue', 'brainstorm').($i + 1) ?>:</b> <input type="text" name="item_value<?php echo $i ?>" value="<?php p(@$form->$valuekey) ?>" size="50" />
+        </td>
+    </tr>
+<?php
+}
+?>
+    <tr valign="top">
+        <td colspan="2">
+            <br/>
+            <input type="submit" name="go_btn" value="<?php print_string('savemultiple', 'brainstorm') ?>" />
+            &nbsp;<input type="button" name="add_btn" value="<?php print_string('addthreemore', 'brainstorm') ?>" onclick="document.forms['multipleform'].numparam.value = <?php p($moreparams) ?>; document.forms['multipleform'].what.value = 'inputmultiple' ; document.forms['multipleform'].submit()" />
+            &nbsp;<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>"  onclick="document.forms['multipleform'].what.value = '' ; document.forms['multipleform'].submit()" />
+        </td>
+    </tr>
+</table>
+</form>
+</center>

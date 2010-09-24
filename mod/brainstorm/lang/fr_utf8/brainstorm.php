@@ -1,0 +1,128 @@
+<?PHP // $Id: brainstorm.php,v 1.2 2004/08/24 16:36:19 cmcclean Exp $
+      // brainstorm.php - created with Moodle 1.8 development (2007122600)
+
+$string['addmoreresponses'] = 'Ajouter plus d\'idées ';
+$string['allopdata'] = 'Nombre de données d\'organisation ';
+$string['allresponses'] = 'Nombre de réponses données ';
+$string['allusersclear'] = 'Effacer pour tous les participants ';
+$string['brainstorm:manage'] = 'Gérer l\'activité ';
+$string['brainstorm:collect'] = 'Poster des idées ';
+$string['brainstorm:prepare'] = 'Préparer les opérations ';
+$string['brainstorm:organize'] = 'Ranger ';
+$string['brainstorm:grade'] = 'Evaluer ';
+$string['brainstorm:gradable'] = 'Etre évalué ';
+$string['brainstorm:select'] = 'Choisir les opérations ';
+$string['brainstorm:display'] = 'Voir les résultats ';
+$string['brainstorm:import'] = 'Importer des idées ';
+$string['brainstorm:report'] = 'Rédiger une synthèse ';
+$string['brainstormname'] = 'Titre ';
+$string['brainstormtext'] = 'Description ';
+$string['chooseoperatornotice'] = 'Pour activer ou désactiver un opérateur, cliquez simplement dessus. Vous pourrez définir des paramètres pour cet opérateur en cliquant dans le sous-menu proposé ci-dessus. Si vous désactivez un opérateur, vous ne perdez pas les derniers paramètres réglés pour cet opérateur.';
+$string['chooseoperators'] = 'Choix des opérateurs';
+$string['clearallprevious'] = 'Effacer les anciennes données ';
+$string['collect'] = 'Collecte';
+$string['collectingideas'] = 'Collecte des idées';
+$string['commands'] = 'Commandes';
+$string['data'] = 'Données de rangement';
+$string['deleteselection'] = 'Supprimer la sélection';
+$string['display'] = 'Visualisation';
+$string['dograde'] = 'Evaluer !';
+$string['editareport'] = 'Rédiger une synthèse';
+$string['feedback'] = 'Synthèse';
+$string['feedbackweight'] = 'Poids de la note de réflexion ';
+$string['finalgrade'] = 'Total';
+$string['float'] = 'Quantification réelle ';
+$string['flowcontrol'] = 'Contrôle de progression ';
+$string['flowmode'] = 'Mode de progression ';
+$string['foradminsonly'] = 'Réglages additionnels. Uniquement pour les administrateurs';
+$string['grade'] = 'Note ';
+$string['grades'] = 'Notes ';
+$string['graded'] = 'Evalué(s)';
+$string['gradeforfeedback'] = 'Note pour la réflexion et la synthèse';
+$string['gradefororganisation'] = 'Note pour les rangements';
+$string['gradeforparticipation'] = 'Note pour la collecte et la participation';
+$string['gradeforpreparing'] = 'Note pour la préparation et le choix des opérateurs';
+$string['gradesummary'] = 'Résumé des évaluations';
+$string['grading'] = 'Evaluation ';
+$string['gradingof'] = 'Evaluation de ';
+$string['havereport'] = 'Ont rédigé une synthèse';
+$string['heightresponse'] = 'Hauteur du champ de réponse';
+$string['helptext'] = 'Aide sur les formats';
+$string['importfile'] = 'Fichier d\'import ';
+$string['importideas'] = 'Importer des idées';
+$string['integer'] = 'Quantification entière ';
+$string['manager'] = 'Animateur ';
+$string['modulename'] = 'Brainstorm';
+$string['modulenameplural'] = 'Brainstorms';
+$string['multiple'] = 'Quantification multiple ';
+$string['mustentercategory'] = 'Vous devez entrer au moins une catégorie avant de sauvegarder.';
+$string['mustentersomething'] = 'Vous devez au moins entrer une idée avant de sauvegarder.';
+$string['myresponses'] = 'Mes réponses';
+$string['myreport'] = 'Ma synthèse';
+$string['notabletodisplayfor'] = 'Les résultats de l\'opérateur <b>$a</b> ne peuvent être affichés';
+$string['notimplemented'] = 'Pas encore implémenté';
+$string['notresponded'] = 'Aucune idée pour l\'instant';
+$string['noreports'] = 'Pas de synthèses déposées';
+$string['numcolumns'] = 'Colonnes ';
+$string['numresponses'] = 'Idées par personne ';
+$string['numresponsesinform'] = 'Nombre d\'entrées dans le formulaire de collecte ';
+$string['opdatainallgroups'] = 'Nombre de données d\'organisation tous groupes confondus ';
+$string['opdatainyourgroup'] = 'Nombre de données d\'organisation dans votre groupe ';
+$string['operators'] = 'Opérateurs';
+$string['oprequirementtype'] = 'Type de consigne ';
+$string['organizations'] = 'Rangements';
+$string['organize'] = 'Rangement';
+$string['organizeideas'] = 'Organiser des idées';
+$string['organizeweight'] = 'Poids de la note de rangement ';
+$string['otherresponses'] = 'Les réponses d\'autres personnes';
+$string['parallel'] = 'Accès parallèle';
+$string['participant'] = 'Participant ';
+$string['participation'] = 'Participation';
+$string['participationweight'] = 'Poids de la note de participation ';
+$string['preparations'] = 'Preparations';
+$string['prepare'] = 'Préparation';
+$string['preparingweight'] = 'Poids de la note de préparation ';
+$string['privacy'] = 'Isolement entre utilisateurs ';
+$string['procedure'] = 'Procédure ';
+$string['publishing'] = 'Publication ';
+$string['requirement'] = 'Consigne ';
+$string['responded'] = 'idées';
+$string['responses'] = 'idées';
+$string['report'] = 'Synthèse';
+$string['reportless'] = 'N\'ont pas déposé';
+$string['responsesinallgroups'] = 'Nombre de réponses données tous groupes confondus ';
+$string['responsesinyourgroup'] = 'Nombre de réponses données dans votre groupe ';
+$string['saveconfig'] = 'Mémoriser la configuration ';
+$string['savemyresponse'] = 'Enregistrer mon idée';
+$string['scale'] = 'Valuation';
+$string['select'] = 'Choisir';
+$string['sequential'] = 'Progression séquentielle (par phases)';
+$string['sequentialaccess'] = 'Attribution des phases (mode sequentiel) ';
+$string['singlegrade'] = 'Note unique ';
+$string['splittedgrade'] = 'Note dissociée ';
+$string['summary'] = 'Résumé';
+$string['teacherfeedback'] = 'Observation de l\'animateur';
+$string['textarea'] = 'Zone de texte ';
+$string['textfield'] = 'Ligne de texte ';
+$string['ungraded'] = 'Non évalué';
+$string['unlimited'] = 'Illimité';
+$string['utf8advice'] = 'Pour éviter tout problème avec les accents ou caractères non ASCII, convertissez votre fichier texte au jeu de caractères UTF-8 avant d\'importer vos idées.';
+$string['userdata'] = 'Données participant';
+$string['warnclear'] = 'Attention : Si vous changez ce paramètre, les données sauvegardées\\\\n pour cet opérateur ne sont plus valides et seront effacées.\\\\n Si vous désirez conserver les données actuelles, NE SAUVEGARDEZ PAS ces paramètres en allant vers un autre écran de l\\\'activité';
+$string['whysiwhygtextarea'] = 'Editeur whysiwhyg ';
+$string['widthresponse'] = 'Largeur du champ de réponse';
+$string['youmayusecategories'] = 'Vous allez entrer des idées en rapport avec les catégories suivantes : $a ';
+
+///get all operators lang files
+global $CFG, $USER, $SITE;
+$DIR = opendir($CFG->dirroot.'/mod/brainstorm/operators');
+$lang = current_language();
+while($opname = readdir($DIR)){
+    if (!is_dir($CFG->dirroot.'/mod/brainstorm/operators/'.$opname)) continue;
+    if (ereg("^\\.", $opname)) continue;
+    if (file_exists("{$CFG->dirroot}/mod/brainstorm/operators/{$opname}/lang/{$lang}/operator.php")){ 
+        include "{$CFG->dirroot}/mod/brainstorm/operators/{$opname}/lang/{$lang}/operator.php";
+    }
+}
+
+?>

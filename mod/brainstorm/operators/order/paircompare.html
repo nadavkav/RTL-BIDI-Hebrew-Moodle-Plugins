@@ -1,0 +1,38 @@
+<center>
+<form name="pairform" action="view.php" method="POST">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="rep1" value="<?php p($form->response1) ?>" />
+<input type="hidden" name="rep2" value="<?php p($form->response2) ?>" />
+<input type="hidden" name="operator" value="<?php p($page) ?>" />
+<input type="hidden" name="what" value="nextpaircompare" />
+<table width="50%">
+    <tr>
+        <td align="left"><b><?php print_string('checkpreference', 'brainstorm') ?>:</b></td>
+    </tr>
+    <tr valign="top">
+        <td align="right">
+            <input type="radio" name="choice" value="<?php echo $form->response1 ?>" onclick="unlock_button();" /> <?php echo $form->value1 ?><br/>
+            <input type="radio" name="choice" value="<?php echo $form->response2 ?>" onclick="unlock_button();" /> <?php echo $form->value2 ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php
+                print_simple_box(get_string('remains', 'brainstorm').' '.$form->remains.' '.get_string('comparisons', 'brainstorm'));
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" name="go_btn" value="<?php print_string('continue') ?>" disabled="disabled" onclick="document.forms['pairform'].submit()" />
+            &nbsp;<input type="button" name="resume_btn" value="<?php print_string('resume', 'brainstorm') ?>" onclick="document.forms['pairform'].what.value='resumepaircompare'; document.forms['pairform'].submit()" />
+            <script type="text/javascript">
+            function unlock_button(){
+                document.forms['pairform'].go_btn.disabled = false;
+            }
+            </script>
+        </td>
+    </tr>
+</table>
+</form>
+</center>

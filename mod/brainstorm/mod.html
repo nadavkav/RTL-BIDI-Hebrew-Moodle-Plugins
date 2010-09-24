@@ -1,0 +1,318 @@
+<?php
+
+
+if (empty($form->name)) {
+    $form->name = '';
+}
+if (empty($form->description)) {
+    $form->text = '';
+}
+if (empty($form->flowmode)) {
+    $form->flowmode = 'parallel';
+}
+if (empty($form->privacy)) {
+    $form->privacy = 0;
+}
+if (empty($form->numresponses)) {
+    $form->numresponses = 0;
+}
+if (empty($form->numcolumns)) {
+    $form->numcolumns = 3;
+}
+if (empty($form->numresponsesinform)) {
+    $form->numresponsesinform = 1;
+}
+if (empty($form->scale)) {
+    $form->scale = 0;
+}
+if (!isset($form->singlegrade)) {
+    $form->singlegrade = 1;
+}
+if (!isset($form->participationweight)) {
+    $form->participationweight = 0.25;
+}
+if (!isset($form->preparingweight)) {
+    $form->preparingweight = 0.25;
+}
+if (!isset($form->organizeweight)) {
+    $form->organizeweight = 0.25;
+}
+if (!isset($form->feedbackweight)) {
+    $form->feedbackweight = 0.25;
+}
+if (!isset($form->seqaccesscollect)) { // participant
+    $form->seqaccesscollect = 1;
+}
+if (!isset($form->seqaccessprepare)) { // manager
+    $form->seqaccessprepare = 0;
+}
+if (!isset($form->seqaccessorganize)) { // participant
+    $form->seqaccessorganize = 1;
+}
+if (!isset($form->seqaccessdisplay)) { // participant
+    $form->seqaccessdisplay = 1;
+}
+if (!isset($form->seqaccessfeedback)) { // participant
+    $form->seqaccessfeedback = 1;
+}
+if (!isset($form->oprequirementtype)) {
+    $form->oprequirementtype = 0;
+}
+
+if ($usehtmleditor = can_use_richtext_editor()) {
+    $defaultformat = FORMAT_HTML;
+    $onsubmit = "onsubmit=\"copyrichtext(document.form.text);\"";
+} else {
+    $defaultformat = FORMAT_MOODLE;
+    $onsubmit = '';
+}
+
+require("$CFG->dirroot/mod/brainstorm/lib.php");
+
+$collectmanagerselected = (!$form->seqaccesscollect) ? 'checked="checked"' : '' ;
+$collectparticipantselected = ($form->seqaccesscollect) ? 'checked="checked"' : '' ;
+$preparemanagerselected = (!$form->seqaccessprepare) ? 'checked="checked"' : '' ;
+$prepareparticipantselected = ($form->seqaccessprepare) ? 'checked="checked"' : '' ;
+$organizemanagerselected = (!$form->seqaccessorganize) ? 'checked="checked"' : '' ;
+$organizeparticipantselected = ($form->seqaccessorganize) ? 'checked="checked"' : '' ;
+$displaymanagerselected = (!$form->seqaccessdisplay) ? 'checked="checked"' : '' ;
+$displayparticipantselected = ($form->seqaccessdisplay) ? 'checked="checked"' : '' ;
+$feedbackmanagerselected = (!$form->seqaccessfeedback) ? 'checked="checked"' : '' ;
+$feedbackparticipantselected = ($form->seqaccessfeedback) ? 'checked="checked"' : '' ;
+
+$numresponses_options = range(0, $BRAINSTORM_MAX_RESPONSES);
+$numresponses_options[0] = get_string('unlimited', 'brainstorm');
+$numresponsesinform_options = range(0, $BRAINSTORM_MAX_RESPONSES);
+unset($numresponsesinform_options[0]);
+$numcolumns_options = range(0, $BRAINSTORM_MAX_COLUMNS);
+
+$oprequirementtype_options[0] = get_string('textfield', 'brainstorm');
+$oprequirementtype_options[1] = get_string('textarea', 'brainstorm');
+$oprequirementtype_options[2] = get_string('whysiwhygtextarea', 'brainstorm');
+?>
+<form name="form" method="post" <?php echo $onsubmit ?> action="mod.php">
+
+<fieldset>
+<table width="100%">
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('brainstormname', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <input type="text" name="name" style="width:100%" value="<?php p($form->name) ?>" />
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('brainstormtext', 'brainstorm')?>:</b>
+    <br /><br />
+     <?php
+        helpbutton('writing', get_string('helpwriting'), 'moodle', true, true);
+        echo '<br />';
+        helpbutton('questions', get_string('helpquestions'), 'moodle', true, true);
+        echo '<br />';
+        if ($usehtmleditor) {
+           helpbutton('richtext', get_string('helprichtext'), 'moodle', true, true);
+        } else {
+           emoticonhelpbutton('form', 'text');
+        }
+        echo '<br />';
+      ?>
+    </td>
+    <td align="right">
+        <?php
+        print_textarea($usehtmleditor, 20, 50, 680, 400, 'description', @$form->description);
+        if (!$usehtmleditor){
+    		echo '<p align="right">';
+            helpbutton('textformat', get_string('formattexttype'));
+            print_string('formattexttype');
+            echo ":&nbsp;";
+            if (empty($form->format)) {
+               $form->format = $defaultformat;
+            }
+            choose_from_menu(format_text_menu(), 'format', $form->format, '');
+        }
+        ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('privacy', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        $privacy_options['0'] = get_string('no');
+        $privacy_options['1'] = get_string('yes');
+        choose_from_menu($privacy_options, 'privacy', $form->privacy, '', '', '');
+        helpbutton('privacy', get_string('privacy', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('numresponses', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        choose_from_menu($numresponses_options,'numresponses', $form->numresponses, '', '', '');
+        helpbutton('numresponses', get_string('numresponses', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('numresponsesinform', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        choose_from_menu($numresponsesinform_options,'numresponsesinform', $form->numresponsesinform, '', '', '');
+        helpbutton('numresponsesinform', get_string('numresponsesinform', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('numcolumns','brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        choose_from_menu($numcolumns_options, 'numcolumns', $form->numcolumns, '', '', '');
+        helpbutton('numcolumns', get_string('numcolumns', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('oprequirementtype','brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        choose_from_menu($oprequirementtype_options, 'oprequirementtype', $form->oprequirementtype, '', '', '');
+        helpbutton('oprequirementtype', get_string('oprequirementtype', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend><?php print_string('flowcontrol', 'brainstorm') ?></legend>
+<table width="100%">
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('flowmode', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <?php
+        $mode_options['sequential'] = get_string('sequential', 'brainstorm');
+        $mode_options['parallel'] = get_string('parallel', 'brainstorm');
+        choose_from_menu($mode_options, 'flowmode', $form->flowmode, '', '', '');
+        helpbutton('flowmode', get_string('flowmode', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><b><?php print_string('sequentialaccess', 'brainstorm') ?>:</b></td>
+    <td align="right">
+        <table style="border : 1px solid gray" width="90%">
+            <tr>
+                <td>&nbsp;</td>
+                <th><?php print_string('collect', 'brainstorm') ?></th>
+                <th><?php print_string('prepare', 'brainstorm') ?></th>
+                <th><?php print_string('organize', 'brainstorm') ?></th>
+                <th><?php print_string('display', 'brainstorm') ?></th>
+                <th><?php print_string('feedback', 'brainstorm') ?></th>
+            </tr>
+            <tr>
+                <th><?php print_string('manager', 'brainstorm') ?></th>
+                <td><input type="radio" name="seqaccesscollect" value="0" <?php echo $collectmanagerselected ?> /></td>
+                <td><input type="radio" name="seqaccessprepare" value="0" <?php echo $preparemanagerselected ?> /></td>
+                <td><input type="radio" name="seqaccessorganize" value="0" <?php echo $organizemanagerselected ?> /></td>
+                <td><input type="radio" name="seqaccessdisplay" value="0" <?php echo $displaymanagerselected ?> /></td>
+                <td><input type="radio" name="seqaccessfeedback" value="0" <?php echo $feedbackmanagerselected ?> /></td>
+            </tr>
+            <tr>
+                <th><?php print_string('participant', 'brainstorm') ?></th>
+                <td><input type="radio" name="seqaccesscollect" value="1" <?php echo $collectparticipantselected ?> /></td>
+                <td><input type="radio" name="seqaccessprepare" value="1" <?php echo $prepareparticipantselected ?> /></td>
+                <td><input type="radio" name="seqaccessorganize" value="1" <?php echo $organizeparticipantselected ?> /></td>
+                <td><input type="radio" name="seqaccessdisplay" value="1" <?php echo $displayparticipantselected ?> /></td>
+                <td><input type="radio" name="seqaccessfeedback" value="1" <?php echo $feedbackparticipantselected ?> /></td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        <?php
+        helpbutton('sequentialaccess', get_string('sequentialaccess', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend><?php print_string('grading', 'brainstorm') ?></legend>
+<table width="100%">
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('grade') ?>:</b></td>
+    <td>
+        <?php print_grade_menu($course->id, 'scale', "$form->scale"); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('splittedgrade', 'brainstorm') ?>:</b></td>
+    <td>
+        <input type="radio" name="singlegrade" value="0" <?php echo (!$form->singlegrade) ? 'checked="checked"' : '' ; ?> /> <?php print_string('yes') ?>
+        &nbsp;<input type="radio" name="singlegrade" value="1" <?php echo ($form->singlegrade) ? 'checked="checked"' : '' ; ?> /> <?php print_string('no') ?>
+        <?php
+        helpbutton('singlegrade', get_string('splittedgrade', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('participationweight', 'brainstorm') ?>:</b></td>
+    <td>
+        <input type="text" name="participationweight" size="5" value="<?php echo $form->participationweight ?>" />
+        <?php
+        helpbutton('gradeweights', get_string('participationweight', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('preparingweight', 'brainstorm') ?>:</b></td>
+    <td>
+        <input type="text" name="preparingweight" size="5" value="<?php echo $form->preparingweight ?>" />
+        <?php
+        helpbutton('gradeweights', get_string('preparingweight', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('organizeweight', 'brainstorm') ?>:</b></td>
+    <td>
+        <input type="text" name="organizeweight" size="5" value="<?php echo $form->organizeweight ?>" />
+        <?php
+        helpbutton('gradeweights', get_string('organizeweight', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left" width="350"><b><?php print_string('feedbackweight', 'brainstorm') ?>:</b></td>
+    <td>
+        <input type="text" name="feedbackweight" size="5" value="<?php echo $form->feedbackweight ?>" />
+        <?php
+        helpbutton('gradeweights', get_string('feedbackweight', 'brainstorm'), 'brainstorm');
+    	?>
+    </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend><?php print_string('publishing', 'brainstorm') ?></legend>
+<table width="100%">
+<?php
+print_visible_setting($form);
+print_groupmode_setting($form);
+?>
+</table>
+</fieldset>
+<br/>
+<center>
+<input type="hidden" name="course" value="<?php p($form->course) ?>">
+<input type="hidden" name="coursemodule" value="<?php p($form->coursemodule) ?>">
+<input type="hidden" name="sesskey" value="<?php  p($form->sesskey) ?>" />
+<input type="hidden" name="section" value="<?php p($form->section) ?>">
+<input type="hidden" name="module" value="<?php p($form->module) ?>">
+<input type="hidden" name="modulename" value="<?php p($form->modulename) ?>">
+<input type="hidden" name="instance" value="<?php p($form->instance) ?>">
+<input type="hidden" name="mode" value="<?php p($form->mode) ?>">
+<input type="submit" value="<?php print_string('savechanges') ?>">
+<input type="submit" name="cancel" value="<?php print_string('cancel') ?>">
+</center>
+</form>
