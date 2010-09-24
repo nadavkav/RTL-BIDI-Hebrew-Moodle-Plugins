@@ -1,0 +1,11 @@
+Place full /certificate directory in /mod directory, log like admin go to notifications and wait auto install to make changes on database.
+
+If you have previous certificate installed be sure that database was actualized, this version requires some database
+alterations, in my tests this happen with some delay in systems with older certificates installed, but happen. ;)
+ 
+Certificate 4.X is not compatible with older certificate types. I recommend deleting all types and installing only
+type that follow the package.
+
+Certificate 4.X was tested w/ moodle 1.7+ AND moodle 1.8 running over PHP5 environment.
+
+Certify if “locale” of your system is appropriate for your Moodle language pack. 
