@@ -1,0 +1,118 @@
+<?php
+	require_once($CFG->dirroot.'/mod/door/lib.php');
+	
+	echo "
+	<script language='javascript'>		
+		function del_repository(id){
+			var rep_id = document.getElementById('id'+id).value;
+			if(confirm('".get_string('configdeleterepositoryconfirm','door')."'))
+				location.href='".$CFG->wwwroot."/mod/door/delete_repository.php?repositoryid='+rep_id;
+		}
+
+		function validate(){
+			var count = 1;
+			var entries = document.form.entries.value;
+			var name;
+			var address;
+			for(count=1;count<=entries;count++){
+				name = document.getElementById(''+count).value;
+				address = document.getElementById(''+count*(-1)).value;
+				if((name!='' && address=='') || (name=='' && address!='')){
+					alert('".get_string('configcompleteallfields','door')."');
+					return false;
+				}
+			}
+			return true;
+		}
+	</script>
+	";
+	
+	function print_section_header($title){
+		echo '<tr>';
+        echo '<td colspan="4"><hr /></td>';
+		echo '</tr>';
+		echo '<tr>';
+		echo '<td colspan="4" style="text-align: center; color:#0000FF;"><b>'.$title.'</b></td>';
+		echo '</tr>';
+		echo '<tr>';
+		echo '</tr>';
+		
+		echo '<tr>';
+		echo '<td width="25%" style="text-align: center;"><b>'.get_string("configservername","door").'</b></td>';
+		echo '<td width="40%" style="text-align: center;"><b>'.get_string("configserveraddress","door").'</b></td>';
+		echo '<td width="25%" style="text-align: center;"><b>'.get_string("configauthentication","door").'</b></td>';
+        echo '<td width="10%" style="text-align: center;"></td>';
+		echo '</tr>';
+	}
+?>
+	<form method="post" action="<?php echo $CFG->wwwroot."/mod/door/save_config.php"?>" name="form" onSubmit="return validate()">
+	<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>">
+		<table cellpadding="5" cellspacing="5" width="100%" >
+			<tr>
+				<td colspan="4" style="text-align: center; color:#FF0000; font-size:24px;"><?php print(get_string("configtitle","door")); ?> <?php print("".helpbutton("managerepositories", get_string("helprepositoriestitle", "door"), "door", true));?></td>	
+			</tr>
+			<?php
+				$repositories = array();
+				$repositories = get_all_repositories();
+                $authentications = get_all_authentications();
+				$count = 1;
+				
+                // check that there is at least one authentication
+                if ($authentications === false OR count($authentications) === 0) {
+                    echo '<tr>';
+                    echo '<td colspan="4" align="center">';
+                    echo get_string("...", "door");                         // TODO, define translation for NO AUTHENTICATIONS
+                    echo '</td>';
+                    echo '</tr>';    
+                } else {
+                
+                $opt = '<option value="%s" %s>%s</option>'."\n";
+				if($repositories!=false){
+					//Edit section (print title + entry header)
+					print_section_header(get_string('configeditrepositories','door'));
+					
+					
+					//Show existent repositories
+					foreach($repositories as $repository){
+						echo '<tr>';
+						echo '<input type="hidden" id="id'.$count.'" name="'.id.'['.$count.']'.'" value="'.$repository->id.'">';
+						echo '<td style="width: 25%; text-align: center;"><input style="width: 100%; text-align: center" type="text" id="'.$count.'" name="'.name.'['.$count.']'.'" value="'.$repository->name.'"></td>'."\n";
+						echo '<td style="width: 40%; text-align: center;"><input style="width: 100%; text-align: center" type="text" id="'.($count*(-1)).'" name="'.address.'['.$count.']'.'" value="'.$repository->address.'"></td>'."\n";
+						echo '<td style="width: 25%; text-align: center;"><select style="width: 100%; text-align: center" name="'.authentication.'['.$count.']'.'">'."\n";
+                            foreach ($authentications as $authentication) {
+                                $selected = (intval($authentication->id) === intval($repository->authentication)) ? "selected" : "";
+                                echo sprintf($opt, $authentication->id, $selected, $authentication->name);    
+                            }
+						echo '</select></td>';
+						echo '<td style="width: 10%; text-align: center;"><input style="width: 100%;" name="button" type="button" value="'.get_string("configdeleterepositorybutton","door").'" onClick="del_repository(\''.$count.'\')"></td>'."\n\n\n";
+						echo '</tr>';
+						$count++;
+					}
+				}
+				
+				//Add section (print title + entry header)
+				print_section_header(get_string('configaddnewrepository','door'));
+				
+				//Row for a new repository
+				echo '<tr>';
+				echo '<td style="width: 25%; text-align: center;"><input style="width: 100%; text-align: center" type="text" id="'.$count.'" name="'.name.'['.$count.']'.'" value=""></td>'."\n";
+				echo '<td style="width: 40%; text-align: center;"><input style="width: 100%; text-align: center" type="text" id="'.($count*(-1)).'" name="'.address.'['.$count.']'.'" value=""></td>'."\n";
+				echo '<td style="width: 25%; text-align: center;"><select style="width: 100%; text-align: center" name="'.authentication.'['.$count.']'.'">'."\n";
+						foreach ($authentications as $authentication) {
+                            echo sprintf($opt, $authentication->id, $selected, $authentication->name);    
+                        }
+				echo '</select></td>';
+				echo '</tr>';
+	
+				echo '<input type="hidden" name="entries" value="'.$count.'">'."\n";	
+			?>
+			<tr>
+				<td colspan="4" align="center">
+				<?php
+					echo '<input type="submit" value="'.get_string('configsavechanges','door').'"/>';
+				?>
+                </td>
+			</tr>
+            <?php } ?>
+		</table>
+	</form>

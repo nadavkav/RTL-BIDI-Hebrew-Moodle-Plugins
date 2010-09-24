@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/door/db" VERSION="20080725" COMMENT="XMLDB file for Moodle mod/door"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="door_export" COMMENT="door_export table retrofitted from MySQL" NEXT="door_repository">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="token"/>
+        <FIELD NAME="token" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="imslink"/>
+        <FIELD NAME="imslink" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="token" NEXT="inserted"/>
+        <FIELD NAME="inserted" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" ENUM="false" PREVIOUS="imslink"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for door_export"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="door_repository" COMMENT="door_repository table retrofitted from MySQL" PREVIOUS="door_export" NEXT="door">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="address"/>
+        <FIELD NAME="address" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="authentication"/>
+        <FIELD NAME="authentication" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="address"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for door_repository"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="door" COMMENT="door table retrofitted from MySQL" PREVIOUS="door_repository" NEXT="door_repository_authentications">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="resource"/>
+        <FIELD NAME="resource" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for door"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="door_repository_authentications" COMMENT="door_repository_authentications table" PREVIOUS="door">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for door_repository_authentications"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert door_repository_authentications" TYPE="insert" TABLE="door_repository_authentications" COMMENT="Initial insert of records on table door_repository_authentications">
+      <SENTENCES>
+        <SENTENCE TEXT="(name) VALUES ('all')" />
+        <SENTENCE TEXT="(name) VALUES ('local')" />
+        <SENTENCE TEXT="(name) VALUES ('shibboleth')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>
