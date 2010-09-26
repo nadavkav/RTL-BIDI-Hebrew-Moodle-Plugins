@@ -1,0 +1,66 @@
+<?php global $CFG,$USER,$COURSE; ?>
+<div class="qtext">
+    <?php echo $questiontext; ?>
+</div>
+
+<?php if ($image) { ?>
+    <!--img class="qimage" src="<?php echo $image; ?>" alt="" /-->
+
+    <!--
+        Original script, if you want to look at the source, remove if live.
+        <script type="text/javascript" src="/_script/pixlr.js"></script>
+    -->
+    <script type="text/javascript" src="<?php echo $CFG->wwwroot; ?>/question/type/imagedit/pixlr/_script/pixlr_minified.js"></script>
+    <script type="text/javascript">
+        //Global setting edit these
+        //pixlr.settings.target = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>save_post_modal.php';
+        pixlr.settings.target = '<?php echo "{$CFG->wwwroot}/question/type/imagedit/image-upload.php?courseid={$COURSE->id}&qid={$question->id}&qatt={$state->attempt}"; ?>';
+        pixlr.settings.exit = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>exit_modal.php';
+        pixlr.settings.credentials = true;
+        pixlr.settings.method = 'post';
+    </script>
+<b><?php echo get_string("clicktoedit","qtype_imagedit") ?></b><br />
+<a href="javascript:pixlr.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'he'});">
+<img id="editme" src="<?php if (isset($imgurl)) { echo $imgurl; } else { echo $image; } ?>" width="250" height="150" title="<?php echo str_replace('file.php','sendfile.php',$image); ?>" /></a><br /><br />
+<br /><br />
+<?php } ?>
+
+
+<div class="ablock clearfix">
+    <div class="ablock">
+        <?php
+            //echo "$struploadfile ($strmaxsize)";
+        ?>
+        <br />
+        <?php
+            //echo "$struploadform";
+        ?>
+    </div>
+
+    <input type="hidden" id="imgurl" name="imgurl" value="<?php echo $imgurl; ?>">
+
+    <?php if ($uploadfeedback) { ?>
+        <div class="feedback message">
+            <?php echo $uploadfeedback; ?>
+        </div>
+    <?php } ?>
+
+    <?php if ($struploadedfile) { ?>
+        <div class="answer">
+            <?php //echo $struploadedfile; ?>
+        </div>
+    <?php } ?>
+
+    <?php if ($showessay) { ?>
+        <div class="answer">
+            <?php echo $answer; ?>
+        </div>
+    <?php } ?>
+
+    <?php if ($feedback) { ?>
+      <div class="feedback">
+        <?php echo $feedback; ?>
+      </div>
+    <?php } ?>
+    <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+</div>
