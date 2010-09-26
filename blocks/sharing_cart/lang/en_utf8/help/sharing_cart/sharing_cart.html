@@ -1,0 +1,69 @@
+<h1>Sharing Cart</h1>
+
+<p>version 1.9, release 5 - 2009.04.24</p>
+
+<h2>Purpose</h2>
+
+<p>The Sharing Cart is a block that enables sharing of Moodle content (resources, activities) between
+multiple courses on your site.  You can share among teachers or among your own courses.
+It copies and moves single course items without user data &mdash; similar to the &ldquo;Import&rdquo;
+function in Course Administration.  Items can be collected and saved on the Sharing Cart indefinitely,
+serving as a library of frequently used course items available for duplication.
+It is viewable only by teachers, course creators and administrators.
+It requires Moodle version 1.9 and works with Topic, Weekly and Project course formats.</p>
+
+<h2>Operation</h2>
+
+<dl>
+<dt>Turning On and Off</dt>
+	<dd>With editing on, add the Sharing Cart block from the block menu.
+		After adding the Sharing Cart block, you will notice the block stays "on" and follows you
+		wherever you roam courses across a site.
+		Click the "X" icon to turn "off" the Sharing Cart, although the contents of the Sharing Cart
+		will remain there when you turn it on again.</dd>
+<dt>Copying to the Sharing Cart</dt>
+	<dd>You will notice a small "Copy to Sharing Cart" icon which appears after each
+		resource or activity in the center column of a Moodle course.
+		Click on that icon to send a copy of that resource/activity into the Sharing Cart.
+		User data will be removed, only the activity itself will be cloned.</dd>
+<dt>Copying from the Sharing Cart</dt>
+	<dd>Click "Copy to course" icon in Sharing Cart, then the target markers appear on each section.
+		You can select one of them to complete the copying, or "Cancel" which is above those.</dd>
+<dt>Making folders inside the Sharing Cart</dt>
+	<dd>Click the "Move into folder" icon on a course content item and an input box will appear
+		if there is no folder.  Input the name of the target folder there.
+		To move an item into an existing folder, click on the "Move into folder" icon,
+		then a drop-down list appears, and select the target folder.
+		If you click the "Edit" icon, you will replace the drop-down list with an input box.</dd>
+</dl>
+
+<h2>Roles</h2>
+
+<p>Generally, the Sharing Cart will duplicate any activity in any course that a teacher has access to.
+However, Quiz questions have another set of permissions independent of site roles.
+Therefore, we recommend if you wish to share questions, make the following changes:</p>
+
+<ol>
+	<li>Add a new role &mdash; Question Creator:
+		Make this role in Site Admin &gt;&gt; Users &gt;&gt; Permissions &gt;&gt; Define roles,
+		and assign all teachers to this role (in addition to other roles they already have).
+		This role should be given at least the following rights (set permissions to "Allow")
+		under "Course":
+		<ul>
+			<li>Manage Activities</li>
+			<li>Manage Files</li>
+			<li>Add new questions</li>
+			<li>Edit all questions</li>
+			<li>Edit question categories</li>
+			<li>Move all questions</li>
+			<li>Use all questions</li>
+			<li>View all questions
+		</ul></li>
+	<li>Set questions to System Question Category:  If you set questions to course or activity
+		level categories, you may not be able to share them.</li>
+</ol>
+
+<h2>Requirements, Installation, Development, Issue Reports</h2>
+
+<p>See Moodle Docs:
+<a href="http://docs.moodle.org/en/Sharing_Cart">http://docs.moodle.org/en/Sharing_Cart</a></p>

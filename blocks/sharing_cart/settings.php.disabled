@@ -1,0 +1,18 @@
+<?php  //$Id: settings.php,v 1.1 2009/04/14 04:08:53 akiococom Exp $
+
+require_once dirname(__FILE__).'/plugins.php';
+
+sharing_cart_plugins::load();
+$plugin_names = sharing_cart_plugins::enum();
+
+$settings->add(
+	new admin_setting_configmultiselect(
+		'sharing_cart_plugins',
+		get_string('conf_plugins_enabled_head', 'block_sharing_cart'),
+		get_string('conf_plugins_enabled_desc', 'block_sharing_cart'),
+		$plugin_names,
+		array_combine($plugin_names, $plugin_names)
+	)
+);
+
+?>
