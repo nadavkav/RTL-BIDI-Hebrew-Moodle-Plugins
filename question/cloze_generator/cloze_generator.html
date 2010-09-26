@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="rtl" lang="he" xml:lang="he">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Cloze Question Generator</title>
+
+<script src="cloze_generator_fichiers/prototype.js" type="text/javascript"></script>
+<script src="cloze_generator_fichiers/scriptaculous.js" type="text/javascript"></script><script type="text/javascript" src="cloze_generator_fichiers/builder.js"></script><script type="text/javascript" src="cloze_generator_fichiers/effects.js"></script><script type="text/javascript" src="cloze_generator_fichiers/dragdrop.js"></script><script type="text/javascript" src="cloze_generator_fichiers/controls.js"></script><script type="text/javascript" src="cloze_generator_fichiers/slider.js"></script><script type="text/javascript" src="cloze_generator_fichiers/sound.js"></script>
+<style type="text/css">
+input {
+	width:100%;
+}
+fieldset {
+	padding:5px;
+}
+</style></head><body>
+
+<div class="content">
+<h1 id="header">Cloze Generator - מחולל שאלות</h1>
+<div id="menu"></div>
+</div>
+<div class="content">
+<table>
+	<tbody><tr>
+		<td valign="top">
+			סוג שאלה:<br/>
+				<a href="javascript:switch_qt('mc');">Multiplechoice - רב בחירה</a><br/>
+				<a href="javascript:switch_qt('mcv');">Multiplechoice Vertical - רב בחירה אנכי</a><br/>
+				<a href="javascript:switch_qt('mch');">Multiplechoice Horizontal - רב בחירה אופקי</a><br/>
+				<a href="javascript:switch_qt('num');">Numerical - מספרי </a><br/>
+				<a href="javascript:switch_qt('sha');">Shortanswer - תשובה קצרה</a><br/>
+			<br>
+			<div id="workspace"></div>
+			* חובה להזין<br>
+			<div id="btns" style="display: none;">
+				<button onclick="generate(tmp);">Generate - חולל שאלה</button>
+				<button onclick="add_answer(1);">Add response - הוספת תשובה לשאלה</button>
+				<button onclick="clear_mc();">Clear - איפוס</button>
+			</div>
+		</td>
+		<td valign="top">העתיקו את קוד השאלה מכאן:<br>
+		<textarea id="cloze_output" name="cloze_output" cols="70" rows="2" readonly="readonly"></textarea></td>
+	</tr>
+</tbody></table>
+</div>
+
+<script type="text/javascript">
+var tmp=new Array();
+var stat;
+var i=0;
+var qt;
+
+function switch_qt(type) {
+	tmp=new Array();
+	$('workspace').update('');
+	$('cloze_output').update('');
+	if(type == "mc") new_multichoice(type);
+	if(type == "mcv") new_multichoice(type);
+	if(type == "mch") new_multichoice(type);
+	if(type == "num") new_numerical();
+	if(type == "sha") new_shortanswer();
+	$('btns').appear();
+}
+
+function new_numerical() {
+	qt="num";
+	var ws=$("workspace");
+
+	stat = document.createTextNode(">> Numerical Question ");
+	ws.appendChild(stat);
+	stat = document.createElement("br");
+    ws.appendChild(stat);
+
+//	stat = document.createTextNode("Question: ");
+//	ws.appendChild(stat);
+//	stat = document.createElement("input");
+//    stat.setAttribute("type", "text");
+//	stat.setAttribute("name", "frage");
+//	stat.setAttribute("id", "frage");
+//	stat.setAttribute("size", 60);
+//    ws.appendChild(stat);
+
+    stat = document.createElement("br");
+    ws.appendChild(stat);
+
+    stat = document.createTextNode("Correct Answer: ");
+	ws.appendChild(stat);
+	stat = document.createElement("input");
+    stat.setAttribute("type", "text");
+	stat.setAttribute("name", "answer");
+	stat.setAttribute("id", "answer");
+	stat.setAttribute("size", 60);
+    ws.appendChild(stat);
+
+    stat = document.createElement("br");
+    ws.appendChild(stat);
+
+    i=1;
+    add_answer_num(2);
+}
+
+function add_answer(count) {
+	if(qt == "mc" || qt == "sha") add_answer_sha_mc(count);
+	else add_answer_num(count);
+}
+
+function add_answer_num(count) {
+	for (var u =1;u <=count;u++)
+	{
+		var ws=$("workspace");
+		tmp[i]=new Array();
+
+		tmp[i][2] = document.createElement("fieldset");
+		tmp[i][2].setAttribute("id", "field_"+i);
+		$("workspace").appendChild(tmp[i][2]);
+		tmp[i][3] = document.createElement("legend");
+		$("field_"+i).appendChild(tmp[i][3]);
+		stat = document.createTextNode('תשובה #'+i);
+		tmp[i][3].appendChild(stat);
+
+		stat = document.createTextNode("* ציון (0-100): ");
+		$("field_"+i).appendChild(stat);
+		tmp[i][0] = document.createElement("input");
+	    tmp[i][0].setAttribute("type", "text");
+		tmp[i][0].setAttribute("name", "answer_grade");
+		tmp[i][0].setAttribute("id", "points_"+i);
+		tmp[i][0].setAttribute("size", 60);
+	    $("field_"+i).appendChild(tmp[i][0]);
+
+	    stat = document.createElement("br");
+   		$("field_"+i).appendChild(stat);
+
+	    stat = document.createTextNode("* מרווח טעות: ");
+		$("field_"+i).appendChild(stat);
+		tmp[i][1] = document.createElement("input");
+	    tmp[i][1].setAttribute("type", "text");
+		tmp[i][1].setAttribute("name", "answer_error");
+		tmp[i][1].setAttribute("id", "error_"+i);
+		tmp[i][1].setAttribute("size", 60);
+	    $("field_"+i).appendChild(tmp[i][1]);
+
+	    stat = document.createElement("br");
+   		$("field_"+i).appendChild(stat);
+
+	    stat = document.createTextNode("משוב: ");
+		$("field_"+i).appendChild(stat);
+		tmp[i][4] = document.createElement("input");
+	    tmp[i][4].setAttribute("type", "text");
+		tmp[i][4].setAttribute("name", "feedback");
+		tmp[i][4].setAttribute("id", "feedback_"+i);
+		tmp[i][4].setAttribute("size", 60);
+	    $("field_"+i).appendChild(tmp[i][4]);
+	    i++;
+	}
+}
+
+
+function new_multichoice(mctype) {
+	qt=mctype;
+	var ws=$("workspace");
+
+	stat = document.createTextNode(">> Multiplechoice Question "+qt);
+	ws.appendChild(stat);
+//	stat = document.createElement("br");
+//    ws.appendChild(stat);
+
+//	stat = document.createTextNode("Question: ");
+//	ws.appendChild(stat);
+
+	stat = document.createElement("input");
+    stat.setAttribute("type", "text");
+	stat.setAttribute("name", "frage");
+	stat.setAttribute("id", "frage");
+	stat.setAttribute("size", 60);
+    ws.appendChild(stat);
+
+    i=1;
+    add_answer_sha_mc(2);
+}
+
+function new_shortanswer() {
+	qt="sha";
+	var ws=$("workspace");
+
+	stat = document.createTextNode(">> שאלת 'תשובה קצרה' ");
+	ws.appendChild(stat);
+	stat = document.createElement("br");
+    ws.appendChild(stat);
+
+//	stat = document.createTextNode("Question: ");
+//	ws.appendChild(stat);
+
+	stat = document.createElement("input");
+    stat.setAttribute("type", "text");
+	stat.setAttribute("name", "frage");
+	stat.setAttribute("id", "frage");
+	stat.setAttribute("size", 60);
+    ws.appendChild(stat);
+
+    i=1;
+    add_answer_sha_mc(2);
+}
+
+function generate(tmp) {
+	var output="";
+	var error=false;
+	var maxscore=0;
+	var id="";
+	var mc_qcount=0;
+	if(qt == "mc" ||qt == "mcv" || qt == "mch" ||qt == "sha") {
+		for(var item in tmp) {
+				item=tmp[item];
+				if(typeof(item[0]) == "undefined") break;
+
+				id=parseInt(item[0].id.substr(6,100));
+			   	if(id && $("points_"+id).value != "") {
+
+					output+="%"+$(item[1].id).value+"%"+$(item[4].id).value+"#"+$(item[7].id).value;
+					mc_qcount++;
+
+					if(!IsNumeric($(item[1].id).value) || parseInt($(item[1].id).value) > 100) {
+						item[1].style.backgroundColor="red";
+						error=true;
+					} else {
+						item[1].style.backgroundColor="white";
+						if(parseInt($(item[1].id).value) > maxscore) maxscore=parseInt($(item[1].id).value);
+					}
+
+					if($(item[4].id).value == "") {
+						item[4].style.backgroundColor="red";
+						error=true;
+					} else {
+						item[4].style.backgroundColor="white";
+					}
+
+				 	if($("points_"+(id+1)) && $("points_"+(id+1)).value != "") {
+						output+="~";
+					}
+
+					delete id;
+				}
+		}
+		if(maxscore != 100) {
+			$("cloze_output").update("Generation stopped - at least one response has to give 100 points.");
+		} else {
+			if(error == true) {
+				$("cloze_output").update("Generation stopped - incorrect entries are marked red.");
+			} else {
+				if (mc_qcount < 2 && ( qt == "mc" ||qt == "mcv" || qt == "mch")) {
+					$("cloze_output").update("Generation stopped - At least 2 responses are needed for that question type.");
+				}
+				else {
+					if(qt == "mc") $("cloze_output").update($('frage').value+"{:MULTICHOICE:" + output + "}");
+					if(qt == "mcv") $("cloze_output").update($('frage').value+"{:MULTICHOICE_V:" + output + "}");
+					if(qt == "mch") $("cloze_output").update($('frage').value+"{:MULTICHOICE_H:" + output + "}");
+					if(qt == "sha") $("cloze_output").update($('frage').value+"{:SHORTANSWER:" + output + "}");
+				}
+			}
+		}
+	} else if(qt == "num") {
+		for(var item in tmp) {
+				item=tmp[item];
+				if(typeof(item[2]) == "undefined") break;
+
+				id=parseInt(item[2].id.substr(6,100));
+			   	if(id && $("points_"+id).value != "") {
+
+					output+="%"+$(item[0].id).value+"%"+$('answer').value+":"+$(item[1].id).value+"#"+$(item[4].id).value;
+
+					if(!IsNumeric2($('answer').value) || $('answer').value == "") {
+						$('answer').style.backgroundColor="red";
+						error=true;
+					} else {
+						$('answer').style.backgroundColor="white";
+					}
+
+					if(!IsNumeric($(item[0].id).value) || parseInt($(item[0].id).value) > 100) {
+						item[0].style.backgroundColor="red";
+						error=true;
+					} else {
+						item[0].style.backgroundColor="white";
+						if(parseInt($(item[0].id).value) > maxscore) maxscore=parseInt($(item[0].id).value);
+					}
+
+					if(!IsNumeric2($(item[1].id).value) || $(item[1].id).value == "") {
+						item[1].style.backgroundColor="red";
+						error=true;
+					} else {
+						item[1].style.backgroundColor="white";
+					}
+
+				 	if($("points_"+(id+1)) && $("points_"+(id+1)).value != "") {
+						output+="~";
+					}
+
+					delete id;
+				}
+		}
+		if(maxscore != 100) {
+			$("cloze_output").update("Generation stopped - at least one response has to give 100 points.");
+		} else {
+			if(error == true) {
+				$("cloze_output").update("Generation stopped - incorrect entries are marked red.");
+			} else $("cloze_output").update($('frage').value+"{:NUMERICAL:"+output+"}");
+		}
+	}
+}
+
+
+
+function add_answer_sha_mc(count) {
+	for (var u =1;u <=count;u++)
+	{
+		tmp[i]=new Array();
+		tmp[i][0] = document.createElement("fieldset");
+		tmp[i][0].setAttribute("id", "field_"+i);
+		$("workspace").appendChild(tmp[i][0]);
+		tmp[i][9] = document.createElement("legend");
+		$("field_"+i).appendChild(tmp[i][9]);
+		stat = document.createTextNode('תשובה #'+i);
+		tmp[i][9].appendChild(stat);
+
+		tmp[i][8] = document.createTextNode("* ציון: (0-100) ");
+		$("field_"+i).appendChild(tmp[i][8]);
+
+		tmp[i][1] = document.createElement("input");
+	    tmp[i][1].setAttribute("type", "text");
+		tmp[i][1].setAttribute("name", "answer_grade");
+		tmp[i][1].setAttribute("id", "points_"+i);
+		$("field_"+i).appendChild(tmp[i][1]);
+
+		tmp[i][2] = document.createElement("br");
+		$("field_"+i).appendChild(tmp[i][2]);
+		tmp[i][3] = document.createTextNode("* תשובה: ");
+		$("field_"+i).appendChild(tmp[i][3]);
+		tmp[i][4] = document.createElement("input");
+	    tmp[i][4].setAttribute("type", "text");
+		tmp[i][4].setAttribute("name", "answer");
+		tmp[i][4].setAttribute("id", "answer_"+i);
+		$("field_"+i).appendChild(tmp[i][4]);
+
+		tmp[i][5] = document.createElement("br");
+		$("field_"+i).appendChild(tmp[i][5]);
+		tmp[i][6] = document.createTextNode("משוב: ");
+		$("field_"+i).appendChild(tmp[i][6]);
+		tmp[i][7] = document.createElement("input");
+	    tmp[i][7].setAttribute("type", "text");
+		tmp[i][7].setAttribute("name", "answer_feedback");
+		tmp[i][7].setAttribute("id", "feedback_"+i);
+		$("field_"+i).appendChild(tmp[i][7]);
+
+		i++;
+	}
+}
+
+function clear_mc() {
+	tmp=new Array();
+	$("workspace").update("");
+	$("cloze_output").update("");
+	new_multichoice();
+}
+
+function IsNumeric(sText)
+
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+
+   for (n = 0; n < sText.length && IsNumber == true; n++)
+      {
+      Char = sText.charAt(n);
+      if (ValidChars.indexOf(Char) == -1)
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+
+}
+function IsNumeric2(sText)
+
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+
+   for (n = 0; n < sText.length && IsNumber == true; n++)
+      {
+      Char = sText.charAt(n);
+      if (ValidChars.indexOf(Char) == -1)
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+
+}
+
+
+</script>
+
+</body></html>
