@@ -1,0 +1,2 @@
+[17-Apr-2010 20:48:37] PHP Fatal error:  Class 'question_edit_form' not found in /home/tikshuvp/public_html/moodle/question/type/ddmatch/edit_ddmatch_form.php on line 15
+[17-Apr-2010 20:48:40] PHP Fatal error:  Class 'default_questiontype' not found in /home/tikshuvp/public_html/moodle/question/type/ddmatch/questiontype.php on line 15

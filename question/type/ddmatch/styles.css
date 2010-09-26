@@ -1,0 +1,42 @@
+li.matchdrag {
+    border: 1px solid black;
+    background-color: white;
+    cursor: move;
+    margin: 6px;
+    padding: 4px;
+}
+
+ul.matchorigin {
+    width: 35%;
+    border: 1px solid gray;
+    list-style: none;
+    margin: 6px;
+    padding: 4px;
+    float: right;
+}
+
+ul.matchtarget {
+    border: 1px solid black;
+    list-style: none;
+    min-height: 30px;
+    margin: 6px;
+    padding: 4px;
+}
+
+ul.matchdefault {
+    border: 2px solid gray;
+}
+
+ul.matchover {
+    border: 2px dotted red;
+}
+
+.que .matchcontrol {
+	width: 50%;
+	margin: 6px;
+	padding: 4px;
+}
+
+.que .matchanswer {
+	width: 60%;
+}

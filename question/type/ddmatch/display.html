@@ -1,0 +1,101 @@
+<div class="qtext">
+  <?php echo $questiontext; ?>
+</div>
+
+<?php if ($image) { ?>
+  <img class="qimage" src="<?php echo $image; ?>" alt="" />
+<?php } ?>
+
+<div id="q<?php echo $question->id ?>answer" class="ablock clearfix">
+  <table id="answertable<?php echo $nameprefix ?>" class="answer">
+    <?php $row = 1; foreach ($anss as $answer) { ?>
+      <tr class="<?php echo 'r'.$row = $row ? 0 : 1; ?>">
+        <td class="c0 text">
+          <?php echo $answer->text; ?>
+        </td>
+        <td id="td<?php echo $nameprefix.$answer->id ?>" class="matchtd c1 matchcontrol <?php echo $answer->class ?> matchtarget">
+          <?php echo $answer->control; ?>
+        </td>
+        <td>
+            <?php echo $answer->feedbackimg; ?>
+        </td>
+        <?php if (!empty($answer->feedback)) { ?>
+        <td class="c0 feedback">
+          <?php echo $answer->feedback; ?>
+        </td>
+        <?php } ?>
+      </tr>
+    <?php } ?>
+  </table>
+
+<?php if (!$fallbackonly) { ?>
+<script>
+//<![CDATA[
+
+function insertQuestion<?php echo $question->id ?>(e, f, vars) {
+
+Dom = YAHOO.util.Dom;
+
+var answertable = document.getElementById("answertable<?php echo $nameprefix ?>");
+Dom.addClass(answertable, "matchanswer");
+
+var questioncontentdiv = document.getElementById("q<?php echo $question->id ?>answer");
+var submitbutton = document.getElementsByName("<?php echo $nameprefix ?>submit");
+
+ul = document.createElement("ul"); ul.setAttribute("id", "ulorigin<?php echo $nameprefix ?>");
+Dom.addClass(ul, "matchorigin");
+
+<?php foreach ($answers as $key => $answer) { ?>
+li = document.createElement("li");
+li.setAttribute("id", "drag<?php echo $nameprefix; echo $key; ?>");
+Dom.addClass(li, "matchdrag");
+lidiv = document.createElement("div");
+<?php $answertext = preg_replace('/\r\n/', ' ', $answer); $answertext = preg_replace('/"/', '\\"', $answertext);?>
+lidiv.innerHTML = "<?php echo $answertext; ?>";
+li.appendChild(lidiv);
+ul.appendChild(li);
+<?php } ?>
+
+if (submitbutton[0]) {
+    questioncontentdiv.insertBefore(ul, submitbutton[0]);
+}
+else {
+    questioncontentdiv.appendChild(ul);
+}
+
+var input = null;
+<?php foreach ($anss as $answer) { ?>
+input = createElementWithName("input", "<?php echo $nameprefix; echo $answer->id; ?>");
+input.setAttribute("type", "hidden");
+input.setAttribute("id", "hidden<?php echo $nameprefix; echo $answer->id; ?>");
+input.setAttribute("value", "<?php echo 0 ?>");
+if (submitbutton[0]) {
+    questioncontentdiv.insertBefore(input, submitbutton[0]);
+}
+else {
+    questioncontentdiv.appendChild(input);
+}
+
+<?php } ?>
+
+ddMatchingInit(vars);
+
+}
+
+var vars = new Object;
+vars.id = "<?php echo $nameprefix ?>";
+vars.questions = <?php echo $questionsarraystring ?>;
+vars.answers = <?php echo $answersarraystring ?>;
+vars.responses = <?php echo $responsesarraystring; ?>;
+vars.readonly = <?php echo $options->readonly ? "true" : "false" ?>;
+vars.dragstring = "<?php echo $dragstring; ?>";
+
+YAHOO.util.Event.onDOMReady(insertQuestion<?php echo $question->id ?>, vars);
+YAHOO.util.Event.addListener("responseform", "click", ddMatchingSetHiddens, vars);
+
+//]]>
+</script>
+<?php } ?>
+
+  <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+</div>
