@@ -1,0 +1,20 @@
+<?PHP // $Id: block_birthday.php,v 1.4.2.1 2008/04/16 22:44:22 arborrow Exp $ 
+      // block_birthday.php - created with Moodle 1.8.2+ 
+
+$string['birthday'] = 'יום הולדת';
+$string['blockname'] = 'יום הולדת';
+$string['blockshow'] = 'הצגת משבצת ימי הולדת גם כאשר אין מה להציג';
+$string['blockhide'] = 'הסתרת משבצת ימי הולדת כאשר אין מה להציג';
+$string['blockvisible_info'] = 'Should the block be visible when there are no birthdays?';
+$string['block_title'] = 'ימי הולדת היום';
+$string['dateformat_info'] = 'בחרו את תצורת תאריך יום ההולדת כפי שהיא מוזנת במאפייני המשתמש.';
+$string['dateformatiso'] = 'ISO Date format: %%Y-%%m-%%d (בררת מחדל)';
+$string['dateformatusa'] = 'USA Date format: \'%%m.%%d.%%Y\'';
+$string['dateformateur'] = 'EUR Date format: \'%%d.%%m.%%Y\'';
+$string['happybirthday'] = 'יום הולדת שמח!';
+$string['nobirthdays'] = 'אין ימי הולדת היום.';
+$string['periodnminutes'] = 'ב $a הדקות האחרונות';
+$string['user_info_field_shortname'] = 'The unique shortname of the user profile field that contains the user\'s date of birth (the default shortname is \'DOB\').';
+$string['user_info_field_days'] = 'The number of days in the future to display birthdays (the default is 0 and will show only today\'s birthdays).';
+ 
+?>

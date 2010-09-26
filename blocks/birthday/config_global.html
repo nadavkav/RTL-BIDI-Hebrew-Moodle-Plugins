@@ -1,0 +1,93 @@
+<table cellpadding="9" cellspacing="0">
+<tr valign="top">
+    <td align="right">block_birthday_fieldname: </td>
+    <td>
+    <input name="block" type="hidden" value="<?php echo intval($_REQUEST['block']); ?>" />
+    <input name="block_birthday_fieldname" type="text" size="10" value="<?php
+    $config_birthday = get_config('block/birthday');
+    if(isset($config_birthday->block_birthday_fieldname)) {
+        p($config_birthday->block_birthday_fieldname);
+    } else {
+        p('DOB');
+    } ?>" />
+    </td>
+    <td>
+    <?php print_string('user_info_field_shortname', 'block_birthday') ?>
+    </td>
+</tr>
+   
+<tr valign="top">
+    <td align="right">block_birthday_days: </td>
+    <td>
+    <input name="block_birthday_days" type="text" size="3" value="<?php
+    
+    if(isset($config_birthday->block_birthday_days)) {
+        p($config_birthday->block_birthday_days);
+    } else {
+        p('0');
+    } ?>" />
+    </td>
+    <td>
+    <?php print_string('user_info_field_days', 'block_birthday') ?>
+    </td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">block_birthday_dateformat: </td>
+<td>
+    <select name="block_birthday_dateformat">
+
+     <option value="ISO" <?php if(isset($config_birthday->block_birthday_dateformat)){ 
+     if($config_birthday->block_birthday_dateformat == "ISO"){ echo "selected=\"selected\"";}
+     }else{
+         echo "selected=\"selected\"";
+     }?>     
+     ><?php p(get_string('dateformatiso', 'block_birthday')) ?></option>
+
+     <option value="USA" <?php if(isset($config_birthday->block_birthday_dateformat)){ 
+         if($config_birthday->block_birthday_dateformat == "USA"){ echo "selected=\"selected\""; }
+     }?>
+     ><?php p(get_string('dateformatusa', 'block_birthday')) ?></option>
+
+     <option value="EUR" <?php if(isset($config_birthday->block_birthday_dateformat)){ 
+         if($config_birthday->block_birthday_dateformat == "EUR"){ echo "selected=\"selected\""; }
+     }?>
+     ><?php p(get_string('dateformateur', 'block_birthday')) ?></option>
+
+    </select>
+</td>
+<td>
+    <?php print_string('dateformat_info', 'block_birthday') ?>
+</td>
+</tr>
+
+<tr valign="top">
+<td align="right">block_birthday_visible: </td>
+<td>
+    <select name="block_birthday_visible">
+     
+     <option value="Show" <?php if(isset($config_birthday->block_birthday_visible)){ 
+     if($config_birthday->block_birthday_visible == "Show"){ echo "selected=\"selected\"";}
+     }else{
+         echo "selected=\"selected\"";
+     }?>     
+     ><?php p(get_string('blockshow', 'block_birthday')) ?></option>
+     
+     <option value="Hide" <?php if(isset($config_birthday->block_birthday_visible)){ 
+         if($config_birthday->block_birthday_visible == "Hide"){ echo "selected=\"selected\""; }
+     }?>
+     ><?php p(get_string('blockhide', 'block_birthday')) ?></option>
+     
+    </select>
+</td>
+<td>
+    <?php print_string('blockvisible_info', 'block_birthday') ?>
+</td>
+</tr>
+
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string('savechanges') ?>" /></td>
+</tr>
+</table>
