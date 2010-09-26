@@ -1,0 +1,101 @@
+#admin-report-rolescapabilities-index #legend_container {
+    float: left;
+    width: 45%;
+}
+
+#admin-report-rolescapabilities-index #options_container {
+    float: right;
+    width : 45%;
+}
+
+#admin-report-rolescapabilities-index #options_container #repeat_each {
+    display: inline;
+    margin-left: 1em;
+}
+
+#admin-report-rolescapabilities-index #middle-column h2 {
+    clear: both;
+}
+
+#admin-report-rolescapabilities-index #legend dt {
+    float: left;
+    margin-right: 10px;
+}
+
+#admin-report-rolescapabilities-index #legend dd {
+    margin-bottom: 5px;
+}
+
+#admin-report-rolescapabilities-index #legend dt span {
+    border: 1px solid black;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities {
+    clear: both;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 75%;
+    width: 100%;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities th,
+#admin-report-rolescapabilities-index #roles_capabilities td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities th {
+    background-color: #ffe4b9;
+    padding: 3px;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td {
+    padding: 3px;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities .action {
+    width: 20%;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities .role {
+    width: 6%;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities .component_name td {
+    font-weight: bold;
+    font-size: 125%;
+    padding: 10px 5px;
+    background-color: #ddd;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td span.cap_friendly_name {
+    display: block;
+    font-weight: bold;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td span.cap_name {
+    display: block;
+    font-size: 95%;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td.cap_not_set,
+#admin-report-rolescapabilities-index #legend dt span.not_set {
+    background-color: white;
+    text-align: center;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td.cap_1,
+#admin-report-rolescapabilities-index #legend dt span.allow {
+    background-color: green;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td.cap_-1,
+#admin-report-rolescapabilities-index #legend dt span.prevent {
+    background-color: yellow;
+}
+
+#admin-report-rolescapabilities-index #roles_capabilities td.cap_-1000,
+#admin-report-rolescapabilities-index #legend dt span.deny {
+    background-color: red;
+}
