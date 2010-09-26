@@ -1,0 +1,76 @@
+<?php //$Id: filter.php,v 0.1 2009/11/23 17:12:30 stronk7 Exp $
+
+///////////////////////////////////////////////////////////////////////////
+//                                                                       //
+// NOTICE OF COPYRIGHT                                                   //
+//                                                                       //
+// Moodle - Modular Object-Oriented Dynamic Learning Environment         //
+//          http://moodle.com                                            //
+//                                                                       //
+// Copyright (C) 2001-3001 Martin Dougiamas        http://dougiamas.com  //
+//           (C) 2001-3001 Eloy Lafuente (stronk7) http://contiento.com  //
+//                                                                       //
+// This program is free software; you can redistribute it and/or modify  //
+// it under the terms of the GNU General Public License as published by  //
+// the Free Software Foundation; either version 2 of the License, or     //
+// (at your option) any later version.                                   //
+//                                                                       //
+// This program is distributed in the hope that it will be useful,       //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of        //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         //
+// GNU General Public License for more details:                          //
+//                                                                       //
+//          http://www.gnu.org/copyleft/gpl.html                         //
+//                                                                       //
+///////////////////////////////////////////////////////////////////////////
+
+// This filter allows you to play an audio sound of a word in the text
+// based on www.yourdictionary.com service (free dictionary)
+//
+// Syntax for filter is:
+//     [[sayit:EnglishWord]]
+// where:
+//     sayit:        acronym of "sayit", must be always present.
+//     EnglishWord:    a word in english
+//
+
+function sayit_filter($courseid, $text) {
+
+    $u = empty($CFG->unicodedb) ? '' : 'u'; //Unicode modifier
+
+    preg_match_all('/\[\[sayit:([a-zA-Z]+)\]\]\s/i'.$u, $text, $list_sayitwords);
+
+echo "<div style=\"direction:ltr;\">";
+print_r($list_sayitwords);
+echo "</div>";
+
+	/// No question links found. Return original text
+    if (empty($list_sayitwords[0])) {
+        return $text;
+    }
+
+    foreach ($list_sayitwords[0] as $key=>$item) {
+        $replace = '';
+		// Extract info from the question link
+        $sayit = new stdClass;
+        $sayit->word = $list_sayitwords[1][$key];
+		// Calculate footer text (it's optional in the filter)
+//         if ($sayit->word) {
+//             $headertext = '<br /><span class="$iframe-title">'.format_string($sayit->word).'</span>';
+//         } else {
+//             $headertext = '';
+//         }
+
+		$replace = '<a href="http://www.yourdictionary.com/audio/'.
+			substr($sayit->word,0,1).'/'.substr($sayit->word,0,2).'/'.$sayit->word.'.mp3">'.$sayit->word.'</a>&nbsp;';
+
+		// If replace found, do it
+        if ($replace) {
+            $text = str_replace($list_sayitwords[0][$key], $replace, $text);
+        }
+    }
+
+/// Finally, return the text
+    return $text;
+}
+?>
