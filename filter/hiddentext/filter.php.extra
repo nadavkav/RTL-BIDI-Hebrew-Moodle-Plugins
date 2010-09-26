@@ -1,0 +1,117 @@
+<?php //$Id: filter.php,v 1.5 2008/01/12 17:00:10 dlnsk Exp $
+
+///////////////////////////////////////////////////////////////////////////
+//                                                                       //
+// This program is part of Moodle - Modular Object-Oriented Dynamic      //
+// Learning Environment - http://moodle.org                              //
+//                                                                       //
+// Copyright (C) 2008  Dmitry Pupinin <dlnsk@ngs.ru>                     //
+//                                                                       //
+// This program is free software; you can redistribute it and/or modify  //
+// it under the terms of the GNU General Public License as published by  //
+// the Free Software Foundation; either version 2 of the License, or     //
+// (at your option) any later version.                                   //
+//                                                                       //
+// This program is distributed in the hope that it will be useful,       //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of        //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         //
+// GNU General Public License for more details:                          //
+//                                                                       //
+//          http://www.gnu.org/copyleft/gpl.html                         //
+//                                                                       //
+///////////////////////////////////////////////////////////////////////////
+
+function hiddentext_filter($courseid, $text) {
+    global $CFG;
+
+    if (empty($text) or is_numeric($text)) {
+        return $text;
+    }
+
+    $search_span = '/<span\s+filter="hiddentext"((\s+class=".*?"|\s+desc=".*?"){0,2})\s*>(.*?)<\/span>/is';
+    $search_div  =  '/<div\s+filter="hiddentext"((\s+class=".*?"|\s+desc=".*?"){0,2})\s*>(.*?)<\/div>/is';
+
+    $search_pp ='/\[ht((\s+class=\&quot\;.*?\&quot\;|\s+desc=&quot;.*?&quot;){0,2})\s*\](.*?)\[\/ht\]/is';
+    $search_pp2 ='/\[htd((\s+class=\&quot\;.*?\&quot\;|\s+desc=&quot;.*?&quot;){0,2})\s*\](.*?)\[\/htd\]/is';    
+   
+    $result = preg_replace_callback($search_span, 'hiddentext_filter_impl', $text);
+    $result = preg_replace_callback($search_div,  'hiddentext_filter_impl', $result);
+    $result = preg_replace_callback($search_pp,  'hiddentext_filter_impl_pp', $result); 
+    $result = preg_replace_callback($search_pp2,  'hiddentext_filter_impl_pp', $result);
+
+
+    if (is_null($result)) {
+        return "ERROR filter HT<br/>".$text; //error during regex processing (too many nested spans?)
+    } else {
+        return $result;
+    }
+}
+
+function hiddentext_filter_impl($matches) {
+    global $CFG;
+    
+    $output =  '<link rel="stylesheet" type="text/css" href="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse.css" />';
+    $output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/lib/yui/yahoo-dom-event/yahoo-dom-event.js"></script>';
+	$output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/lib/yui/animation/animation-min.js"></script>';
+	$output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse.js"></script>';
+	$output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse-css.js"></script>';
+    		   
+    
+   	preg_match('/class="(.*?)"/is', $matches[1], $m);
+   	$class = $m[1];
+   	if (!empty($class)) {
+   		$class = ' class="'.$class.'"';
+   	}
+   	preg_match('/desc="(.*?)"/is', $matches[1], $m);
+   	$desc = $m[1];
+   	
+    if (substr($matches[0], 1, 4) == 'span' ) {
+    	$output .= "<span class=\"ht_trigger\"><img src=\"{$CFG->wwwroot}/filter/hiddentext/show_hidden.png\" alt=\"$desc\" />".
+    	           (empty($desc) ? '' : "&nbsp;$desc") .'</span>'.
+    			   "<span$class>&nbsp;".$matches[3].'</span>';
+    } else {
+	   	if (empty($desc)) {
+	   		$desc = get_string('seemore', 'hiddentext');
+	   	}
+    	$output .=  "<div class=\"ht_trigger\"><img src=\"{$CFG->wwwroot}/filter/hiddentext/show_hidden.png\" alt=\"\" />&nbsp;$desc</div>".
+    				"<div$class>".$matches[3].'</div>';
+    }
+    return $output;
+}
+
+
+function hiddentext_filter_impl_pp($matches) {
+    global $CFG;
+
+    $output =  '<link rel="stylesheet" type="text/css" href="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse.css" />';
+    $output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/lib/yui/yahoo-dom-event/yahoo-dom-event.js"></script>';
+        $output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/lib/yui/animation/animation-min.js"></script>';
+        $output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse.js"></script>';
+        $output .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/filter/hiddentext/yuidomcollapse-css.js"></script>';
+
+
+        preg_match('/class=&quot;(.*?)&quot;/is', $matches[1], $m);
+        $class = $m[1];
+        if (!empty($class)) {
+                $class = ' class="'.$class.'"';
+        }
+        preg_match('/desc=&quot;(.*?)&quot;/is', $matches[1], $m);
+        $desc = $m[1];
+
+    if (substr($matches[0], 1, 3) != 'htd') {
+        $output .= "<span class=\"ht_trigger\"><img src=\"{$CFG->wwwroot}/filter/hiddentext/show_hidden.png\" alt=\"$desc\" />".
+                   (empty($desc) ? '' : "&nbsp;$desc") .'</span>'.
+                           "<span$class>&nbsp;".$matches[3].'</span>';
+    } else {
+                if (empty($desc)) {
+                        $desc = get_string('seemore', 'hiddentext');
+                }
+        $output .=  "<div class=\"ht_trigger\"><img src=\"{$CFG->wwwroot}/filter/hiddentext/show_hidden.png\" alt=\"\" />&nbsp;$desc</div>"."<div$class>".$matches[3].'</div>';
+
+    }
+    return $output;
+}
+
+
+
+?>
