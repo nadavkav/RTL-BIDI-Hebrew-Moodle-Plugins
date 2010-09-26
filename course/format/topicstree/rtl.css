@@ -1,0 +1,7 @@
+body ul.treesection li.treeactivity {
+    line-height: 1.5em;
+    background: url(<?php echo "{$CFG->wwwroot}/course/format/topicstree/node-right.png" ?>) no-repeat right center;
+}
+body ul.treesection li.treeactivity.last {
+    background: <?php echo $bg ?> url(<?php echo "{$CFG->wwwroot}/course/format/topicstree/lastnode-right.png" ?>) no-repeat right top;
+}
