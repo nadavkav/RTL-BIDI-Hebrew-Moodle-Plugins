@@ -1,0 +1,77 @@
+<?PHP // $Id: attforblock.php,v 1.1.2.2 2009/02/23 19:22:45 dlnsk Exp $
+// attforblock.php - created with Moodle 1.6 development (2005101200)
+
+
+$string['modulename'] = 'N�rvaro';
+$string['modulenameplural'] = 'N�rvaro';
+$string['modulenamesimple'] = 'N�rvaro';
+$string['Aacronym'] = 'F';
+$string['Afull'] = 'Fr�nvarande';
+$string['Eacronym'] = 'G';
+$string['Efull'] = 'Giltig fr�nvaro';
+$string['Lacronym'] = 'S';
+$string['Lfull'] = 'Sen';
+$string['Pacronym'] = 'N';
+$string['Pfull'] = 'N�rvarande';
+$string['acronym'] = 'Akronym';
+$string['add'] = 'L�gg till '
+$string['addmultiplesessions'] = 'L�gg till flerfaldiga sessioner';
+$string['addsession'] = 'L�gg till session';
+$string['alltaken'] = 'Allt har registrerats';
+$string['attendanceforthecourse'] = 'N�rvaro f�r kurs';
+$string['attendancegrade'] = 'N�rvaro - betyg';
+$string['attendancepercent'] = 'N�rvaro i procent';
+$string['attendancereport'] = 'N�rvarorapport';
+$string['attendancesuccess'] = 'N�rvaron har framg�ngsrikt registrerats';
+$string['attendanceupdated'] = 'N�rvaron har framg�ngsrikt uppdaterats';
+$string['changesession'] = '�ndra session';
+$string['createmultiplesessions'] = 'Skapa flerfaldiga sessioner';
+$string['createonesession'] = 'Skapa en session f�r kursen';
+$string['defaults'] = 'F�rinst�llda v�rden';
+$string['delete'] = 'Ta bort ';
+$string['deletesession'] = 'Ta bort session';
+$string['deletingsession'] = 'Tar bort session f�r kursen';
+$string['description'] = 'Beskrivning';
+$string['display'] = 'Visa';
+$string['downloadexcel'] = 'Ladda ner i Excel-format';
+$string['downloadtext'] = 'Ladda ner i textformat';
+$string['editsession'] = 'Redigera session';
+$string['errorinaddingsession'] = 'Ett fel uppstod n�r en session skulle l�ggas till';
+$string['erroringeneratingsessions'] = 'Ett fel uppstod n�r  sessioner skulle genereras '
+$string['indetail'] = 'I detalj';
+$string['months'] = 'M�nader';
+$string['myvariables'] = 'Mina variabler';
+$string['newdate'] = 'Nytt datum';
+$string['nodescription'] = 'Ingen beskrivning av den h�r sessionen';
+$string['noguest'] = 'G�ster kan inte se n�rvaro';
+$string['noofdaysabsent'] = 'Antal fr�nvarodagar';
+$string['noofdaysexcused'] = 'Antal dagar med giltig fr�nvaro';
+$string['noofdayslate'] = 'Antal dagar med sen ankomst';
+$string['noofdayspresent'] = 'Antal n�rvarodagar';
+$string['nosessiondayselected'] = 'Ingen session har valts';
+$string['nosessionexists'] = 'Det finns ingen session f�r den h�r kursen';
+$string['olddate'] = 'Gammalt datum';
+$string['remarks'] = 'Anm�rkningar';
+$string['report'] = 'Rapport';
+$string['restoredefaults'] = '�terst�ll standardinst�llningar';
+$string['session'] = 'Session';
+$string['sessionadded'] = 'Sessionen har framg�ngsrikt lagts till';
+$string['sessionalreadyexists'] = 'Det finns redan en session for detta datum';
+$string['sessiondate'] = 'Session - datum';
+$string['sessiondays'] = 'Session - dagar';
+$string['sessiondeleted'] = 'Sessionen har framg�ngsrikt tagits bort';
+$string['sessionenddate'] = 'Slutdatum f�r session';
+$string['sessionexist'] = 'Sessionen har inte lagt till  (den fanns redan)';
+$string['sessionscompleted'] = 'Sessionerna �r fullgjorda';
+$string['sessionsgenerated'] = 'Sessioner har framg�ngsrikt genererats';
+$string['sessionstartdate'] = 'Startdatum f�r session';
+$string['sessionupdated'] = 'Sessionen har framg�ngsrikt uppdaterats';
+$string['settings'] = 'Inst�llningar';
+$string['status'] = 'Status';
+$string['studentid'] = 'Student/elev/deltagar/l�rande ID';
+$string['takeattendance'] = 'Registrera n�rvaro';
+$string['update'] = 'Uppdatera';
+$string['variablesupdated'] = 'Variablerna har framg�ngsrikt uppdaterats';
+$string['weeks'] = 'Veckor';
+
+?>

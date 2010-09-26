@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/attforblock/db" VERSION="20090825" COMMENT="XMLDB file for Moodle mod/attforblock"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="attforblock" COMMENT="Module for support Attendances" NEXT="attendance_sessions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="100" SEQUENCE="false" ENUM="false" COMMENT="This is maximum grade for instance" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for attforblock"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="attendance_sessions" COMMENT="attendance_sessions table retrofitted from MySQL" PREVIOUS="attforblock" NEXT="attendance_sessiontitles">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="sessdate"/>
+        <FIELD NAME="sessdate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="courseid" NEXT="duration"/>
+        <FIELD NAME="duration" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sessdate" NEXT="lasttaken"/>
+        <FIELD NAME="lasttaken" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="duration" NEXT="lasttakenby"/>
+        <FIELD NAME="lasttakenby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="lasttaken" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="lasttakenby" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified" NEXT="sessiontitle"/>
+        <FIELD NAME="sessiontitle" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="description" NEXT="subject"/>
+        <FIELD NAME="subject" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="sessiontitle" NEXT="teacher"/>
+        <FIELD NAME="teacher" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="subject" NEXT="processed"/>
+        <FIELD NAME="processed" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacher" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="processed"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for attendance_sessions"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid" NEXT="sessdate"/>
+        <INDEX NAME="sessdate" UNIQUE="false" FIELDS="sessdate" PREVIOUS="courseid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="attendance_sessiontitles" COMMENT="attendance_sessiontitles table retrofitted from MySQL" PREVIOUS="attendance_sessions" NEXT="attendance_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="sessiontitle"/>
+        <FIELD NAME="sessiontitle" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sessiontitle"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_log" COMMENT="attendance_log table retrofitted from MySQL" PREVIOUS="attendance_sessiontitles" NEXT="attendance_sicknotes_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="sessionid"/>
+        <FIELD NAME="sessionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="studentid"/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sessionid" NEXT="statusid"/>
+        <FIELD NAME="statusid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="link with attendance_status table" PREVIOUS="studentid" NEXT="statusset"/>
+        <FIELD NAME="statusset" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="statusid" NEXT="timetaken"/>
+        <FIELD NAME="timetaken" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="When attendance of this student was taken" PREVIOUS="statusset" NEXT="timepresent"/>
+        <FIELD NAME="timepresent" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timetaken" NEXT="takenby"/>
+        <FIELD NAME="takenby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timepresent" NEXT="remarks"/>
+        <FIELD NAME="remarks" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="takenby" NEXT="makeupnoteduedate"/>
+        <FIELD NAME="makeupnoteduedate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="remarks" NEXT="makeupnotes"/>
+        <FIELD NAME="makeupnotes" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="makeupnoteduedate" NEXT="sicknote"/>
+        <FIELD NAME="sicknote" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="makeupnotes" NEXT="sicknoteduedate"/>
+        <FIELD NAME="sicknoteduedate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sicknote" NEXT="override"/>
+        <FIELD NAME="override" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sicknoteduedate" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="override"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for attendance_log"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="sessionid" UNIQUE="false" FIELDS="sessionid" NEXT="studentid"/>
+        <INDEX NAME="studentid" UNIQUE="false" FIELDS="studentid" PREVIOUS="sessionid" NEXT="statusid"/>
+        <INDEX NAME="statusid" UNIQUE="false" FIELDS="statusid" PREVIOUS="studentid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="attendance_sicknotes_log" COMMENT="Table to store a log of sicknotes received" PREVIOUS="attendance_log" NEXT="attendance_statuses">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="log_id"/>
+        <FIELD NAME="log_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="event"/>
+        <FIELD NAME="event" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="log_id" NEXT="event_date"/>
+        <FIELD NAME="event_date" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="event"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_statuses" COMMENT="attendance_statuses table retrofitted from MySQL" PREVIOUS="attendance_sicknotes_log" NEXT="attendance_subjects">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="acronym"/>
+        <FIELD NAME="acronym" TYPE="char" LENGTH="2" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="courseid" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="acronym" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="number" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="description" NEXT="visible"/>
+        <FIELD NAME="visible" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="grade" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="visible" NEXT="makeupnote"/>
+        <FIELD NAME="makeupnote" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="notrequired" SEQUENCE="false" ENUM="false" PREVIOUS="deleted" NEXT="sicknote"/>
+        <FIELD NAME="sicknote" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="notrequired" SEQUENCE="false" ENUM="false" PREVIOUS="makeupnote" NEXT="makeupnotedays"/>
+        <FIELD NAME="makeupnotedays" TYPE="number" LENGTH="20" NOTNULL="true" UNSIGNED="true" DEFAULT="7" SEQUENCE="false" ENUM="false" PREVIOUS="sicknote" NEXT="sicknotedays"/>
+        <FIELD NAME="sicknotedays" TYPE="number" LENGTH="20" NOTNULL="true" UNSIGNED="true" DEFAULT="7" SEQUENCE="false" ENUM="false" PREVIOUS="makeupnotedays" NEXT="startlogic"/>
+        <FIELD NAME="startlogic" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="none" SEQUENCE="false" ENUM="false" PREVIOUS="sicknotedays" NEXT="afterstart"/>
+        <FIELD NAME="afterstart" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="startlogic" NEXT="finishlogic"/>
+        <FIELD NAME="finishlogic" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="none" SEQUENCE="false" ENUM="false" PREVIOUS="afterstart" NEXT="beforefinish"/>
+        <FIELD NAME="beforefinish" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="finishlogic" NEXT="percentageattended"/>
+        <FIELD NAME="percentageattended" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="beforefinish" NEXT="logicoperator"/>
+        <FIELD NAME="logicoperator" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="none" SEQUENCE="false" ENUM="false" PREVIOUS="percentageattended"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="mdl_attestat_cou_ix" UNIQUE="false" FIELDS="courseid" NEXT="mdl_attestat_vis_ix"/>
+        <INDEX NAME="mdl_attestat_vis_ix" UNIQUE="false" FIELDS="visible" PREVIOUS="mdl_attestat_cou_ix" NEXT="mdl_attestat_del_ix"/>
+        <INDEX NAME="mdl_attestat_del_ix" UNIQUE="false" FIELDS="deleted" PREVIOUS="mdl_attestat_vis_ix"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="attendance_subjects" COMMENT="attendance_subjects table retrofitted from MySQL" PREVIOUS="attendance_statuses" NEXT="attendance_makeupnotes_log">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="subject"/>
+        <FIELD NAME="subject" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="subject"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_makeupnotes_log" COMMENT="attendance_makeupnotes_log table retrofitted from MySQL" PREVIOUS="attendance_subjects" NEXT="attendance_report_query">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="log_id"/>
+        <FIELD NAME="log_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="event"/>
+        <FIELD NAME="event" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="log_id" NEXT="event_date"/>
+        <FIELD NAME="event_date" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="event"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_report_query" COMMENT="attendance_report_query table retrofitted from MySQL" PREVIOUS="attendance_makeupnotes_log" NEXT="attendance_teachers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" NEXT="datefrom"/>
+        <FIELD NAME="datefrom" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="dateto"/>
+        <FIELD NAME="dateto" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="datefrom" NEXT="reporttype"/>
+        <FIELD NAME="reporttype" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="dateto" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="reporttype" NEXT="student"/>
+        <FIELD NAME="student" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="subject"/>
+        <FIELD NAME="subject" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="student" NEXT="teacher"/>
+        <FIELD NAME="teacher" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="subject" NEXT="makeupnote"/>
+        <FIELD NAME="makeupnote" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="teacher" NEXT="sicknote"/>
+        <FIELD NAME="sicknote" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="makeupnote" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="sicknote" NEXT="sortby"/>
+        <FIELD NAME="sortby" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="status" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sortby"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_teachers" COMMENT="Default comment for the table, please edit me" PREVIOUS="attendance_report_query" NEXT="attendance_scan_logs">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="teacher"/>
+        <FIELD NAME="teacher" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="deleted"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacher"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="attendance_scan_logs" COMMENT="Default comment for the table, please edit me" PREVIOUS="attendance_teachers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="studentid"/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="timescanned"/>
+        <FIELD NAME="timescanned" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="studentid" NEXT="scannedin"/>
+        <FIELD NAME="scannedin" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="timescanned" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="scannedin" NEXT="scan"/>
+        <FIELD NAME="scan" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="courseid" NEXT="processed"/>
+        <FIELD NAME="processed" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="scan" NEXT="success"/>
+        <FIELD NAME="success" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="processed" NEXT="allocated"/>
+        <FIELD NAME="allocated" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="success" NEXT="carriedover"/>
+        <FIELD NAME="carriedover" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="allocated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

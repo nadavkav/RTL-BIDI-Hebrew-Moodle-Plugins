@@ -1,0 +1,41 @@
+[25-Aug-2009 13:59:01] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 14:51:06] PHP Notice:  Undefined property: stdClass::$sortmenu in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 92
+[25-Aug-2009 14:51:06] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 15:55:49] PHP Notice:  Undefined property: stdClass::$sortmenu in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 92
+[25-Aug-2009 15:55:49] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 16:26:34] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 16:29:22] PHP Notice:  Use of undefined constant client - assumed 'client' in /home/admin/public_html/test/mod/attforblock/advanced_report_form.php on line 122
+[25-Aug-2009 16:30:37] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 16:36:26] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 16:36:51] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 16:38:24] PHP Notice:  Undefined property: stdClass::$sortmenu in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 92
+[25-Aug-2009 17:46:51] PHP Notice:  Undefined property: stdClass::$sortmenu in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 92
+[25-Aug-2009 17:46:51] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[25-Aug-2009 18:02:29] PHP Fatal error:  Function name must be a string in /home/admin/public_html/test/mod/attforblock/locallib.php on line 714
+[25-Aug-2009 18:02:37] PHP Fatal error:  Function name must be a string in /home/admin/public_html/test/mod/attforblock/locallib.php on line 833
+[25-Aug-2009 18:02:53] PHP Fatal error:  Function name must be a string in /home/admin/public_html/test/mod/attforblock/locallib.php on line 833
+[25-Aug-2009 18:02:59] PHP Fatal error:  Function name must be a string in /home/admin/public_html/test/mod/attforblock/locallib.php on line 714
+[25-Aug-2009 18:04:27] PHP Notice:  Undefined property: stdClass::$sortmenu in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 92
+[25-Aug-2009 18:04:27] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 196
+[26-Aug-2009 18:03:18] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/scan.php on line 113
+[27-Aug-2009 05:18:22] PHP Warning:  Invalid argument supplied for foreach() in /home/admin/public_html/test/mod/attforblock/advanced_report_form.php on line 47
+[27-Aug-2009 07:04:20] PHP Parse error:  syntax error, unexpected T_STRING, expecting ',' or ';' in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 221
+[27-Aug-2009 07:36:58] PHP Notice:  Undefined variable: studentselected in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/lib/weblib.php on line 4426
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/lib/weblib.php on line 4453
+[27-Aug-2009 07:36:58] PHP Notice:  Undefined variable: studentselected in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/lib/weblib.php on line 4426
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/lib/weblib.php on line 4453
+[27-Aug-2009 07:36:58] PHP Notice:  Undefined variable: studentselected in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:36:58] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/lib/weblib.php on line 4426
+[27-Aug-2009 07:38:29] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:38:29] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:38:29] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:39:31] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:39:31] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 07:39:31] PHP Notice:  Trying to get property of non-object in /home/admin/public_html/test/mod/attforblock/reportlib.php on line 52
+[27-Aug-2009 11:07:24] PHP Parse error:  syntax error, unexpected T_STRING, expecting ',' or ';' in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 249
+[27-Aug-2009 11:07:26] PHP Parse error:  syntax error, unexpected T_STRING, expecting ',' or ';' in /home/admin/public_html/test/mod/attforblock/adv_report.php on line 249

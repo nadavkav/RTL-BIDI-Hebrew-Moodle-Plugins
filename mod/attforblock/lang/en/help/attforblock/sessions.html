@@ -1,0 +1,9 @@
+<p align="center"><b>Attendance Block</b></p>
+
+<p align="center">
+	<?php
+	  	require_once($CFG->libdir.'/blocklib.php');
+	  	$blockobject = block_instance('attendance'); 
+	  	echo get_string('version').": $blockobject->release ($blockobject->version)";
+	?>
+</p>

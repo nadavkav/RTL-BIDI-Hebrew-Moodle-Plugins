@@ -1,0 +1,67 @@
+.boxwidthwide {
+	width: 80%;
+	align
+	=center;
+}
+
+.generaltable {
+	text-align: center;
+	padding: 3;
+	border-spacing: 3;
+	width: 80%;
+	page-break-after: always;
+	white-space: nowrap;
+}
+
+.alignright {
+	text-align: right;
+	padding-right: 15px;
+}
+
+.helpbuttonright {
+	text-align: right;
+	padding-right: 15px;
+}
+
+.alignleft {
+	text-align: left;
+}
+
+.filtermenu {
+	width: 500px;
+	margin-left: 0px;
+	page-break-after: always;
+}
+
+.generalbox {align =center;
+	
+}
+
+.studentname {
+	page-break-before: always;
+}
+
+.attendancetable {
+	width: 80%;
+	align
+	=center;
+}
+
+.submitbutton {
+	width: 100px;
+	margin: 0 auto;
+}
+
+.myvarwidth {
+	width: 110%;
+	align
+	=center;
+}
+
+.withselectedarea {
+	text-align: right;
+}
+
+.myclass {
+display: none;
+}
