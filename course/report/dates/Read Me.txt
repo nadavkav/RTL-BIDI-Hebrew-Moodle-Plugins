@@ -1,0 +1,11 @@
+Installation.
+1. Copy dates folder to ..\Course\report\
+2. You can find your new report in Course->Report Section
+Delete/Remove Report
+1. Simply Move/Remove the dates folder from ..\Course\report and it will be uninstalled automatically.
+
+Contribution By:
+	E-Learning Unit, School of Postgraduate Medical
+	and Dental Education Cardiff.
+	(Un-warrentied Plug-in issued under the GNU-Licence terms & conditions)
+Resourced by: Abrar Ullah, www.pgmdewales.net
