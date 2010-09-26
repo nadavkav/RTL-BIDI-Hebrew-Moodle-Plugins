@@ -1,0 +1,5 @@
+<?php 
+
+$string['formattwocolumns'] = 'יחידות הוראה בשני עמודות';
+
+?>
