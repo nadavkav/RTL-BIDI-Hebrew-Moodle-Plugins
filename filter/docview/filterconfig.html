@@ -1,0 +1,21 @@
+<?php
+    // check the default settings
+    require_once "defaultsettings.php";
+
+    // get strings
+    $txt = new Object;
+    $txt->questionplugin = get_string( 'docviewplugin','docviewfilter' );
+    $txt->yes = get_string( 'yes' );
+    $txt->no = get_string( 'no' );
+
+    $yesno = array( $txt->no, $txt->yes );
+?>
+
+<table cellpadding="9" cellspacing="0">
+   <tr valign="top">
+        <td align="right"><?php echo $txt->docviewplugin ?></td>
+        <td><?php choose_from_menu( $yesno,'filter_docview_plugin_enable',
+             $CFG->filter_docview_plugin_enable ); ?></td> 
+        <td />
+    </tr>
+</table>
