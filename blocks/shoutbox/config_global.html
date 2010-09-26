@@ -1,0 +1,14 @@
+<div style="text-align: center;">
+<?php
+require_once('../config.php');
+global $CFG, $COURSE;
+?>
+<?php print_string('noofmessage', 'block_shoutbox'); ?>
+<?php
+ $user_sql="SELECT  COUNT(*) AS TOTAL FROM {$CFG->prefix}block_shoutbox_shoutbox";
+$use= mysql_fetch_array(mysql_query($user_sql));
+echo ":&nbsp;".$use["TOTAL"];
+?>
+
+
+</div>

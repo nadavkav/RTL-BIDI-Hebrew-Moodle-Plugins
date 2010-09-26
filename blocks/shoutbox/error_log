@@ -1,0 +1,14 @@
+[26-Mar-2010 15:38:02] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 2471
+[26-Mar-2010 15:41:47] PHP Warning:  Unexpected character in input:  ''' (ASCII=39) state=1 in /home/tikshuvp/public_html/moodle/course/lib.php on line 2504
+[26-Mar-2010 15:41:47] PHP Parse error:  syntax error, unexpected '&' in /home/tikshuvp/public_html/moodle/course/lib.php on line 2504
+[26-Mar-2010 15:43:09] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 916
+[26-Mar-2010 15:43:11] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 2768
+[26-Mar-2010 15:44:32] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 2779
+[26-Mar-2010 15:58:38] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 939
+[26-Mar-2010 15:58:40] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 2666
+[15-Aug-2010 22:17:43] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 2637
+[15-Aug-2010 22:22:02] PHP Warning:  Unexpected character in input:  ''' (ASCII=39) state=1 in /home/tikshuvp/public_html/moodle/course/lib.php on line 1779
+[15-Aug-2010 22:22:02] PHP Parse error:  syntax error, unexpected '<' in /home/tikshuvp/public_html/moodle/course/lib.php on line 1779
+[30-Aug-2010 22:04:50] PHP Parse error:  syntax error, unexpected $end in /home/tikshuvp/public_html/moodle/course/lib.php on line 893
+[30-Aug-2010 22:05:09] PHP Warning:  Unterminated comment starting line 2635 in /home/tikshuvp/public_html/moodle/course/lib.php on line 2635
+[30-Aug-2010 22:05:09] PHP Fatal error:  fatal flex scanner internal error--end of buffer missed in /home/tikshuvp/public_html/moodle/course/lib.php on line 2635

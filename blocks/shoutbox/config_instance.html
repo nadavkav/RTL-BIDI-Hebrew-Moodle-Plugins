@@ -1,0 +1,39 @@
+<table cellpadding="9" cellspacing="0">
+<tr valign="top">
+    <td align="right"><?php print_string('configtitle', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="title" size="30" value="<?php echo isset($this->config->title)?($this->config->title):get_string('blockname', 'block_shoutbox'); ?>" /> </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string('noofrow', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="row" size="30" value="<?php echo isset($this->config->row)?($this->config->row):'4'; ?>" /> </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string('row_allow', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="char_allow" size="30" value="<?php echo isset($this->config->char_allow)?($this->config->char_allow):'55'; ?>" /> </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string('noofcharbreak', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="noofcharbreak" size="30" value="<?php echo isset($this->config->noofcharbreak)?($this->config->noofcharbreak):'33'; ?>" /> </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string('secondrefresh', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="secondrefresh" size="30" value="<?php echo isset($this->config->secondrefresh)?($this->config->secondrefresh):'1000'; ?>" /> </td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><?php print_string('bgcolor1', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="bgcolor1" size="30" value="<?php echo isset($this->config->bgcolor1)?($this->config->bgcolor1):'#FFFFFF'; ?>" /> </td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><?php print_string('bgcolor2', 'block_shoutbox'); ?>:</td>
+    <td><input type="text" name="bgcolor2" size="30" value="<?php echo isset($this->config->bgcolor2)?($this->config->bgcolor2):'#FFFFFF'; ?>" /> </td>
+</tr>
+
+
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string('savechanges') ?>" /></td>
+</tr>
+</table>
+
