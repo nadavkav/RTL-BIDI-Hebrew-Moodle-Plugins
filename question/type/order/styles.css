@@ -1,0 +1,48 @@
+ul.draglist {
+    position: relative;
+/*     width: 90%; */
+    border: 1px solid black;
+    list-style: none;
+    margin: 10px;
+    padding: 10px;
+}
+
+ul.draglist li {
+    margin: 6px;
+    padding: 4px;
+    cursor: move;
+    background-color: white;
+    border:1px solid black;
+/*     float:left; */
+}
+
+ul.deactivateddraglist {
+    position: relative;
+    width: 100%;
+    border: 1px solid black;
+    list-style: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: lightgray;
+}
+
+ul.deactivateddraglist li {
+    margin: 6px;
+    padding: 4px;
+    cursor: default;
+    background-color: lightgray;
+    border:1px solid gray;
+}
+
+
+ul.inline li {
+    display: inline;
+    line-height: 5ex;
+}
+
+}
+
+ul.readonly li {
+    cursor: default;
+}
+

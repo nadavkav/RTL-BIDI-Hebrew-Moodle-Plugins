@@ -1,0 +1,129 @@
+<div class="qtext">
+  <?php echo $questiontext; ?>
+</div>
+
+<?php if ($image) { ?>
+  <img class="qimage" src="<?php echo $image; ?>" alt="" />
+<?php } ?>
+
+<div id="q<?php echo $question->id ?>answer" class="ablock clearfix">
+
+<?php if (!$fallbackonly) { ?>
+<script type="text/javascript">
+//<![CDATA[
+
+function insertQuestion<?php echo $question->id ?>() {
+
+var Dom = YAHOO.util.Dom;
+
+var questiondiv = document.getElementById("q<?php echo $question->id ?>");
+var questioncontentdiv = document.getElementById("q<?php echo $question->id ?>answer");
+
+var answerdiv = document.createElement("div");
+Dom.addClass(answerdiv, "answer");
+
+var ul = document.createElement("ul");
+ul.setAttribute("id", "<?php echo $ulname ?>");
+Dom.addClass(ul, "<?php echo $ulclass ?>");
+
+var input = null;
+<?php foreach ($inputs as $input) { ?>
+input = createElementWithName("input", "<?php echo $input['name'] ?>");
+input.setAttribute("type", "hidden");
+input.setAttribute("id", "<?php echo $input['id'] ?>");
+input.setAttribute("value", "<?php echo $input['value'] ?>");
+answerdiv.appendChild(input);
+
+<?php } ?>
+
+var li = null;
+var img = null;
+<?php foreach ($lis as $li) { ?>
+li = document.createElement("li");
+Dom.addClass(li, "<?php echo $li['class']?>");
+li.setAttribute("id", "<?php echo $li['id']?>");
+<?php if (isset($li['ishtml'])) { ?>
+li.innerHTML = "<?php echo $li['text']?>";
+<?php } else { ?>
+li.appendChild(document.createTextNode("<?php echo $li['text']?>"));
+<?php } ?>
+<?php if (isset($li['feedbackimgsrc'])) { ?>
+li.appendChild(document.createTextNode(" "));
+img = document.createElement("img");
+img.setAttribute("src", "<?php echo $li['feedbackimgsrc'] ?>");
+img.setAttribute("alt", "<?php echo $li['feedbackimgalt'] ?>");
+Dom.addClass(img, "<?php echo $li['feedbackimgclass'] ?>");
+li.appendChild(img);
+<?php } ?>
+
+ul.appendChild(li);
+
+<?php } ?>
+
+answerdiv.appendChild(ul);
+
+input = createElementWithNameandType("input", "<?php echo $defaultresponsename ?>", "checkbox");
+input.setAttribute("id", "cb<?php echo $defaultresponsename ?>");
+<?php if ($defaultresponsechecked) { ?>
+input.setAttribute("checked", "checked");
+input.setAttribute("defaultChecked", "checked");
+<?php } ?>
+
+answerdiv.appendChild(input);
+answerdiv.appendChild(document.createTextNode("<?php echo $defaultresponsestr ?>"));
+
+submitbutton = document.getElementsByName("<?php echo $nameprefix ?>submit");
+
+if (submitbutton[0]) {
+    questioncontentdiv.insertBefore(answerdiv, submitbutton[0]);
+}
+else {
+    questioncontentdiv.appendChild(answerdiv);
+}
+
+<?php if (!$options->readonly) { ?>
+ddOrderingInit(<?php echo $liarraystring ?>, "q<?php echo $question->id ?>");
+<?php } ?>
+
+}
+
+YAHOO.util.Event.onDOMReady(insertQuestion<?php echo $question->id ?>);
+
+<?php
+foreach ($jsinit as $jsinitline) {
+    echo $jsinitline."\n";
+}
+?>
+//]]>
+</script>
+<noscript>
+<?php } ?>
+  <table class="answer">
+    <?php $row = 1; foreach ($anss as $answer) { ?>
+      <tr class="<?php echo 'r'.$row = $row ? 0 : 1; ?>">
+        <td class="c0 text">
+          <?php echo $answer->text; ?>
+        </td>
+        <td class="c1 control <?php echo $answer->class ?>">
+          <?php echo $answer->control; ?>
+        </td>
+        <td>
+            <?php echo $answer->feedbackimg; ?>
+        </td>
+        <?php if (!empty($answer->feedback)) { ?>
+        <td class="c0 feedback">
+          <?php echo $answer->feedback; ?>
+        </td>
+        <?php } ?>
+      </tr>
+    <?php } ?>
+    </table>
+<?php if (!$fallbackonly) { ?>
+</noscript>
+<?php } ?>
+
+<input type="hidden" name="<?php echo $defaultresponsename ?>" value="0" />
+
+  <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+
+</div>

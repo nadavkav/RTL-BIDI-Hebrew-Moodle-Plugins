@@ -1,0 +1,2 @@
+[17-Apr-2010 01:03:30] PHP Fatal error:  Class 'question_edit_form' not found in /home/tikshuvp/public_html/moodle/question/type/order/edit_order_form.php on line 15
+[17-Apr-2010 01:03:35] PHP Fatal error:  Class 'default_questiontype' not found in /home/tikshuvp/public_html/moodle/question/type/order/questiontype.php on line 22
