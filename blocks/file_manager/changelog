@@ -1,0 +1,13 @@
+2008112402:
+  updated SQL query for selecting users from courses by roles (when sharing)
+  file: print_lib.php ( http://tracker.moodle.org/browse/CONTRIB-2380 )
+  //nadavkav patch
+
+  support for rtl visual alignments in view.php
+  //nadavkav patch
+
+  updated hebrew Translation
+  //nadavkav patch
+
+  disable site wide sharig
+  //nadavkav patch

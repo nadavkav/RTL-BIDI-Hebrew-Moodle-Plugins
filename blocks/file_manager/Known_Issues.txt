@@ -1,0 +1,25 @@
+//Known_issues.txt for Myfiles beta release
+//Michael Avelar
+//1.25.06
+
+// Zipping files issues
+	- unzipping files will overwrite other files in the directory without warning!
+	- zipping a file will overwrite another zip of the same name without warning
+	- 'moodlezip' feature is currently inactive
+	- unzipping large/complex directories may not unzip correctly... 
+	
+
+// Sharing issues	
+	- Shared page will show all shared users...large courses may take a long time to load
+
+// Additional issues
+	- Help file implementation is in the works
+
+------------------------------------------------------
+
+//Known_issues.txt for Myfiles beta release
+// Michael Daudignon & Romain Lombardo & Valery Fremaux
+// 1.30
+
+// Block issues outside a course
+If the block is added outside any courses, it may show an error message "Course id not valid", but moodle will work fine. Inside a course, it will allways works.

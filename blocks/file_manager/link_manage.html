@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Link Management</title>
+</head>
+<script language="javascript">
+	<!--
+	function unlock(click) {
+			if (click.value == 'file') {
+				document.linkform.linkfile.disabled = false;
+				document.linkform.linkurl.disabled = true;
+				document.linkform.linkurl.value = '';
+			} else {
+				document.linkform.linkfile.disabled = true;
+				document.linkform.linkurl.disabled = false;
+			}
+	}
+	-->
+</script>
+
+<?php 
+echo fm_print_js_popup(); 
+echo fm_print_js_sendform('cat_manage.php?id='.$id.'&amp;groupid='.$groupid.'&amp;from=link_manage&amp;fromid='.$foldid.'&amp;rootdir='.$rootdir, 'linkform'); 
+
+$tmp = '';
+$urlchecked = '';
+$filechecked = '';
+$urlfield = '';
+$filefield = '';
+if ($store->radioval == 'url') {
+	$tmp = $store->url;
+	$urlchecked = 'checked';
+	$filefield = 'disabled';
+} else {
+	$filechecked = 'checked';
+	$urlfield = 'disabled';
+}		
+?>
+
+<body>
+<br/><center>
+<form name="linkform" action="link_manage.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" value="<?php p($id) ?>" />
+<input type="hidden" name="groupid" value="<?php p($groupid) ?>" />
+<input type="hidden" name="linkid" value="<?php p($linkid) ?>" />
+<input type="hidden" name="rootdir" value="<?php p($rootdir) ?>" />
+<input type="hidden" name="popup=" value="<?php p($popup) ?>" />
+<table id="linktable" cellspacing="5">
+
+<?php $cats = fm_get_cat_list($groupid);  ?>
+
+<tr>
+    <td align="right"><b><?php 
+		$str = get_string('namename','block_file_manager').":";
+	    if ($missinginput['name'] == true) {
+			$str = "<span class=\"red\">*{$str}</span>";
+		}
+		echo $str;
+	 ?></b></td>
+	 <td align="left">
+	    <input type="text" size="45" name="linkname" value="<?php echo $store->name; ?>" />
+	 </td>
+</tr>
+<tr>
+    <td align="right">
+	    <b><?php echo get_string('catname','block_file_manager').":"; ?></b>
+	</td>
+	<td align="left">
+	    <?php echo choose_from_menu($cats, 'linkcat', $store->category, '', '', '', true); ?>
+	</td>
+</tr>
+<?php 
+if (!isset($linkrec)) {	
+?>
+<tr>
+    <td align="right">
+        <input type="radio" name="rad" value="file" onclick="unlock(this);" <?php echo $filechecked; ?> />
+        <b><?php 
+		$str = get_string('addfile','block_file_manager'); 
+		if ($filechecked == 'checked' && $missinginput['link'] == true) {
+			$str = "<span class=\"red\">*{$str}</span>";
+		}
+		echo $str;
+		?>:</b>
+	</td>
+	<td align="left">
+	    <input type="file" size="35" name="linkfile" <?php echo $filefield; ?> />
+	</td>
+</tr>
+<?php 
+} 
+if ($dupfile == true) {
+?>
+<tr>
+    <td align="right">
+        <span class="red">*<?php print_string('rename','block_file_manager') ?>: </span>
+    </td>
+    <td align="left">
+        <input type="text" name="linkrename" value="" />
+    </td>
+</tr>
+<?php
+}
+if (!isset($linkrec) || ($linkrec->type == TYPE_URL)) {
+?>
+<tr>
+    <td align="right">
+        <input type="radio" name="rad" value="url" onclick="unlock(this);" <?php echo $urlchecked; ?> />
+        <b><?php 
+        $str = get_string('addurl','block_file_manager'); 
+		if ($urlchecked == 'checked' && $missinginput['link'] == true) {
+			$str = "<span class=\"red\">*{$str}</span>";
+		}
+		echo $str;
+		?>:</b>
+	</td>
+	<td align="left">
+	    <input type="text" size="45" name="linkurl" value="<?php echo $tmp; ?>" <?php echo $urlfield; ?> />
+	</td>
+</tr>
+<?php 
+} elseif ($linkrec->type == TYPE_FILE || $linkrec->type == TYPE_ZIP) { 
+?>
+<tr>
+	<td align="center">
+		<b><?php echo get_string('changefilename','block_file_manager').":";?></b>
+	</td>
+	<td align="left">
+		<?php $tmpfile = get_record('fmanager_link','id',$linkid); ?>
+		<input type="text" size="25" name="changefilename" value="<?php echo $tmpfile->link; ?>" />
+		<?php if ($linkrec->type == TYPE_ZIP) { ?>
+		<input type="button" name="viewzip" value="<?php echo get_string('btnviewzip','block_file_manager'); ?>" onClick="return popup(<?php echo "'zip.php?id=$id&amp;groupid={$groupid}&amp;zipid=$linkid&amp;what=\'viewzip\''"; ?>)" /> 
+		<?php } ?>
+	</td>
+</tr>
+<?php 
+} 
+?>
+<tr valign="top">
+    <td align="right">
+        <b><?php echo get_string('descname','block_file_manager'); ?>:</b>
+    </td>
+    <td align="left">
+        <textarea rows="7" cols="40" name="linkdesc"><?php echo $store->description; ?></textarea>
+    </td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+<?php 
+if ($linkid != NULL) {
+?>
+<input type="submit" name="change" value="<?php echo get_string('btnchange','block_file_manager') ?>">&nbsp;&nbsp;
+<?php 
+} else {   
+?>
+<input type="submit" name="add" value="<?php echo get_string('btnaddlink','block_file_manager') ?>">&nbsp;&nbsp;
+<?php 
+}
+?>
+<input type="submit" name="cancel" value="<?php echo get_string('btncancel','block_file_manager') ?>">&nbsp;&nbsp;
+<?php 
+if ($linkrec && $linkrec->type == TYPE_ZIP) {
+?>
+<input type="submit" name="unzip" value="<?php echo get_string('btnunzip','block_file_manager') ?>">
+<?php 
+}
+?> 
+</form>
+</center>

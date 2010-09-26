@@ -1,0 +1,83 @@
+<?php 
+echo fm_print_js_sendform('cat_manage.php?id='.$id.'&amp;groupid='.$groupid.'&amp;from=folder_manage&amp;fromid='.$foldid.'&amp;rootdir='.$rootdir, 'foldform'); 
+?>
+
+<center>
+<!--
+<form name="foldform" action="<?php echo 'folder_manage.php?id='.$id.'&amp;from='.$from.'&amp;fromid='.$fromid.'&amp;rootdir='.$rootdir ?>" method="post" enctype="multipart/form-data"> correction : from et fromid undefined inutile ? 
+ -->
+<form name="foldform" action="folder_manage.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" value="<?php p($id); ?>" />
+<input type="hidden" name="groupid" value="<?php p($groupid); ?>" />
+<input type="hidden" name="rootdir" value="<?php p($rootdir); ?>" />
+<table>
+
+<tr>
+    <td align="right" nowrap>
+        <?php 
+            if ($dupname == true) {
+        		echo '<span class="error">';
+        	}
+        	echo "<b>". get_string('foldername', 'block_file_manager')."</b>:"; 
+        	if ($dupname == true) {
+        		echo '</span>';
+        	}
+        	$cats = fm_get_cat_list($groupid);
+        	?>
+
+<?php
+if ($foldid == NULL) { 
+        ?>
+    </td>
+    <td align="left">
+        <input type="text" name="foldername" value="<?php echo $foldername ?>">
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <b><?php echo get_string('catname','block_file_manager') ?></b>:
+	</td>
+	<td align="left">
+	    <?php
+	        echo choose_from_menu($cats, 'foldercat', 0, '', '', '', true); 
+	    ?>
+	</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+    <input type="submit" name="submit" value="<?php echo get_string('btncreate','block_file_manager') ?>"> &nbsp;&nbsp;
+	<input type="submit" name="cancel" value="<?php echo get_string('btncancel','block_file_manager') ?>">
+<?php 
+} else {  	
+	$tmp = get_record('fmanager_folders', 'id', $foldid);
+?>
+
+	</td>
+	<td align="left">
+	    <input type="text" name="foldername" value="<?php echo $tmp->name ?>" />
+	    <input type="hidden" name="foldid" value="<?php echo $foldid ?>" />
+	</td>
+</tr>
+<tr>
+    <td align="right"><b><?php echo get_string("catname",'block_file_manager') ?></b>:</td>
+    <td align="left">
+	    <?php
+	        echo choose_from_menu($cats, 'foldercat', $tmp->category, '', '', '', true); 
+	    ?>
+	</td>
+</tr>
+
+</table>
+
+<br/><br/>
+    <input type="submit" name="submit" value="<?php echo get_string('btnchange','block_file_manager') ?>"> &nbsp;&nbsp;
+	<input type="submit" name="cancel" value="<?php echo get_string('btncancel','block_file_manager') ?>">
+<?php 
+}  
+?>
+
+</form>
+</center>

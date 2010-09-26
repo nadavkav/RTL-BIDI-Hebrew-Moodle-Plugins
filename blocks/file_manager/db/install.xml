@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/file_manager/db" VERSION="20080617" COMMENT="XMLDB file for Moodle blocks/file_manager"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="fmanager_link" COMMENT="fmanager_link table retrofitted from MySQL" NEXT="fmanager_categories">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="ownertype"/>
+        <FIELD NAME="ownertype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="0 for user, 1 for group, 2 for grouping" PREVIOUS="owner" NEXT="type"/>
+        <FIELD NAME="type" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="ownertype" NEXT="folder"/>
+        <FIELD NAME="folder" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="type" NEXT="category"/>
+        <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="folder" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="category" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="link"/>
+        <FIELD NAME="link" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="description" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="link"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fmanager_link"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fmanager_categories" COMMENT="fmanager_categories table retrofitted from MySQL" PREVIOUS="fmanager_link" NEXT="fmanager_folders">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="ownertype"/>
+        <FIELD NAME="ownertype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="0 for user, 1 for group, 2 for grouping" PREVIOUS="owner" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="ownertype" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fmanager_categories"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fmanager_folders" COMMENT="fmanager_folders table retrofitted from MySQL" PREVIOUS="fmanager_categories" NEXT="fmanager_shared">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="ownertype"/>
+        <FIELD NAME="ownertype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="0 for user, 1 for group, 2 for grouping" PREVIOUS="owner" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="ownertype" NEXT="category"/>
+        <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="path"/>
+        <FIELD NAME="path" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="category" NEXT="pathid"/>
+        <FIELD NAME="pathid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="path" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="pathid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fmanager_folders"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fmanager_shared" COMMENT="fmanager_shared table retrofitted from MySQL" PREVIOUS="fmanager_folders" NEXT="fmanager_admin">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="ownertype"/>
+        <FIELD NAME="ownertype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="0 for user, 1 for group, 2 for grouping" PREVIOUS="owner" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="ownertype" NEXT="type"/>
+        <FIELD NAME="type" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="sharedlink"/>
+        <FIELD NAME="sharedlink" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="type" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sharedlink" NEXT="viewed"/>
+        <FIELD NAME="viewed" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="userid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fmanager_shared"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fmanager_admin" COMMENT="fmanager_admin table retrofitted from MySQL" PREVIOUS="fmanager_shared">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="usertype"/>
+        <FIELD NAME="usertype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="maxupload"/>
+        <FIELD NAME="maxupload" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="usertype" NEXT="maxdir"/>
+        <FIELD NAME="maxdir" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="maxupload" NEXT="enable_fmanager"/>
+        <FIELD NAME="enable_fmanager" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="maxdir" NEXT="allowsharing"/>
+        <FIELD NAME="allowsharing" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="enable_fmanager" NEXT="sharetoany"/>
+        <FIELD NAME="sharetoany" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="allowsharing"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fmanager_admin"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

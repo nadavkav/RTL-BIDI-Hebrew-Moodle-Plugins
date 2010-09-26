@@ -1,0 +1,8 @@
+/***
+***For file-manager table-layout (aligning checkbox in header first cell)
+***/
+.generaltable .header input {
+    vertical-align: top;
+    position: relative;
+    top: -3px;
+}
