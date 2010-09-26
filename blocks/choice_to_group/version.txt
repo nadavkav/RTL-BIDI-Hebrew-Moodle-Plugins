@@ -1,0 +1,6 @@
+/**
+   @author Jochen Lackner, Markus Pusswald
+   @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*/
+
+Version 1.0
