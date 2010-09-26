@@ -1,0 +1,33 @@
+Drag and Drop ChangeLog
+
+2008-06-05 Version 2008060502 (by Harry Winkelmann, Jean-Michel Védrine, Andreas Grabs)
+* We have fully qualified URIs in all scripts.
+* Including the dragdrop yui libs in the dragdropshow.tpl template by using
+  a new function get_view_tpl_yui_libs() in dragdrop.php.
+  - We are waiting until the YAHOO.util.Event.onDOMReady() event.
+  - Afterwards we create and initialize the GapImages.
+  - This is much better than tha ugly document.write method of javascript in script.js
+* Deleted script.js at all. We don't need it anymore.
+* Added new Databasefield for placing the mediafiles below or right beside the background.
+* Added import/export functionality.
+
+2008-06-05 Version 2008060501 (by Harry Winkelmann)
+* Added new Databasefield for arranging the mediafiles in a grid.
+  You now can select if all media is in one row or one or several columns.
+* All javascript rewrite to make it compatible with moodles yui libs (version 2.3).
+* New javascript methods for arranging the medias and hotspots.
+  - Media moves back to startposition if dropped on invalid target.
+  - Hotspots are moved AND RESIZED via drag and drop webinterface (yui libs version 2.5.2).
+* Plugin installs and upgrades automatically.
+  No codechanges in any moodle libs are necessary.
+* Added new function get_arrange_tpl_yui_libs() in dragdrop.php for getting the htmltext
+  which includes the 2.5.2 yui libs in the dragdroparrange.tpl template.
+  - this function should notice when the moodle yui libs are available and take them.
+* Complete rewrite of the view (dragdropshow.tpl) and arrange (dragdroparrange.tpl) templates.
+* Deleted a lot of original code in dragdrop.php that was responsible for the old
+  javascript implementation. Hopefully not too much...
+* Including the dragdrop yui libs in the dragdropshow.tpl template by using the 
+  document.write method of javascript in the script.js file. 
+  This is a little bit ugly but I didn't know a better way.
+* Added some translation strings and translated them also to german language.
+* Added some code for workaround for bug (typo) in /question/format/qti2/qt_common.php

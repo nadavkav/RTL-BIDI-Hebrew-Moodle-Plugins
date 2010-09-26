@@ -1,0 +1,2 @@
+[17-Apr-2010 20:49:19] PHP Fatal error:  Class 'question_edit_form' not found in /home/tikshuvp/public_html/moodle/question/type/dragdrop/edit_dragdrop_form.php on line 16
+[17-Apr-2010 20:49:23] PHP Fatal error:  Class 'default_questiontype' not found in /home/tikshuvp/public_html/moodle/question/type/dragdrop/questiontype.php on line 42
