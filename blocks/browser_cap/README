@@ -1,0 +1,77 @@
+
+This block allows a teacher to indicate which browser plug-ins 
+students are likely to require in the course based on the content they 
+are intending to include. The plug-ins they choose are stored against 
+the instance of the block for the course the block has been added to.
+
+Students will see a tick or a cross against each one of the plug-ins 
+selected indicating whether or not their browser seems to support the 
+plug-in.
+
+There is no embedded help for users as to how to locate or install any 
+missing plug-ins, its simply an indication as to whether they seem to 
+have them currently installed.
+
+
+Implementation details:
+----------------------
+
+This solution as implemented is to use the navigator.* methods 
+supported by Mozilla, Firefox and early IE browsers to establish if 
+support may be available. And to create an ActiveX object in later IE 
+versions with some VBScript. Although the navigator.* method is not as 
+reliable it gives a  easonable indication without the overhead of 
+actually instantiating each individual object type.
+
+Most comprehensive plug-in detection solutions achieve detection 
+through attempting to instantiate an instance of the object in 
+question by including an <object> tag in the output, then checking to 
+see if that object exists or is able to be queried through its 
+methods/properties. If not the detector assumes the plug-in is not 
+available or is disabled.
+
+The instantiation method is effective, but also places an increased 
+processing and network burden on the browser, and potentially the 
+back-end server, which may not be appropriate on a page which is 
+heavily or frequently visited.
+
+The block does not require any additional database fields or tables 
+and should be supported by any backend Moodle version >= 1.5 (has been 
+specifically tested in 1.7, 1.8 & 1.9). It has also been tested in 
+Javascript enabled browsers IE7, FF2 and Safari3 (a warning is 
+presented in the block to the user if Javascript not enabled).
+
+Development of this block is discussed here:
+  http://moodle.org/mod/forum/discuss.php?d=94932
+
+
+Possible future changes to this block:
+--------------------------------------
+
+ o check for specific versions of plugins (lots of work)
+ o inspect uploaded or linked content in a course and automatically 
+populate the plug-in list based on extensions
+ o a page with instructions or links to installers for each plug-in
+ o integration with the Moodle check_browser_version() sub
+ o check for XML support (ie NN7+, IE6+, FF1+ etc)
+
+
+Other plug-detection approaches:
+--------------------------------
+
+Jamie Pratt describes using the instantiation method to detect the 
+flash player in this thread:
+  http://moodle.org/mod/forum/discuss.php?d=20943
+
+Also mentioned is Hixie's workaround for the <embed> element missing 
+in HTML4 problem:
+  http://ln.hixie.ch/?start=1081798064&count=1
+
+California State University - Web Browser Check Up
+  http://ilearn.csumb.edu/BrowserTestFiles/index.php
+
+moock fpi - flash detection
+  http://moock.org/webdesign/flash/detection/moockfpi/
+
+Detecting plugins in Internet Explorer
+  http://www.builtfromsource.com/2007/06/26/

@@ -1,0 +1,89 @@
+<p>Select the browser plug-ins you would like to be checked for in the block. Students in your course will see a tick or a cross against each one of these items indicating whether their browser seems to support the plug-in or not.
+If you know you aren't using any of these files you may as well remove the tick against them.
+<strong>Please Note:</strong> this block will only give you an <em>indication</em> that the plug-in is present. It won't tell you which version
+</p>
+
+<table cellpadding="9" cellspacing="0">
+<tr valign="top">
+    <td>Adobe Acrobat</td> 
+    <td>
+        <input type="hidden" name="detect_adobe" value="0" />
+        <input type="checkbox" name="detect_adobe" value="1"
+        <?php if(!empty($this->config->detect_adobe)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>The Adobe Portable Document Format is a commonly used file format by web content creators. This format is easily viewable on multiple operating systems with the aid of a PDF plug-in such as Acrobat Reader. </td>
+</tr>
+<tr valign="top">
+    <td>Cookies</td> 
+    <td>
+        <input type="hidden" name="detect_cookies" value="0" />
+        <input type="checkbox" name="detect_cookies" value="1"
+        <?php if(!empty($this->config->detect_cookies)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>Cookies are an important requirement, and needed to login to Moodle so its not really necessary to check for them</td>
+</tr>
+<tr valign="top">
+    <td>Flash</td> 
+    <td>
+        <input type="hidden" name="detect_flash" value="0" />
+        <input type="checkbox" name="detect_flash" value="1"
+        <?php if(!empty($this->config->detect_flash)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>Like Java, Flash enables content authors to provide dynamic and interactive web content. You will need flash player to take advantage of these enhancements</td>
+</tr>
+<tr valign="top">
+    <td>Java</td> 
+    <td>
+        <input type="hidden" name="detect_java" value="0" />
+        <input type="checkbox" name="detect_java" value="1"
+        <?php if(!empty($this->config->detect_java)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>The Java runtime environment enables users to launch and view web applications created using the Java programming language. </td>
+</tr>
+<tr valign="top">
+    <td>JavaScript</td> 
+    <td>
+        <input type="hidden" name="detect_javascript" value="0" />
+        <input type="checkbox" name="detect_javascript" value="1"
+        <?php if(!empty($this->config->detect_javascript)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>Another important technology used in Moodle. As with Cookies however it is probably not necessary to check for this, and in fact this block wont operate without it</td>
+</tr>
+<tr valign="top">
+    <td>QuickTime Player</td> 
+    <td>
+        <input type="hidden" name="detect_quicktime" value="0" />
+        <input type="checkbox" name="detect_quicktime" value="1"
+        <?php if(!empty($this->config->detect_quicktime)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>If you have uploaded Quicktime files (.qt) into your class or are linking to them, the students will need to make sure they have this player installed</td>
+</tr>
+<tr valign="top">
+    <td>Real Player</td> 
+    <td>
+        <input type="hidden" name="detect_real" value="0" />
+        <input type="checkbox" name="detect_real" value="1"
+        <?php if(!empty($this->config->detect_real)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>If you have uploaded Real media files (.rm) into your class or are linking to them, the students will need to make sure they have this player installed.</td>
+</tr>
+<tr valign="top">
+    <td>Windows Media Player</td> 
+    <td>
+        <input type="hidden" name="detect_windowsmedia" value="0" />
+        <input type="checkbox" name="detect_windowsmedia" value="1"
+        <?php if(!empty($this->config->detect_windowsmedia)) echo 'checked="checked"'; ?> />
+    </td>
+    <td>If you have uploaded Windows media files (.wm or .wav) into your class or are linking to them, the students will need to make sure they have this player installed.</td>
+</tr>
+<tr>
+    <td colspan="2" align="center">
+        <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+</tr>
+</table>
+
+<h2>Technical Notes</h2>
+<p>This solution as implemented is to use the navigator.* methods supported by Mozilla, Firefox and early IE browsers to establish if support may be available. And to use the ActiveX object in later IE versions with some VBScript. Although not as reliable it gives a reasonable indication without the overhead of actually instantiating each individual object type.</p>
+<p>Most comprehensive plug-in detection solutions achieve detection through attempting to instantiate an instance of the object in question by including an <object> tag in the output, then checking to see if that object exists or is able to be queried through its methods/properties. If not the detector assumes the plug-in is not available or is disabled.</p>
+<p>This instantiation is effective, but also places a processing and network burden on the browser, and potentially the back-end server, which may not be appropriate on a page which is heavily or frequently visited.</p>
