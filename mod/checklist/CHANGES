@@ -1,0 +1,660 @@
+2010-09-23 Thursday 02:48  davosmith
+
+	* lang/pt_br_utf8/checklist.php: 
+	
+	file checklist.php was initially added on branch MOODLE_19_STABLE.
+
+2010-09-23 Thursday 02:48  davosmith
+
+	* lang/: en_utf8/checklist.php, pt_br_utf8/checklist.php: 
+	
+	Added Brazilian Portuguese, as provided by Marcelo Claro
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_purple.gif: 
+	
+	file colour_purple.gif was initially added on branch
+	MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_black.gif: 
+	
+	file colour_black.gif was initially added on branch
+	MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_green.gif: 
+	
+	file colour_green.gif was initially added on branch
+	MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_blue.gif: 
+	
+	file colour_blue.gif was initially added on branch
+	MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_orange.gif: 
+	
+	file colour_orange.gif was initially added on branch
+	MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:11  davosmith
+
+	* images/colour_red.gif: 
+	
+	file colour_red.gif was initially added on branch MOODLE_19_STABLE.
+
+2010-09-11 Saturday 04:10  davosmith
+
+	* locallib.php, styles.css, version.php, db/install.xml,
+	db/upgrade.php, locallib.php, styles.php, version.php,
+	db/install.xml, db/upgrade.php, images/colour_black.gif,
+	images/colour_blue.gif, images/colour_green.gif,
+	images/colour_orange.gif, images/colour_purple.gif,
+	images/colour_red.gif, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-2202 Now able to change the colour of the items in the
+	checklist
+
+2010-08-15 Sunday 04:32  davosmith
+
+	* locallib.php, locallib.php: 
+	
+	CONTRIB-2271 Switched to using Moodle date functions to ensure
+	correct timestamps generated & displayed
+
+2010-08-14 Saturday 00:59  davosmith
+
+	* locallib.php: 
+	
+	Fixed missing 'addslashes' when updating calendar events
+
+2010-07-06 Tuesday 18:54  davosmith
+
+	* README.txt, README.txt: 
+	
+	Update README file with some recent changes
+
+2010-07-06 Tuesday 18:48  davosmith
+
+	* README.txt: 
+	
+	Update README file with some recent changes
+
+2010-05-18 Tuesday 16:21  davosmith
+
+	* images/: add.png, cross_box.gif, empty_box.gif, optional.png,
+	progress.gif, remove.png, required.png, tick_box.gif: 
+	
+	CONTRIB-2005 Removing old images
+
+2010-05-18 Tuesday 16:14  davosmith
+
+	* lang/: de_utf8/checklist.php, en_utf8/checklist.php,
+	en_utf8/help/checklist/index.html,
+	en_utf8/help/checklist/mods.html, es_utf8/checklist.php,
+	ja_utf8/checklist.php, nl_utf8/checklist.php: 
+	
+	CONTRIB-2005 Removing old language files
+
+2010-05-18 Tuesday 16:01  davosmith
+
+	* backuplib.php, edit.php, icon.gif, index.php, lib.php,
+	locallib.php, mod_form.php, report.php, restorelib.php, styles.css,
+	styles.php, view.php, db/install.php, db/install.xml,
+	db/upgrade.php: 
+	
+	CONTRIB-2005 Updated checklist module to work with Moodle 2.0
+
+2010-05-18 Tuesday 00:06  arborrow
+
+	* index.php, report.php, db/access.php, db/install.xml,
+	db/upgrade.php, README.txt, backuplib.php, edit.php, icon.gif,
+	lib.php, restorelib.php, styles.php, version.php, view.php,
+	locallib.php, mod_form.php, images/optional.png, images/remove.png,
+	images/required.png, lang/ja_utf8/checklist.php, images/add.png,
+	images/cross_box.gif, images/empty_box.gif, images/progress.gif,
+	images/tick_box.gif, lang/en_utf8/checklist.php,
+	lang/en_utf8/help/checklist/index.html, lang/es_utf8/checklist.php,
+	lang/de_utf8/checklist.php, lang/en_utf8/help/checklist/mods.html,
+	lang/nl_utf8/checklist.php: 
+	
+	CONTRIB-2005 - adding 19stable branch of checklist module so that
+	HEAD can be used for preparing 2.0 migration
+
+2010-05-16 Sunday 15:36  davosmith
+
+	* lib.php: 
+	
+	Fixed comments not being deleted when checklists deleted
+
+2010-05-16 Sunday 15:36  arborrow
+
+	* lib.php: 
+	
+	file lib.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-05-12 Wednesday 00:55  davosmith
+
+	* lib.php: 
+	
+	CONTRIB-2055 Fixed PHP4-incompatible expression
+
+2010-05-07 Friday 01:23  davosmith
+
+	* lang/nl_utf8/checklist.php: 
+	
+	CONTRIB-1882 Dutch translation updated
+
+2010-05-07 Friday 01:23  arborrow
+
+	* lang/nl_utf8/checklist.php: 
+	
+	file checklist.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:28 +0000
+
+2010-05-03 Monday 22:25  davosmith
+
+	* locallib.php: 
+	
+	Fixed a number of minor typos causing error messages when
+	checklists had no items in them
+
+2010-05-03 Monday 22:25  arborrow
+
+	* locallib.php: 
+	
+	file locallib.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:26 +0000
+
+2010-05-03 Monday 17:49  davosmith
+
+	* lib.php, locallib.php: 
+	
+	CONTRIB-1959 Both overview and complete user reports now supported
+
+2010-05-03 Monday 15:47  davosmith
+
+	* backuplib.php, locallib.php, mod_form.php, restorelib.php,
+	styles.php, version.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1955 Teachers now able to add comments to a student's
+	checklist
+
+2010-05-03 Monday 15:47  arborrow
+
+	* backuplib.php: 
+	
+	file backuplib.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:25 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* restorelib.php: 
+	
+	file restorelib.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:25 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* styles.php: 
+	
+	file styles.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* db/install.xml: 
+	
+	file install.xml was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:24 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* mod_form.php: 
+	
+	file mod_form.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:26 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* db/upgrade.php: 
+	
+	file upgrade.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:24 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* lang/en_utf8/checklist.php: 
+	
+	file checklist.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-05-03 Monday 15:47  arborrow
+
+	* version.php: 
+	
+	file version.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-05-01 Saturday 23:39  davosmith
+
+	* backuplib.php, lib.php, restorelib.php: 
+	
+	CONTRIB-2033 Missing fields now included in backup/restore
+
+2010-04-27 Tuesday 05:20  davosmith
+
+	* locallib.php, styles.php, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1898 Students can now add a note to go with each of their
+	personal items
+
+2010-04-26 Monday 02:23  davosmith
+
+	* lib.php: 
+	
+	CONTRIB-2028 Checklist items with dates attached are now shown on
+	the 'my moodle' page
+
+2010-04-24 Saturday 03:48  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1897 Fixed date selection permanently disabled in browsers
+	other than Google Chrome
+
+2010-04-20 Tuesday 18:07  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1999 Added a line of javascript to automatically select the
+	textbox when adding/updating checklist items
+
+2010-04-20 Tuesday 05:41  davosmith
+
+	* lib.php, locallib.php, mod_form.php, version.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1897 Due dates added to course calendar (if checklist
+	option is set)
+
+2010-04-19 Monday 03:26  davosmith
+
+	* locallib.php, styles.php, version.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1897 Checklist items can now (optionally) display dates
+
+2010-04-18 Sunday 20:05  davosmith
+
+	* index.php, locallib.php, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1927 'Checklists' view now includes progress bars showing
+	the current user's progress through them
+
+2010-04-18 Sunday 20:05  arborrow
+
+	* index.php: 
+	
+	file index.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:24 +0000
+
+2010-04-07 Wednesday 23:20  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1970 Student names, in reports, now hyperlinked to student
+	profiles
+
+2010-03-18 Thursday 03:10  davosmith
+
+	* lib.php: 
+	
+	CONTRIB-1832 Fixed gradebook update code so it should now work with
+	Oracle databases (also tested successfully on MySQL)
+
+2010-03-17 Wednesday 06:36  davosmith
+
+	* lib.php, locallib.php, version.php, db/upgrade.php: 
+	
+	CONTRIB-1864 export percentage complete of required items to grade
+	book
+
+2010-03-17 Wednesday 02:48  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1877 Can now sort reports by first name / surname
+
+2010-03-16 Tuesday 02:54  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1913 Sort user items by position and id, to keep consistent
+	ordering
+
+2010-03-15 Monday 02:47  davosmith
+
+	* locallib.php, version.php: 
+	
+	CONTRIB-1868 Added static functions to allow progress bars to be
+	displayed outside of this plugin
+
+2010-03-13 Saturday 06:32  davosmith
+
+	* styles.php: 
+	
+	Fixed minor typo in css - 'background-repeate', instead of
+	'background-repeat'
+
+2010-03-06 Saturday 17:24  davosmith
+
+	* lang/nl_utf8/checklist.php: 
+	
+	CONTRIB-1885 Added Dutch translation - thanks to Pieter Wolters
+
+2010-03-04 Thursday 02:44  davosmith
+
+	* locallib.php, lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1886 Added option to switch between full details and
+	progress bars on the report view
+
+2010-03-03 Wednesday 06:03  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1883 Edit screen now remembers where you were editing
+	items, even if you move/delete another item
+
+2010-03-02 Tuesday 18:21  davosmith
+
+	* lang/de_utf8/checklist.php: 
+	
+	German translation updated - thanks again to Joachim Vogelgesang
+
+2010-03-02 Tuesday 18:21  arborrow
+
+	* lang/de_utf8/checklist.php: 
+	
+	file checklist.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:28 +0000
+
+2010-03-01 Monday 23:09  davosmith
+
+	* lang/ja_utf8/checklist.php: 
+	
+	Added Japanes language file - thanks to 畠中俊巳
+
+2010-03-01 Monday 23:09  arborrow
+
+	* lang/ja_utf8/checklist.php: 
+	
+	file checklist.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:26 +0000
+
+2010-03-01 Monday 06:17  davosmith
+
+	* lib.php, locallib.php, mod_form.php, styles.php, version.php,
+	db/install.xml, db/upgrade.php, images/cross_box.gif,
+	images/empty_box.gif, images/tick_box.gif,
+	lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1863 Teachers can now update checklists with
+	YES/NO/UNDECIDED marks
+
+2010-03-01 Monday 06:17  arborrow
+
+	* images/cross_box.gif: 
+	
+	file cross_box.gif was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-03-01 Monday 06:17  arborrow
+
+	* images/empty_box.gif: 
+	
+	file empty_box.gif was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-03-01 Monday 06:17  arborrow
+
+	* images/tick_box.gif: 
+	
+	file tick_box.gif was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-03-01 Monday 03:18  davosmith
+
+	* lang/en_utf8/checklist.php: 
+	
+	Fixed capitalisation in language strings
+
+2010-03-01 Monday 01:17  arborrow
+
+	* lang/es_utf8/checklist.php: 
+	
+	CONTRIB-1832 - updating Spanish language pack to include new
+	language strings
+
+2010-03-01 Monday 01:17  arborrow
+
+	* lang/es_utf8/checklist.php: 
+	
+	file checklist.php was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-03-01 Monday 00:58  davosmith
+
+	* lib.php, locallib.php, report.php, version.php, db/upgrade.php,
+	lang/en_utf8/checklist.php: 
+	
+	CONTRIB-1832 Teacher can now view a single student's tick marks via
+	a link on the report view
+
+2010-03-01 Monday 00:58  arborrow
+
+	* report.php: 
+	
+	file report.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:24 +0000
+
+2010-02-28 Sunday 05:18  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1861 Student checkmarks now submitted as an array, rather
+	than consecutively named values
+
+2010-02-28 Sunday 01:18  arborrow
+
+	* lang/es_utf8/checklist.php: 
+	
+	CONTRIB-1831 - adding Spanish language pack for checklist activity
+	module
+
+2010-02-27 Saturday 19:48  davosmith
+
+	* lang/de_utf8/checklist.php: 
+	
+	Added German language support - thanks to Joachim Vogelgesang
+
+2010-02-27 Saturday 07:56  davosmith
+
+	* README.txt: 
+	
+	Added relevant links to README.txt
+
+2010-02-27 Saturday 07:56  arborrow
+
+	* README.txt: 
+	
+	file README.txt was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-02-27 Saturday 06:19  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1877 (partial) added code, but not UI, to allow sorting
+	table by first/last name
+
+2010-02-27 Saturday 03:36  davosmith
+
+	* mod_form.php: 
+	
+	CONTRIB-1876 Add support for groupings
+
+2010-02-27 Saturday 02:28  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1875 Put the 'no guest access' message after the page
+	header
+
+2010-02-26 Friday 03:36  davosmith
+
+	* locallib.php: 
+	
+	Minor typo that prevented optional item status from saving
+
+2010-02-25 Thursday 23:18  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1849 Switched all 'checklist=XX' urls to 'id=XX' instead,
+	for consistency
+
+2010-02-25 Thursday 22:58  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1834 user items now counted as part of the 'all items'
+	progress bar (the 'required items' progress bar is unaffected)
+
+2010-02-25 Thursday 22:52  davosmith
+
+	* styles.php, images/progress.gif: 
+	
+	CONTRIB-1833 Gradient changed to avoid potentially confusing use of
+	colours
+
+2010-02-25 Thursday 22:52  arborrow
+
+	* images/progress.gif: 
+	
+	file progress.gif was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:27 +0000
+
+2010-02-25 Thursday 07:07  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1859 Missed one last 'stripslashes'
+
+2010-02-25 Thursday 06:55  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1860 Made the editing page box wider
+
+2010-02-25 Thursday 06:52  davosmith
+
+	* locallib.php: 
+	
+	CONTRIB-1859 Fixed database updates that had potential SQL
+	injection security issue in them
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* lang/en_utf8/help/checklist/mods.html: 
+	
+	file mods.html was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:28 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* lang/en_utf8/help/checklist/index.html: 
+	
+	file index.html was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:27 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* db/access.php: 
+	
+	file access.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:24 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* view.php: 
+	
+	file view.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* icon.gif: 
+	
+	file icon.gif was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* images/remove.png: 
+	
+	file remove.png was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:26 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* images/optional.png: 
+	
+	file optional.png was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:26 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* images/required.png: 
+	
+	file required.png was added on branch MOODLE_19_STABLE on
+	2010-05-17 16:06:26 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* images/add.png: 
+	
+	file add.png was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:27 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* edit.php: 
+	
+	file edit.php was added on branch MOODLE_19_STABLE on 2010-05-17
+	16:06:25 +0000
+
+2010-02-18 Thursday 23:38  arborrow
+
+	* edit.php, README.txt, backuplib.php, icon.gif, index.php,
+	lib.php, locallib.php, mod_form.php, report.php, restorelib.php,
+	styles.php, version.php, view.php, images/add.png,
+	images/optional.png, images/remove.png, images/required.png,
+	db/access.php, db/install.xml, db/upgrade.php, images/progress.gif,
+	lang/en_utf8/checklist.php, lang/en_utf8/help/checklist/index.html,
+	lang/en_utf8/help/checklist/mods.html: 
+	
+	CONTRIB-1831 - adding checklist module contributed and maintained
+	by Davo Smith
+
