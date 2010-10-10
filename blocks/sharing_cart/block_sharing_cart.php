@@ -220,7 +220,7 @@ var sharing_cart = new sharing_cart_handler({
         }
         $text[] = '</div>';
         
-        $text[] = '<div class="column c1" title="'.$item['text'].'">'.mb_substr($item['text'],0,30).'</div>';
+        $text[] = '<div class="column c1" title="'.$item['text'].'">'.mb_substr($item['text'],0,20,"UTF-8").'</div>';
         
         $text[] = '<span class="commands">';
         {
