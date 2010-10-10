@@ -1,0 +1,68 @@
+<style type="text/css">
+<!--
+#maincontent	{
+	float: left;
+	padding: 10px;
+	font-size: medium;
+	width: 95%;
+}
+#navlist
+{
+border-bottom: 1px solid #FFCC66;
+border-top: 1px solid #FFCC66;
+margin: 0px;
+margin-bottom: 30px;
+padding: 0px;
+padding-left: 180px;
+background-color: #FF9900;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+padding-bottom: 3px;
+padding-top: 3px;
+}
+
+#navlist a, #navlist a:link, #navlist a:visited
+{
+border: 1px solid #FF9900;
+padding: 1px;
+padding-left: 0.5em;
+padding-right: 0.5em;
+color: #000000;
+font-weight: bold;
+text-decoration: none;
+}
+
+#navlist a:hover, #navlist a:active, #navlist a:focus
+{
+border: 1px solid #000000;
+padding: 1px;
+padding-left: 0.5em;
+padding-right: 0.5em;
+text-decoration: none;
+}
+
+#navlist li
+{
+padding-right: 1px;
+display: inline;
+font-size: 13px;
+}
+
+#navlist ul
+{
+margin: 0px;
+padding: 0px;
+}
+
+#navlist #active a { background-color: #FFCC66; }
+
+#current a:link, #current a:visited, #current a:hover {
+	background-color: #FFCC66;
+} 
+
+#footer p {
+	text-align: center;
+	line-height: 0.3em;
+	font-size: small;
+}
+-->
+</style>

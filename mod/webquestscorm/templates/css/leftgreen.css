@@ -1,0 +1,86 @@
+<style type="text/css">
+<!--
+#maincontent	{
+	font-size: medium;
+	margin-left: 145px;
+	margin-right: 20px;
+}
+
+#navcontainer {
+	margin: 6px;
+	padding: 0;
+	float: left;
+}
+
+#navcontainer ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	}
+
+#navcontainer li	{
+	text-align: center;
+	border-top: solid #ddc;
+	border-bottom: solid #ddc 1px;
+	width: 100px;
+	margin: 0;
+	padding: 0;
+	font: 15px "Lucida Grande", "Lucida Sans Unicode", verdana, lucida, arial, helvetica, sans-serif;
+	color: #8f8fb5;
+	background: #fdf8f2;
+	border: 1px solid #ddc;
+}
+
+#navcontainer li a {
+	display: block;
+	font-weight: normal;
+	padding: 0;
+	border-left: 1px solid #ddc;
+	border-right: 1px solid #ddc;
+	background: #fdf8f2;
+	color: #334;
+	text-decoration: none;
+	width: 100px; 	/* False value for IE4-5.x/Win. */
+ 	voice-family: "\"}\""; 
+  	voice-family:inherit;
+	width: 98px;	/* You get it. Good value for compliant browers. */	
+	}
+
+html>#navcontainer li a {
+	width: 98px;	 /* Be nice to Opera */
+	}
+
+#navcontainer li a:hover {
+	font-weight: normal;
+	background: #669966;
+	color: #ffe;
+	border-left: 1px solid #669966;
+	border-right: 1px solid #669966;
+	text-decoration: none;
+	}
+
+#navcontainer li a:active {
+	font-weight: normal;
+	background: #996666;
+	color: #ffe;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	text-decoration: none;
+	}
+#current a:link, #current a:visited, #current a:hover {
+        /*/*/	font-weight: normal;
+	background: #669966;
+	color: #ffe;
+	border-left: 1px solid #669966;
+	border-right: 1px solid #669966;
+	text-decoration: none; /* */
+}
+
+#footer p {
+	text-align: center;
+	line-height: 0.3em;
+	font-size: small;
+}
+-->
+</style>

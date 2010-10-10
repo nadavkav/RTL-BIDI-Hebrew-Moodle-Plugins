@@ -1,0 +1,60 @@
+<style type="text/css">
+<!--
+#maincontent	{
+	font-size: medium;
+	margin-left: 145px;
+	margin-right: 20px;
+}
+
+#navcontainer {
+     margin: 6px;
+    	padding: 0;
+     width: 100px;
+     float: left;
+}
+
+#navcontainer ul {
+        margin: 0; /*removes indent IE and Opera*/
+        padding: 0; /*removes indent Mozilla and NN7*/
+        list-style-type: none; /*turns off display of bullet*/
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+}
+#navcontainer li {
+        margin: 0 0 3px 0;
+}
+
+#navcontainer a {
+        /*/*/display: block;
+        padding: 2px 2px 2px 24px;
+        border: 1px solid #333;
+        width: 100px;
+        background-color: #999;
+        background-image:  url(../images/l1_down.gif); /* */
+}
+
+#navcontainer a:link, #navcontainer a:visited {
+        color: #000;
+        /*/*/color: #EEE;
+        text-decoration: none; /* */
+}
+#navcontainer a:hover {
+        border: 1px solid #333;
+        background-color: #FF6600;
+        background-image:  url(../images/l1_over.gif);
+        color: #333;
+}
+#current a:link, #current a:visited, #current a:hover {
+        /*/*/border: 1px solid #333;
+        background-color: #FF6600;
+        background-image:  url(../images/l1_over.gif);
+        color: #333; /* */
+}
+
+#footer p {
+	text-align: center;
+	line-height: 0.3em;
+	font-size: small;
+}
+-->
+</style>

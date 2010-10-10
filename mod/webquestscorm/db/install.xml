@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/webquestscorm/db" VERSION="20081028" COMMENT="XMLDB file for Moodle mod/webquestscorm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="webquestscorm" COMMENT="Webquest module" NEXT="webquestscorm_submissions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table webquestscorm" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="timeavailable"/>
+        <FIELD NAME="timeavailable" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="grade" NEXT="timedue"/>        
+        <FIELD NAME="timedue" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timeavailable" NEXT="dueenable"/>                
+        <FIELD NAME="dueenable" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timedue" NEXT="dueyear"/>        
+        <FIELD NAME="dueyear" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dueenable" NEXT="duemonth"/>                
+        <FIELD NAME="duemonth" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dueyear" NEXT="dueday"/>        
+        <FIELD NAME="dueday" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="duemonth" NEXT="duehour"/>        
+        <FIELD NAME="duehour" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dueday" NEXT="dueminute"/>        
+        <FIELD NAME="dueminute" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="duehour" NEXT="availableenable"/>        												        
+        <FIELD NAME="availableenable" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dueminute" NEXT="availableyear"/>        
+        <FIELD NAME="availableyear" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availableenable" NEXT="availablemonth"/>                
+        <FIELD NAME="availablemonth" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availableyear" NEXT="availableday"/>        
+        <FIELD NAME="availableday" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availablemonth" NEXT="availablehour"/>        
+        <FIELD NAME="availablehour" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availableday" NEXT="availableminute"/>        
+        <FIELD NAME="availableminute" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availablehour" NEXT="preventlate"/>        												        
+        <FIELD NAME="preventlate" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="availableminute" NEXT="maxbytes"/>
+        <FIELD NAME="maxbytes" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="preventlate" NEXT="resubmit"/>
+        <FIELD NAME="resubmit" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="maxbytes" NEXT="emailteachers"/>
+        <FIELD NAME="emailteachers" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="resubmit" NEXT="template"/>
+        <FIELD NAME="template" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="emailteachers" NEXT="introduction"/>				
+        <FIELD NAME="introduction" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="template" NEXT="task"/>
+        <FIELD NAME="task" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="introduction" NEXT="process"/> 
+	  <FIELD NAME="process" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="task" NEXT="evaluation"/>       
+        <FIELD NAME="evaluation" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="process" NEXT="conclusion"/>
+        <FIELD NAME="conclusion" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="evaluation" NEXT="credits"/>  
+	<FIELD NAME="credits" TYPE="text" LENGTH="small" SEQUENCE="false" ENUM="false" PREVIOUS="conclusion" NEXT="timemodified"/>  
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="credits"/>        
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for webquestscorm"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>      
+    </TABLE>
+    <TABLE NAME="webquestscorm_submissions" COMMENT="Info about submitted assignments" PREVIOUS="webquestscorm">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="webquestscorm"/>
+        <FIELD NAME="webquestscorm" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="webquestscorm" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated" NEXT="numfiles"/>
+        <FIELD NAME="numfiles" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified" NEXT="data1"/>
+        <FIELD NAME="data1" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="numfiles" NEXT="data2"/>
+        <FIELD NAME="data2" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="data1" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="data2" NEXT="submissioncomment"/>
+        <FIELD NAME="submissioncomment" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="grade" NEXT="format"/>
+        <FIELD NAME="format" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="submissioncomment" NEXT="teacher"/>
+        <FIELD NAME="teacher" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="format" NEXT="timemarked"/>
+        <FIELD NAME="timemarked" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacher" NEXT="mailed"/>
+        <FIELD NAME="mailed" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timemarked"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for webquestscorm_submissions" NEXT="webquestscorm"/>
+        <KEY NAME="webquestscorm" TYPE="foreign" FIELDS="webquestscorm" REFTABLE="webquestscorm" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userid" UNIQUE="false" FIELDS="userid" NEXT="mailed"/>
+        <INDEX NAME="mailed" UNIQUE="false" FIELDS="mailed" PREVIOUS="userid" NEXT="timemarked"/>
+        <INDEX NAME="timemarked" UNIQUE="false" FIELDS="timemarked" PREVIOUS="mailed"/>
+      </INDEXES>
+    </TABLE>    
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert log_display" TYPE="insert" TABLE="log_display" COMMENT="Initial insert of records on table log_display">
+      <SENTENCES>
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('webquestscorm', 'view', 'webquestscorm', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('webquestscorm', 'add', 'webquestscorm', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('webquestscorm', 'update', 'webquestscorm', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('webquestscorm', 'view submission', 'webquestscorm', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('webquestscorm', 'upload', 'webquestscorm', 'name')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>  
+</XMLDB>

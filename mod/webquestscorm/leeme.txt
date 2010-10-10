@@ -1,0 +1,23 @@
+El módulo WebQuest-SCORM de Moodle ha sido desarrollado conjuntamente por Julia Tejerina, Oscar S‡nchez y Javier González. 
+Julia Tejernia ha sido la autora de la version 1 de WebQuest-SCORM, Oscar Sanchez y Javier González han desarrollado la versión 2.* bajo la tutela de Santiago Blanco, profesor de la Universidad de Valladolid.
+
+El módulo es totalmente funcional para todas las versiones actuales de moodle (25-4-2009), para cualquier duda consulte los hilos de los foros de moodle.org o p—ngase en contacto con:
+
+javigon.napster@gmail.com
+oscarsnchez@hotmail.com
+
+Manual de Instalacion
+
+La instalación del módulo WebQuest-SCORM se hace como la instalación de cualquier otro módulo de actividad en Moodle. Dado que se ha seguido una estructura en ‡rbol para los paquetes de idioma y ayuda, la instalaci—n se ha simplificado y se reduce a tan solo dos pasos. Haremos referencia a [htdocsmoodle] como la ruta hasta la carpeta de Moodle que contiene las p‡ginas web de Moodle.
+
+C.1	Carpeta webquestscorm:
+		#Copiar la carpeta webquestscorm en --> [htdocsmoodle] \mod
+
+C.2	Instalar el m—dulo WebQuest-SCORM:
+		#Pulsar sobre el enlace Notificaciones con credenciales de administrador
+C. 	En caso de instalar el m—dulo en Moodle 1.7.* o anterior, copiar el archivo mod.html que se encuentra en el directorio /previousversions
+	en el directorio raíz de webquestscorm
+	
+	
+	
+--> This module may be distributed under the terms of the General Public License (see http://www.gnu.org/licenses/gpl.txt for details <--
