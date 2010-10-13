@@ -29,6 +29,7 @@
 
     // Should we display on Course's Frontpage?
     if ($tab->displayfp == 1 ) {
+        $donotshowacitivity = true;
 
         // Include Special CSS, if defined by user
         echo '<style>'."\n";

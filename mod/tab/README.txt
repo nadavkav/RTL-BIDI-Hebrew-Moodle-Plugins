@@ -33,10 +33,21 @@ before the line:
     if ($mod->modname == "label") {
 
 add:
+    $donotshowacitivity = false;
     // Special Display of TAB module on fronpage of course (if enabled)
     if ($mod->modname=="tab") {
         include($CFG->dirroot.'/mod/tab/tablib.php');
     }
+
+in case you wish to hide the activity's name from the front page:
+
+  if (!$donotshowacitivity) { // hide activity name if it is displaying some kind of frontpage content (nadavkav)
+      $linkcss = $mod->visible ? "" : " class=\"dimmed\" ";
+      echo '<a '.$linkcss.' '.$extra.        // Title unnecessary!
+          ' href="'.$CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">'.
+          '<img src="'.$icon.'" class="activityicon" alt="" /> <span>'.
+          $instancename.$altname.'</span></a>';
+  }
 
 USING THE TAB MODULE
 -----------------------------
