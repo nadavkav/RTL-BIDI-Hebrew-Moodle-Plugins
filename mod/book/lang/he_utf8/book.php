@@ -1,7 +1,7 @@
 <?PHP // $Id: book.php,v 1.2.2.3 2008/08/13 23:22:34 skodak Exp $
 //Translated by Miki Alliel
 
-$string['modulename'] = 'ספר דיגיטלי';
+$string['modulename'] = 'ספר';
 $string['modulenameplural'] = 'ספרים';
 
 $string['toc'] = 'תוכן עניינים';
@@ -15,7 +15,7 @@ $string['customtitles'] = 'כותרות מותאמות אישית';
 $string['editingchapter'] = 'עריכת פרק';
 $string['chaptertitle'] = 'כותרת פרק';
 $string['content'] = 'תוכן';
-$string['subchapter'] = 'תת־פרק';
+$string['subchapter'] = 'תת-פרק';
 
 $string['numbering'] = 'מספור פרק';
 $string['numbering0'] = 'ללא';

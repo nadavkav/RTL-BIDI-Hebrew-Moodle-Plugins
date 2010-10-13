@@ -215,14 +215,14 @@ $generateimscp = ($allowexport) ? '<a title="'.get_string('generateimscp', 'book
 <table class="booktable" width="100%" cellspacing="0" cellpadding="2">
 
 <!-- subchapter title and upper navigation row //-->
-<tr>
-    <td style="width:<?php echo $tocwidth ?>px" valign="bottom">
+<tr class="toc">
+    <td class="toc" style="width:<?php echo $tocwidth ?>px" valign="bottom">
         <?php
         print_string('toc', 'book');
         echo $doimport;
         ?>
     </td>
-    <td>
+    <td class="actions">
         <div class="bookexport"><?php echo $printbook.$printchapter.$generateimscp ?></div>
         <div class="booknav"><?php echo $chnavigation ?></div>
     </td>
@@ -256,7 +256,7 @@ $generateimscp = ($allowexport) ? '<a title="'.get_string('generateimscp', 'book
         $content .= $chapter->content;
 
         $nocleanoption = new object();
-        $nocleanoption->noclean = true;
+        $nocleanoption->noclean = true; // (nadavkav) so Funland could be displayed without visual problems
         echo '<div class="book_content">';
         echo format_text($content, FORMAT_HTML, $nocleanoption, $course->id);
         echo '</div>';
