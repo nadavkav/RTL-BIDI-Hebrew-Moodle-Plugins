@@ -1,0 +1,135 @@
+<?php
+
+  global $CFG,$COURSE;
+  require_once($CFG->libdir.'/moodlelib.php');
+
+	$coursefolders = get_directory_list("$CFG->dataroot/$COURSE->id", $CFG->moddata,true,true,false);
+	$coursefolders_fixed['/'] = get_string('maincoursefolder','block_jquery_slideshow');
+	foreach($coursefolders as $folder) {
+		$coursefolders_fixed[$folder] = $folder."/";
+	}
+
+    // jQuery Transitions
+    $transitions = array('fade'=>'Fade','fadeZoom'=>'Fade & Zoom', 'blindX'=>'Blind X', 'blindY'=>'Blind Y'
+                        ,'scrollUP'=>'Scroll UP','scrollDown'=>'Scroll Down','scrollLeft'=>'Scroll Left','scrollRight'=>'Scroll Right'
+                        ,'wipe'=>'Wipe','zoom'=>'Zoom','growX'=>'Grow X','growY'=>'Grow Y');
+
+?>
+
+<table cellpadding="9" cellspacing="0">
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtitle', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="title" size="30" value="<?php echo $this->config->title; ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configcontent', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <?php print_textarea(true, 10, 50, 0, 0, 'text', $this->config->text); ?>
+    </td>
+  </tr>
+
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configimagedir', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <?php if (empty($this->config->imagedir) or $this->config->imagedir == '' ) {
+			choose_from_menu ($coursefolders_fixed, "imagedir", "/", "", "", "");
+	      } else {
+			choose_from_menu ($coursefolders_fixed, "imagedir", $this->config->imagedir, "", "", "");
+	    }
+		echo "<a target=\"_new\" href=\"$CFG->wwwroot/files/index.php?id=$COURSE->id\">".get_string('openinnewwindow','block_jquery_slideshow')."</a>";
+      ?>
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtransition', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <?php if (empty($this->config->transition) or $this->config->transition == '' ) {
+            choose_from_menu ($transitions, "transition", "fade", "", "", "");
+          } else {
+            choose_from_menu ($transitions, "transition", $this->config->transition, "", "", "");
+        }
+        echo '<a target="_new" href="http://malsup.com/jquery/cycle/browser.html">'.get_string('transitionbrowser','block_jquery_slideshow').'</a>';
+      ?>
+    </td>
+  </tr>
+
+  <!--tr valign="top">
+    <td align="right">
+      <?php print_string('configfilesfilter', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="filesfilter" size="30" value="<?php if (isset($this->config->filesfilter)) { echo $this->config->filesfilter; } else { echo 'png|jpeg|gif|jpg'; } ?>" style="direction:ltr;"/><br/>
+      <div>  <?php print_string('configfilesfilterinfo', 'block_jquery_slideshow'); ?> <br/></div>
+    </td>
+  </tr-->
+
+  <!--tr valign="top">
+    <td align="right">
+      <?php print_string('configwhattoinclude', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+        <?php print_checkbox('includejpeg' , '1' , $this->config->includejpeg , get_string('includejpeg', 'block_jquery_slideshow')); ?><br/>
+        <?php print_checkbox('includepng' , '1' , $this->config->includepng , get_string('includepng', 'block_jquery_slideshow')); ?><br/>
+        <?php print_checkbox('includegif' , '1' , $this->config->includegif , get_string('includegif', 'block_jquery_slideshow')); ?><br/>
+    </td>
+  </tr-->
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configtimeout', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="timeout" size="5" value="<?php if (isset($this->config->timeout)) { echo $this->config->timeout; } else { echo '4'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configwidth', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="width" size="5" value="<?php if (isset($this->config->width)) { echo $this->config->width; } else { echo '180'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configheight', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="height" size="5" value="<?php if (isset($this->config->height)) { echo $this->config->height; } else { echo '160'; } ?>" />
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td align="right">
+      <?php print_string('configmaxfiles', 'block_jquery_slideshow'); ?>:
+    </td>
+    <td>
+      <input type="text" name="maxfiles" size="5" value="<?php if (isset($this->config->maxfiles)) { echo $this->config->maxfiles; } else { echo '30'; } ?>" />
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+
+</table>
+
+<?php use_html_editor(); ?>
