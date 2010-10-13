@@ -1,0 +1,83 @@
+.Accordion {
+	border-left: solid 0px gray;
+	border-right: solid 0px black;
+	border-bottom: solid 0px gray;
+	overflow: hidden;
+	font-family: "Trebuchet MS";
+	font-size: 12px;
+}
+.AccordionPanel {
+	margin: 0px;
+	padding: 0px;
+}
+.AccordionPanelTab {
+	border-top: solid 0px black;
+	border-bottom: solid 0px gray;
+	padding: 2px;
+	padding-top: 7px;
+	cursor: pointer;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	height: 29px;
+	length: 746px;
+	background-image: url(accordian_images/accordianBar.png);
+	repeat: 0;
+	background-repeat: no-repeat;
+	position: inherit;
+	width: auto;
+	left: auto;
+	margin: 0px;
+	text-align: center;
+	text-indent: 24px;
+	color:#FFF;
+}
+.AccordionPanelContent {
+	overflow: auto;
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+	text-indent: 30px;
+}
+.AccordionPanelOpen .AccordionPanelTab {
+	/*background-color: #FFFFFF;*/
+}
+.AccordionPanelTabHover {
+	height: 29px;
+	length: 746px;
+	background-image: url(accordian_images/accordianBarRollover.png);
+	background-repeat: no-repeat;
+	color:#FFFFFF;
+}
+.AccordionPanelOpen .AccordionPanelTabHover {
+	color: #000000;
+}
+.AccordionFocused .AccordionPanelTab {
+	/*background-color: #FFFFFF;*/
+}
+.AccordionFocused .AccordionPanelOpen .AccordionPanelTab {
+	/*background-color: #FFFFFF;*/
+}
+.AccordionPanelTab a:selected {
+
+}
+
+/*  fix visual display of hidden paragraph  */
+.AccordionPanelTab {
+-moz-user-select:none;
+background-color:#EFEFEF;
+background-image:none;
+background-repeat:no-repeat;
+border-bottom:1px dotted gray;
+border-top:1px dotted black;
+color:#816700;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+height:auto;
+left:auto;
+margin:0;
+padding:2px;
+text-align:center;
+text-indent:0px;
+width:auto;
+}
