@@ -1,0 +1,217 @@
+<?php
+
+# $Id: questiontypes.html,v 1.3 2007/06/12 17:40:43 mchurch Exp $
+
+// Written by James Flemer
+// For eGrad2000.com
+// <jflemer@alum.rpi.edu>
+
+?>
+<a name="top"></a>
+<table bgcolor="#ffffff" border=2 width="98%"><tr><td>
+<p align="center"><b>Modificando un Cuestionario</b></p>
+<ul>
+    <li><a href="#new">Creando un nuevo Cuestionario</a></li>
+    <li><a href="#types">Ejemplos de tipos de Respuestas</a></li>
+    <li><a href="#analysis">Cruz Análisis</a></li>
+    <li><a href="#tabulation">Tabulación Cruzada</a></li>
+</ul>
+
+<hr>
+
+<ul>
+<li><h3><a name="new">Creando un nuevo cuestionario</a></h3>
+    <ol>
+    <li><b>Tab de Preguntas:</b>
+        <p>Entre el texto de su pregunta (Por ejemplo <em>Cual
+         es tu color favorito?</em>) en la caja 
+        <b>pregunta</b>. Como una opcion, puedes entrar un nombre en el
+        <b>Nombre de Campo</b> para esta pregunta.  Si se deja en blanco
+        uno sera generado.</p>
+
+        <p>Si deseas que la pregunta sea obligatoria
+        Seleccione <b>Si</b> en el campo <b>Obligatorio</b>.</p>
+
+        <p>Escoja el <b>Tipo de respuesta</b> para esta
+        Pregunta. [<a href="#types">Click aquí para ver Ejemplos</a>.]
+        Tipos diferentes posiblemente tendrán parámetros que cambian 
+        como funciona el cuestionario.  Consulte la tabla para el uso de 
+        los campos de <b>longitud</b> y <b>precisión</b>.</p>
+
+        <table border="0">
+          <tr><th align="left">Tipo</th><th align="left">Longitud</th><th align="left">Precisión</th></tr>
+          <tr><td colspan="3"><hr size="0" noshadow="true"></td></tr>
+          <tr><td>Si/No</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Texto</td><td>longitud</td><td>Longitud Maxima</td></tr>
+          <tr><td>Ensayo</td><td>columnas</td><td>Filas</td></tr>
+          <tr><td>Radio</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Checkboxes</td><td>min #</td><td>max # <em>(no implementado)</em></td></tr>
+          <tr><td>Dropdown</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Valor</td><td>1..N</td><td>Use "N/A"</td></tr>
+          <tr><td>Fecha</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Numérico</td><td>longitud</td><td>precisión</td></tr>
+        </table>
+
+        <p>Si deseas una respuesta que tiene opciones definidas,
+        complete una respuesta por linea en el fondo de la forma.
+        Si necesitas mas lineas haga un click en <b>Añadir una nueva linea</b>.
+        [Tipo de preguntas con opciones son: Check Boxes, Dropdown Box,
+        Radio Buttons, Valor.]  Para check boxes and radio
+        buttons, puedes entrar <tt>&quot;!other&quot;</tt>
+        en una linea para crear una opcion de llenar-el-blanco. 
+        Una caja &quot;Otro&quot; usa el aviso <em>Otro: </em>
+        por defecto, pero se puede configurar utilizando el 
+        comando de format:
+        <br><center><tt>!other=texto de aviso</tt></center></p>
+
+        <p>Añada mas preguntas por medio de la selección del botón 
+        <b>Nueva Pregunta</b>. Se pueden Cambiar/Ver preguntas que existen
+        haciendo un click en el numero de la pregunta en la parte superior de la forma.<p>
+
+    </li>
+    <li><b>Tab de Orden:</b>
+        <p>En este tab, puedes cambiar el orden de las
+        preguntas, borrar preguntas, y crear una quebrada de 
+        <b>sección</b>. Una quebrada de sección divide
+        su cuestionario en paginas múltiples (muy bueno para 
+        cuestionarios largos).</p>
+    </li>
+    <li><b>Tab de Prevista:</b>
+        <p>Muestra una prevista de su cuestionario. Puedes cambiar
+        a este tab cuando quieras para ver como se vera su cuestionario
+        Si quieres hacer cambios, puedes regresar al tab apropiado para 
+        efectuar los cambios.  Si estas satisfecho con el cuestionario
+        Seleccione el tab<b>Completar</b> o el botón al fin de la pagina.</p>
+
+        <p>Los botones <b>Proxima Pagina</b> y <b>Someter el Cuestionario</b>
+        estan inactivos en el modo de prevista.</p>
+    </li>
+    </ol>
+
+    <p><a href="#top">Regrese al Principio</a></p>
+</li>
+<li><h3><a name="types">Tipo de Respuestas</h3></a>
+    <ul>
+    <li>Si/No<br>
+        <input type="radio" name="bool">Si<br>
+        <input type="radio" name="bool">No
+    </li>
+    <li>Entrada de una sola linea de texto<br>
+        <input type="text" size=30>
+    </li>
+    <li>Ensayo<br>
+        <textarea cols="40" rows="4"></textarea>
+    </li>
+    <li>Radio Buttons<br>
+        <input type="radio" name="radio">Opción 1<br>
+        <input type="radio" name="radio">Opción 2<br>
+    </li>
+    <li>Check Boxes<br>
+        <input type="checkbox">Opción 1<br>
+        <input type="checkbox">Opción 2<br>
+    </li>
+    <li>Dropdown Box<br>
+        <select>
+            <option></option>
+            <option>Opción 1</option>
+            <option>Opción 2</option>
+        </select>
+    </li>
+    <li>Valor (Escala 1..N)
+    <blockquote>
+        <table border="0" cellspacing="1" cellpadding="0">
+            <tr>
+                <td></td>
+                <td width="40" align="center" bgcolor="#eeeeee">1</td>
+                <td width="40" align="center" bgcolor="#dddddd">2</td>
+                <td width="40" align="center" bgcolor="#eeeeee">3</td>
+                <td width="40" align="center" bgcolor="#dddddd">4</td>
+                <td width="40" align="center" bgcolor="#eeeeee">5</td>
+                <td width="40" align="center" bgcolor="#dddddd">N/A</td>
+            </tr>
+            <tr>
+                <td>Opción 1</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Opción 2</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Opción 3</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="N/A"></td>
+            </tr>
+        </table>
+    </blockquote>
+    </li>
+    <li>Fecha<br>
+    <input type="text" name="date" size="10"> <em>(e.g. 4/21/2002)</em>
+    </li>
+    <li>Numerico<br>
+    <input type="text" name="numeric" size="10">
+    </li>
+    </ul>
+    <p><a href="#top">Regrese al Principio</a></p>
+</li>
+
+<li><h3><a name="analysis">Cruz Análisis</h3></a>
+    Puedes analizar por cruzado a los resultados de el cuestionario por medio de la 
+    selección del botón radio al lado izquierdo de la pregunta.  Entonces debes escoger
+    una o mas preguntas por medio de la selección del marcador debajo de la pregunta
+    que deseas seleccionar.  Esto mostrara los resultados del cuestionario entero basado en
+    el criterio que has escogido.  Por el presente análisis por cruzado se liimita a 
+    preguntas singulares.
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis.jpg" width="700" height="262"><br>
+    <br>
+    Esto producirá los siguientes resultados:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis_result.jpg" width="700" height="284"><br>
+    <br>
+    El despliegue que resulta muestra todas las respuestas para pregunta numero 1 que fueron 
+    &quot;Si&quot;.
+<p><a href="#top">Regrese al Principio</a></p>
+</li>
+<li><h3><a name="tabulation">Tabulación Cruzado</h3></a>
+    Tabulación cruzado regresa un sistema de resultados basado en la selección de dos
+     preguntas.  Esto se pude hacer por medio del escoger cual de las opciones de las preguntas
+    formaran las columnas y cuales formaran las filas para los resultados.
+    Seleccionando un botón radio  en la caja roja en el lado derecho de la pregunta indica
+    la seleccioné de fila.  Seleccionando un botón radio en la caja azul indica la selección 
+    de columna..</p>
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate.jpg" width="700" height="273"></p>
+    <p>En el ejemplo arriba, hemos escogido Tabulación cruzada entre preguntas uno y cuatro.
+    Pregunta numero uno es la fila y pregunta cuatro es la columna
+    Esto regresa los resultados siguientes:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result1.jpg" width="700" height="187"><br>
+    Alternativamente podemos hacer una Tabulación cruzada de las mismas dos preguntas pero
+    haciendo que pregunta cuatro sea la fila y pregunta uno sea la columna como se demuestra
+    aqui:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate2.jpg" width="700" height="271"><br>
+    <br>
+    Esto produce los siguientes resultados:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result2.jpg" width="700" height="274"> </p>
+<p><a href="#top">Regrese al Principio</a></p>
+</li>
+</ul>
+
+</td>
+</tr>
+</table>

@@ -1,0 +1,223 @@
+<?php
+
+# $Id: questiontypes.html,v 1.4 2007/06/12 17:40:44 mchurch Exp $
+
+// Written by James Flemer
+// For eGrad2000.com
+// <jflemer@alum.rpi.edu>
+
+// Translated for 	  	: Luiz Paulo Leite Machado (lunixbr@gmail.com)
+// Date of translation		: 2006/06/21
+// Date of the last revision	: 2006/07/12
+// Translated for project Casa Brasil (www.casabrasil.gov.br)
+
+?>
+<a name="top"></a>
+<table bgcolor="#ffffff" border=2 width="98%"><tr><td>
+<p align="center"><b>Editando um Question&aacute;rio</b></p>
+<ul>
+    <li><a href="#new">Criar uma nova Pesquisa</a></li>
+    <li><a href="#types">Exemplo de tipos de Respostas</a></li>
+    <li><a href="#analysis">An&aacute;lise em Cruz</a></li>
+    <li><a href="#tabulation">Tabula&ccedil;&atilde;o em Cruz</a></li>
+</ul>
+
+<hr>
+
+<ul>
+<li><h3><a name="new">Criar uma nova Pesquisa</a></h3>
+    <ol>
+    <li><b>Perguntas Indicadas:</b>
+        <p>Entre com o texto da sua quest&atilde;o (Ex. <em>Qual 
+        &eacute; sua cor favorita? </em>) na caixa da
+        <b>quest&atilde;o</b>. Opcionalmente entre com um <b>nome de 
+        campo</b> para esta quest&atilde;o, se voc&ecirc; deixar em branco
+        um ser&aacute; gerado para voc&ecirc;.</p>
+        <p>Se voc&ecirc; gostaria de exigir que o usu&aacute;rio responda a quest&atilde;o,
+        selecione <b>sim</b> ou <b>requerido</b> no campo.</p>
+        <p>Escolha o <b>tipo de resposta</b> para esta
+        quest&atilde;o. [Clique aqui para ver <a
+        href="#types">Exeplos</a>.] Tipos diferentes podem ter
+        par&acirc;metros que alterem seus comportamentos, Consulte
+        o mapa abaixo para o uso do <b>Tamanho</b>
+        e <b>Precis&atilde;o</b> dos campos.</p>
+        
+        <table border="0">
+          <tr><th align="left">Tipo</th><th align="left">Tamanho</th><th align="left">Precis&atilde;o</th></tr>
+          <tr><td colspan="3"><hr size="0" noshadow="true"></td></tr>
+          <tr><td>Yes/No</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Text</td><td>tamanho</td><td>tamanho m&aacute;ximo</td></tr>
+          <tr><td>Essay</td><td>columns</td><td>rows</td></tr>
+          <tr><td>Radio</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Checkboxes</td><td>min&iacute;mo #</td><td>m&aacute;ximo# <em>(n&atilde;o implementado)</em></td></tr>
+          <tr><td>Dropdown</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Rate</td><td>1..N</td><td>Use "N/A"</td></tr>
+          <tr><td>Date</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Numeric</td><td>tamanho</td><td>precis&atilde;o</td></tr>
+        </table>
+        <p>Se escolheu um tipo de resposta que tem op&ccedil;&otilde;es de resposta,
+        preenche uma resposta por linha na metade inferior da forma. Se
+        necessitar de mais linhas, clique em <b>Adicione outra linha de resposta</b>.
+        [tipos de pergunta com op&ccedil;&otilde;es de resposta s&atilde;o:
+        Check Boxes, Dropdown Box, Radio Buttons, Rate.] Para check
+        boxes e radio buttons, voc&ecirc; pode entrar com <tt>&quot;!outro&quot;</tt>
+        em uma linha para preencher a op&ccedil;&atilde;o em branco. Um
+        &quot;Outro&quot; box definido para usar o lembrete <em>Outro:</em>,
+        mais &eacute; configuravel para usar o formato :
+        
+        <br><center><tt>!outro=texto pronto</tt></center></p>
+
+        <p>Adicionar mais quest&otilde;es clique no bot&atilde;o <b>Nova
+        Quest&atilde;o</b>. Editar/Ver quest&otilde;es existentes clique
+        no numero da quest&atilde;o no topo do formul&aacute;rio.<p>
+
+    </li>
+    <li><b>Ordem em Aba:</b>
+        <p>Nesta aba, voc&ecirc; pode mudar a ordem das perguntas,
+        apagar perguntas, e inserir uma pausa na <b>se&ccedil;&atilde;o</b>.
+        Uma pausa da se&ccedil;&atilde;o, divide seu exame em m&uacute;ltiplas
+        p&aacute;ginas (boas para pesquisas longas).</p>
+    </li> 
+    <li><b>Pr&eacute;-Visualiza&ccedil;&atilde;o em Aba:</b>
+        <p>Mostra uma pr&eacute;-visualiza&ccedil;&atilde;o da sua pesquisa.
+        Voc&ecirc; pode trocar para esta aba em qualquer momento para ver a sua pesquisa. 
+        Se voc&ecirc; gostar de fazer mudan&ccedil;as, pode voltar para a aba apropriada
+        e fazer as mudan&ccedil;as.
+        Se voc&ecirc; estiver satisfeito com a pesquisa, 
+        clique <b> Fim </b> da aba ou no bot&atilde;o do final da p&aacute;gina.</p>
+
+        <p>Os bot&otilde;es <b>Pr&oacute;xima P&aacute;gina</b> e <b>Enviar pesquisa</b>
+         est&atilde;o inativos no modo de pr&eacute;-visualiza&ccedil;&atilde;o.</p>
+    </li>
+    </ol>
+
+    <p><a href="#top">Voltar para Topo</a></p>
+</li>
+<li><h3><a name="types">Exemplo de tipos de Respostas</h3></a>
+    <ul>
+    <li>Yes/No<br>
+        <input type="radio" name="bool">Yes<br>
+        <input type="radio" name="bool">No
+    </li>
+    <li>Linha simples para entrada de  Texto (Text)<br>
+        <input type="text" size=30>
+    </li>
+    <li>Essay<br>
+        <textarea cols="40" rows="4"></textarea>
+    </li>
+    <li>Radio Buttons<br>
+        <input type="radio" name="radio">Op&ccedil;&atilde;o 1<br>
+        <input type="radio" name="radio">Op&ccedil;&atilde;o 2<br>
+    </li>
+    <li>Check Boxes<br>
+        <input type="checkbox">Op&ccedil;&atilde;o 1<br>
+        <input type="checkbox">Op&ccedil;&atilde;o 2<br>
+    </li>
+    <li>Dropdown Box<br>
+        <select>
+            <option></option>
+            <option>Op&ccedil;&atilde;o 1</option>
+            <option>Op&ccedil;&atilde;o 2</option>
+        </select>
+    </li>
+    <li>Rate (scale 1..N)
+    <blockquote>
+        <table border="0" cellspacing="1" cellpadding="0">
+            <tr>
+                <td></td>
+                <td width="40" align="center" bgcolor="#eeeeee">1</td>
+                <td width="40" align="center" bgcolor="#dddddd">2</td>
+                <td width="40" align="center" bgcolor="#eeeeee">3</td>
+                <td width="40" align="center" bgcolor="#dddddd">4</td>
+                <td width="40" align="center" bgcolor="#eeeeee">5</td>
+                <td width="40" align="center" bgcolor="#dddddd">N/A</td>
+            </tr>
+            <tr>
+                <td>Op&ccedil;&atilde;o 1</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Op&ccedil;&atilde;o 2</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Op&ccedil;&atilde;o 3</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="N/A"></td>
+            </tr>
+        </table>
+    </blockquote>
+    </li>
+    <li>Data (Date)<br>
+    <input type="text" name="date" size="10"> <em>(Ex. 21/04/2002)</em>
+    </li>
+    <li>Num&eacute;rico (Numeric)<br>
+    <input type="text" name="numeric" size="10">
+    </li>
+    </ul>
+    <p><a href="#top">Voltar para Topo</a></p>
+</li>
+
+<li><h3><a name="analysis">An&aacute;lise em Cruz</h3></a>
+    Para cruzar uma analize dos resultados de uma pesquisa, escolhe-se uma quest&atilde;o
+    selecionando o &quot;<i>radio button</i>&quot; apropriado para a esquerda do question&aacute;rio. 
+    Voc&ecirc; deve ent&atilde;o escolher uma ou mais das escolhas, selecionando a 
+    pergunta do &quot;<i>checkbox</i>&quot; apropriado sob a pergunta escolhida.
+    Isto exibir&aacute; os resultados inteiros desta pesquisa baseado no crit&eacute;rio que voc&ecirc;
+    escolheu. Neste momento, An&aacute;lise em Cruz &eacute; limitada a &uacute;nicas perguntas. 
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis.jpg" width="700" height="262"><br>
+    <br>
+    Isto produzir&aacute; o seguinte resultado:
+    <br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis_result.jpg" width="700" height="284"><br>
+    <br>
+    A exposi&ccedil;&atilde;o do resultado mostra todas as respostas onde a quest&atilde;o 1 escolha era
+    &quot;Yes&quot;.
+<p><a href="#top">Voltar para Topo</a></p>
+</li>
+<li><h3><a name="tabulation">Tabula&ccedil;&atilde;o em Cruz</h3></a>
+    A disposi&ccedil;&atilde;o em tabelas de cruz retorna um jogo de resultado, baseado em
+    duas sele&ccedil;&otilde;es de pergunta. Isto &eacute; alcançado, por escolher que as op&ccedil;&otilde;es
+    da pergunta formar&atilde;o filas ou colunas para cruzar o resultado disposto em forma de tabela.
+    Selecionar um "radio button" na caixa vermelha ao lado direito da pergunta indica a 
+    seleção de fila, e selecionar um "radio button" na caixa azul ao lado direito da 
+    pergunta indica a sele&ccedil;&atilde;o de coluna.</p>
+
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate.jpg" width="700" height="273"></p>
+
+    <p>No exemplo acima n&oacute;s escolhemos a tabula&ccedil;&atilde;o em cruz para a pergunta 1 e pergunta 4,
+    onde a pergunta 1 é a sele&ccedil;&atilde;o de fila e a pergunta 4 &eacute; a sele&ccedil;&atilde;o de coluna.
+    Isto retornar&aacute; o seguinte resultado :<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result1.jpg" width="700" height="187"><br>
+    Alternativamente podemos cruzar a disposi&ccedil;&atilde;o em forma de tabela, as mesmas 2 perguntas,
+    mas a quest&atilde;o 4 como a sele&ccedil;&atilde;o de fila e a quest&atilde;o 1 como a sele&ccedil;&atilde;o
+    de coluna, como mostrado embaixo:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate2.jpg" width="700" height="271"><br>
+    <br>
+    Isto produz o seguinte resultado :<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result2.jpg" width="700" height="274"> </p>
+<p><a href="#top">Voltar para Topo</a></p>
+</li>
+</ul>
+
+</td>
+</tr>
+</table>

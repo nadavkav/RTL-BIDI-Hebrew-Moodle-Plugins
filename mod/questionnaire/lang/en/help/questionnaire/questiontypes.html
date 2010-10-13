@@ -1,0 +1,222 @@
+<?php
+
+# $Id: questiontypes.html,v 1.4 2007/06/12 17:40:44 mchurch Exp $
+
+// Written by James Flemer
+// For eGrad2000.com
+// <jflemer@alum.rpi.edu>
+
+?>
+<a name="top"></a>
+<table bgcolor="#ffffff" border=2 width="98%"><tr><td>
+<p align="center"><b>Editing a Questionnaire</b></p>
+<ul>
+    <li><a href="#new">Creating a new survey</a></li>
+    <li><a href="#types">Response Types Examples</a></li>
+    <li><a href="#analysis">Cross Analysis</a></li>
+    <li><a href="#tabulation">Cross Tabulation</a></li>
+</ul>
+
+<hr>
+
+<ul>
+<li><h3><a name="new">Creating a new survey</a></h3>
+    <ol>
+    <li><b>Questions Tab:</b>
+        <p>Enter the text of your question (i.e. <em>What
+        is your favorite color?</em>) in the
+        <b>question</b> box. Optionally enter a <b>field
+        name</b> for this question, if you leave it blank
+        one will be generated for you.</p>
+
+        <p>If you would like to require the user to respond
+        to this question, select <b>yes</b> in the
+        <b>required</b> field.</p>
+
+        <p>Choose the <b>type of response</b> for this
+        question. [Click here to see <a
+        href="#types">Examples</a>.] Different types may
+        have parameters to change how they behave, consult
+        the chart below for the use of the <b>length</b>
+        and <b>precision</b> fields.</p>
+
+        <table border="0">
+          <tr><th align="left">Type</th><th align="left">Length</th><th align="left">Precision</th></tr>
+          <tr><td colspan="3"><hr size="0" noshadow="true"></td></tr>
+          <tr><td>Yes/No</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Text</td><td>length</td><td>max length</td></tr>
+          <tr><td>Essay</td><td>columns</td><td>rows</td></tr>
+          <tr><td>Radio</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Checkboxes</td><td>min #</td><td>max # <em>(not implemented yet)</em></td></tr>
+          <tr><td>Dropdown</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Rate</td><td>1..N</td><td>Use "N/A"</td></tr>
+          <tr><td>Date</td><td>n/a</td><td>n/a</td></tr>
+          <tr><td>Numeric</td><td>length</td><td>precision</td></tr>
+        </table>
+
+        <p>If you chose a response type that has answer
+        options, fill in one answer per line on the bottom
+        half of the form. If you need more lines, click
+        <b>Add another answer line</b>. [Question types
+        with answer options are: Check Boxes, Dropdown Box,
+        Radio Buttons, Rate.] For check boxes and radio
+        buttons, you may enter <tt>&quot;!other&quot;</tt>
+        on a line to create a fill in the blank option. An
+        &quot;Other&quot; box defaults to using the prompt
+        <em>Other: </em>, but is configurable by using the
+        format:
+        <br><center><tt>!other=prompt text</tt></center></p>
+
+        <p>Add more questions by clicking the <b>New
+        Question</b> button. Edit/View existing questions
+        by clicking the question numbers at the top of the
+        form.<p>
+
+    </li>
+    <li><b>Order Tab:</b>
+        <p>On this tab, you can change the order of the
+        questions, delete questions, and insert
+        <b>section</b> breaks. A section break, divides
+        your survey into multiple pages (good for long
+        surveys).</p>
+    </li>
+    <li><b>Preview Tab:</b>
+        <p>Shows a preview of your survey. You can switch
+        to this tab at any time to see what your survey
+        will look like. If you would like to make changes,
+        go back to the appropriate tab and make the
+        changes. If you are satisfied with the survey,
+        click the <b>Finish</b> tab or button at the bottom
+        of the page.</p>
+
+        <p>The <b>Next Page</b> and <b>Submit Survey</b>
+        buttons are inactive in the preview mode.</p>
+    </li>
+    </ol>
+
+    <p><a href="#top">Back to Top</a></p>
+</li>
+<li><h3><a name="types">Response Types</h3></a>
+    <ul>
+    <li>Yes/No<br>
+        <input type="radio" name="bool">Yes<br>
+        <input type="radio" name="bool">No
+    </li>
+    <li>Single Line Text Entry<br>
+        <input type="text" size=30>
+    </li>
+    <li>Essay<br>
+        <textarea cols="40" rows="4"></textarea>
+    </li>
+    <li>Radio Buttons<br>
+        <input type="radio" name="radio">Option 1<br>
+        <input type="radio" name="radio">Option 2<br>
+    </li>
+    <li>Check Boxes<br>
+        <input type="checkbox">Option 1<br>
+        <input type="checkbox">Option 2<br>
+    </li>
+    <li>Dropdown Box<br>
+        <select>
+            <option></option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+        </select>
+    </li>
+    <li>Rate (scale 1..N)
+    <blockquote>
+        <table border="0" cellspacing="1" cellpadding="0">
+            <tr>
+                <td></td>
+                <td width="40" align="center" bgcolor="#eeeeee">1</td>
+                <td width="40" align="center" bgcolor="#dddddd">2</td>
+                <td width="40" align="center" bgcolor="#eeeeee">3</td>
+                <td width="40" align="center" bgcolor="#dddddd">4</td>
+                <td width="40" align="center" bgcolor="#eeeeee">5</td>
+                <td width="40" align="center" bgcolor="#dddddd">N/A</td>
+            </tr>
+            <tr>
+                <td>Option 1</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_124" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_124" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Option 2</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_125" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_125" value="N/A"></td>
+            </tr>
+            <tr>
+                <td>Option 3</td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="1"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="2"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="3"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="4"></td>
+                <td width="40" align="center" bgcolor="#eeeeee"><input type="radio" name="118_126" value="5"></td>
+                <td width="40" align="center" bgcolor="#dddddd"><input type="radio" name="118_126" value="N/A"></td>
+            </tr>
+        </table>
+    </blockquote>
+    </li>
+    <li>Date<br>
+    <input type="text" name="date" size="10"> <em>(e.g. 4/21/2002)</em>
+    </li>
+    <li>Numeric<br>
+    <input type="text" name="numeric" size="10">
+    </li>
+    </ul>
+    <p><a href="#top">Back to Top</a></p>
+</li>
+
+<li><h3><a name="analysis">Cross Analysis</h3></a>
+    To cross analyse results from a survey choose a question by
+    selecting the appropriate radio button to the left of the question. You must
+    then choose one or more of the question's choices by selecting the appropriate
+    checkbox under the chosen question. This will display the entire results of
+    this survey based on the criteria you have chosen. At present, Cross Analysis
+    is limited to single questions.
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis.jpg" width="700" height="262"><br>
+    <br>
+    This will produce the following result:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_analysis_result.jpg" width="700" height="284"><br>
+    <br>
+    The resulting display shows all the responses where question 1 choice was
+    &quot;Yes&quot;.
+<p><a href="#top">Back to Top</a></p>
+</li>
+<li><h3><a name="tabulation">Cross Tabulation</h3></a>
+    Cross tabulation returns a result set based on a two question
+    selection. This is achieved by choosing which question's options will form
+    the rows or columns for the cross tabulated result set. Selecting a radio
+    button in the red box to the right of the question indicates the row selection
+    and selecting a radio button in the blue box to the right of the question
+    indicates the column selection.</p>
+    <p><img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate.jpg" width="700" height="273"></p>
+    <p>In the above example we have chosen to cross tabulate question1 and question
+    4 where question 1 is the row selection and question 4 is the column selection.
+    This returns the following result set:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result1.jpg" width="700" height="187"><br>
+    Alternatively we can cross tabulate the same 2 questions but set question
+    4 as the row selection and question 1 as the column selection as shown below:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate2.jpg" width="700" height="271"><br>
+    <br>
+    This produces the following result set:<br>
+    <br>
+    <img src="<?php echo($CFG->wwwroot);?>/mod/questionnaire/images/cross_tabulate_result2.jpg" width="700" height="274"> </p>
+<p><a href="#top">Back to Top</a></p>
+</li>
+</ul>
+
+</td>
+</tr>
+</table>
