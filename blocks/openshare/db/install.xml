@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/open_meta/db" VERSION="20070811" COMMENT="XMLDB file for Moodle mod/openshare"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+	
+    <TABLE NAME="block_openshare_courses" COMMENT="To allow for openness at the course level" NEXT="block_openshare_modules">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Course that openness pertains to" PREVIOUS="id" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Is course enabled to have modules open (0) or closed (1)" PREVIOUS="courseid" NEXT="timemodified" />
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Standard Moodle time modified data" PREVIOUS="status"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid"/>
+      </INDEXES>
+    </TABLE>
+		
+    <TABLE NAME="block_openshare_modules" COMMENT="To allow for individual open modules" PREVIOUS="block_openshare_courses" NEXT="block_openshare_licenses">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Course that contains target moduleid" PREVIOUS="id" NEXT="moduleid"/>
+        <FIELD NAME="moduleid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Target module matched in course_modules to be licensed, opened, or closed" PREVIOUS="courseid" NEXT="license"/>
+        <FIELD NAME="license" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" COMMENT="Matches openlicenses db entries for intellectual property types. (1) is copyright" PREVIOUS="moduleid" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Is this module open (0) or closed (1)" PREVIOUS="license" NEXT="timemodified" />
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Standard Moodle time modified data" PREVIOUS="status"/>
+		</FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="moduleid" UNIQUE="false" FIELDS="moduleid"/>
+      </INDEXES>
+    </TABLE>
+	
+    <TABLE NAME="block_openshare_licenses" COMMENT="Descriptions of intellectual property licenses" PREVIOUS="block_openshare_modules">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="shortname of license" PREVIOUS="id" NEXT="shortdesc"/>
+		<FIELD NAME="shortdesc" TYPE="text" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="short description of license" PREVIOUS="name" NEXT="longdesc"/>
+		<FIELD NAME="longdesc" TYPE="text" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="long description of license" PREVIOUS="shortdesc" NEXT="code"/>
+		<FIELD NAME="code" TYPE="text" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="no idear" PREVIOUS="longdesc" NEXT="timemodified" />
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Standard Moodle time modified data" PREVIOUS="code"/>
+
+		</FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="index" UNIQUE="false" FIELDS="name"/>
+      </INDEXES>
+    </TABLE>
+	
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert block_openshare_licenses" TYPE="insert" TABLE="block_openshare_licenses" COMMENT="Initial insert of CC licenses on table block_open_licenses">
+		<SENTENCES>
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('copyright', 'Copyright', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by-nc-nd', 'Creative Commons Attribution Non-Commercial No Derivatives', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by-nc-sa', 'Creative Commons Attribution Non-commercial No Derivatives', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by-nc', 'Creative Commons Attribution Non-Commercial', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by-nd', 'Creative Commons Attribution No Derivatives', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by-sa', 'Creative Commons Attribution Share Alike', ' ',' ')" />	
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('CC by', 'Creative Commons Attribution', ' ',' ')" />
+			<SENTENCE TEXT="(name, shortdesc, longdesc, code) VALUES ('public domain', 'Public domain', ' ',' ')" />
+		</SENTENCES>
+	</STATEMENT>
+	
+  </STATEMENTS>
+</XMLDB>

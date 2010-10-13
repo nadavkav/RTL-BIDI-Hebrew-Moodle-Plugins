@@ -1,0 +1,95 @@
+The following two modifications are OPTIONAL additions to the OpenShare block mod.
+
+These provide on-the-fly license and open/close icons next to the individual modules in the course > topics view.
+
+Note that these changes are beta and need to be tested. Moodle developers: if you know of a better way to do this, let me know.
+
+FILE: moodle/course/view.php
+LINE: ~197
+AFTER:
+     // Course wrapper start
+
+INSERT:
+	//Begin OpenShare modification (complements OpenShare block)
+	//This checks for settings and passes those on to the functions called in lib.php
+    if(require_once($CFG->dirroot.'/blocks/openshare/locallib.php')){
+		//check for openness
+		$opencheck = block_check_opensettings($id);
+	?>
+		<style type="text/css">
+			span.groupinglabel { display: none !important; }
+		</style>
+	<?php
+	}
+	//end OpenShare modification (complements OpenShare block)
+
+
+
+FILE: moodle/course/lib.php
+LINE: ~1430
+AFTER:
+                echo make_editing_buttons($mod, $absolute, true, $mod->indent, $section->section);
+
+INSERT:
+//Begin OpenShare modification (complements OpenShare block)
+				
+				global $opencheck;//Remove this in next version!
+				if ($opencheck['ometa']==1 && $opencheck['ocourse']==1){					
+					//see if open_modules entry for this module exists
+					$checkmod = get_record("block_openshare_modules", "courseid", $course->id, "moduleid", $mod->id);
+
+					$opensetlink = $CFG->wwwroot.'/blocks/openshare/open_mods_set.php?id='.$course->id.'&amp;cmid='.$mod->id.'&amp;sesskey='.$sesskey.'&amp;sect='.$section->section;
+					//print $opencheck['cid'];
+					//print $checkmod->license;
+					if (($checkmod->license <= $opencheck['cid'])){
+
+						$rightstitle = 'Change to CC';
+						$rightsimage = 'c.png';
+						$rightslink = $opensetlink.'&amp;license='.$opencheck['ccid'];
+
+						$openimage = 'defunct.png';
+						$opentitle = 'unavailable';
+												
+						if(empty($checkmod->license)){
+				    		$opentitle = 'Close this mod';
+							$openimage = 'open.png';
+							$openlink  = $opensetlink.'&amp;status=1&amp;license='.$opencheck['cid'];
+						}
+					} else {
+						//print $checkmod->license;
+						$rightstitle = 'Change to C';
+						$rightsimage = 'cc.png';
+						$rightslink = $opensetlink.'&amp;license='.$opencheck['cid'];
+					
+						if($opencheck['og'] && $opencheck['ogg'] && $opencheck['oggg']){
+							//links to set open or closed
+							if ($checkmod->status < 2){
+					   			$opentitle = 'Open this';
+								$openimage = 'closed.png';
+								$openlink  = $opensetlink.'&amp;status=2';
+							} else {
+					   			$opentitle = 'Close this';
+								$openlink  = $opensetlink.'&amp;status=1';
+								$openimage = 'open.png';
+								if ($mod->module==$opencheck['resid']){									$openimage = 'glass.png';
+								}
+							}
+					//end open & closed
+						}
+					//end grouping+group else check
+					}
+					
+					//toggle links and icons for CC
+					
+					$openrights = '<a title="'.$rightstitle.'" href="'.$rightslink.'"><img src="'.$CFG->wwwroot.'/blocks/openshare/images/'.$rightsimage.'" hspace="2" height="11" width="11" '.'border="0" alt="'.$rightstitle.'" /></a>';
+
+					if($openimage != 'defunct.png'){
+						$openstatus = '<a title="'.$opentitle.'" href="'.$openlink.'"><img src="'.$CFG->wwwroot.'/blocks/openshare/images/'.$openimage.'" style=" margin:0 2px; height: 11px; width: 11px; border: none;" alt="'.$opentitle.'" /></a>';
+					}
+					else {
+						$openstatus = '<img src="'.$CFG->wwwroot.'/blocks/openshare/images/'.$openimage.'" style=" margin:0 2px; height: 11px; width: 11px; border: none;" alt="'.$opentitle.'" />';
+					}
+					
+					print '<span class="commands">'.$openrights.$openstatus.'</span>';
+				}
+				//end OpenShare modification

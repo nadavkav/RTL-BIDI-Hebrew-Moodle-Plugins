@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+<title>OpenShare on Moodle</title>
+<style type="text/css">
+	body { width: 45em; max-width: 90%; font-family: Arial,sans-serif; font-size: 90%; line-height: 1.5em; }
+	h1, h2, h3, h4 { margin-bottom: .35em; font-weight: normal }
+	h3 { color: #cc6600; border-bottom: 1px dotted; font-weight: normal; font-size: 125%; }
+	h4 { color: #cc6600; font-size: 115%; }
+</style>
+</head>
+
+<body>
+<p>Turn Moodle into an open educational resource publishing platform by "opening" and "closing" all or <em>just parts</em> of a course with the OpenShare block.</p>
+<p><a href="http://flexknowlogy.learningfield.org/addons/openshare/">OpenShare Web Page at <em>Flexknowlogy</em></a></p>
+<h3>In This Document</h3>
+<ol>
+	<li><a href="#req">Requirements</a></li>
+	<li><a href="#overview">Overview</a></li>
+	<li><a href="#setup">How to Setup OpenShare</a></li>
+	<li><a href="#osh_howto">How to License, Open, or Close Modules</a></li>
+	<li><a href="#osh_group">Restricted by Group and Grouping</a></li>
+	<li><a href="#openlearner">The Open Learner Role</a></li>
+	<li><a href="#osh_add">Additional Modification for OpenShare</a></li>
+</ol>
+
+<h3 id="req">Requirements</h3>
+<ul>
+	<li>Moodle 1.9x</li>
+	<li>Groupings enabled</li>
+</ul>
+
+<h3>Overview</h3>
+<p>The <em>OpenShare</em> block for Moodle allows you to mark <em>resources</em> or <em>activities</em> as <strong>closed</strong> (private, for enrolled class members only) or <strong>open</strong> (available to the public). This allows you to use Moodle as a publishing platform for <a href="http://www.ocwconsortium.org">opencourseware</a> or <a href="http://oercommons.org/help/learn-more-about/oer">open educational resources</a>.</p>
+
+<h4 id="osh_openclosed">Open and Closed Modules (Resources and Activities)</h4>
+<p>Once a course has enabled OpenShare, you are responsible for marking all course resources or activities (aka <em>modules</em>) as <em>closed</em> or <em>open</em>. <strong>The default is open!</strong> You should also indicate the <em>license</em> for your resources and activities.  Note that in order to mark any module as open you must first change it's license from "Copyright" to Copyright-cleared, Public domain, or any specific <a href="http://creativecommons.org/">Creative Commons</a> license.</p>
+
+<h3 id="setup">How to Setup OpenShare</h3>
+<h4>Installation on the Moodle Server</h4>
+<div style="float: right; width:219px; margin: 0 0 1.5em 1.5em; font-size: 75%;"><img style="display: block;" src="../../../../images/help/openshare00.jpg" alt="the OpenShare block" />Notifications</div>
+<ol>
+	<li><strong>Download and unzip</strong> <a href="/resources/stein/plugins/openshare.zip">openshare.zip</a></li>
+	<li><strong>Move "openshare"</strong> into your <strong>moodle/blocks/</strong> folder</li>
+	<li>Login to Moodle as an Administrator and <strong>click Notifications</strong></li>
+	<li>Ensure Admin settings for <strong>Experimental > Groupings is ON</strong>.</li>
+</ol>
+
+<h4>Setup in a Course</h4>
+
+<ol>
+	<li>With Editing on, <strong>add the OpenShare block</strong></li>
+	<li><div style="float: right; width:221px; margin: 0 0 1.5em 1.5em; font-size: 75%;"><img style="display: block;" src="../../../../images/help/openshare06.jpg" alt="the OpenShare block" /></div><strong>Enable OpenShare</strong> on the block--NOTE: the default status for all course modules is OPEN</li>
+	<li>Use <strong>OpenShare Modules</strong> to <a href="#osh_howto">set the licence(s) and open/closed status of one or more course modules</a>
+</li>
+	<li><strong>Determine public access</strong> to the course through course <strong>Settings</strong>:
+		<ol type="a">
+			<li>As Guests (<strong>Allow Guest Access</strong>) with access to Open modules except activities.</li>
+			<li>As Open Learners (<strong>Allow Registration; Default Role = Open Learner</strong>) with access to Open modules including some activities (e.g. quizzes)</li>
+		</ol>
+	</li>
+</ol>
+
+<h3 id="osh_howto">How to License, Open, or Close Modules</h3>
+<p>The fastest way to mark the license of course resources or activities and list them as open or closed is <em>en masse</em> through <strong>OpenShare Modules</strong> on the OpenShare block. Here you can apply a change to the entire course, to whole module categories (e.g. Forum), or to individual resources or activities.</p>
+
+<div style="1.5em 0; font-size: 75%;"><a href="/resources/stein/images/openshare/openshare08.jpg"><img style="display: block;" src="../../../../images/help/openshare07.jpg" style="border: none" alt="open and close modules in Moodle" /></a>License, Open, or Close Resources &amp; Activities</div>
+
+<p>If you have <a href="#osh_add">the optional modification to the Moodle core files</a> (course/view.php and course/lib.php) you may also change the license or open status of individual modules from the <em>course topics</em> view when <em>editing</em> is turned <strong>on</strong>.</p>
+
+<h4 id="osh_group">Restricted by Group and Grouping</h4>
+
+<p>OpenShare should set everything up for you with respect to Groups and Groupings. Here's an overview of how it works:</p>
+
+<p>The functionality of the OpenShare mod for Moodle is based on the ("experimental" in Moodle 1.9) "Groupings" feature.  Thus, <strong>use of OpenShare requires that "Groupings" is enabled</strong> at the server level. Talk to your Moodle server admin about turning this on.</p>
+
+<p>OpenShare "protects" closed modules from the public by setting those resources into a special Grouping called "Closed", and making <em>students</em>, <em>teachers</em>, and <em>editing teachers</em> part of a special Group called "Course Members".</p>
+
+<div style="1.5em 0; font-size: 75%;"><img style="display: block;" src="../../../../images/help/openshare09.jpg" alt="open and close modules in Moodle" />OpenShare adds modules to the "Closed" Grouping</div>
+<p>Both the "Course Members" Group and the "Closed" Grouping are set up automatically when you enable the OpenShare mod in your course.</p>
+
+<div style="1.5em 0; font-size: 75%;"><img style="display: block;" src="../../../../images/help/openshare11.jpg" alt="Group and Grouping" />OpenShare adds all current students to the "Course Members" group</div>
+
+<p>All other users (e.g. non-registered public users) may access open course materials one of two ways:</p>
+<ul>
+	<li>as "Guests"--Guest access must be allowed in your course settings</li>
+	<li>as "Open Learners" with self-enrollment--Open Learner is a custom role installed with the OpenShare block that allows enrolled non-student users to engage in course activities for self-learning, e.g. quizzes. By default this role does not allow forum access, but can be modified to allow for this after installation.</li>
+</ul>
+
+<p>Note that enabling the OpenShare block in a course sets the <strong>Default Role</strong> to OpenLearner. You must make the <strong>Course Enrollable</strong> or allow <strong>Guest access</strong> in your course settings.</p>
+
+<h4 id="openlearner">The Open Learner Role</h4>
+<p>Open Learners can interact with most activities in Moodle, but your system admin can customize this role to restrict activities (e.g. forums or any instance where they upload files).  This is important because Open Learners may create a student information security danger if you mark collaborative or interactive activities as open--for practitioners in the USA I strongly encourage you to NOT allow Open Learners to access discussion forums, chats, or wikis because of FERPA law.</p>
+<p>It's also important to note that allowing Open Learners access to a live course may cause teacher confusion.  The Course Members group and the Open Learner role help make it easy to filter out non-enrolled students.</p>
+
+<p>The safest bet is to instead simply <em>Allow Guest Access</em>, however Guests are unable to interact with most Activities in Moodle and do not maintain their own Moodle identity, diminishing the potential impact of the OpenShare mod.</p>
+
+<h3 id="osh_add">Additional Modification for In-Course OpenShare</h3>
+<p>This version of the mod requires <em>no modification of core Moodle code</em>.  I do, however, have <a href="/resources/stein/plugins/course_topics_mod.txt">two snippets of code that modify course/lib.php and course/view.php</a> and provide advanced usability of the mod.</p>
+<div style="1.5em 0; font-size: 75%;"><a href="/resources/stein/images/openshare/openshare14.jpg"><img style="display: block;" src="../../../../images/help/openshare14.jpg" alt="open and close individual modules in Moodle" /></a>An optional modification allows for OpenShare changes on the fly.</div>
+
+
+</body>
+</html>
+
