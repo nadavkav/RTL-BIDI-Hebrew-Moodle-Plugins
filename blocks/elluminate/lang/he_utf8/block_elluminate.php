@@ -18,7 +18,7 @@ $string['newusernotice'] = 'We are going to create a new account for you based o
                            'Moodle user information but <b>you must enter a password</b>.  You ' .
                            'can use the same password for your Moodle account or you can ' .
                            'enter a completely new one.';
-$string['recentrecordings'] = 'הקלטות קודמות';
+$string['recentrecordings'] = 'ארכיון מפגשים מוקלטים';
 $string['role'] = 'תפקיד';
 $string['userid'] = 'קוד משתמש';
 $string['yourelluminateaccount'] = 'חשבון מפגש מקוון - אילומינייט שלך';
