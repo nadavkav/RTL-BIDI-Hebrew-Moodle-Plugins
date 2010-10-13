@@ -1,0 +1,89 @@
+<center>
+	<!-- 
+  <p align="center"><?php echo $strfilterdesc; ?></p>
+  <p align="center"><?php print_string('firstname'); ?>:
+  --> 
+<?php
+	/*
+        if ($firstinitial) {
+            echo " <a href=\"participants.php?id=$id&amp;sort=firstname&amp;dir=ASC&amp;" .
+				 "lastinitial=$lastinitial\">$strall</a> ";
+        } else {
+            echo " <b>$strall</b> ";
+        }
+        foreach ($alphabet as $letter) {
+            if ($letter == $firstinitial) {
+                echo " <b>$letter</b> ";
+            } else {
+                echo " <a href=\"participants.php?id=$id&amp;sort=firstname&amp;dir=ASC&amp;" .
+					 "firstinitial=$letter&amp;lastinitial=$lastinitial\">$letter</a> ";
+            }
+        }
+        echo "<br />";
+    
+    /// Bar of last initials
+        echo get_string('lastname') . " : ";
+        if ($lastinitial) {
+            echo " <a href=\"participants.php?id=$id&amp;sort=lastname&amp;dir=ASC&amp;" .
+				 "firstinitial=$firstinitial\">$strall</a> ";
+        } else {
+            echo " <b>$strall</b> ";
+        }
+        foreach ($alphabet as $letter) {
+            if ($letter == $lastinitial) {
+                echo " <b>$letter</b> ";
+            } else {
+                echo " <a href=\"participants.php?id=$id&amp;sort=lastname&amp;dir=ASC&amp;" .
+				     "firstinitial=$firstinitial&amp;lastinitial=$letter\">$letter</a> ";
+            }
+        }
+	*/
+
+?>
+  </p>
+</center>
+<form id="participantForm" method="post" action="<?php echo $CFG->wwwroot; ?>/mod/elluminate/participants.php">
+    <input type="hidden" name="id" value="<?php echo $id;?>" />
+    <input type="hidden" name="sesskey" value="<?php echo $sesskey; ?>" />
+    <input type="hidden" name="submitvalue" value="" />
+    <center>
+        <table align="center" border="0" cellpadding="5" cellspacing="0">
+            <tr align="center">
+                <td><?php echo $struserscur; ?></td>
+                <td><?php echo $strusersavail; ?></td>
+            </tr>
+            <tr align="center">
+                <td>
+                    <select name="userscur[]" size="15" multiple="multiple">
+<?php
+
+    if (!empty($curusers)) {
+        foreach($curusers as $curuser) {
+            echo '<option value="' . $curuser->id . '">' . fullname($curuser) . ' (' . $curuser->username . ')</option>' . "\n";
+        }
+    }
+
+?>
+                    </select>
+                </td>
+                <td>
+                    <select name="usersavail[]" size="15" multiple="multiple">
+<?php
+
+    if (!empty($availusers)) {
+        foreach($availusers as $availuser) {
+            echo '<option value="' . $availuser->id . '">' . fullname($availuser) . ' (' . $availuser->username . ')</option>' . "\n";
+        }
+    }
+
+?>
+                    </select>
+                </td>
+            </tr>
+            <tr align="center">
+                <td><input id="removeSubmit" type="submit" value="<?php echo get_string('removeparticipants', 'elluminate'). ' -&gt;'; ?>" /></td>
+                <td><input id="addSubmit" type="submit" value="<?php echo '&lt;- ' . get_string('addparticipants', 'elluminate'); ?>" /></td>
+            </tr>
+        </table>
+    </center>
+</form>

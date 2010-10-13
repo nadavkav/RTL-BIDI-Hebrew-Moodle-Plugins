@@ -1,0 +1,16 @@
+<p align="center"><b>Session recording</b></p>
+
+<p>This allows you to set a default recording state for the session.
+   The possible values are as follows:</p>
+
+<ul>
+   <li><b>None</b></li>
+   <ul>The recording functionality will be completely turned off for
+       this session.</ul>
+
+   <li><b>Manual</b></li>
+   <ul>Recording will be turned off by default but can be turned on during the session by a moderator.</ul>
+
+   <li><b>Automatic</b></li>
+   <ul>Recording is turned on by default and cannot be turned off by a moderator.</ul>
+</ul>

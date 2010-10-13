@@ -1,0 +1,51 @@
+<form id="participantForm" method="post" action="<?php echo $CFG->wwwroot; ?>/mod/elluminate/moderators.php">
+    <input type="hidden" name="id" value="<?php echo $id;?>" />
+    <input type="hidden" name="sesskey" value="<?php echo $sesskey; ?>" />
+    <input type="hidden" name="submitvalue" value="" />
+    <center>
+        <table align="center" border="0" cellpadding="5" cellspacing="0">
+        	<tr align="center">
+                <td colspan="2"><?php echo "Session Creator: $strcreator->firstname $strcreator->lastname ($strcreator->username)";   ?></td>                
+            </tr>        
+            <tr align="center">
+                <td><?php echo $strmodscur; ?></td>
+                <td><?php echo $strmodsavail; ?></td>
+            </tr>
+            <tr align="center">
+                <td>
+                    <select name="modscur[]" size="15" multiple>
+<?php
+
+    if (!empty($curmods)) {
+        foreach($curmods as $curmod) {
+			if ($curmod->id == $elluminate->creator) {
+			} else {
+	            echo '<option value="' . $curmod->id . '">' . fullname($curmod) . ' (' . $curmod->username . ')</option>' . "\n";
+			}
+        }
+    }
+
+?>
+                    </select>
+                </td>
+                <td>
+                    <select name="modsavail[]" size="15" multiple>
+<?php
+
+    if (!empty($availmods)) {
+        foreach($availmods as $availmod) {
+            echo '<option value="' . $availmod->id . '">' . fullname($availmod) . ' (' . $availmod->username . ')</a>' . "\n";
+        }
+    }
+
+?>
+                    </select>
+                </td>
+            </tr>
+            <tr align="center">
+                <td><input id="removeSubmit" type="submit" value="<?php echo get_string('removemoderators', 'elluminate'). ' -&gt;'; ?>" /></td>
+                <td><input id="addSubmit" type="submit" value="<?php echo '&lt;- ' . get_string('addmoderators', 'elluminate'); ?>" /></td>
+            </tr>
+        </table>
+    </center>
+</form>

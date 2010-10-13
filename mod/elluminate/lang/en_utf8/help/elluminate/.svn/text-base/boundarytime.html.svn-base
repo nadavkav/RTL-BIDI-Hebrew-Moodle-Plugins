@@ -1,0 +1,11 @@
+<p align="center"><b>Boundary time</b></p>
+
+<p>This option (if configured by an administrator) allows you to set
+   a boundary time (in minutes) for the session.</p>
+
+<p>Boundary time allows users to access the session before its
+   specified start time in order to properly configure their audio
+   settings and make sure they have the necessary software installed.</p>
+
+<p>If you cannot select a value for this time, it means an administrator
+   has chosen a default time for all sessions.</p>

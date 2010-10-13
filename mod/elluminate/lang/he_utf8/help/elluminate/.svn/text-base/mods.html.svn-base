@@ -1,0 +1,7 @@
+<p><img alt="" src="<?php echo $CFG->wwwroot?>/mod/elluminate/icon.gif" />&nbsp;<b>Elluminate Live! Sessions</b></p>
+<div class="indent">
+This activity allows you to create and manage Elluminate <i>Live!</i> sessions.  These sessions
+will be created for you on the configured Elluminate <i>Live!</i> server.  You can add moderators
+and participants to the sessions you create and also choose to send out notifications to
+participating users reminding them of the upcoming session.
+</div>
