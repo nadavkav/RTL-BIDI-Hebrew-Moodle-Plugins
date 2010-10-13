@@ -1,0 +1,21 @@
+Copyright (c) 2005-2008, The Gong Project
+All rights reserved.
+
+Conditions of Use for the NanoGong Applet
+-----------------------------------------
+
+Source code, bytecode and documentation for the NanoGong applet remain
+copyright of the Gong project 2002-2008. 
+
+You may make copies of this software and associated documentation, provided it
+is for personal or educational use and the original documentation, including
+these conditions of use, remain intact. 
+
+You must not sell or otherwise charge for the use of the NanoGong applet.
+
+This software is provided on an "as is" basis, without warranty. The authors
+makes no representation, or warranty, either express or implied, with respect
+to the software programs, their quality, accuracy or fitness for a specific
+purpose. Therefore the authors accept no liability with respect to loss or
+damage caused directly or indirectly by the NanoGong software.
+

@@ -1,0 +1,58 @@
+<?php // $Id: nanogong.php,v 3.3 2010/01/11 00:00:00 Scolastra Francesco Exp $
+
+$string['nanogong'] = 'NanoGong';
+$string['modulenameplural'] = 'NanoGongs';
+$string['modulename'] = 'NanoGong';
+$string['nanogongname'] = 'Nome';
+$string['nanogongmessage'] = 'Descrizione';
+$string['nanogongcolor'] = 'Colore (\'#rrggbb\')';
+$string['nanogongmaxmessages'] = 'Max numero di messaggi permessi per ogni studente(0 = illimitati)';
+$string['nanogongmaxscore'] = 'Punteggio massimo';
+$string['nanogongallowguestaccess'] = 'Permetti l\'accesso agli ospiti';
+$string['description'] = 'Descrizione';
+$string['submitnewmessage'] = 'Invia un nuovo messaggio';
+$string['yourmessage'] = 'Il tuo messaggio';
+$string['messagelist'] = 'Lista dei messaggi';
+$string['student'] = 'Studente';
+$string['submitdate'] = 'Inserito il';
+$string['timeedited'] = 'Modificato';
+$string['audiomessage'] = 'Audio';
+$string['textmessage'] = 'Testo';
+$string['title'] = 'Titolo';
+$string['message'] = 'Messaggio';
+$string['commentedby'] = 'Commentato da';
+$string['comments'] = 'Commenti';
+$string['score'] = 'Punteggio';
+$string['locked'] = 'Modifiche';
+$string['altlocked'] = 'Il messaggio &egrave; bloccato. Non può essere modificato o cancellato da uno studente.';
+$string['altopen'] = 'Il messaggio &egrave; modificabile dagli studenti.';
+$string['confirmdelete'] = 'Sei sicuro di volere cancellare il messaggio?';
+$string['confirmlock'] = 'Stai modificando il messaggio.\\\nVuoi impedire che venga modificato o cancellato dagli studenti?';
+$string['submitmessage'] = 'Invia il messaggio';
+$string['editmessage'] = 'Modifica';
+$string['deletemessage'] = 'Cancella';
+$string['updatemessage'] = 'Aggiorna il messaggio';
+$string['newmessage'] = 'Nuovo messaggio';
+$string['lockallmessage'] = 'Blocca tutti i messaggi';
+$string['unlockallmessage'] = 'Sblocca tutti i messaggi';
+$string['messagesubmitted'] = 'Il messaggio &egrave; stato inviato.';
+$string['messageedited'] = 'Il messaggio &egrave; stato modificato.';
+$string['messagedeleted'] = 'Il messaggio &egrave; stato cancellato.';
+$string['messageslocked'] = 'Il messaggio &egrave; stato bloccato.';
+$string['messagesunlocked'] = 'Il messaggio &egrave; stato sbloccato.';
+$string['guestaccessnotallow'] = 'Accesso ospiti non permesso.';
+$string['messagenotfound'] = 'Il messaggio non esiste.';
+$string['submitfailed'] = 'Il messaggio non &egrave; stato inviato.';
+$string['editfailed'] = 'Il messaggio non &egrave; stato aggiornato.';
+$string['deletefailed'] = 'Il messaggio non &egrave; stato cancellato.';
+$string['lockfailed'] = 'Il messaggio non &egrave; stato bloccato.';
+$string['unlockfailed'] = 'Il messaggio non &egrave; stato sbloccato.';
+$string['lockerror'] = 'Il messaggio &egrave; bloccato. Non hai il permesso di modificare/cancellare il suo contenuto.';
+$string['recordernotready'] = 'Il registratore non &egrave; pronto.\\\nRicarica la pagina e prova di nuovo.';
+$string['norecording'] = 'Devi registrare il tuo messaggio utilizzando il registratore!';
+$string['uploadfailure'] = 'Il registratore non ha caricato il tuo messaggio vocale.\\\nProva di nuovo.';
+$string['pathmissing'] = 'Nessun audio &egrave; stato inviato con il messaggio.';
+$string['notincourse'] = 'Non sei iscritto al corso.';
+$string['maxmessagereached'] = 'Il massimo numero di messaggi &egrave; stato raggiunto.';
+
+?>
