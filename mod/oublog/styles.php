@@ -275,3 +275,18 @@ padding:2px;
 background-color:#8FFCA0;
 text-decoration:none;
 }
+
+.dir-rtl #left-column,
+.dir-rtl #left-column {
+float:right !important;
+}
+
+#mod-oublog-view #right-column,
+#mod-oublog-viewpost #right-column,
+#mod-oublog-viewedit #right-column,
+#mod-oublog-allposts #right-column {
+float:left;
+}
+#course-view #middle-column {
+width:100%;
+}

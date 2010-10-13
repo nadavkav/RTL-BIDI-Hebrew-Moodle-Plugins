@@ -110,7 +110,7 @@ $string['computingguideurlexplained'] = 'Enter the URL for the OU blogs omputing
 $string['maybehiddenposts'] = 'בבלוג זה קיימות ידיעות אשר ניתנות לצפייה על ידי חברי הבלוג בלבד. אם יש לכם חשבון משתמש במערכת זו, אנא, <a href=\'$a\'>התחברו</a>.';
 $string['guestblog'] = 'If you have an account on the system, please
 <a href=\'$a\'>log in for full blog access</a>.';
-$string['noposts'] = 'אינכם מורשים לראות את הידיעות הקיימות בבלוג זה.';
+$string['noposts'] = 'טרם הוזנו ידיעות בבלוג זה. <br/> אתם מוזמנים להיות הראשונים אשר מוסיפים ידיעה חדשה!';
 $string['showuserpics'] = 'תצוגת תמונות כותבי הידיעות';
 $string['configshowuserpics'] = 'If enabled, user pictures are displayed next to each post and comment.';
 $string['accessdenied'] = 'הודעה מערכת: אין לכם גישה לצפייה בתוכן המסויים.';

@@ -244,6 +244,8 @@ else {
 	    print '</div>';
 	}
 
+print '</div>';// fix mixed columns in rtl mode and editing mode (nadavkav patch)
+
 	// The right column, BEFORE the middle-column.
 	print '<div id="right-column">';
 }
