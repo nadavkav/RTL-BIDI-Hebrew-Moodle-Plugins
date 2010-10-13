@@ -1,0 +1,10 @@
+Suggestions for future versions:
+
+2007-12-21 Version 2.1
+* use general post table for comments and notes
+* Public sharing address can not be changed/revoked
+* Inline comments and documentation
+* Integration of standard Moodle blog.
+* Patch for submitting of files from portfolio to assignment.
+* Tags (new feature in 1.9)
+* Review compatibility with course reset (reimplemented in 1.9)

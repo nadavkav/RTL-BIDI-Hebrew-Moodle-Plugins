@@ -1,0 +1,15 @@
+<?php
+$active_version = empty($CFG->block_exabis_eportfolio_active_version) ? 3 : $CFG->block_exabis_eportfolio_active_version;
+?>
+<table cellpadding="9" cellspacing="0" align="center">
+<tr>
+    <td><input type="radio" name="block_exabis_eportfolio_active_version" value="3" <?php if($active_version != 2) echo 'checked="checked"'; ?> /></td>
+    <td><?php echo get_string('config_version_3', 'block_exabis_eportfolio') ?></td>
+<tr></tr>
+	<td><input type="radio" name="block_exabis_eportfolio_active_version" value="2" <?php if($active_version == 2) echo 'checked="checked"'; ?> /></td>
+    <td><?php echo get_string('config_version_2', 'block_exabis_eportfolio') ?></td>
+</tr>
+<tr>
+    <td colspan="3" align="center"><input type="submit" value="<?php print_string('savechanges') ?>" /></td>
+</tr>
+</table>
