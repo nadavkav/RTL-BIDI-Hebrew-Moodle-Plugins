@@ -3,7 +3,7 @@
  * Defines the editing form for the dragdropr question type.
  *
  * @copyright &copy; 2007 Jamie Pratt
- * @author Jean-Michel Vï¿½drine vedrine@univ-st-etienne.fr
+ * @author Jean-Michel Védrine vedrine@univ-st-etienne.fr
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package questionbank
  * @subpackage questiontypes

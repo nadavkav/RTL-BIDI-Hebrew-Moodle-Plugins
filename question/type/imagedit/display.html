@@ -14,12 +14,24 @@
     <script type="text/javascript">
         //Global setting edit these
         //pixlr.settings.target = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>save_post_modal.php';
+
         pixlr.settings.target = '<?php echo "{$CFG->wwwroot}/question/type/imagedit/image-upload.php?courseid={$COURSE->id}&qid={$question->id}&qatt={$state->attempt}"; ?>';
         pixlr.settings.exit = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>exit_modal.php';
         pixlr.settings.credentials = true;
         pixlr.settings.method = 'post';
     </script>
 <b><?php echo get_string("clicktoedit","qtype_imagedit") ?></b><br />
+
+<?php
+if ($imgurl) {
+// if we already have a user's edited image... let see/use it
+$image = $imgurl;
+} else {
+  // a fresh question. no editing was done, yet.
+  //echo $image;
+}
+?>
+
 <a href="javascript:pixlr.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'he'});">
 <img id="editme" src="<?php if (isset($imgurl)) { echo $imgurl; } else { echo $image; } ?>" width="250" height="150" title="<?php echo str_replace('file.php','sendfile.php',$image); ?>" /></a><br /><br />
 <br /><br />
@@ -63,4 +75,10 @@
       </div>
     <?php } ?>
     <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+<input type="submit" onclick="form.action = form.action + '#q<?php echo $question->id; ?>'; return true;" class="submitfile btn" value="שמירת תמונה" name="resp<?php echo $question->id; ?>_submit" style="">
+&nbsp;&nbsp;&nbsp;
+(לאחר שמירת התמונה, הקישו על המקש F5 במקלדת שלכם כדי לוודא שהתמונה אכן נשמרה במערכת, לפני שאתם ממשיכים)
+<style>
+/* #mod-quiz-attempt .que .submit {display:block !important;} */
+</style>
 </div>

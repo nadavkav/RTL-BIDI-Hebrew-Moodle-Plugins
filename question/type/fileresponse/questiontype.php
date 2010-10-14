@@ -215,6 +215,7 @@ class fileresponse_qtype extends default_questiontype {
         }
 
         // set the file input form
+        //"form.action = form.action + '#q".$question->id."'; document.getElementById('responseform').submit();"
         $struploadform = upload_print_form_fragment(1, array($question->name_prefix . "file"), null, false, null, 0, $maxbytes, true);
 
         // set file upload feedback and display of uploaded file
