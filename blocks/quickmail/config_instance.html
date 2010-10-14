@@ -1,0 +1,41 @@
+<?php // $Id: config_instance.html,v 1.6 2007/03/02 03:06:53 mark-nielsen Exp $
+/**
+ * config_instance.html - prints the configuration form for
+ *      the Quickmail instance settings.
+ *
+ * @author Mark Nielsen
+ * @version $Id: config_instance.html,v 1.6 2007/03/02 03:06:53 mark-nielsen Exp $
+ * @package quickmail
+ **/
+    
+    print_simple_box_start('center', '20%');
+?>
+<table cellpadding="5" cellspacing="0" align="center">
+<tr valign="top">
+    <td align="right">
+        <strong><?php print_string('groupmode'); ?>:</strong>
+    </td>
+    <td align="left">
+        <?php
+            $options = array();
+            $options[NOGROUPS]       = get_string('groupsnone');
+            $options[SEPARATEGROUPS] = get_string('groupsseparate');
+            $options[VISIBLEGROUPS]  = get_string('groupsvisible');
+            choose_from_menu($options, 'groupmode', $this->config->groupmode, '', '', 0, false, $this->course->groupmodeforce);
+            helpbutton('groupmode', get_string('groupmode'));
+
+            if ($this->course->groupmodeforce) {
+                // if On, then the dropdown is disabled and wont submit,
+                //  which means we loose Quickmails groupmode setting.
+                echo '<input type="hidden" name="groupmode" value="'.$this->config->groupmode.'" />';
+            }
+        ?>
+    </td>
+</tr> 
+<tr>
+    <td colspan="2" align="center">
+        <p><input type="submit" value="<?php print_string('savechanges') ?>" /></p>
+    </td>
+</tr>
+</table>
+<?php print_simple_box_end(); ?>

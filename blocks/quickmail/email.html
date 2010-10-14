@@ -1,0 +1,98 @@
+<?php // $Id: email.html,v 1.13 2007/03/02 03:06:53 mark-nielsen Exp $
+/**
+ * email.html - Prints the email form for Quickmail
+ *
+ * @author Mark Nielsen
+ * @version $Id: email.html,v 1.13 2007/03/02 03:06:53 mark-nielsen Exp $
+ * @package quickmail
+ **/
+?>
+
+<form name="theform" method="post" action="email.php" enctype="multipart/form-data">
+<table border="0" cellpadding="5">
+<tr valign="top">
+    <td align="right"><strong><?php print_string('to', 'block_quickmail'); ?>:</strong></td>
+    <td>
+        <a href="javascript:void(0);" onclick="block_quickmail_toggle(true, 1, 0);"><?php print_string('selectall'); ?></a> / <a href="javascript:void(0);" onclick="block_quickmail_toggle(false, 1, 0);"><?php print_string('deselectall'); ?></a>
+        <br />
+        <br />
+        <?php print_table($table); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('subject', 'forum'); ?>:</b></td>
+    <td>
+        <input type="text" name="subject" size="60" value="<?php p($form->subject); ?>" />
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b>
+     <?php print_string('message', 'forum'); ?>:
+     </b></td>
+    <td align="left" rowspan="2">
+    <?php print_textarea($usehtmleditor, 25, 65, 630, 400, 'message', $form->message); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right" valign="center" nowrap="nowrap">
+        <font size="2">
+            <?php
+                helpbutton('reading', get_string('helpreading'), 'moodle', true, true);
+                echo '<br />';
+                helpbutton('writing', get_string('helpwriting'), 'moodle', true, true);
+                echo '<br />';
+                if ($usehtmleditor) {
+                   helpbutton('richtext', get_string('helprichtext'), 'moodle', true, true);
+                } else {
+                   emoticonhelpbutton('theform', 'message');
+                } 
+            ?>
+         </font>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><b><?php print_string('formattexttype'); ?>:</b></td>
+    <td>
+    <?php 
+        if ($usehtmleditor) {   /// Trying this out for a while
+            print_string('formathtml');
+            echo '<input type="hidden" name="format" value="'.FORMAT_HTML.'" />';
+        } else {
+            choose_from_menu(format_text_menu(), 'format', $form->format, '');
+        }
+        helpbutton('textformat', get_string('helpformatting'));
+     ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right" nowrap="nowrap">
+        <b><?php print_string('attachmentoptional', 'block_quickmail'); ?>:</b>
+    </td>
+    <td>
+    <?php
+        if (has_capability('moodle/course:managefiles', $context)) {
+            echo '<input type="text" name="attachment" size="90" value="'.$form->attachment.'" alt="'.get_string('attachmentalt', 'block_quickmail').'" /><br />';
+            button_to_popup_window ("/files/index.php?id=$course->id&choose=theform.attachment", "coursefiles", $strchooseafile, 500, 750, $strchooseafile);
+        } else {
+            $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);
+            echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$maxbytes.'" />';
+            echo '<input type="file" name="attachment" size="45" alt="'.get_string('attachmentalt', 'block_quickmail').'" /> ';
+            print_string('maxsize', '', display_size($maxbytes));
+        }
+    ?>
+    </td>
+</tr>
+
+<tr>
+    <td align="center" colspan="2">
+    <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>" />
+    <input type="hidden" name="id" value="<?php echo $course->id; ?>" />
+    <input type="hidden" name="instanceid" value="<?php echo $instanceid; ?>" />
+    <input type="submit" name="cancel" value="<?php print_string('cancel') ?>" />
+    <input type="submit" name="sendemail" value="<?php print_string('sendemail', 'block_quickmail') ?>" />
+    </td>
+</tr>
+</table>
+</form>
