@@ -64,7 +64,6 @@ function page_print_add_mods_form($page, $course) {
         foreach ($modules as $modplural => $instances) {
             // Sets an optgroup which can't be selected/submitted
             $options[$modplural.'_group_start'] = "--$modplural";
-
             foreach($instances as $cmid => $name) {
                 $options[$cmid] = shorten_text($name);
             }
@@ -1807,7 +1806,11 @@ function page_get_modules($course, $field = NULL) {
         foreach ($modinfo->instances as $instances) {
             // Run names through filter for proper sorting
             foreach ($instances as $key => $instance) {
-                $instances[$key]->name = format_string($instances[$key]->name);
+                if ($instances[$key]->modname == 'label') { // support for Hebrew language in content (nadavkav patch)
+                    $instances[$key]->name = format_string($instances[$key]->extra);
+                  } else {
+                    $instances[$key]->name = format_string($instances[$key]->name);
+                }
             }
 
             uasort($instances, $function);
