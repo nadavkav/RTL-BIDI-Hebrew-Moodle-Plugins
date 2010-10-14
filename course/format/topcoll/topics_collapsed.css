@@ -1,0 +1,17 @@
+/* --- Table Row Definitions --- */		
+tr.cps {
+		background-color: #e2e2f2;
+		color: #555555;
+		display: table-row;
+}
+
+tr.cps td {
+		font-size: 0.8em;
+		text-align: center;
+		padding: 0 0;
+		}
+		
+.cps_large {
+		   font-size: 1.2em;
+		   font-style: italic;
+		   }
