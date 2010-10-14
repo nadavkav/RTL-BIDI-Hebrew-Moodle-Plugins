@@ -1,0 +1,26 @@
+<?php print_box_start() ?>
+<table>
+  <tr>
+    <td align='right'>
+      <?php print_string('searchterms','block_twitter_search') ?> (<a href="http://search.twitter.com/operators" target="_blank"><?php print_string('help') ?></a>):
+    </td>
+    <td class="tweets">
+      <?php print_textfield('search_string', $this->config->search_string) ?>
+    </td>
+  </tr>
+  <tr>
+    <td align='right'>
+	  <?php print_string('numoftweets','block_twitter_search') ?>:
+    </td>
+    <td>
+      <?php choose_from_menu(range(0,20),'no_tweets', $this->config->no_tweets) ?>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="2" class="submit"><br/><br/>
+      <input type="submit" value="<?php print_string('savechanges') ?>" />
+    </td>
+  </tr>
+</table>
+<?php print_box_end() ?>
