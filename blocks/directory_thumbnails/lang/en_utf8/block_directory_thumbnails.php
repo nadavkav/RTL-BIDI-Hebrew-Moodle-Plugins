@@ -1,15 +1,15 @@
 <?php
 
-$string['imagegallery'] = "lightboxgallery slideshow";
-$string['title'] = "album slideshow";
-$string['content'] =  'please choose lightboxgallery album';
-$string['configtitle'] = "slideshow title";
-$string['configrandomize'] = "display randomized images";
-$string['configcount'] = "number of images to show";
-$string['configcontent'] =  'slideshow sub title';
-$string['configgallery']= 'plase choose a lighboxgallery for the slideshow';
-$string['configheight']= 'slideshow height';
-$string['configwidth']= 'slideshow width';
-$string['configimagedir']= 'choose folder to display';
+$string['imagegallery'] = "Image list Thumbnails";
+$string['title'] = "Image List";
+$string['content'] =  'Please choose a folder';
+$string['configtitle'] = "Block title";
+$string['configrandomize'] = "Display randomized images";
+$string['configcount'] = "Number of images to show";
+$string['configcontent'] =  'Slideshow sub title';
+$string['configgallery']= 'Plase choose a folder with images to display';
+$string['configheight']= 'Image height';
+$string['configwidth']= 'Image width';
+$string['configimagedir']= 'Choose folder to display';
 
 ?>

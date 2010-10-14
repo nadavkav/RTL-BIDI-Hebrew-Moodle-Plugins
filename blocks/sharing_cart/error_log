@@ -1,5 +1,0 @@
-[01-מאי-2009 18:48:03] PHP Notice:  Undefined property: stdClass::$original_siteidentifier in /home/tikshuvp/public_html/moodle/blocks/sharing_cart/shared/SharingCart_Restore.php on line 177
-[01-מאי-2009 18:48:04] PHP Fatal error:  Call to undefined function  backup_is_same_site() in /home/tikshuvp/public_html/moodle/question/restorelib.php on line 344
-[01-מאי-2009 18:56:16] PHP Notice:  Undefined property: stdClass::$original_siteidentifier in /home/tikshuvp/public_html/moodle/blocks/sharing_cart/shared/SharingCart_Restore.php on line 177
-[01-מאי-2009 18:56:17] PHP Fatal error:  Call to undefined function  get_site_identifier() in /home/tikshuvp/public_html/moodle/backup/lib.php on line 449
-[01-מאי-2009 18:59:21] PHP Notice:  Undefined property: stdClass::$original_siteidentifier in /home/tikshuvp/public_html/moodle/blocks/sharing_cart/shared/SharingCart_Restore.php on line 177
