@@ -1,0 +1,295 @@
+<script type="text/javascript" language="JavaScript">
+<!-- Begin
+
+// Source code get to http://www.gamarod.com.ar
+
+sortitems = 1;
+
+function move(fbox, tbox) {
+
+    for( var i = 0; i < fbox.options.length; i++) {
+        if(fbox.options[i].selected && fbox.options[i].value != "") {
+            var no = new Option();
+            no.value = fbox.options[i].value;
+            no.text = fbox.options[i].text;
+            tbox.options[tbox.options.length] = no;
+            fbox.options[i].value = "";
+            fbox.options[i].text = "";
+        }
+    }
+    BumpUp(fbox);
+    if (sortitems) SortD(tbox);
+}
+
+function BumpUp(box) {
+    for(var i=0; i<box.options.length; i++) {
+        if(box.options[i].value == "")  {
+            for(var j=i; j<box.options.length-1; j++)  {
+                box.options[j].value = box.options[j+1].value;
+                box.options[j].text = box.options[j+1].text;
+            }
+            var ln = i;
+            break;
+        }
+    }
+
+    if(ln < box.options.length)  {
+        box.options.length -= 1;
+        BumpUp(box);
+   }
+}
+
+function SortD(box)  {
+    var temp_opts = new Array();
+    var temp = new Object();
+    for(var i=0; i<box.options.length; i++)  {
+        temp_opts[i] = box.options[i];
+    }
+
+    for(var x=0; x<temp_opts.length-1; x++)  {
+        for(var y=(x+1); y<temp_opts.length; y++)  {
+            if(temp_opts[x].text > temp_opts[y].text)  {
+                temp = temp_opts[x].text;
+                temp_opts[x].text = temp_opts[y].text;
+                temp_opts[y].text = temp;
+                temp = temp_opts[x].value;
+                temp_opts[x].value = temp_opts[y].value;
+                temp_opts[y].value = temp;
+            }
+        }
+    }
+
+    for(var i=0; i<box.options.length; i++)  {
+        box.options[i].value = temp_opts[i].value;
+        box.options[i].text = temp_opts[i].text;
+   }
+}
+
+function addSenders(tipo) {
+
+    if ( tipo == 'to' ) {
+
+        if (  document.sendusers.selectedusersto.options.length > 0 ) {
+            var field = window.opener.document.sendmail.nameto;
+            var s = document.sendusers.selectedusersto;
+        } else {
+            return;
+        }
+    } else if ( tipo == 'cc' ) {
+
+        if (  document.sendusers.selecteduserscc.options.length > 0 ) {
+            var field = window.opener.document.sendmail.namecc;
+            var s = document.sendusers.selecteduserscc;
+        } else {
+            return;
+        }
+    } else if( tipo == 'bcc' ) {
+
+        if (  document.sendusers.selectedusersbcc.options.length > 0 ) {
+            var field = window.opener.document.sendmail.namebcc;
+            var s = document.sendusers.selectedusersbcc;
+
+        } else {
+            return;
+        }
+    } else {
+        return;
+    }
+
+    for (var i = 0; i < s.options.length; i++) {
+        if ( s.options[i].text.substring(0,1) == '#' ) {
+            field.value = field.value + s.options[i].text.substring(2) + ', ';
+        } else {
+            field.value = field.value + s.options[i].text + ', ';
+        }
+        var contacts = window.opener.document.createElement("input");
+        contacts.setAttribute("type", "hidden");
+        contacts.setAttribute("value", s.options[i].value);
+        contacts.setAttribute("name", tipo + "[]");
+        window.opener.document.getElementById('id_name'+tipo).parentNode.appendChild(contacts);
+    }
+
+}
+
+function addCourse() {
+
+    var inputHidden = window.opener.document.createElement("input");
+    inputHidden.setAttribute("type", "hidden");
+    inputHidden.setAttribute("value", '<?php echo $courseid;?>');
+    inputHidden.setAttribute("name", "course");
+    window.opener.document.getElementById("id_send").parentNode.appendChild(inputHidden);
+
+}
+
+function prepareSubmit( ) {
+    for( var i = 0; i < document.sendusers.selectedusersto.options.length; i++) {
+        document.sendusers.selectedusersto.options[i].selected = true;
+    }
+
+    for( var i = 0; i < document.sendusers.selecteduserscc.options.length; i++) {
+        document.sendusers.selecteduserscc.options[i].selected = true;
+    }
+
+    for( var i = 0; i < document.sendusers.selectedusersbcc.options.length; i++) {
+        document.sendusers.selectedusersbcc.options[i].selected = true;
+    }
+
+    for( var i = 0; i < document.sendusers.unselectedusers.options.length; i++) {
+        document.sendusers.unselectedusers.options[i].selected = false;
+    }
+
+    addSenders('to');
+    addSenders('cc');
+    addSenders('bcc');
+
+    addCourse();
+
+    window.close();
+}
+
+
+function moveElementsWasSelected() {
+
+    var tipos = Array('to', 'cc', 'bcc');
+    var element;
+    var childs = new Array();
+    var val;
+
+    for ( var count = 0; count < 3; count++ ) {
+        element = window.opener.document.getElementById('id_name'+tipos[count]).parentNode;
+        if ( element ) {
+            if ( element.hasChildNodes() ) {
+                for ( var x = 1; x < element.childNodes.length; x++) {
+                    val = element.childNodes[x].getAttribute('value');
+                    for ( var y = 0; y < document.sendusers.unselectedusers.options.length; y++ ) {
+                        if ( document.sendusers.unselectedusers.options[y].value == val ) {
+                            // Only move idem
+                            for( var i = 0; i < document.sendusers.unselectedusers.options.length; i++) {
+                                document.sendusers.unselectedusers.options[i].selected = false;
+                            }
+                            document.sendusers.unselectedusers.options[y].selected = true;
+                            move(document.getElementById('unselectedusers'), document.getElementById('selectedusers'+tipos[count]));
+                        }
+                    }
+                }
+
+                while ( element.childNodes.length > 1 ) {
+                    element.removeChild(element.childNodes[1]);
+                }
+
+            }
+        }
+
+        // Clear if exist
+        if ( window.opener.document.getElementById('id_name'+tipos[count]) ) {
+            window.opener.document.getElementById('id_name'+tipos[count]).value = '';
+        }
+    }
+
+    // Sort users
+    SortD(document.getElementById('unselectedusers'));
+
+}
+
+
+// end hiding script -->
+</script>
+
+<form name="sendusers" id="sendusers" method="post" action="<?php echo $url;?>">
+
+  <div align="center"><p><?php p($straction) ?></p></div>
+
+  <table cellspacing="0" cellpadding="10" align="center" class="generaltable generalbox">
+    <tr align="center" valign="top">
+      <td class="generalboxcontent">
+          <p>
+          <select id="unselectedusers" name="unselectedusers[]" size="18" multiple="multiple">
+            <?php
+                if ( !empty($unselectedusers)) {
+                    foreach ($unselectedusers as $id => $unselectedusersname) {
+                        echo "<option value=\"$id\">$unselectedusersname</option>";
+                    }
+                }
+            ?>
+          </select>
+          </p>
+      </td>
+
+      <td class="generalboxcontent">
+        <table cellspacing="0" cellpadding="10" align="center" class="generaltable">
+            <tr align="center" valign="middle">
+                <td class="generalboxcontent">
+                    <input type="button" name="unselectedto" value="<?php p($straddusersto) ?> -&gt;"
+                            onclick="javascript:move(document.getElementById('unselectedusers'), document.getElementById('selectedusersto')); " />
+                </td>
+                <td class="generalboxcontent">
+                    <select id="selectedusersto" name="selectedusersto[]" size="5" multiple="multiple">
+                        <?php
+                            if ( !empty($selectedusersto)) {
+                                foreach ($selectedusersto as $id => $selectedusersname) {
+                                    echo "<option value=\"$id\">$selectedusersname</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr align="center" valign="middle">
+                <td class="generalboxcontent">
+                    <input type="button" name="unselectedcc" value="<?php p($stradduserscc) ?> -&gt;"
+                            onclick="javascript:move(document.getElementById('unselectedusers'), document.getElementById('selecteduserscc')) " />
+                </td>
+                <td class="generalboxcontent">
+                    <select id="selecteduserscc" name="selecteduserscc[]" size="5" multiple="multiple">
+                        <?php
+                            if ( !empty($selectedusersbcc)) {
+                                foreach ($selecteduserscc as $id => $selectedusersname) {
+                                    echo "<option value=\"$id\">$selectedusersname</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr align="center" valign="middle">
+                <td class="generalboxcontent">
+                    <input type="button" name="unselectedbcc" value="<?php p($straddusersbcc) ?> -&gt;"
+                            onclick="javascript:move(document.getElementById('unselectedusers'), document.getElementById('selectedusersbcc')) " />
+                 </td>
+                <td class="generalboxcontent">
+                    <select id="selectedusersbcc" name="selectedusersbcc[]" size="5" multiple="multiple">
+                        <?php
+                            if ( !empty($selectedusersbcc)) {
+                                foreach ($selectedusersbcc as $id => $selectedusersname) {
+                                    echo "<option value=\"$id\">$selectedusersname</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+        <td class="generalboxcontent" align="right" colspan="2">
+            <input type="button" name="selectedusersremove" value="&#060;- <?php p($strselectedusersremove) ?>"
+                 onclick="javascript:move(document.getElementById('selectedusersto'),document.getElementById('unselectedusers'));move(document.getElementById('selecteduserscc'),document.getElementById('unselectedusers'));move(document.getElementById('selectedusersbcc'),document.getElementById('unselectedusers'));" />
+        </td>
+    </tr>
+
+    <tr>
+        <td class="generalboxcontent" align="left" colspan="2">
+            <input type="submit" name="send" value="<?php echo get_string('accept', 'block_email_list'); ?>" onclick="javascript:prepareSubmit();" />
+            <input type="button" name="cancel" value="<?php p($strcancel) ?>" onclick="javascript:prepareSubmit();" />
+        </td>
+    </tr>
+
+  </table>
+    <?php echo $toform; ?>
+    <input type="hidden" name="action" value="newmail" />
+    <script language="JavaScript" type="text/javascript">
+        moveElementsWasSelected();
+    </script>
+</form>

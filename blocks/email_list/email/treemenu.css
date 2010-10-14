@@ -1,0 +1,84 @@
+/*
+ * date:	2003-01-09
+ * info:	http://inspire.server101.com/js/xc/
+ */
+
+.c_menu, .c_exclusive, .c_breadcrumb, .c_no_menu, .c_no_current, .c_open_menu, .c_expand, .c_collapse
+{
+}
+
+ul.c_menu, #util_bar
+{
+	list-style : none;
+	margin : 5px 0px;
+	padding : 0px 10px;
+	/*font-size:0.8em;*/
+}
+
+.c_menu ul
+{
+	list-style : none;
+	margin : 0px 0px;
+	padding : 0px 10px;
+}
+
+.c_menu LI
+{
+	display : inline;
+	list-style: none;
+	margin : 0px 0px;
+	padding : 0px 0px;
+}
+
+.c_menu A
+{
+	display : block;
+	margin : 0px 0px;
+	padding-top: 0px;
+	text-decoration : none;
+	padding-left : 12px;
+	background-repeat : no-repeat;
+	background-position : left;
+}
+
+.c_menu A:hover
+{
+	text-decoration:underline;
+	/*font-style:italic;*/
+}
+
+LI.c_breadcrumb A
+{
+	display : inline;
+}
+LI.c_breadcrumb
+{
+	display : inline;
+	padding-left : 12px;
+	padding-right : 4px;
+	background-repeat : no-repeat;
+	background-position : left;
+}
+
+.c_current
+{
+	font-weight:bold;
+}
+
+A.c_aO {
+	background-image :  url("switch_plus.gif");
+	background-repeat : no-repeat;
+	background-position : left;
+}
+
+A.c_aC {
+	background-image :  url("switch_minus.gif");
+	background-repeat : no-repeat;
+	background-position : left;
+}
+
+A.c_ex
+{
+	padding-left: 0px;
+	background-image :  none;
+}

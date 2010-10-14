@@ -1,0 +1,132 @@
+/***
+ *** eMail
+ ***/
+
+/**
+ * Header for viewmail
+ **/
+.headermail {
+    background: #336799;
+    color : #ffffff;
+    font-size : 20px;
+    font-weight : bold;
+}
+
+/**
+ * Background color and text color for textarea who show send to,cc and/or bcc users
+ **/
+.textareacontacts {
+    background-color:#F4F4F4;
+    color: #000000;
+    width: 99%;
+}
+
+/**
+ * Subject field
+ **/
+.emailsubject {
+	width: 99% !important;
+}
+
+/**
+ * Link to select user's to send mail
+ **/
+.extrabutton {
+    text-align: left;
+    width: 30%;
+}
+
+/**
+ * News id's and class for eMail
+ **/
+
+#layout-email {
+  display:block;
+  margin-top:10px;
+  margin-bottom:10px;
+  float:left;
+  width:100%;
+}
+
+#left-column-email,
+#middle-column-email
+{
+  vertical-align:top;
+}
+
+#layout-email #middle-column-email {
+  padding-left:1%;
+}
+
+#left-column-email {
+  display:block;
+  float:left;
+  position:relative;
+  width: 16%;
+  overflow:auto;
+}
+
+#middle-column-email {
+  display:block;
+  float:left;
+  position:relative;
+  width: 82%;
+  overflow:auto;
+}
+
+#left-column-email .sideblock .header {
+  background-color:#336799;
+  border-bottom-color:#F9FAFA;
+}
+#left-column-email .sideblock .list td {
+  border-color:#FFF;
+}
+
+#layout-email #middle-column-email .headingblock {
+  font-size:0.9em;
+  text-indent: 5px;
+  padding: 0px;
+  margin-top:  0px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+#left-column-email .hidden .header
+{
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+#left-column-email .hidden .content
+{
+  display: none;
+}
+
+/**.flexible .header a:link,
+.flexible .header a:visited {
+  background-color:#336799;
+  color: #FFF;
+}
+.flexible .header a:hover {
+  background-color:#FFF;
+  color: #336799;
+}*/
+
+
+
+.emailleft {
+    position:relative;
+    float:left;
+}
+
+.emailright {
+    position:relative;
+    float:right;
+}
+
+.emailfloatcontent {
+    display:block;
+}
+#blocks-email_list-email-print .messagelinks {
+    display: none;
+}

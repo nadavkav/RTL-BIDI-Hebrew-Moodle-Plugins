@@ -1,0 +1,26 @@
+ul.c_menu,#util_bar {
+	/*font-size: 1em;*/
+}
+
+.c_menu A {
+	/*background-image: url("/img/bolleta_blau.gif");*/
+	padding-left: 15px;
+}
+
+.c_menu A:hover
+{
+	/*padding-left: 15px;*/
+}
+
+A.c_aO {
+	background-image: url(../../../pix/t/switch_minus.gif);
+}
+
+A.c_aC {
+	background-image: url(../../../pix/t/switch_plus.gif);
+}
+
+A.c_ex {
+	padding-left: 0px;
+	background-image: none;
+}

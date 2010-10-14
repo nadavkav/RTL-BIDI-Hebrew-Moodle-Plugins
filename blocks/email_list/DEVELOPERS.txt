@@ -1,0 +1,28 @@
+//////////////////////////////////////////////////////
+//                                                  //
+//                                                  //
+//            	eMail has created by                //
+//       Center for Information Technologies        //
+//          University of Balearic Islands          //
+//              http://www.cti.uib.es               //
+//                                                  //
+//                                                  //
+//////////////////////////////////////////////////////
+
+
+
+
+This mail tool has been created by Center for Information Techmologies
+of University of Balearic Islands.
+
+Soon publish all documentation for module in http://www.cti.uib.es
+
+
+Autor:
+	Toni Mas (toni.mas@uib.es), Lead Developer 
+
+Collaborators:
+	Eduardo Domínguez ( Center for Information Technologies )
+	Marga Inaraja     ( Campus Extens )
+	Sergio Sama	  ( University of Oviedo )
+	Michael Avelar

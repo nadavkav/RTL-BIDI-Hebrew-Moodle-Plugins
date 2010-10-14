@@ -1,0 +1,146 @@
+<?php
+/**
+ * Configure block page.
+ *
+ * @author Toni Mas
+ * @version
+ * @package email
+ * @license The source code packaged with this file is Free Software, Copyright (C) 2006 by
+ *          <toni.mas at uib dot es>.
+ *          It's licensed under the AFFERO GENERAL PUBLIC LICENSE unless stated otherwise.
+ *          You can get copies of the licenses here:
+ *                         http://www.affero.org/oagpl.html
+ *          AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
+ **/
+?>
+
+<table cellpadding="9" cellspacing="0" >
+<tr valign="top">
+<td align="right"><b>eMail GENERAL settings</b></td>
+<td>You can enable who user's choose prefences</td>
+<td></td>
+</tr>
+<tr valign="top">
+    <td align="right">email_trackbymail:</td>
+    <td>
+    <?php
+		$choose = array('0' => get_string('no'), '1' => get_string('yes'));
+		choose_from_menu ($choose, "email_trackbymail", $CFG->email_trackbymail, "", "", ""); ?>
+    </td>
+    <td>
+    <?php echo get_string("configtrackbymail", 'block_email_list'); ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right">email_marriedfolders2courses:</td>
+    <td>
+    <?php
+		$choose = array('0' => get_string('no'), '1' => get_string('yes'));
+		choose_from_menu ($choose, "email_marriedfolders2courses", $CFG->email_marriedfolders2courses, "", "", ""); ?>
+    </td>
+    <td>
+    <?php echo get_string("configmarriedfolders2courses", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right">email_old_select_participants:</td>
+    <td>
+    <?php
+    	$choose = array('0' => get_string('no'), '1' => get_string('yes'));
+		choose_from_menu ($choose, "email_old_select_participants", $CFG->email_old_select_participants, "", "", "");
+	?>
+    </td>
+    <td>
+    <?php echo get_string("configold_select_participants", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right">email_add_admins:</td>
+    <td>
+    <?php
+    	$choose = array('0' => get_string('no'), '1' => get_string('yes'));
+		choose_from_menu ($choose, "email_add_admins", $CFG->email_add_admins, "", "", "");
+	?>
+    </td>
+    <td>
+    <?php echo get_string("add_admins", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right">email_enable_ajax:</td>
+    <td>
+    <?php
+    	$choose = array('0' => get_string('no'), '1' => get_string('yes'));
+		choose_from_menu ($choose, "email_enable_ajax", $CFG->email_enable_ajax, "", "", "");
+	?>
+    </td>
+    <td>
+    <?php echo get_string("enable_ajax", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+<td align="right"><b>eMail COLORS</b></td>
+<td>You can choose colors for email table and color for reply mails</td>
+<td></td>
+</tr>
+<tr valign="top">
+    <td align="right">email_answered_color:</td>
+    <td>
+    <?php
+		print_textfield ('email_answered_color', $CFG->email_answered_color, '', 7,7);
+	?>
+    </td>
+    <td>
+    <?php echo get_string("configanswered_color", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="right">email_table_field_color:</td>
+    <td>
+    <?php
+		print_textfield ('email_table_field_color', $CFG->email_table_field_color, '', 7,7);
+	?>
+    </td>
+    <td>
+    <?php echo get_string("configtable_field_color", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr valign="top">
+<td align="right"><b>BLOCK email_list</b></td>
+<td></td>
+<td></td>
+</tr>
+<tr valign="top">
+    <td align="right">email_max_number_courses:</td>
+    <td>
+    <?php
+        $options[0] = get_string('all');
+        $options[5] = 5;
+        $options[10] = 10;
+        $options[15] = 15;
+        $options[20] = 20;
+        $options[25] = 25;
+        $options[30] = 30;
+        $options[35] = 35;
+        $options[40] = 40;
+        $options[45] = 45;
+        $options[50] = 50;
+        choose_from_menu ($options, "email_max_number_courses", $CFG->email_max_number_courses, "", "", ""); ?>
+    </td>
+    <td>
+    <?php echo get_string("configmaxnumbercourses", 'block_email_list') ?>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>
