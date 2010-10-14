@@ -1,0 +1,176 @@
+<?php
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/**
+ * Configuration for course menu instances
+ * 
+ * @author Alan Trick
+ * @copyright Copyright Trinity Western University
+ * @license http://www.gnu.org/copyleft/gpl-3.0.html
+ */
+
+$plugins = $this->load_plugins($CFG->dirroot . '/blocks/yui_menu/plugin');
+$itemlist = array();
+foreach ($plugins as $p) $p->add_items(&$itemlist, $this);
+$itemlist = $this->order_items($itemlist);
+$items = $itemlist;
+
+
+foreach ($items as $k=>$v) {
+    $text = $v->html();
+    
+    $config = '';
+    $show = true;
+    $item = 'item_'.$k;
+    if (!empty($this->config->$item)) {
+        $show =  ($this->config->$item == 'show');
+        $config = $this->config->$item;
+    } else {
+        $show = $v->plugin->visible;
+    }
+    $img = htmlspecialchars($CFG->wwwroot.'/pix/i/'.($show?'hide':'show').'.gif');
+    $field = $item . '_field';
+    print "
+    <span id='$item' onclick='return toggleitem.call(this);'>
+        <img src='$img' id='{$item}_image' class='icon hide' alt='Hide link' />
+        <label for='$field'>$text</label>
+        <input type='hidden' name='$item' id='$field' value='$config' />
+    </span>";
+}
+
+?>
+
+<table id="yui_menu_config_list">
+<?php
+$n_items = count($items);
+for ($i = 0; $i < $n_items; $i++) {
+    $prev = $i - 1;
+    if ($prev < 0) $prev = 0;
+    $next = $i + 1;
+    if ($next > $n_items) $next = $n_items;
+    echo "
+<tr id='disp{$i}tr'>
+	<td><span id='display{$i}'></span></td>
+	<td id='up{$i}'><a href='#' onclick='changeItem($prev,$i); return false;'>
+        <img src='{$CFG->wwwroot}/pix/t/up.gif'></a></td>
+	<td id='down{$i}'><a href='#' onclick='changeItem($i,$next); return false;'>
+        <img src='{$CFG->wwwroot}/pix/t/down.gif'></a></td>
+</tr>";
+}
+?>
+</table>
+<?php
+if (!isset($this->config->maxsize)) {
+   $this->config->maxsize = 19;
+}
+if (!isset($this->config->trunc)) {
+   $this->config->trunc = '...';
+}
+if (!isset($this->config->introaction)) {
+   $this->config->introaction = 'introhide';
+}
+if ($this->config->introaction == 'introhide') {
+    $introhidestr = 'selected';
+    $introscrollstr = '';
+} else {
+    $introscrollstr = 'selected';
+    $introhidestr = '';
+}
+?>
+<table align="center">
+<tr><td><?php echo get_string('introlength', 'block_yui_menu'); ?></td>
+<td colspan="2"><input type="text" name="maxsize" value="<?php p($this->config->maxsize) ?>"></td></tr>
+<tr><td><?php echo get_string('trunctext', 'block_yui_menu'); ?> </td>
+<td colspan="2"><input type="text" name="trunc" value="<?php p($this->config->trunc) ?>"></td></tr>
+<tr><td><?php echo get_string('introaction', 'block_yui_menu'); ?> </td>
+<td colspan="2"><select name="introaction"><option value="introhide" <?php echo $introhidestr . '>' . get_string('introhide','block_yui_menu'); ?></option>
+<option value="introscroll"<?php echo $introscrollstr . '>' . get_string('introscroll','block_yui_menu'); ?></option></select></td></tr>
+</table>
+
+<table align="center">
+<tr>
+    <td colspan="3" align="center">
+        <input type="submit" value="<?php print_string('savechanges'); ?>" />
+    </td>
+</tr>
+</table>
+
+<?php
+foreach (array_keys($items) as $i=>$value) {
+    $item = 'order_'.$i;
+    print "\n<input type='hidden' name='$item' id='$item' value='$value' />";
+}
+// clear any potential extra values
+$i = $n_items;
+while (1) {
+    $item = 'order_'.$i;
+    if (!isset($config->$item)) break;
+    print "\n<input type='hidden' name='$item' id='$item' value='' />";
+    $i++;
+}
+?>
+
+<script type="text/javascript">
+var items = ["<?php echo implode('", "', array_keys($items)); ?>"];
+
+var spans = [];
+var hidden = [];
+var span_display = [];
+for (i = 0; i < items.length; i++) {
+    span = document.getElementById('item_'+items[i]);
+    span.style.display = "none";
+    spans.push(span);
+    hidden.push(document.getElementById("order_"+i));
+    span_display.push(document.getElementById("display"+i));
+}
+
+for (i = 0; i < items.length; i++) {
+	spans[i].style.display = "block";
+	span_display[i].appendChild(spans[i]);
+}
+
+document.getElementById("up0").removeChild(
+    document.getElementById("up0").childNodes[0]);
+document.getElementById("down<?php echo $n_items-1; ?>").removeChild(
+    document.getElementById("down<?php echo $n_items-1; ?>").childNodes[0]);
+
+// --------------
+
+function toggleitem() {
+    image = document.getElementById(this.id + '_image');
+    field = document.getElementById(this.id + '_field');
+    // figure out which way to toggle
+    imgdir = '<?php echo $CFG->wwwroot; ?>/pix/i/';
+    var show = true;
+    // We'll check this because field.value can be empty
+    if (image.src != imgdir + 'show.gif')  show = false;
+    // do toggling
+    image.src=imgdir+ (show ? 'hide':'show') +'.gif';
+    field.value = (show ? 'show':'hide');
+}
+
+function changeItem(n1, n2) 
+{
+	var t = hidden[n1].value;
+	hidden[n1].value = hidden[n2].value;
+	hidden[n2].value = t;
+	
+	span_display[n1].removeChild(spans[n1]);
+	span_display[n2].removeChild(spans[n2]);
+	var t = spans[n1];
+	spans[n1] = spans[n2];
+	spans[n2] = t;
+	span_display[n1].appendChild(spans[n1]);
+	span_display[n2].appendChild(spans[n2]);
+}
+
+</script>
