@@ -1,0 +1,35 @@
+/* NEWS filter */
+.newsfilter {
+
+}
+
+.dir-rtl .newsfilter {
+text-align:right;
+}
+
+.newsfilter a:link {
+
+}
+
+.newsfilter a:hover {
+
+}
+
+.newsfilter a:visited {
+
+}
+
+.newsfilter ul {
+	margin-left: 0px;
+	padding-left: 10px;
+}
+
+.newsfilter li {
+	list-style:none;
+}
+
+.newsfilter img {
+	  width:16px;
+	  height:16px;
+	  margin-right:4px;
+}

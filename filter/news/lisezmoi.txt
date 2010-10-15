@@ -1,0 +1,32 @@
+Ce filtre vous permet d'insérer dans la première page de votre Moodle les titres des discussions de certains de vos forums, pour faire comme un gestionnaire de news... (uniquement partie affichage).
+
+- Affichage sur seulement la première page (donc géré par l'administrateur) car cela évite que d'autre utilisateurs puissent lire les titres de forums sans en avoir les droits.
+- Le filtre utilise la partie expérimentale de Moodle qui consiste à permettre une date de diffusion et de retrait pour les discussions (activations dans les paramètres du module Forum).
+- Ce filtre ne se base pas sur le flux RSS qui lui ne respecte pas cette notion d'affichage différé.
+- Les sujets sont affichés avec un lien, la gestion des droits est faite sur la lecture du forum quand on clique sur le lien.
+- Les discussions sont classées dans l'ordre descendant (les plus récents en premiers) en mixant la date d'affichage (si elle existe) ou la date de rédaction.
+- Les discussions retirées ne sont pas visible dans le récapitulatif.
+
+
+HOW TO
+1) Installez le filtre
+2) Copier le fichier news.css dans le répertoire votre thème et adaptez le (si vous ne voulez pas l'adapter à votre thème, le filtre utilisera le fichier moodle/filter/news/news.css fournis)
+3) Activez le filtre
+4) Essaye le...
+
+Pour utiliser ce filtre, dans une étiquette écrivez [-NEWS(id,group,nb)-]
+- "id" est l'identifiant du forum, vous le trouverez en analysant l'adresse URL d'un forum : http://www.monmoodle.org/mod/forum/view.php?id=8
+- "group" est l'identifiant du groupe, utilisez 0 si le forum n'a pas de groupe ou que vous voulez les messages accessibles à tous les groupes dans un forum, vous le trouverez en analysant l'adresse URL d'un forum : http://www.monmoodle.org/mod/forum/view.php?id=8&group=1
+- "nb" est le nombre de discussions maxi à afficher dans le bilan
+
+Par exemple :
+[-NEWS(2,0,5)-] affiche les 5 dernières discussions du forum 2
+[-NEWS(14,2,7)-] affiche les 7 dernières discussions du groupe 2 du forum 14
+
+
+Vous pouvez placer plusieurs instances dans une étiquette pour, par exemple, créer un tableau avec des news issues de plusieurs forums.
+
+La mise à jour de ce filtre n'est pas dépendante de votre réglage du cache.
+Dites moi si quelque chose ne va pas.
+
+Éric Bugnet
