@@ -1,0 +1,151 @@
+<?php  // $Id: config.html,v 1.32.2.4 2007/12/21 14:13:54 poltawski Exp $
+    require_once($CFG->dirroot . '/mod/kaltura/lib.php');
+    require_once($CFG->dirroot.'/mod/kaltura/settingslib.php');
+?>
+<style type="text/css">
+    td
+    {
+        padding-top:20px;
+    }
+</style>
+
+<form method="post" action="module.php" id="form">
+<div>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+ <input type="hidden" name="module" value="kaltura" />
+
+<?php   
+$errors = false;
+if (KalturaHelpers::getPlatformKey("partner_id","none") == "none")
+{
+  if (isset($_GET["err"]) && $_GET["err"]=="mand")
+  {
+      formerr(get_string('registrationmandatoryall','kaltura'));
+  }
+  else if (isset($_GET["err"]) && $_GET["err"]=="terms")
+  {
+      formerr(get_string('registrationacceptterms','kaltura'));
+  }
+  $contOpt = array();
+  $i=1;
+  $base_name = 'registerebcontent-opt';
+  while (strstr(get_string($base_name . $i, 'kaltura'), $base_name) == FALSE)
+  {
+    $contOpt[get_option_key($base_name . $i . '-key')] = get_string($base_name . $i, 'kaltura');
+    $i++;
+  }
+  
+  $descOpt = array();
+  $i=1;
+  $base_name = 'registerdescself-opt';
+  while (strstr(get_string($base_name . $i, 'kaltura'), $base_name) == FALSE)
+  {
+    $descOpt[get_option_key($base_name . $i . '-key')] = get_string($base_name . $i, 'kaltura');
+    $i++;
+  }
+
+  $adultOpt = array();
+  $i=1;
+  $base_name = 'registeradult-opt';
+  while (strstr(get_string($base_name . $i, 'kaltura'), $base_name) == FALSE)
+  {
+    $adultOpt[get_option_key($base_name . $i . '-key')] = get_string($base_name . $i, 'kaltura');
+    $i++;
+  }
+
+ ?>
+ <h2><?php print_string('settingstitle','kaltura'); ?></h2>
+ <span class="kaltura_hand kaltura_link" onclick="kalturaInitModalBox('<?php echo "$CFG->wwwroot/mod/kaltura/kpartner_login.php" ?>',{width:250, height:100});return false;"> <?php print_string('existingcustomer','kaltura');?></span><br /><br />
+ <?php print_string('settingsmarketing1', 'kaltura');?><br /><br />
+ <h4> <?php print_string('settingsmarketing2', 'kaltura');?></h4>
+ 	<table>
+	<tr>
+	<td>
+
+<table >
+ <tr ><td><?php print_string('registeruser', 'kaltura'); ?></td>
+     <td><?php print_textfield("username", isset($config->username) ? $config->username : "");?></td>
+ </tr>
+ <tr><td><?php print_string('registercompany', 'kaltura'); ?></td>
+     <td><?php print_textfield("company", isset($config->company) ? $config->company : "");?></td>
+ </tr>
+ <tr><td><?php print_string('registeremail', 'kaltura'); ?></td>
+     <td><?php print_textfield("email", isset($config->email) ? $config->email : "");?></td>
+ </tr>
+ <tr><td><?php print_string('registerphone', 'kaltura'); ?></td>
+     <td><?php print_textfield("phone", isset($config->phone) ? $config->phone : "");?></td>
+ </tr>
+ <tr><td><?php print_string('registerdescself', 'kaltura'); ?></td>
+     <td><?php choose_from_menu($descOpt, "descself"); ?></td>
+ </tr>
+ <tr><td><?php print_string('registerweburl', 'kaltura'); ?></td>
+     <td><?php print_textfield("weburl", isset($config->weburl) ? $config->weburl : "");?></td>
+ </tr>
+ <tr><td><?php print_string('registerebcontent', 'kaltura'); ?></td>
+     <td><?php choose_from_menu ($contOpt, "webcontent", '', 'choose', '', '0', false, false, 0, '', true, true, ''); ?></td>
+ </tr>
+  <tr><td><?php print_string('registeradult', 'kaltura'); ?></td>
+     <td><?php choose_from_radio ($adultOpt, "adult"); ?></td>
+ </tr>
+  <tr><td><?php print_string('registerpurpose', 'kaltura'); ?></td>
+     <td><?php print_textarea(false, 5, 40, 0, 0, "purpose"); ?></td>
+ </tr>
+
+ </table>  
+ </td>
+	<td style="	vertical-align:text-top;padding-left:40px">
+		<div style="background-color: #f4f6e0;padding:20px">
+		<h4><?php echo print_string('kalturace_header', 'kaltura'); ?> </h4>
+		<?php echo print_string('kalturace_prefix', 'kaltura'); ?> 
+		<table >
+		<tr><td style="vertical-align:text-top"><?php echo print_string('kalturace_url', 'kaltura'); ?></td><td style="vertical-align:text-top"><?php print_textfield("ceurl", "http://","",20); ?></br></br></td></tr>
+		<tr><td style="vertical-align:text-top;width:70%"><?php echo print_string('kalturace_admin_mail', 'kaltura'); ?></td><td style="vertical-align:text-top"><?php print_textfield("ceadminemail", "","",20); ?></td></tr>
+		<tr><td style="vertical-align:text-top"><?php echo print_string('kalturace_password', 'kaltura'); ?></td><td style="vertical-align:text-top"><input name="cecmspass" type="password" value="" size="20"/></br></br></td></tr>		
+        <tr><td colspan="2" style="text-align:center" ><input type="submit" value="<?php echo print_string('submitcekaltura', 'kaltura') ?>" /> </td></tr>
+		</table>
+		</div>
+	</td>
+	</tr>
+	</table>
+    <?php print_checkbox("accpetterms","checked",false); print_string('acceptkalturaterms','kaltura');?>
+    <input type="submit" value="<?php print_string('signupkaltura', 'kaltura') ?>" />
+<?php
+} //end of non registered user
+else 
+{
+    $kClient = new KalturaClient(KalturaHelpers::getServiceConfiguration());
+    $kalturaUser = KalturaHelpers::getPlatformKey("user","");
+    $kalturaSecret = KalturaHelpers::getPlatformKey("adminsecret","");
+    $ksId = $kClient -> session -> start($kalturaSecret, $kalturaUser, KalturaSessionType::ADMIN);
+    $kClient -> setKs($ksId);
+
+    $kalInfo = $kClient -> partner -> getinfo();
+    $kalUsage = $kClient -> partner -> getUsage();
+    
+    if ($kalInfo->partnerPackage == 1)
+    {
+        if ($kalUsage->Percent == 100)
+        {
+             print_string('trialexpired','kaltura');
+       }
+        else
+        {
+            print_string('usingtrial','kaltura');
+            echo get_string('trialpercent1','kaltura') . $kalUsage->Percent . get_string('trialpercent2','kaltura') ;
+            print_string('postregister','kaltura');    
+        }
+    }
+    else
+    {
+
+         echo get_string('regusage1','kaltura') . $kalUsage->usageGB . get_string('regusage2','kaltura') ;
+         print_string('postregister','kaltura');
+    }
+   
+?>
+<?php 
+}
+?>    
+</div>
+
+</form>

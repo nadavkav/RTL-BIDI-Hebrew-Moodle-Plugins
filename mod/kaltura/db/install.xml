@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/kaltura/db" VERSION="20070522" COMMENT="XMLDB file for Moodle mod/kaltura"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="kaltura_entries" COMMENT="Kaltura entries">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="entry_id"/>
+        <FIELD NAME="entry_id" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="dimensions"/>
+        <FIELD NAME="dimensions" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="entry_id" NEXT="size"/>
+        <FIELD NAME="size" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="dimensions" NEXT="custom_width"/>
+        <FIELD NAME="custom_width" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="size" NEXT="design"/>
+        <FIELD NAME="design" TYPE="char" LENGTH="45" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" ENUM="false" PREVIOUS="custom_width" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="design" NEXT="context"/>
+        <FIELD NAME="context" TYPE="char" LENGTH="45" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="title" NEXT="entry_type"/>
+        <FIELD NAME="entry_type" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="context" NEXT="media_type"/>
+        <FIELD NAME="media_type" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="entry_type"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="kaltura_entry_id_ix" UNIQUE="false" FIELDS="entry_id"  NEXT="kaltura_context_ix"/>
+        <INDEX NAME="kaltura_context_ix" UNIQUE="true" FIELDS="context" PREVIOUS="kaltura_entry_id_ix" />
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert log_display" TYPE="insert" TABLE="log_display" COMMENT="Initial insert of records on table log_display"  NEXT="insert config_plugins">
+      <SENTENCES>
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'add', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'update', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'view', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'report', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'attempt', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'submit', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'review', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'editquestions', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'preview', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'start attempt', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'close attempt', 'kaltura', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('kaltura', 'continue attempt', 'kaltura', 'name')" />
+      </SENTENCES>
+    </STATEMENT>
+    <STATEMENT NAME="insert config_plugins" TYPE="insert" TABLE="config_plugins" COMMENT="Initial insert of records on table config_plugins" PREVIOUS="insert log_display">
+      <SENTENCES>
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'server_uri', 'http://www.kaltura.com')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'uploader_regular', '1002217')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'uploader_mix', '1002225')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'editor', '1002226')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'player_regular_dark', '1002712')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'player_regular_light', '1002711')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'player_mix_dark', '1002259')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'player_mix_light', '1002260')" />
+        <SENTENCE TEXT="(plugin, name, value) VALUES ('kaltura', 'video_presentation', '1003069')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>

@@ -1,0 +1,3 @@
+[04-Aug-2010 02:32:16] PHP Fatal error:  Interface 'IKalturaLogger' not found in /home/tikshuvp/public_html/moodle/mod/kaltura/client/kaltura_logger.php on line 2
+[05-Aug-2010 00:27:35] PHP Fatal error:  Interface 'IKalturaLogger' not found in /home/tikshuvp/public_html/moodle/mod/kaltura/client/kaltura_logger.php on line 2
+[13-Aug-2010 08:46:34] PHP Fatal error:  Interface 'IKalturaLogger' not found in /home/tikshuvp/public_html/moodle/mod/kaltura/client/kaltura_logger.php on line 2
