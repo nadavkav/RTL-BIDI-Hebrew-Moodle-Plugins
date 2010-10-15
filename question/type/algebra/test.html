@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>Formula</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</head>
+	<body bgcolor="#FFFFFF">
+		<form>
+			<input type="text" size="20" name="formula" id="formula"/>
+			<input type="button" value="Display Formula"
+			  onclick='document.getElementsByName("my_iframe")[0].src="http://localhost:8888/moodle19/question/type/algebra/displayformula.php?"+document.getElementById("formula").value'/>
+			<iframe name="my_iframe" id="my_iframe" src=""/>
+		</form>
+	</body>
+</html>

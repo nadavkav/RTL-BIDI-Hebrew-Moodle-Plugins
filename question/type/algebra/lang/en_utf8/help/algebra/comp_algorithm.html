@@ -1,0 +1,32 @@
+<h1>Comparison Algorithm</h1>
+
+This selects the method by which the students' responses are compared
+to all the questions answers. The different possibilities are:
+
+<ul>
+<li><b>SAGE</b><br>
+This algorithm uses the Open Source <a href="http://www.sagemath.org/">SAGE</a>
+mathematics software to perform a full symbolic algebraic comparison between
+responses and answers. To use this algorithm a SAGE XML-RPC server must be
+running and the Moodle server must be configured to connect to it.</li>
+
+<li><b>Evaluation</b><br>
+This is the poor man's cheat to performing algebraic comparisons! Rather than
+doing a proper symbolic manipulation this method generates random numbers for
+the question variables and then evaluates both the student response and the
+question's answer for that set of values. This is repeated a configurable
+number of times and, if tboth are equal within the selected tolerance each
+time the two expressions are declared to be equal. While the <i>SAGE</i>
+algorithm is certainly to be preferred this algorithm has the benefit of
+not requiring any external servers or code. It is implemented entirely within
+the Moodle server.</p>
+
+<li><b>Equivalence</b><br>
+This is the simplest of all the methods. It is implemented inside the algebraic
+parser used by this question type. It will only perform the most basic of
+comparisons between expressions. The expressions must contain the exact same
+terms for a comparison to be successful. The only thing accounted for is
+commutativity of the operations. Hence the terms <i>(x+1)<sup>2</sup></i> and
+<i>(1+x)<sup>2</sup></i> will be found to be equal but <i>(x+1)<sup>2</sup></i>
+and <i>x<sup>2</sup>+2x+1</i> will not. Like the <i>Evaluation</i> method it is
+entirely implemented inside the Moodle server.</p>

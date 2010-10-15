@@ -1,0 +1,33 @@
+Version 0.0.4
+Improvements
+  - Export and import to Moodle XML format
+  - Backup and restore functions added
+Bug fixes
+  - Fixed parser problem with negative numbers
+Version 0.0.3
+Improvements
+  - Added danish localizations based on forum feedback: mltiplication now 
+    uses 'cdot' and decimal points are rendered as commas when Danish is
+    selected as a language
+Bug fixes
+  - Operator priority, BODMAS, not quite implemented correctly. */ and +- not
+    implemented as equal priority - now fixed
+Version 0.0.2
+Significant changes as a result of the first round of feedback!
+  - Renamed parser classes to conform to coding guidelines
+  - Moved all parser strings into a language pack
+  - Switched a lot of double quoted string to single as per guidelines
+  - added automatic formatted comments as required by coding guidelines
+  - changed treatment of variable names to help reduce confusion. Now
+    the first letter is treated as the name and the rest are subscripted.
+    Greek letter names are treated as a single character i.e. theta1 
+    becomes \theta_{1} in LaTeX.
+  - Added option to specify text which goes in front of response box
+  - Added support for specified variable names in the parser to improve
+    parsing in some situations e.g. 'xy' will now get treated as 'x * y' if
+    there are two variables 'x' and 'y' defined.
+Bug fixes
+  - fixed bug when evaluating special constants in the parser
+  - fixed incorrect rendering of sqrt in LaTeX by the parser
+  - fixed incorrect sage-server.py file in the ZIP
+Version 0.0.1 released

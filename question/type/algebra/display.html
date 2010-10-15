@@ -1,0 +1,41 @@
+<div class="qtext">
+  <?php echo $questiontext; ?>
+</div>
+
+<?php if ($image) { ?>
+  <img class="qimage" src="<?php echo $image; ?>" alt="" />
+<?php } ?>
+
+<script type="text/javascript">
+<?php echo "$displayfunction"; ?>
+</script>
+
+<div class="ablock clearfix">
+  <div class="prompt" style="vertical-align: top;">
+    <?php if(isset($question->options->answerprefix) and !empty($question->options->answerprefix)) {
+              $opts=new StdClass;
+              $opts->para=false;
+              echo format_text($question->options->answerprefix,FORMAT_MOODLE,$opts);
+          } else {
+              echo get_string('answer', 'quiz').': '; 
+          } ?>
+  </div>
+  <div class="answer">
+    <input type="text" class="<?php echo $class; ?>" <?php echo "$readonly $inputname $value"; ?> size="60"
+	 onchange=<?php echo '"'.$df_name.'()"'; ?> />
+    <?php echo $feedbackimg; ?>
+  </div>
+  <?php if ($feedback) { ?>
+    <div class="feedback">
+      <?php echo $feedback ?>
+    </div>
+  <?php } ?>
+  <div class="dispresponse">
+    <input type="button" value="Display Reponse" onclick=<?php echo '"'.$df_name.'()"'; ?> />
+    <iframe <?php echo "$iframename"; ?> width="60%" height="60" align="middle" src="" ></iframe> 
+    <script type="text/javascript">
+    <?php echo "$df_name();"; ?>
+    </script>
+  </div>
+  <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+</div>

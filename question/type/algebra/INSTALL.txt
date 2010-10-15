@@ -1,0 +1,48 @@
+INSTALLATION INSTRUCTIONS
+
+Before installation: Please note that this is ALPHA quality software at
+the moment. DO NOT install this on your production server - or at least
+don't blame me if you do and it all goes horribly wrong! 
+
+
+REQUIREMENTS
+
+To install the algebra based question type you will need the following:
+
+1) Already installed copy of Moodle 1.9.1. It may work with other
+   Moodle versions but this is the only one I have tested it with.
+   
+2) PHP5: The code uses exceptions and so requires PHP version 5 at a
+   minimum. I used this since Moodle 2.0 will require it so it should
+   not be an unusual requirement for long. I used PHP 5.2.5.
+   
+3) If you want to use the SAGE XML-RPC server you will also need XML-RPC
+   support in PHP5. Most installations include this but the MAMP 1.7.1
+   package does not. If you use MAMP you will need to download the MAMP 
+   source code from the MAMP website and recompile PHP making sure you
+   call the initial configure script with the flag "--with-xmlrpc".
+   
+4) If you want to use the SAGE XML-RPC server you will also need a copy of
+   SAGE which you can get from here: http://www.sagemath.org/. This should
+   be installed according to the instructions on their website.
+   
+
+INSTALLING
+
+1) Copy the contents of the "moodle" directory into your top level moodle
+   directory. Note that all the files are 'new' so there should be no files
+   overwritten. ('cp -iR' are good options to use).
+   
+2) Load the admin page and your database should be configured. You are now
+   ready to write algebra based questions which use the 'Evaluate' and
+   'Equivalent' comarison methods.
+   
+3) To run the SAGE XML-RPC server you will need an installed copy of SAGE
+   (http://www.sagemath.org/). Edit the first line of the 'sage-server.py'
+   file to point to your installed copy of the sage executable. Then simply
+   execute the sage-server.py script. It will run a very simple XML-RPC
+   server. If the machine you run your moodle server on is different from
+   the machine running your Moodle webserver you will need to edit line 493
+   of the file question/type/algebra/questiontype.php to point to the XML-RPC
+   server. The same applies if you edit the network port. (This mechanism
+   obviously needs to be improved!)

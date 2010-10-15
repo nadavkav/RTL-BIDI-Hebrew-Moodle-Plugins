@@ -1,0 +1,21 @@
+<h1>Variables</h1>
+
+<p>Each variable used by an algebraic question must be specifically entered in the
+question configuration. This is to ensure correct handling by the comparison
+algorithms. All question answers are checked for variables and an error will be flagged
+if a variable is found in a question which has not been declared.</p>
+
+<p>There is a maximum and a minimum value for each variable. This need only be filled
+in if the <i>Evaluation</i> comparison algorithm is used. It can be specified for the
+other algorithms but will be ignored. These values define the range over which values will
+be randomly chosen. Care should be taken to ensure that the question answers are well
+behaved over this range.</p>
+
+<p>For example if one of the question answers is '1/x' the range for the variable 'x'
+should not include zero! Also be aware of variable interactions may also cause problems.
+For example if you have an answer '1/(x-y)' you must ensure that the ranges for x and
+y are such that they do not overlap which may give x=y. Similary when using inverse sine 
+or cosine you must ensure that the argument never exceeds 1. Note that in the case of a
+mistake the program will not crash but comparisons may well be inaccurate.</p>
+
+

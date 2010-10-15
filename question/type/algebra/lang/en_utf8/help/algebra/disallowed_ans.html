@@ -1,0 +1,21 @@
+<h1>Disallowed Answer</h1>
+
+<p><b>**NOT YET IMPLEMENTED**</b></p>
+
+<p>This box contains an expression which will be disallowed as an answer.
+Students entering an answers which matches this will be prevented from
+receiving any grade for the question even if the response would match
+a given answer for the question.</p>
+
+<p>The purpose behind this is to allow for simple algebraic manipulation
+questions. For example, expand the expression (x+y+z)<sup>2</sup>. If the
+student simply copies the expression in the question into the answer box
+then both the <i>SAGE</i> and <i>Evaluate</i> comparison algorithms would
+match and the student given a correct response. With such a question the
+expression (x+y+z)<sup>2</sup> should be entered into the disallowed
+answer box and then a simple comparison will be performed between student
+responses and the expression. Responses which match will be rejected.</p>
+
+<p>The comparison method used will be <i>Equivalent</i> if <i>Evaluate</i>
+is selected as the main algorithm and <i>Simple SAGE</i> if <i>SAGE</i>
+is selected as the main comparison algorithm.</p>
