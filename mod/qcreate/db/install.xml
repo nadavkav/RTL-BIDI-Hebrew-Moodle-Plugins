@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/qcreate/db" VERSION="20071121" COMMENT="XMLDB file for Moodle mod/qcreate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="qcreate" COMMENT="Main table for qcreate activity" NEXT="qcreate_required">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Course qcreate activity belongs to" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="graderatio"/>
+        <FIELD NAME="graderatio" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Percentage ratio of automatic grades to manual grades. 15 means 15 percent of grade is automatically assigned for number of required questions created." PREVIOUS="grade" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="General introduction of the qcreate activity" PREVIOUS="graderatio" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="allowed"/>
+        <FIELD NAME="allowed" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="which question types are allowed" PREVIOUS="introformat" NEXT="totalrequired"/>
+        <FIELD NAME="totalrequired" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="total questions students are required to create" PREVIOUS="allowed" NEXT="studentqaccess"/>
+        <FIELD NAME="studentqaccess" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="totalrequired" NEXT="timesync"/>
+        <FIELD NAME="timesync" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="time of last sync of student question access" PREVIOUS="studentqaccess" NEXT="timeopen"/>
+        <FIELD NAME="timeopen" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timesync" NEXT="timeclose"/>
+        <FIELD NAME="timeclose" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timeopen" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timeclose" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for qcreate"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="qcreate_required" COMMENT="the table in which we keep details of what question types and how many are to be created." PREVIOUS="qcreate" NEXT="qcreate_grades">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="qcreateid"/>
+        <FIELD NAME="qcreateid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="refers to the qcreate module table id" PREVIOUS="id" NEXT="qtype"/>
+        <FIELD NAME="qtype" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="qcreateid" NEXT="no"/>
+        <FIELD NAME="no" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="no of required questions" PREVIOUS="qtype"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table, please edit me"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="qcreate_grades" COMMENT="Grades for created questions" PREVIOUS="qcreate_required">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="qcreateid"/>
+        <FIELD NAME="qcreateid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="questionid"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="qcreateid" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="questionid" NEXT="gradecomment"/>
+        <FIELD NAME="gradecomment" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="grade" NEXT="teacher"/>
+        <FIELD NAME="teacher" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="gradecomment" NEXT="timemarked"/>
+        <FIELD NAME="timemarked" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacher"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="qcreate grades" NEXT="questionid"/>
+        <KEY NAME="questionid" TYPE="foreign" FIELDS="questionid" REFTABLE="question" REFFIELDS="id" PREVIOUS="primary" NEXT="qcreateid"/>
+        <KEY NAME="qcreateid" TYPE="foreign" FIELDS="qcreateid" REFTABLE="qcreate" REFFIELDS="id" PREVIOUS="questionid"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="timemarked" UNIQUE="false" FIELDS="timemarked"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert log_display" TYPE="insert" TABLE="log_display" COMMENT="Initial insert of records on table log_display. Each record describes how data will be showed by log reports.">
+      <SENTENCES>
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('qcreate', 'add', 'qcreate', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('qcreate', 'update', 'qcreate', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('qcreate', 'view', 'qcreate', 'name')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>
