@@ -1,0 +1,13 @@
+/** Calculated Objects qtype
+ */
+.qco-objects, .qco-text{font-family:'Comic Sans MS',serif; color:#040; font-size:1.3em;}
+.qco-objects { border:1px solid #ccc; padding:5px 0; }
+.qco-objects div, .qco-objects center  { width:45%; float:left; }
+.qco-objects.vertical div{ width:90%; margin:0 auto;float:none; }
+.qco-objects .op{ width:9%; float:left; text-align:center; font-size:3.2em; }
+.qco-objects .op.vertical { float:none; font-size:1em; }
+.qco-objects hr.o{ width:50%; height:5px; background:#666; }
+.qco-objects img{ vertical-align:middle; }
+.qco-objects .big{font-size:2em; font-style:normal;}
+.qco-text { margin:0 3.5em .8em; }
+
