@@ -1,0 +1,97 @@
+<DBMIGRATION type="mod/netpublish" VERSION="2005120100">
+  <TABLES>
+    <TABLE name="netpublish_grades" />
+    <TABLE name="netpublish_status_records" />
+    <TABLE name="netpublish_status" />
+    <TABLE name="netpublish_lock" />
+    <TABLE name="netpublish_images" />
+    <TABLE name="netpublish_first_section_names">
+      <FIELDS>
+        <FIELD name="name" method="PLAIN_SQL_UPDATE" type="varchar" length="255">
+         <SQL_DETECT_USER />
+         <SQL_DETECT_COURSE>
+           SELECT n.course
+           FROM {$CFG->prefix}netpublish n,
+                {$CFG->prefix}netpublish_first_section_names nfsn
+           WHERE n.id = nfsn.publishid
+           AND nfsn.publishid = RECORDID;
+         </SQL_DETECT_COURSE>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+    <TABLE name="netpublish_sections">
+      <FIELDS>
+        <FIELD name="fullname" method="PLAIN_SQL_UPDATE" type="varchar" length="128">
+          <SQL_DETECT_USER />
+          <SQL_DETECT_COURSE>
+            SELECT n.course
+            FROM {$CFG->prefix}netpublish n,
+                 {$CFG->prefix}netpublish_sections s
+            WHERE n.id = s.publishid
+            AND s.publishid = RECORDID;
+          </SQL_DETECT_COURSE>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+    <TABLE name="netpublish_articles">
+      <FIELDS>
+        <FIELD name="title" method="PLAIN_SQL_UPDATE" type="varchar" length="255">
+          <SQL_DETECT_USER>
+          SELECT na.userid
+          FROM {CFG->prefix}netpublish_articles na
+          WHERE publishid = RECORDID
+          </SQL_DETECT_USER>
+          <SQL_DETECT_COURSE>
+          SELECT n.course
+          FROM {$CFG->prefix}netpublish n,
+               {$CFG->prefix}netpublish_articles na
+          WHERE n.id = na.publishid
+          AND na.publishid = RECORDID
+          </SQL_DETECT_COURSE>
+        </FIELD>
+        <FIELD name="intro" method="PLAIN_SQL_UPDATE" type="text" length="0">
+          <SQL_DETECT_USER>
+          SELECT na.userid
+          FROM {CFG->prefix}netpublish_articles na
+          WHERE publishid = RECORDID
+          </SQL_DETECT_USER>
+          <SQL_DETECT_COURSE>
+          SELECT n.course
+          FROM {$CFG->prefix}netpublish n,
+               {$CFG->prefix}netpublish_articles na
+          WHERE n.id = na.publishid
+          AND na.publishid = RECORDID
+          </SQL_DETECT_COURSE>
+        </FIELD>
+        <FIELD name="content" method="PLAIN_SQL_UPDATE" type="text" length="0">
+          <SQL_DETECT_USER>
+          SELECT na.userid
+          FROM {CFG->prefix}netpublish_articles na
+          WHERE publishid = RECORDID
+          </SQL_DETECT_USER>
+          <SQL_DETECT_COURSE>
+          SELECT n.course
+          FROM {$CFG->prefix}netpublish n,
+               {$CFG->prefix}netpublish_articles na
+          WHERE n.id = na.publishid
+          AND na.publishid = RECORDID
+          </SQL_DETECT_COURSE>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+    <TABLE name="netpublish">
+      <FIELDS>
+        <FIELD name="intro" method="PHP_FUNCTION" type="text" length="0">
+          <PHP_FUNCTION>
+          migrate2utf8_netpublish_intro(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+        <FIELD name="name" method="PHP_FUNCTION" type="varchar" length="255">
+          <PHP_FUNCTION>
+          migrate2utf8_netpublish_name(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+  </TABLES>
+</DBMIGRATION>

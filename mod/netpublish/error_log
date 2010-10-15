@@ -1,0 +1,210 @@
+[26-מרץ-2009 01:13:14] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[26-מרץ-2009 01:13:36] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[26-מרץ-2009 01:13:42] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[26-מרץ-2009 01:13:48] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[26-מרץ-2009 01:13:53] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[26-מרץ-2009 01:13:57] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:31:09] PHP Notice:  Undefined property: stdClass::$course in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 3787
+[28-Aug-2009 02:31:09] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 124
+[28-Aug-2009 02:31:09] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:31:09] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:33:17] PHP Warning:  Missing argument 2 for get_coursemodule_from_id(), called in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 121 and defined in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1628
+[28-Aug-2009 02:33:17] PHP Notice:  Undefined variable: cmid in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1639
+[28-Aug-2009 02:33:17] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:33:17] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:33:17] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[27-Aug-2009 23:33:17] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafttabs.php on line 30
+[28-Aug-2009 02:34:47] PHP Warning:  Missing argument 2 for get_coursemodule_from_instance(), called in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 121 and defined in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1653
+[28-Aug-2009 02:34:47] PHP Notice:  Undefined variable: instance in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1667
+[28-Aug-2009 02:34:47] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:34:47] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:34:47] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[27-Aug-2009 23:34:47] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafttabs.php on line 30
+[28-Aug-2009 02:35:04] PHP Warning:  Missing argument 2 for get_coursemodule_from_id(), called in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 121 and defined in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1628
+[28-Aug-2009 02:35:04] PHP Notice:  Undefined variable: cmid in /home/tikshuvp/public_html/moodle/lib/datalib.php on line 1639
+[28-Aug-2009 02:35:04] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:35:04] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:35:04] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[27-Aug-2009 23:35:04] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafttabs.php on line 30
+[28-Aug-2009 02:36:34] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:36:34] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:36:34] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[27-Aug-2009 23:36:34] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafttabs.php on line 30
+[28-Aug-2009 02:36:53] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:36:53] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:36:53] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[27-Aug-2009 23:36:53] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafttabs.php on line 30
+[28-Aug-2009 02:37:28] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 971
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 27
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 28
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 29
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 38
+[28-Aug-2009 02:37:28] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 971
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 27
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 28
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 29
+[28-Aug-2009 02:37:28] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 38
+[28-Aug-2009 02:39:08] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 971
+[28-Aug-2009 02:39:08] PHP Notice:  Undefined property: stdClass::$instance in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 27
+[28-Aug-2009 02:39:08] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 29
+[28-Aug-2009 02:39:08] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 30
+[28-Aug-2009 02:39:08] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 31
+[28-Aug-2009 02:39:08] PHP Notice:  Undefined property: stdClass::$id in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 40
+[28-Aug-2009 02:39:13] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:39:13] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:39:13] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:39:15] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:39:15] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:39:15] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:39:32] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:39:44] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:39:44] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:39:44] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:40:16] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:40:16] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:40:16] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:40:19] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:40:19] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:40:19] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:40:21] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:40:21] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:40:21] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:40:26] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:40:26] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:40:26] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:42:20] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 126
+[28-Aug-2009 02:42:20] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:42:20] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:42:47] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:42:47] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:42:47] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:44:21] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:44:21] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:44:21] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:51:38] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:51:43] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:51:43] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:51:43] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:51:56] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:51:56] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:51:56] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:52:39] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:52:39] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:52:39] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:52:51] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:52:51] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:52:51] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:53:02] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:53:22] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:53:25] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:53:25] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:53:25] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:53:32] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:53:32] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:53:32] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:53:41] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:53:41] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:53:41] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:53:45] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[28-Aug-2009 02:53:45] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5318
+[27-Aug-2009 23:53:45] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[28-Aug-2009 02:54:06] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:54:10] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 02:54:51] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 8
+[28-Aug-2009 22:03:03] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[28-Aug-2009 22:03:17] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[28-Aug-2009 22:13:41] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 130
+[28-Aug-2009 22:23:43] PHP Parse error:  syntax error, unexpected T_INCLUDE_ONCE, expecting ',' or ';' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 132
+[28-Aug-2009 22:53:04] PHP Warning:  include_once(themes/1.php) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:04] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/1.php' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:04] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 130
+[28-Aug-2009 22:53:04] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 11
+[28-Aug-2009 22:53:04] PHP Warning:  include_once(themes/1.php) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:04] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/1.php' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:04] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 130
+[28-Aug-2009 22:53:04] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 11
+[28-Aug-2009 22:53:34] PHP Warning:  include_once(themes/1) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:34] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/1' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:34] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 130
+[28-Aug-2009 22:53:34] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 11
+[28-Aug-2009 22:53:36] PHP Warning:  include_once(themes/1) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:36] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/1' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 114
+[28-Aug-2009 22:53:36] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 130
+[28-Aug-2009 22:53:36] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 11
+[28-Aug-2009 23:24:02] PHP Fatal error:  Cannot redeclare netpublish_print_section_list() (previously declared in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php:310) in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 513
+[28-Aug-2009 23:24:51] PHP Fatal error:  Cannot redeclare netpublish_print_section_list() (previously declared in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php:310) in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 513
+[28-Aug-2009 23:48:52] PHP Parse error:  syntax error, unexpected T_FOREACH in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 69
+[29-Aug-2009 01:58:14] PHP Parse error:  syntax error, unexpected T_STRING, expecting ',' or ';' in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 25
+[29-Aug-2009 01:58:56] PHP Warning:  str_repeat() [<a href='function.str-repeat'>function.str-repeat</a>]: Second argument has to be greater than or equal to 0 in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 503
+[29-Aug-2009 01:58:56] PHP Warning:  str_repeat() [<a href='function.str-repeat'>function.str-repeat</a>]: Second argument has to be greater than or equal to 0 in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 503
+[29-Aug-2009 01:58:56] PHP Warning:  str_repeat() [<a href='function.str-repeat'>function.str-repeat</a>]: Second argument has to be greater than or equal to 0 in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 503
+[29-Aug-2009 01:58:56] PHP Warning:  str_repeat() [<a href='function.str-repeat'>function.str-repeat</a>]: Second argument has to be greater than or equal to 0 in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 503
+[29-Aug-2009 01:58:56] PHP Warning:  str_repeat() [<a href='function.str-repeat'>function.str-repeat</a>]: Second argument has to be greater than or equal to 0 in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 503
+[18-Oct-2009 17:45:30] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:46:55] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:47:06] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5351
+[18-Oct-2009 17:47:44] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:48:09] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:48:47] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:49:16] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:49:41] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:50:05] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:50:48] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Oct-2009 17:51:27] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[19-Oct-2009 21:24:29] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[30-Oct-2009 19:41:32] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[22-Nov-2009 21:43:15] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[27-Nov-2009 16:20:47] PHP Fatal error:  Call to undefined function  print_string() in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 15
+[01-Dec-2009 00:12:41] PHP Warning:  include_once(themes/) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[01-Dec-2009 00:12:41] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[01-Dec-2009 00:12:41] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 144
+[01-Dec-2009 00:12:41] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 25
+[01-Dec-2009 00:14:01] PHP Warning:  include_once(themes/) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[01-Dec-2009 00:14:01] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[01-Dec-2009 00:14:01] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 144
+[01-Dec-2009 00:14:01] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 25
+[14-Jan-2010 21:41:08] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[25-Jan-2010 09:56:59] PHP Notice:  Undefined property: stdClass::$modinfo in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 18
+[25-Jan-2010 09:56:59] PHP Warning:  array_merge() [<a href='function.array-merge'>function.array-merge</a>]: Argument #2 is not an array in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 21
+[25-Jan-2010 09:56:59] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 24
+[25-Jan-2010 09:56:59] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[25-Jan-2010 09:57:00] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[25-Jan-2010 09:57:00] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5337
+[25-Jan-2010 09:57:00] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5370
+[25-Jan-2010 09:57:05] PHP Notice:  Undefined property: stdClass::$modinfo in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 18
+[25-Jan-2010 09:57:05] PHP Warning:  array_merge() [<a href='function.array-merge'>function.array-merge</a>]: Argument #2 is not an array in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 21
+[25-Jan-2010 09:57:05] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 24
+[25-Jan-2010 09:57:15] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[25-Jan-2010 09:57:15] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5337
+[25-Jan-2010 09:57:15] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5370
+[25-Jan-2010 09:57:20] PHP Notice:  Undefined property: stdClass::$modinfo in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 18
+[25-Jan-2010 09:57:20] PHP Warning:  array_merge() [<a href='function.array-merge'>function.array-merge</a>]: Argument #2 is not an array in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 21
+[25-Jan-2010 09:57:20] PHP Warning:  Invalid argument supplied for foreach() in /home/tikshuvp/public_html/moodle/mod/studynotes/ext/overlay_snippet.php on line 24
+[25-Jan-2010 09:57:23] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[25-Jan-2010 09:57:23] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5337
+[25-Jan-2010 09:57:23] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5370
+[25-Jan-2010 09:57:33] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[25-Jan-2010 09:57:33] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5337
+[25-Jan-2010 09:57:33] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5370
+[25-Jan-2010 09:57:51] PHP Notice:  Undefined variable: buttontext in /home/tikshuvp/public_html/moodle/mod/netpublish/drafts.php on line 127
+[25-Jan-2010 09:57:51] PHP Notice:  Undefined property: stdClass::$format in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5337
+[25-Jan-2010 09:57:51] PHP Notice:  Undefined property: stdClass::$numsections in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 5370
+[26-Jan-2010 18:39:04] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[17-Feb-2010 18:50:42] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[17-Feb-2010 20:07:09] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[17-Feb-2010 20:07:54] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[19-Feb-2010 17:05:00] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[27-Feb-2010 16:23:50] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[12-Mar-2010 08:52:49] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[24-Mar-2010 18:10:15] PHP Warning:  include_once(themes/) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[24-Mar-2010 18:10:15] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php:/etc/php.d/') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[24-Mar-2010 18:10:15] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 144
+[24-Mar-2010 18:10:15] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 25
+[24-Mar-2010 18:13:42] PHP Warning:  include_once(themes/) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[24-Mar-2010 18:13:42] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'themes/' for inclusion (include_path='/home/tikshuvp/public_html/moodle/lib/pear:.:/usr/lib/php:/usr/local/lib/php:/etc/php.d/') in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 119
+[24-Mar-2010 18:13:42] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.php on line 144
+[24-Mar-2010 18:13:42] PHP Notice:  Undefined variable: magtheme in /home/tikshuvp/public_html/moodle/mod/netpublish/view.html.php on line 25
+[26-Mar-2010 23:31:24] PHP Notice:  Undefined variable: tmplink in /home/tikshuvp/public_html/moodle/mod/netpublish/lib.php on line 451
+[18-Sep-2010 21:08:04] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[18-Sep-2010 22:53:10] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[18-Sep-2010 22:53:46] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)

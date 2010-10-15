@@ -1,0 +1,28 @@
+<table border="0" width="100%">
+<tr>
+    <td>
+<?php
+echo "<h2>$objarticle->title</h2>\n";
+?>
+    </td>
+    <td valign="top" align="right"><p>
+            <?php
+            // Edit buttons
+            netpublish_print_actionbuttons($cm, $objarticle, $USER->id, $course->id);
+            ?>
+            </p>
+    </td>
+</tr>
+</table>
+<?php
+echo "<p>". $strauthor .": ". $objarticle->firstname ." ". $objarticle->lastname ."<br />\n";
+echo $strpublished . ": ";
+print (!empty($objarticle->timepublished)) ? userdate($objarticle->timepublished) : $strnotpublished;
+echo  "</p>\n";
+echo stripslashes($objarticle->intro);
+echo stripslashes($objarticle->content);
+echo "<p style=\"font-size: x-small;\">(";
+echo $strcreated;
+echo ": " .userdate($objarticle->timecreated);
+echo " ". $strmodified .": ". userdate($objarticle->timemodified) .")</p>\n";
+?>

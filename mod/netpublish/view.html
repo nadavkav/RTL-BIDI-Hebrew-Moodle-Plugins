@@ -1,0 +1,80 @@
+
+    <table border="0" cellpadding="6" cellspacing="3" width="100%">
+    <tr>
+        <td width="200" valign="top" style="background-color: white; -moz-border-radius: 8px;"><!-- sections menu -->
+        <p><strong><?php print_string("sections","netpublish");?></strong></p>
+        <?php netpublish_print_sections($cm->id, $cm->instance); ?>
+        </td>
+        <td width="*" valign="top" style="background-color: white; -moz-border-radius: 8px;"><!-- main content -->
+        <?php
+        if (!empty($strnoarticles)) {
+            echo $strnoarticles;
+        } else if (empty($article)) {
+
+            // Edit buttons
+            netpublish_print_actionbuttons($cm, $articles[key($articles)], $USER->id, $course->id, true);
+            echo "<h2>". stripslashes($articles[key($articles)]->title) ."</h2>\n";
+
+            echo "<p><strong>". $strauthor ."</strong>: ".
+                 fullname($articles[key($articles)]);
+            netpublish_print_authors($articles[key($articles)]->authors);
+            echo "<br />\n";
+            echo "<strong>". $strpublished . "</strong>: ". userdate($articles[key($articles)]->timepublished) . "</p>\n";
+
+            echo stripslashes($articles[key($articles)]->intro);
+
+            if (empty($mod->fullpage)) {
+                echo "<p><a href=\"view.php?id=$cm->id&section=$section&article=". $articles[key($articles)]->id ."\">";
+                echo $strreadmore . "</a></p>\n";
+            } else {
+                echo stripslashes($articles[key($articles)]->content);
+                echo "<p style=\"font-size: x-small;\">(";
+                echo $strcreated;
+                echo ": " .userdate($articles[key($articles)]->timecreated);
+                echo " ". $strmodified .": ". userdate($articles[key($articles)]->timemodified) .")</p>\n";
+            }
+        } else {
+            $thearticle = netpublish_get_article($article);
+
+            // Edit buttons
+            netpublish_print_actionbuttons($cm, $thearticle, $USER->id, $course->id, true);
+            echo "<h2>". stripslashes($thearticle->title) ."</h2>\n";
+
+            echo "<p><strong>". $strauthor ."</strong>: ". s($thearticle->firstname) ." ". s($thearticle->lastname);
+            netpublish_print_authors($thearticle->authors);
+            echo "<br />\n";
+            echo "<strong>". $strpublished . "</strong>: ". userdate($thearticle->timepublished) . "</p>\n";
+
+            echo stripslashes($thearticle->intro);
+            echo stripslashes($thearticle->content);
+
+            echo "<p style=\"font-size: x-small;\">(";
+            echo $strcreated;
+            echo ": " .userdate($thearticle->timecreated);
+            echo " ". $strmodified .": ". userdate($thearticle->timemodified) .")</p>\n";
+        }
+        ?>
+
+
+        </td>
+        <td width="200" valign="top" style="background-color: white; -moz-border-radius: 8px;"><!-- articles in this section -->
+        <?php
+
+        if (is_array($articles)) {
+            echo "<p><strong>". get_string("articlesinsection","netpublish") ."</strong></p>\n";
+            $i = 0;
+            foreach($articles as $article) {
+                echo "<a href=\"view.php?id=$cm->id&section=$section&article=$article->id\">";
+                print (!empty($_GET['article']) && $_GET['article'] == $article->id) ?
+                "<strong>$article->title</strong>" :
+                ((!empty($mod->fullpage) && empty($_GET['article']) && $i == 0) ?
+                "<strong>$article->title</strong>" : $article->title);
+                echo "</a><br />\n";
+                $i++;
+            }
+            echo "</ul>\n";
+        }
+        ?>
+        </td>
+    </tr>
+    </table>

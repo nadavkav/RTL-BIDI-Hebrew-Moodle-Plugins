@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/netpublish/db" VERSION="20070419" COMMENT="XMLDB file for Moodle mod/netpublish"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="netpublish" COMMENT="netpublish table" NEXT="netpublish_articles">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="id number of the course." PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the instance" PREVIOUS="course" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Description of the instance" PREVIOUS="name" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Creation time of the instance" PREVIOUS="intro" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Modification date of the instance." PREVIOUS="timecreated" NEXT="maxsize"/>
+        <FIELD NAME="maxsize" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="3" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="timemodified" NEXT="locktime"/>
+        <FIELD NAME="locktime" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="article locking time period when editing." PREVIOUS="maxsize" NEXT="published"/>
+        <FIELD NAME="published" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="published" PREVIOUS="locktime" NEXT="fullpage"/>
+        <FIELD NAME="fullpage" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="fullpage" PREVIOUS="published" NEXT="statuscount"/>
+        <FIELD NAME="statuscount" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="statuscount" PREVIOUS="fullpage" NEXT="scale"/>
+        <FIELD NAME="scale" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="scale" PREVIOUS="statuscount"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course_idx" UNIQUE="false" FIELDS="course" COMMENT="course_idx" NEXT="published_idx"/>
+        <INDEX NAME="published_idx" UNIQUE="false" FIELDS="published" COMMENT="published_idx" PREVIOUS="course_idx" NEXT="scale_idx"/>
+        <INDEX NAME="scale_idx" UNIQUE="false" FIELDS="scale" COMMENT="scale_idx" PREVIOUS="published_idx"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_articles" COMMENT="netpublish_articles table" PREVIOUS="netpublish" NEXT="netpublish_sections">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="publishid"/>
+        <FIELD NAME="publishid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="sectionid"/>
+        <FIELD NAME="sectionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="publishid" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="sectionid" NEXT="teacherid"/>
+        <FIELD NAME="teacherid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="prevarticle"/>
+        <FIELD NAME="prevarticle" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacherid" NEXT="nextarticle"/>
+        <FIELD NAME="nextarticle" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="prevarticle" NEXT="authors"/>
+        <FIELD NAME="authors" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="nextarticle" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="authors" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="binary" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="title" NEXT="content"/>
+        <FIELD NAME="content" TYPE="binary" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="intro" NEXT="timepublished"/>
+        <FIELD NAME="timepublished" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="content" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timepublished" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated" NEXT="statusid"/>
+        <FIELD NAME="statusid" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified" NEXT="rights"/>
+        <FIELD NAME="rights" TYPE="binary" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="statusid" NEXT="sortorder"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="rights"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_articles"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="publishid_idx" UNIQUE="false" FIELDS="publishid, statusid" COMMENT="publishid_idx"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_sections" COMMENT="netpublish_sections table" PREVIOUS="netpublish_articles" NEXT="netpublish_status">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="publishid"/>
+        <FIELD NAME="publishid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="parentid"/>
+        <FIELD NAME="parentid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="publishid" NEXT="fullname"/>
+        <FIELD NAME="fullname" TYPE="char" LENGTH="128" NOTNULL="true" DEFAULT="No Name" SEQUENCE="false" ENUM="false" PREVIOUS="parentid" NEXT="sortorder"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="fullname"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_sections"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="publishid_idx" UNIQUE="false" FIELDS="publishid, parentid" COMMENT="publishid_idx"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_status" COMMENT="netpublish_status table" PREVIOUS="netpublish_sections" NEXT="netpublish_status_records">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="128" NOTNULL="true" DEFAULT="No Status" SEQUENCE="false" ENUM="false" PREVIOUS="id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_status"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="netpublish_status_records" COMMENT="netpublish_status_records table" PREVIOUS="netpublish_status" NEXT="netpublish_images">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="articleid"/>
+        <FIELD NAME="articleid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="statusid"/>
+        <FIELD NAME="statusid" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="articleid" NEXT="counter"/>
+        <FIELD NAME="counter" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="statusid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_status_records" NEXT="statrec_article_idx"/>
+        <KEY NAME="statrec_article_idx" TYPE="unique" FIELDS="articleid" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="statrec_status_idx" UNIQUE="false" FIELDS="statusid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_images" COMMENT="netpublish_images table" PREVIOUS="netpublish_status_records" NEXT="netpublish_first_section_names">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="path"/>
+        <FIELD NAME="path" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="mimetype"/>
+        <FIELD NAME="mimetype" TYPE="char" LENGTH="150" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="path" NEXT="size"/>
+        <FIELD NAME="size" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="mimetype" NEXT="width"/>
+        <FIELD NAME="width" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="size" NEXT="height"/>
+        <FIELD NAME="height" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="width" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="height" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified" NEXT="dir"/>
+        <FIELD NAME="dir" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="owner"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_images"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course_idx" UNIQUE="false" FIELDS="course" COMMENT="course_idx" NEXT="dir_idx"/>
+        <INDEX NAME="dir_idx" UNIQUE="false" FIELDS="dir" COMMENT="dir_idx" PREVIOUS="course_idx"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_first_section_names" COMMENT="netpublish_first_section_names table" PREVIOUS="netpublish_images" NEXT="netpublish_grades">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="publishid"/>
+        <FIELD NAME="publishid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="publishid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_first_section_names" NEXT="publishid_idx"/>
+        <KEY NAME="publishid_idx" TYPE="unique" FIELDS="publishid" COMMENT="publishid_idx" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="netpublish_grades" COMMENT="netpublish_grades table" PREVIOUS="netpublish_first_section_names" NEXT="netpublish_lock">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="publishid"/>
+        <FIELD NAME="publishid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="publishid" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" ENUM="false" PREVIOUS="userid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_grades"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="netpublish_grades_idx" UNIQUE="false" FIELDS="publishid, userid" COMMENT="netpublish_grades_idx"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="netpublish_lock" COMMENT="netpublish_lock table" PREVIOUS="netpublish_grades">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="pageid"/>
+        <FIELD NAME="pageid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="pageid" NEXT="lockstart"/>
+        <FIELD NAME="lockstart" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="userid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for netpublish_lock"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="netpublish_pageid_idx" UNIQUE="false" FIELDS="pageid, userid" COMMENT="netpublish_pageid_idx"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert netpublish_status" TYPE="insert" TABLE="netpublish_status" COMMENT="Default status names">
+      <SENTENCES>
+        <SENTENCE TEXT="(name) VALUES ('draft')" />
+        <SENTENCE TEXT="(name) VALUES ('firstedit)" />
+        <SENTENCE TEXT="(name) VALUES ('finaledit')" />
+        <SENTENCE TEXT="(name) VALUES ('publish')" />
+        <SENTENCE TEXT="(name) VALUES ('hold')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>

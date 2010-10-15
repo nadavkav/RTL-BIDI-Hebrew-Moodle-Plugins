@@ -1,0 +1,64 @@
+
+    <form name="sections" method="post" action="sections.php">
+
+    <table cellpadding="5">
+    <tr>
+        <td align="right"><p><strong><?php print_string("sections","netpublish");?>:</strong></p></td>
+        <td valign="top">
+        <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><?php netpublish_print_section_list($cm->instance, "parentid"); ?></td>
+            <td><input type="checkbox" id="edit" name="edit" onclick="get_section_name()" /> <?php print_string("editsection","netpublish");?><br />
+        <input type="checkbox" name="remove" onclick="change_state()" /> <?php print_string("deletesection","netpublish");?></td>
+        </tr>
+        </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top"><p><strong><?php print_string("sectionname","netpublish");?>:</strong></p></td>
+        <td><p><input type="text" id="fullname" name="fullname" size="35" value="" /></p></td>
+    </tr>
+    </table>
+    <input type="hidden" name="id"        value="<?php echo $cm->id ?>" />
+    <input type="hidden" name="publishid" value="<?php p($cm->instance) ?>" />
+    <input type="hidden" name="course"    value="<?php echo $course->id ?>" />
+    <input type="hidden" name="sesskey"   value="<?php p($USER->sesskey) ?>" />
+
+    <p align="center"><input type="submit" value="<?php print_string("savechanges"); ?>" />
+    <input type="button" value="<?php print_string("done","netpublish"); ?>" onclick="redirect()" /></p>
+    </form>
+
+<script type="text/javascript">
+//<![CDATA[
+
+function redirect() {
+    location.href = '<?php echo "$CFG->wwwroot/mod/netpublish/view.php?id=$cm->id"; ?>';
+}
+
+function change_state() {
+
+    var elem = document.getElementById('fullname');
+    if (elem.disabled != true) {
+        elem.disabled = true;
+    } else {
+        elem.disabled = false;
+    }
+}
+
+function get_section_name () {
+
+    var elem = (!document.all) ? document.getElementById('parentid') : document.sections.parentid;
+    var txtfield = (!document.all) ? document.getElementById('fullname') : document.sections.fullname;
+    var chkbox = (!document.all) ? document.getElementById('edit') : document.sections.edit;
+
+    if (chkbox.checked) {
+        if (elem) {
+            var text = elem.options[elem.selectedIndex].text;
+            txtfield.value = text.replace(/^\W+/, '');
+        }
+    }
+    return false;
+}
+
+//]]>
+</script>

@@ -1,0 +1,9 @@
+<form method="post" action="<?php echo $GLOBALS['ME'] ?>">
+<input type="hidden" name="id"      value="<?php echo $id ?>" />
+<input type="hidden" name="imageid" value="<?php echo $imageid ?>" />
+<input type="hidden" name="sesskey" value="<?php p($USER->sesskey) ?>" />
+<input type="hidden" name="action"  value="delete" />
+<p><?php echo $strdeleteimageconfirm ?></p>
+<p style="text-align: center;"><input type="submit" value="<?php print_string("yes");?>" />
+<input type="button" onclick="javascript:history.go(-1);" value="<?php print_string("no");?>" /></p>
+</form>

@@ -1,0 +1,128 @@
+<?php // $Id: editarticle.html,v 1.2.4.1 2007/09/24 08:46:22 janne Exp $
+if (empty($form->sectionid)) {
+    $form->sectionid = '';
+}
+if (empty($form->statusid)) {
+    $form->statusid = 1;
+}
+if (empty($form->teacherid)) {
+    $form->teacherid = '';
+}
+if (empty($form->title)) {
+    $form->title = '';
+}
+if (empty($form->intro)) {
+    $form->intro = '';
+}
+if (empty($form->content)) {
+    $form->content = '';
+}
+?>
+<form name="theform" id="theform" method="post" action="<?php echo $GLOBALS['ME'] ?>">
+<input type="hidden" name="id" value="<?php p($id) ?>" />
+<input type="hidden" name="course" value="<?php p($course->id);?>" />
+<input type="hidden" name="sesskey" value="<?php p($USER->sesskey) ?>" />
+<?php
+    if (!empty($form->id)) {
+        echo "<input type=\"hidden\" name=\"articleid\" value=\"$form->id\" />\n";
+    }
+    if (!empty($form->publishid)) {
+        echo "<input type=\"hidden\" name=\"publishid\" value=\"$form->publishid\" />\n";
+    }
+    if (!empty($form->timepublished)) {
+        echo "<input type=\"hidden\" name=\"timepublished\" value=\"$form->timepublished\" />\n";
+    }
+?>
+<div>
+<table border="0" cellpadding="4" cellspacing="0">
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("section","netpublish");?>: </strong></td>
+    <td><?php netpublish_print_section_list($cm->instance, "sectionid", $toplevel, $form->sectionid); ?>
+    <?php helpbutton("section", get_string("section"), "netpublish", true, false); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("status","netpublish") ?>: </strong></td>
+    <td><?php echo $statusmenu; ?>
+        <?php helpbutton("status", get_string("status"), "netpublish", true, false); ?>
+        <strong><?php print_string("assignedto","netpublish") ?>: </strong>
+        <?php netpublish_print_teacher_list ($course->id, $form->teacherid); ?>
+        <?php helpbutton("assignedto", get_string("assignedto"), "netpublish", true, false); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("headline","netpublish");?>: </strong></td>
+    <td><input type="text" name="title" size="50" value="<?php p($form->title); ?>" /><?php
+    if (!empty($err)) {
+        echo !empty($err['missingtitle']) ? " <span style=\"color: red\">{$err['missingtitle']}</span>":"";
+    }
+    ?></td>
+</tr>
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("author","netpublish") ?>: </strong></td>
+    <td><input type="hidden" name="userid" value="<?php print(!empty($form->userid)) ? $form->userid : $USER->id; ?>" />
+<?php echo !empty($form->authors) ? "<input type=\"hidden\" name=\"authors\" value=\"$form->authors\" />\n" : "";
+      echo fullname($USER); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("abstract","netpublish") ?>: </strong>
+    <br />
+        <font size="1">
+            <?php  helpbutton("writing", get_string("helpwriting"), "moodle", true, true) ?><br />
+            <?php  helpbutton("text", get_string("helptext"), "moodle", true, true) ?> <br />
+            <?php  emoticonhelpbutton("theform", "alltext") ?> <br />
+        </font>
+    </td>
+    <td><?php print_textarea($usehtmleditor, "15", "65", "", "", "intro", stripslashes($form->intro), $course->id); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right" nowrap="true"><strong><?php print_string("content","netpublish") ?>: </strong>
+    <br />
+        <font size="1">
+            <?php  helpbutton("writing", get_string("helpwriting"), "moodle", true, true) ?><br />
+            <?php  helpbutton("text", get_string("helptext"), "moodle", true, true) ?> <br />
+            <?php  emoticonhelpbutton("theform", "alltext") ?> <br />
+        </font>
+    </td>
+    <td><?php print_textarea($usehtmleditor, "25", "65", "", "", "content", stripslashes($form->content), $course->id); ?></td>
+</tr>
+<tr valign="top">
+    <td>&nbsp;</td>
+    <td>
+    <?php
+            // need to make the value for rights
+            // rights is made like this so it may be passed to permissions.php
+            if (isset($rights)) {
+                $rightsarray = array();
+                foreach ($rights as $studentid => $right) {
+                    if ($nperm->can_read($right)) {
+                        $rightsarray[] = "read[$studentid]=$studentid";
+                    }
+                    if ($nperm->can_write($right)) {
+                        $rightsarray[] = "write[$studentid]=$studentid";
+        }
+    }
+                $search = array('[',']');
+                $replace = array('%5B','%5D');
+                $rights = str_replace($search, $replace, implode('&amp;', $rightsarray));
+                //$rights = base64_encode(serialize($rightsarray));
+            } else {
+                $rights = '';
+    }
+            echo '<input type="hidden" id="rights" name="rights" value="'. $rights .'" />';
+            button_to_popup_window ("/mod/netpublish/permissions.php?id=$course->id&amp;'+ document.getElementById('rights').value +'",
+                                    "permissions",
+                                    get_string('showpermissions','netpublish'),
+                                    500,
+                                    750,
+                                    get_string('permissions','netpublish')
+                                );
+            helpbutton("permissions", get_string("permissions"), "netpublish", true, false);
+    ?>
+    </td>
+</tr>
+</table>
+</div>
+<p style="text-align: center;"><input type="submit" value="<?php print_string("savechanges") ?>" />
+<input type="button" value="<?php print_string("cancel") ?>" onclick="javascript: void(history.go(-1));" /></p>
+</form>
