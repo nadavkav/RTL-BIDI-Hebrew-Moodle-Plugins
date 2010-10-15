@@ -1,0 +1,24 @@
+<div class="qtext">
+  <?php echo $questiontext; ?>
+</div>
+<input id="idresp<?php echo $question->id; ?>_" type="hidden" name="resp<?php echo $question->id; ?>_" value="0" />
+<input id="idresp<?php echo $question->id; ?>_flashdata" type="hidden" name="resp<?php echo $question->id; ?>_flashdata" value="" />
+<input id="idresp<?php echo $question->id; ?>_grade" type="hidden" name="resp<?php echo $question->id; ?>_grade" value="" />
+
+<?php if ($image) { ?>
+    <p class="mediaplugin swf">
+      <script type="text/javascript">
+	function <?php echo $qName; ?>_DoFSCommand(cmd, data) {
+		CpToJSComm(<?php echo $question->id; ?>, cmd+"|"+data, new Array("<?php print_string('incorrect', 'quiz') ?>", "<?php print_string('partiallycorrect', 'quiz') ?>", "<?php print_string('correct', 'quiz') ?>")); 
+	}
+          var sample = new FlashTag("<?php echo $image; ?>", <?php echo $width; ?>, <?php echo $height; ?>);
+          sample.setId("<?php echo $qName; ?>");
+          sample.setFlashvars('qID=<?php echo $question->id. $description. $grade. $readonly. $adaptive. $fillcorrect. $flashdata. $optionalfile. $optionaldata; ?>');
+          sample.write(document);
+      </script>
+    </p>
+<?php } ?>
+
+<div class="ablock clearfix">
+	<?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+</div>
