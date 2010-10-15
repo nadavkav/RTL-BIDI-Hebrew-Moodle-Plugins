@@ -1,0 +1,185 @@
+<?php
+
+
+
+$string['add'] = 'הוספת סקירה';
+
+$string['addcomment'] = 'הוספת הערה';
+
+$string['amber'] = 'צהוב/חום';
+
+$string['addconcern'] = 'הוספת $a';
+
+$string['addtemplate'] = 'הוספת תבנית חדשה';
+
+$string['cancel'] = 'בוטל';
+
+$string['comment'] = 'הערה';
+
+$string['commentfor'] = 'הערה עבור $a';
+
+$string['comments'] = 'הערות';
+
+$string['concerncomments'] = 'הערות:';
+
+$string['concernviewlink'] = 'הקש כאן כדי לראות...';
+
+$string['concerns'] = 'Concerns';
+
+$string['edittemplate'] = 'עריכת תבנית';
+
+$string['ilpconcern:view'] = 'View concerns';
+
+$string['ilpconcern:addconcerns'] = 'הוספת דוח';
+
+$string['ilpconcern:addreport1'] = 'הוספת דוח 1';
+
+$string['ilpconcern:addreport2'] = 'הוספת דוח 2';
+
+$string['ilpconcern:addreport3'] = 'הוספת דוח 3';
+
+$string['ilpconcern:addreport4'] = 'הוספת דוח 4';
+
+$string['ilpconcern:addowncomment'] = 'הוספת הערות אישיות לדוחות';
+
+$string['ilpconcern:addownreport1'] = 'הוספת דוח אישי 1';
+
+$string['ilpconcern:addownreport2'] = 'הוספת דוח אישי 2';
+
+$string['ilpconcern:addownreport3'] = 'הוספת דוח אישי 3';
+
+$string['ilpconcern:addownreport4'] = 'הוספת דוח אישי 4';
+
+$string['ilpconcern:editreport1'] = 'עריכת דוח 1';
+
+$string['ilpconcern:editreport2'] = 'עריכת דוח 2';
+
+$string['ilpconcern:editreport3'] = 'עריכת דוח 3';
+
+$string['ilpconcern:editreport4'] = 'עריכת דוח 4';
+
+$string['ilpconcern:editownreport1'] = 'עריכת דוח אישי 1';
+
+$string['ilpconcern:editownreport2'] = 'עריכת דוח אישי 2';
+
+$string['ilpconcern:editownreport3'] = 'עריכת דוח אישי 3';
+
+$string['ilpconcern:editownreport4'] = 'עריכת דוח אישי 4';
+
+$string['ilpconcern:updateconcernstatus'] = 'עדכון מצב דוח';
+
+$string['ilpconcern:updatestudentstatus'] = 'עדכון מצב תלמיד';
+
+$string['ilpconcern:addcomment'] = 'הוספת הערה לדוח';
+
+$string['ilpconcern:viewclass'] = 'הצגת דוחות לכיתה';
+
+$string['concernscomments'] = 'הערות';
+
+$string['concernsreports'] = 'דוחות עבור $a';
+
+$string['configdifferentreports'] = 'השתמשו במקסימום 3 דוחות כמצויין למטה. אחרת יעשה שימוש רק בדוח הראשון (דוח 1).';
+
+$string['configconcernmessage'] = 'If selected then Moodle will send an instant message to users that a new concern has been added or an existing concern updated.';
+
+$string['configcommentmessage'] = 'If selected then Moodle will send an instant message to users that a new comment has been added to a concern or an existing comment updated.';
+
+$string['configstatusperstudent'] = 'אפשר קביעת האפשרות- מצב סטודנט, עבור כל סטודנט בנפרד';
+
+$string['configcoursespecific'] = 'אם בתוך הקורס, רק דוחות עבור קורס זה יוצגו. ברירת המחדל היא להציג דוחות לכל משתמש ולא לכל קורס.';
+
+$string['configusetemplate'] = 'השתמשו בתבנית להזנת דוח. אם יש יותר מתבנית אחת משתמשים יוכלו לבחור מתפריט.';
+
+$string['course'] = 'קורס';
+
+$string['courserelated'] = 'קורס קשור';
+
+$string['comments'] = 'הערות';
+
+$string['deadline'] = 'תאריך';
+
+$string['deleted'] = 'נמחק';
+
+$string['green'] = 'ירוק';
+
+$string['modulename'] = 'דוח התקדמות אישי';
+
+$string['modulenameplural'] = 'דוחות התקדמות אישית';
+
+$string['mycomment'] = 'הערה שלי';
+
+$string['myconcerns'] = 'הדוחות שלי';
+
+$string['myreport'] = 'שלי $a';
+
+$string['mystudents'] = 'התלמידים שלי';
+
+$string['mystudentstatus'] = 'המצב שלי';
+
+$string['newconcern'] = ':חדש נוסף בשבילך $a';
+
+$string['newcomment'] = 'הערה חדשה נוספה לדוח:';
+
+$string['nostudents'] = 'אין תלמידים שיועדו לך';
+
+$string['notemplates'] = 'תבניות לא נקבעו';
+
+$string['outstanding'] = 'מצויין';
+
+$string['pagesize'] = 'תלמידים בדף';
+
+$string['red'] = 'אדום';
+
+$string['report1'] = 'סקירת התקדמות';
+
+$string['report2'] = 'Concern';
+
+$string['report3'] = 'הערה';
+
+$string['report4'] = 'תרומה';
+
+$string['report1plural'] = 'סקירות התקדמות';
+
+$string['report2plural'] = 'Concerns';
+
+$string['report3plural'] = 'הערות';
+
+$string['report4plural'] = 'תרומות';
+
+$string['reportfor'] = ' $a דוח עבור ';
+
+$string['reportsset'] = 'סקירת דוחות ($a)';
+
+$string['set'] = 'קביעה';
+
+$string['setby'] = 'מורה';
+
+$string['status'] = 'סוג דוח';
+
+$string['statusupdate'] = '$a המעמד שלך עודכן ל ';
+
+$string['studentstatus'] = 'מעמד תלמיד';
+
+$string['template'] = 'תבנית';
+
+$string['templates'] = 'תבניות';
+
+$string['templatedetails'] = 'פרטי תבנית';
+
+$string['update'] = 'עדכון';
+
+$string['updated'] = 'עודכן';
+
+$string['updatedcomment'] = 'הערה לדוח עודכנה:';
+
+$string['updatedconcern'] = '$a עודכן:';
+
+$string['updatestatus'] = 'מצב עדכון';
+
+$string['withdraw'] = 'פרש';
+
+$string['withdrawn'] = 'נמשך';
+
+
+
+?>

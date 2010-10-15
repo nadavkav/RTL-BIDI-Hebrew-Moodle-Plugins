@@ -1,0 +1,165 @@
+<?php 
+	$usehtmleditor = can_use_html_editor(); 
+	$module = 'project/ilp';
+	$config = get_config($module);
+		
+	if ( !isset($CFG->ilpconcern_status_per_student))
+		{ $CFG->ilpconcern_status_per_student = 0; }
+	if ( !isset($CFG->ilpconcern_send_concern_message))
+		{ $CFG->ilpconcern_send_concern_message = 0; }
+	if ( !isset($CFG->ilpconcern_send_comment_message))
+		{ $CFG->ilpconcern_send_comment_message = 0; }
+	if ( !isset($CFG->ilpconcern_course_specific))
+		{ $CFG->ilpconcern_course_specific = 0; }	
+	if ( !isset($CFG->ilpconcern_report1))
+		{ $CFG->ilpconcern_report1 = 0; }	
+	if ( !isset($CFG->ilpconcern_report2))
+		{ $CFG->ilpconcern_report2 = 0; }	
+	if ( !isset($CFG->ilpconcern_report3))
+		{ $CFG->ilpconcern_report3 = 0; }	
+	if ( !isset($CFG->ilpconcern_report4))
+		{ $CFG->ilpconcern_report4 = 0; }	
+	if ( !isset($CFG->ilpconcern_use_template))
+		{ $CFG->ilpconcern_use_template = 0; }
+	
+?>
+
+<form method="post" action="module.php" id="form">
+<div>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<table cellpadding="9" cellspacing="0" >
+<tr valign="top">
+    <td align="right">status_per_student:</td>
+	<td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_status_per_student", $CFG->ilpconcern_status_per_student, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configstatusperstudent", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">ilpconcern_send_concern_message:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_send_concern_message", $CFG->ilpconcern_send_concern_message, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configconcernmessage", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">ilpconcern_send_comment_message:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_send_comment_message", $CFG->ilpconcern_send_comment_message, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configcommentmessage", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">ilpconcern_course_specific:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_course_specific", $CFG->ilpconcern_course_specific, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configcoursespecific", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">report1:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_report1", $CFG->ilpconcern_report1, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("report1", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">report2:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_report2", $CFG->ilpconcern_report2, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("report2", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">report3:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_report3", $CFG->ilpconcern_report3, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("report3", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">report4:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_report4", $CFG->ilpconcern_report4, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("report4", "ilpconcern") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">use_template:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilpconcern_use_template", $CFG->ilpconcern_use_template, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configusetemplate", "ilpconcern") ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>
+</div>
+</form>
+<?php 
+
+print_heading(get_string('templates', 'ilpconcern'),'left');
+echo '<p><a href="'.$CFG->wwwroot.'/mod/ilpconcern/add_template.php">'.get_string('addtemplate','ilpconcern').'</a></p>';
+
+$i = 1;
+while ($i <= 4){	
+print_heading(get_string('report'.$i.'plural','ilpconcern'),'left',3);
+
+$status = $i - 1;
+$select = "module = 'ilpconcern' AND status = $status"; 	
+	if($templates = get_records_select('ilp_module_template',$select,'name')){
+    	echo '<ul>';
+		foreach ($templates as $template){
+        	echo '<li>'.$template->name.' | <a href="'.$CFG->wwwroot.'/mod/ilpconcern/add_template.php?id='.$template->id.'"><img src="'.$CFG->pixpath.'/t/edit.gif" alt="'.get_string('edit').'" /> '.get_string('edit').'</a> | <a href="'.$CFG->wwwroot.'/mod/ilpconcern/add_template.php?id='.$template->id.'&amp;action=delete"><img src="'.$CFG->pixpath.'/t/delete.gif" alt="'.get_string('delete').'" /> '.get_string('delete').'</a></li>';
+        }
+        echo '</ul>';
+    }else{
+    	echo get_string('notemplates','ilpconcern');
+    }
+    $i++;
+}
+ 
+if ($usehtmleditor) {
+	use_html_editor(); 
+}
+
+?>

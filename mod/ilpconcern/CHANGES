@@ -1,0 +1,488 @@
+2009-10-25 Sunday 21:44  ulcc
+
+	* concerns_comments.php, concerns_view.php, concerns_comments.php,
+	concerns_view.php: 
+	
+	CONTRIB-1499 - no longer saves cancelled data, tweak to code
+
+2009-10-25 Sunday 02:39  ulcc
+
+	* concerns_comments.php, concerns_view.php, concerns_comments.php,
+	concerns_view.php: 
+	
+	CONTRIB-1499 - no longer saves cancelled data
+
+2009-10-11 Sunday 22:39  ulcc
+
+	* concerns_comments.php, concerns_view.php, index.php, lib.php,
+	view_students.php, concerns_comments.php, concerns_view.php,
+	lib.php, view_students.php, index.php: 
+	
+	CONTRIB-1159 - tidy up breadcrumb and use build_navigation for
+	creating  trail
+
+2009-10-11 Sunday 20:15  ulcc
+
+	* .project: 
+	
+	file .project was initially added on branch MOODLE_19_STABLE.
+
+2009-10-11 Sunday 20:15  ulcc
+
+	* .project, lib.php, version.php, db/access.php,
+	lang/en_utf8/ilpconcern.php, .project, lib.php, version.php,
+	db/access.php, lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1565 - added capabilities to edit targets and reviews
+
+2009-10-11 Sunday 17:23  ulcc
+
+	* view_students.php, view_students.php: 
+	
+	CONTRIB-1499 - fixed additional reports displaying to reporting
+	pages
+
+2009-09-09 Wednesday 02:48  ulcc
+
+	* version.php, db/access.php, version.php, db/access.php: 
+	
+	CONTRIB-1499 - Added capabilities for additional 4th report type
+
+2009-08-27 Thursday 18:17  ulcc
+
+	* concerns_view.php, config.html, lib.php, version.php,
+	view_students.php, lang/en_utf8/ilpconcern.php, concerns_view.php,
+	config.html, lib.php, version.php, view_students.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1499 - Turned deprecated "withdrawn" into additional 4th
+	report type
+
+2009-08-03 Monday 01:35  ulcc
+
+	* add_template.php: 
+	
+	file add_template.php was added on branch MOODLE_19_STABLE on
+	2009-08-02 17:36:01 +0000
+
+2009-08-03 Monday 01:35  ulcc
+
+	* add_template.php, add_template.php: 
+	
+	CONTRIB-1160 - added multiple template configuration to ilpconcern
+	reports
+
+2009-08-03 Monday 01:29  ulcc
+
+	* concerns_view.php, config.html, lib.php,
+	lang/en_utf8/ilpconcern.php, concerns_view.php, config.html,
+	lib.php, lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1160 - added multiple template configuration to ilpconcern
+	reports
+
+2009-05-26 Tuesday 05:45  ulcc
+
+	* concerns_comments.php, concerns_view.php, update_comment.php,
+	README.txt, form_handler.php, icon.gif, lib.php,
+	update_concerns.php, lang/en_utf8/ilpconcern.php,
+	concerns_view.php, lib.php, README.txt, concerns_comments.php,
+	form_handler.php, icon.gif, update_comment.php,
+	update_concerns.php, lang/en_utf8/ilpconcern.php, README.txt,
+	concerns_view.php, form_handler.php, icon.gif, lib.php,
+	update_comment.php, update_concerns.php, concerns_comments.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1157 - removed all redirect code and superfluous pages from
+	ilpconcern to use formlib and moduel lib effectively and reduce
+	pages.
+
+2009-05-26 Tuesday 00:06  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-865 - group changes broke in 1.8
+
+2009-05-25 Monday 00:03  ulcc
+
+	* concerns_comments.php, concerns_view.php, version.php,
+	db/access.php, lang/en_utf8/ilpconcern.php, concerns_comments.php,
+	concerns_view.php, version.php, db/access.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-669 - added new system capabilities for adding entries to
+	own ILP
+
+2009-05-24 Sunday 23:24  ulcc
+
+	* concerns_view.php, concerns_view.php: 
+	
+	CONTRIB-669 - fixed an issue where the user context was being
+	assigned to users looking at their own ILP and so they didn't have
+	capabilities. Changed to system.
+
+2009-04-17 Friday 06:04  ulcc
+
+	* README.txt, concerns_view.php, config.html, mod.html,
+	template_report2.html, template_report3.html, update_concerns.php,
+	view_students.php, form_handler.php, lib.php,
+	template_report1.html, version.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1157 - merge changes from HEAD
+
+2009-03-14 Saturday 02:46  ulcc
+
+	* README.txt, concerns_comments.php, concerns_view.php,
+	config.html, form_handler.php, icon.gif, index.php, lib.php,
+	mod.html, update_comment.php, update_concerns.php, version.php,
+	view.php, view_students.php, db/access.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/ilpconcern.php,
+	lang/es_utf8/ilpconcern.php, pix/icon.gif: 
+	
+	no message
+
+2009-03-14 Saturday 02:39  ulcc
+
+	* template_report1.html, template_report2.html,
+	template_report3.html: 
+	
+	no message
+
+2009-03-14 Saturday 02:15  ulcc
+
+	* README.txt, concerns_view.php, config.html, form_handler.php,
+	lib.php, mod.html, update_concerns.php, version.php,
+	view_students.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	no message
+
+2009-03-09 Monday 04:30  arborrow
+
+	* CHANGES, concerns_comments.php, concerns_view.php,
+	form_handler.php, template_report1.html, version.php, README.txt,
+	icon.gif, index.php, lib.php, mod.html, template_report2.html,
+	update_comment.php, config.html, template_report3.html,
+	update_concerns.php, view.php, view_students.php,
+	lang/es_utf8/ilpconcern.php, pix/icon.gif, db/access.php,
+	db/install.xml, db/upgrade.php, lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-1088 - creating ilp_package MOODLE_19_STABLE branch
+
+2009-03-09 Monday 04:30  arborrow
+
+	* CHANGES: 
+	
+	file CHANGES was initially added on branch MOODLE_19_STABLE.
+
+2009-01-14 Wednesday 01:04  arborrow
+
+	* concerns_view.php: 
+	
+	file concerns_view.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:45 +0000
+
+2009-01-14 Wednesday 01:04  ulcc
+
+	* concerns_view.php: 
+	
+	no message
+
+2009-01-06 Tuesday 21:38  arborrow
+
+	* view_students.php: 
+	
+	file view_students.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:47 +0000
+
+2009-01-06 Tuesday 21:38  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-865
+
+2008-11-26 Wednesday 21:30  arborrow
+
+	* lib.php: 
+	
+	file lib.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:46 +0000
+
+2008-11-26 Wednesday 21:30  ulcc
+
+	* concerns_view.php, lib.php: 
+	
+	CONTRIB-867
+
+2008-11-03 Monday 23:03  ulcc
+
+	* view_students.php: 
+	
+	no message
+
+2008-11-03 Monday 21:25  arborrow
+
+	* index.php: 
+	
+	file index.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:46 +0000
+
+2008-11-03 Monday 21:25  ulcc
+
+	* index.php: 
+	
+	no message
+
+2008-10-16 Thursday 20:44  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-771
+
+2008-10-13 Monday 20:46  ulcc
+
+	* concerns_view.php, view_students.php: 
+	
+	CONTRIB-771
+
+2008-08-19 Tuesday 19:24  arborrow
+
+	* lang/es_utf8/ilpconcern.php: 
+	
+	file ilpconcern.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:48 +0000
+
+2008-08-19 Tuesday 19:24  ulcc
+
+	* lang/es_utf8/ilpconcern.php: 
+	
+	CONTRIB-666
+
+2008-08-11 Monday 20:17  arborrow
+
+	* update_concerns.php: 
+	
+	file update_concerns.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:47 +0000
+
+2008-08-11 Monday 20:17  ulcc
+
+	* update_concerns.php, view_students.php: 
+	
+	no message
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* template_report3.html: 
+	
+	file template_report3.html was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:47 +0000
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* template_report1.html: 
+	
+	file template_report1.html was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:45 +0000
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* template_report2.html: 
+	
+	file template_report2.html was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:46 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* db/install.xml: 
+	
+	file install.xml was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:53 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* config.html: 
+	
+	file config.html was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:47 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* form_handler.php: 
+	
+	file form_handler.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:45 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* version.php: 
+	
+	file version.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:45 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* db/upgrade.php: 
+	
+	file upgrade.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:53 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* db/access.php: 
+	
+	file access.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:53 +0000
+
+2008-07-23 Wednesday 23:08  arborrow
+
+	* lang/en_utf8/ilpconcern.php: 
+	
+	file ilpconcern.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:56 +0000
+
+2008-07-23 Wednesday 23:08  ulcc
+
+	* concerns_view.php, config.html, form_handler.php, lib.php,
+	update_concerns.php, version.php, view_students.php, db/access.php,
+	db/install.xml, db/upgrade.php, lang/en_utf8/ilpconcern.php,
+	template_report1.html, template_report2.html,
+	template_report3.html: 
+	
+	no message
+
+2008-06-04 Wednesday 19:21  arborrow
+
+	* update_comment.php: 
+	
+	file update_comment.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:46 +0000
+
+2008-06-04 Wednesday 19:21  ulcc
+
+	* update_comment.php, update_concerns.php: 
+	
+	CONTRIB-473
+
+2008-06-04 Wednesday 17:11  ulcc
+
+	* update_comment.php, update_concerns.php: 
+	
+	CONTRIB-473
+
+2008-05-29 Thursday 18:48  ulcc
+
+	* concerns_view.php, config.html, form_handler.php, lib.php,
+	update_concerns.php, version.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	no message
+
+2008-05-22 Thursday 20:00  ulcc
+
+	* update_comment.php, view_students.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-451
+
+2008-05-21 Wednesday 19:40  arborrow
+
+	* view.php: 
+	
+	file view.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:47 +0000
+
+2008-05-21 Wednesday 19:40  arborrow
+
+	* concerns_comments.php: 
+	
+	file concerns_comments.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:45 +0000
+
+2008-05-21 Wednesday 19:40  ulcc
+
+	* concerns_comments.php, concerns_view.php, lib.php,
+	update_comment.php, update_concerns.php, view.php,
+	view_students.php, db/access.php, db/install.xml: 
+	
+	CONTRIB-447
+
+2008-05-09 Friday 00:13  ulcc
+
+	* concerns_comments.php, concerns_view.php, lib.php,
+	update_comment.php, update_concerns.php, view.php,
+	view_students.php: 
+	
+	CONTRIB-405
+
+2008-05-08 Thursday 23:19  ulcc
+
+	* concerns_comments.php, concerns_view.php, config.html,
+	form_handler.php, index.php, lib.php, update_comment.php,
+	update_concerns.php, view_students.php, db/access.php,
+	db/install.xml, lang/en_utf8/concerns.php,
+	lang/en_utf8/ilpconcern.php: 
+	
+	CONTRIB-405
+
+2008-05-08 Thursday 22:16  ulcc
+
+	* concerns_comments.php, concerns_view.php, config.html,
+	form_handler.php, index.php, lib.php, update_comment.php,
+	update_concerns.php, view_students.php, db/access.php,
+	db/install.xml: 
+	
+	CONTRIB-405
+
+2008-04-30 Wednesday 18:24  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-399
+
+2008-04-30 Wednesday 18:07  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-396
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* pix/icon.gif: 
+	
+	file icon.gif was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:51 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* README.txt: 
+	
+	file README.txt was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:46 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* mod.html: 
+	
+	file mod.html was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:46 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* icon.gif: 
+	
+	file icon.gif was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:46 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* update_comment.php, view.php, lang/en_utf8/concerns.php,
+	README.txt, concerns_comments.php, concerns_view.php, config.html,
+	form_handler.php, icon.gif, index.php, lib.php, mod.html,
+	update_concerns.php, version.php, view_students.php, pix/icon.gif,
+	db/access.php, db/install.xml, db/upgrade.php: 
+	
+	CONTRIB-262 - adding ILP blocks and modules submitted by James
+	Ballard
+
