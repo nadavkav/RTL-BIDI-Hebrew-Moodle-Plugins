@@ -1,0 +1,212 @@
+[03-יונ-2009 20:57:01] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[03-יונ-2009 20:57:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[30-Oct-2009 18:11:57] PHP Warning:  require_once(/home/tikshuvp/public_html/moodle/lib/weblib.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/tikshuvp/public_html/moodle/lib/setup.php on line 209
+[30-Oct-2009 18:11:57] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '/home/tikshuvp/public_html/moodle/lib/weblib.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/tikshuvp/public_html/moodle/lib/setup.php on line 209
+[01-Dec-2009 00:32:24] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[09-Jan-2010 14:17:34] ADODB Error: Lost connection to MySQL server at 'reading authorization packet', system error: 104
+[10-Jan-2010 16:33:51] PHP Fatal error:  Cannot run code from this file in conjunction with non encoded files in /home/tikshuvp/public_html/moodle/config.php on line 2
+[10-Jan-2010 16:33:52] PHP Fatal error:  Cannot run code from this file in conjunction with non encoded files in /home/tikshuvp/public_html/moodle/config.php on line 2
+[10-Jan-2010 16:34:31] PHP Fatal error:  Cannot run code from this file in conjunction with non encoded files in /home/tikshuvp/public_html/moodle/config.php on line 4
+[12-Jan-2010 14:49:35] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 14:49:36] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:01:43] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:01:43] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:10:47] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:10:47] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:12:48] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:12:48] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:17:50] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[12-Jan-2010 15:17:50] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:50:43] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:50:43] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:50:57] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:50:57] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:04] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:04] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:10] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:10] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:15] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:18] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:18] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:28] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:28] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:35] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:35] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:35] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:35] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:36] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:36] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:39] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:39] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:41] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:41] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:44] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:44] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:46] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:46] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:49] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:51:49] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:03] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:03] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:07] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:07] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:13] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:15] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:24] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:52:24] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:03] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:03] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:32] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:32] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:48] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:48] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:50] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:50] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:51] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:53:51] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:32] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:32] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:41] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:41] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:47] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:47] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:49] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:49] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:50] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:50] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:55] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:54:55] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:00] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:00] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:15] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:16] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:16] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:28] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:28] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:31] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:31] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:34] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:34] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:40] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:40] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:46] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:46] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:48] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:48] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:49] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:49] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:51] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:55:51] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:00] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:00] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:09] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:09] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:10] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:10] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:12] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:12] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:20] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:20] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:23] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:23] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:25] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:25] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:26] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:27] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:27] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:31] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:31] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:32] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:32] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:34] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:56:34] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:11] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:11] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:33] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:33] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:40] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:40] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:42] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:42] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:51] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[14-Jan-2010 23:57:51] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:30:16] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:30:16] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:16] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:16] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:16] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:16] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:17] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:17] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:17] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:17] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:18] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:18] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:20] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:20] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:23] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:24] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:24] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:26] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:36] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:36] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:40] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:40] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:40] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:40] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:54] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Jan-2010 11:33:54] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[26-Jan-2010 18:41:29] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[26-Jan-2010 18:41:29] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:08:26] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:08:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:06] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:06] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:09] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:09] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:16] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:09:16] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:18:42] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:18:42] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:25:32] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[17-Feb-2010 19:25:32] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[26-Mar-2010 23:12:09] PHP Notice:  Undefined variable: wwwroot in /home/tikshuvp/public_html/moodle/theme/aardvark/profileblock.php on line 33
+[07-Jul-2010 12:41:53] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:41:53] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:06] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:06] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:21] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:21] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:22] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:22] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:41] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:41] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:42] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:42] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:43] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:43] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:46] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:46] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:49] PHP Notice:  Undefined variable: course in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
+[07-Jul-2010 12:42:49] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/mindmap/save.php on line 14
