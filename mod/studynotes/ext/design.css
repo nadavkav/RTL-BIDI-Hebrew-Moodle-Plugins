@@ -1,0 +1,104 @@
+body, div.mb-cont {
+	padding: 0;
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	position: relative;
+	background-color: #F3F1FA;
+}
+
+body.margin {
+	padding: 20px 0 0 0;
+}
+
+div.mb-cont {
+	width: 672px;
+	height: 464px;
+	margin: 0 auto;
+	position: relative;
+}
+
+div.mb-cont a {
+	color: #018;
+}
+
+div.mb-cont input, div.mb-cont select, div.mb-cont textarea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	background-color: #fff;
+	border: 1px solid #bbb;
+}
+
+div.mb-cont input[type="checkbox"] {
+	background-color: transparent;
+	border: 0 none;
+}
+
+div.mb-cont h1 {
+	font-size: 1.2em;
+}
+
+div.mb-cont h2 {
+	font-size: 1em;
+}
+
+div.mb-cont h3, div.mb-cont td {
+	font-size: 1em;
+}
+
+div.mb-cont h1, div.mb-cont h2, div.mb-cont h3, div.mb-cont p, div.mb-cont li {
+	margin: 5px 0;
+	line-height: 1.6em
+}
+
+div.mb-cont p {
+	text-align: justify;
+}
+
+div.container {
+	margin: 0 auto 0;
+	width: 976px;
+	padding-bottom: 16px;
+}
+
+div.headerbar {
+	height: 64px;
+	background: #ED2 url('headersmall.jpg') no-repeat;
+	width: 976px;
+	margin-bottom: 16px;
+}
+
+div.headerbar a.vendorlogo {
+	margin-left: 16px;
+	padding-top: 16px;
+	height: 32px;
+	width: 128px;
+	display: block;
+}
+
+div.headerbar a.logout-link, div.headerbar span.user-info {
+	float: right;
+	padding: 4px;
+	margin-top: 24px;
+}
+
+div.headerbar a.logout-link {
+	margin-right: 180px;
+}
+
+div.headerbar a.vendorlogo img {
+	border: 0 none;
+}
+
+div.subcontainer {
+	clear: both;
+	width: 600px;
+	margin: 0 auto;
+	height: 30px;
+	background-color: transparent;
+	padding-top: 2px;
+}
+
+div.subcontainer p {
+	text-align: center;
+}

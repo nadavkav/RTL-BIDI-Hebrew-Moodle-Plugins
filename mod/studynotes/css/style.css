@@ -1,0 +1,1325 @@
+/* dialog */
+div.mb-cont div.overlay, div.mb-cont div.dialog {
+	position: absolute;
+	padding: 4px;
+	background-color: #eee;
+	border: 1px solid #aaa;
+	overflow: hidden;
+	z-index: 120;
+}
+
+div.mb-cont div.overlay.error {
+	z-index: 100;
+}
+
+div.mb-cont div.dialog {
+	-moz-box-shadow: 2px 2px 8px 0 #ddd;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 2px 2px 8px #ddd;
+	-webkit-border-radius: 6px;
+	cursor: default;
+}
+
+/* toolbar and menu */
+div.mb-cont div.toolbar {
+	min-height: 20px;
+	clear: both;
+	background-color: #eee;
+	cursor: default;
+	padding: 4px 0px;
+}
+
+div.mb-cont div.toolbar.noclear {
+	clear: none;
+}
+
+div.mb-cont div.toolbar img {
+	display: block;
+}
+
+div.mb-cont div.toolbar a, div.mb-cont div.toolbar input, div.mb-cont div.toolbar label, div.mb-cont div.toolbar select {
+	float: left;
+	text-decoration: none;
+	margin-right: 4px;
+}
+
+
+div.mb-cont div.toolbar a.right, div.mb-cont a.more {
+	float: right;
+	margin-left: 4px;
+	margin-right: 0px;
+}
+
+div.mb-cont div.toolbar input, div.mb-cont div.toolbar select, div.mb-cont div.toolbar textarea {
+	margin-top: 2px;
+}
+
+div.mb-cont div.toolbar input, div.mb-cont div.toolbar select {
+	width: 80px;
+}
+
+div.mb-cont div.toolbar input[type=checkbox] {
+	width: auto;
+}
+
+div.mb-cont div.toolbar input.large, div.mb-cont div.toolbar select.large {
+	width: 200px;
+}
+
+div.mb-cont div.toolbar input.auto, div.mb-cont div.toolbar select.auto {
+	width: auto;
+}
+
+div.mb-cont div.toolbar span, div.mb-cont div.toolbar label, div.mb-cont div.toolbar a.label, div.mb-cont div.menu span {
+	padding: 4px 4px 0px 4px;
+	height: 20px;
+	margin: 0;
+	float: left;
+}
+
+div.mb-cont div.toolbar a.active, div.mb-cont div.menu {
+	color: #018;
+	background-color: #aad;
+}
+
+div.mb-cont div.menu {
+	position: absolute;
+	z-index: 150;
+	-moz-box-shadow: 2px 2px 8px 0 #aad;
+	-webkit-box-shadow: 2px 2px 8px #aad;
+	font-size: 13px;
+}
+
+div.mb-cont div.menu a {
+	color: #018;
+	display: block;
+	text-decoration: none;
+	padding: 4px;
+	margin: 0;
+}
+
+div.mb-cont div.menu a.item, div.mb-cont div.toolbar a.item {
+	padding: 4px 4px;
+	height: 16px;
+}
+
+div.mb-cont div.menu a.icon, div.mb-cont div.toolbar a.icon {
+	padding-left: 24px;
+	height: 24px;
+}
+
+div.mb-cont div.menu a.item.icon, div.mb-cont div.toolbar a.item.icon {
+	padding-left: 28px;
+	height: 16px;
+}
+
+
+div.mb-cont div.toolbar a.disabled, div.mb-cont div.menu a.disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+div.mb-cont div.toolbar a:hover {
+	background-color: #aad;
+}
+
+div.mb-cont div.menu a:hover {
+	color: #018;
+	background-color: #ddd;
+}
+
+div.mb-cont div.toolbar a.disabled:hover, div.mb-cont div.menu a.disabled:hover {
+	background-color: transparent;
+}
+
+div.mb-cont a.more {
+	margin-top: 4px;
+	margin-right: 4px;
+}
+
+div.mb-cont a.margin {
+	margin-right: 4px;
+}
+
+div.mb-cont a.more.margin {
+	margin-top: 8px;
+}
+
+div.mb-cont a.left, div.mb-cont img.left {
+	float: left;
+}
+
+div.mb-cont textarea.description {
+	width: 300px;
+	height: 40px;
+}
+
+
+/* in case the menu is nested, we have to overwrite the inherited properties */
+div.mb-cont div.menu a, div.mb-cont div.menu span, div.mb-cont div.menu input {
+	float: none;
+	display: block;
+	white-space: nowrap;
+}
+
+/* various */
+div.mb-cont ul, div.mb-cont ol {
+	padding-left: 20px;
+	margin: 0;
+}
+
+div.mb-cont *.pointer {
+	cursor: pointer;
+}
+
+div.mb-cont span.label, div.mb-cont a.label, div.mb-cont div.toolbar a.label, div.mb-cont div.toolbar a.label:hover {
+	text-decoration: underline;
+	color: #666;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+div.mb-cont img.icon.small {
+	padding: 4px;
+}
+
+/* forms */
+div.mb-cont form {
+	margin: 0;
+	padding: 0;
+}
+
+div.mb-cont input.grey {
+	color: #999;
+}
+
+/* balloons */
+div.mb-cont div.balloon h3 {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+div.mb-cont div.balloon {
+	z-index: 120;
+	position: absolute;
+	padding: 6px;
+	border: 2px solid #ff0;
+	background: #FE1;
+	-moz-box-shadow: 2px 2px 8px 0 #DECB00;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 2px 2px 8px #DECB00;
+	-webkit-border-radius: 6px;
+	font-size: 13px;
+}
+
+div.mb-cont div.balloon img.like-button {
+	float: right;
+	background: #eee;
+	border: 1px solid #999;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin: 5px 0 10px 10px;
+}
+
+div.mb-cont h3.collapsible {
+	padding-left: 16px;
+	background: url('../images/expand.png') 0 2px no-repeat;
+}
+
+div.mb-cont h3.collapsible.expanded {
+	background-image: url('../images/collapse.png');
+}
+
+div.mb-cont a.checkbox {
+	background: transparent url('../images/check.png') no-repeat 0 0;
+}
+
+div.mb-cont a.checkbox.checked {
+	background-image: url('../images/check-checked.png');
+}
+
+/* loader for AJAX */
+div.loader {
+	width: 16px;
+	height: 16px;
+	position: relative;
+	z-index: 200;
+	float: right;
+}
+
+div.loader.main {
+	position: absolute;
+	float: none;
+	top: 0;
+	left: 0;
+}
+
+div.loader.show {
+	background: transparent url('../images/async-loader.gif') 0 0 no-repeat;
+}
+
+/* closer */
+div.mb-cont a.closer.right {
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: url('../images/document-close-small.png') 0 0 no-repeat;
+}
+
+div.mb-cont a.closer.right.minimize {
+	margin-right: 8px;
+	background-image: url('../images/document-arrow-down-small.png');
+}
+
+div.mb-cont a.closer.right.maximize {
+	margin-right: 8px;
+	background-image: url('../images/document-arrow-up-small.png');
+}
+
+div.mb-cont textarea.code {
+	font-family: monospace;
+	font-size: 12px;
+}
+
+/* overlay */
+div.mb-cont a.button.flash-card-box.reduced, div.mb-cont a.button.flash-card-box.reduced.half, div.mb-cont a.button.flash-card-box.reduced.full {
+	background: transparent url(../images/desktop-switch-full.png) repeat scroll 0 0;
+	height: 48px;
+	left: 572px;
+	top: 398px;
+	width: 48px;
+}
+
+div.mb-cont a.button.clipboard-box.reduced {
+	display: none;
+	visibility: hidden;
+}
+
+/* general */
+div.mb-cont div.clear, div.mb-cont span.clear {
+	clear: both;
+}
+
+/* formatting for context preview */
+div.context-display pre {
+	line-height: 1.0em;
+	font-size: 10px;
+}
+
+div.context-display img {
+	max-width: 375px;
+}
+
+div.context-display img.equation {
+	vertical-align: middle;
+}
+
+div.context-display img.equation.block {
+	vertical-align: inherit;
+	display: block;
+	margin: 4px auto;
+	max-width: 100%;
+}
+
+div.context-display ul, div.context-display ol {
+	padding-left: 20px;
+	margin: 0;
+}
+
+div.context-display ol {
+	padding-left: 25px;
+	/* for the numbers to be displayed for numbers greater than 20 */
+}
+
+div.context-display ol ol, div.context-display li ol {
+	list-style-type: lower-alpha;
+	padding-left: 20px;
+}
+
+div.context-display ol ol ol, div.context-display li ol li ol {
+	list-style-type: lower-roman;
+	padding-left: 20px;
+}
+
+div.context-display table {
+	caption-side: bottom;
+	border: 2px solid #aaf;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+div.context-display tr {
+	padding: 0;
+}
+
+div.context-display th {
+	background-color: #bbf;
+	padding: 4px;
+	border-bottom: 2px solid #66a;
+	text-align: center;
+}
+
+div.context-display td {
+	background-color: #eee;
+	padding: 4px;
+	text-align: left;
+}
+
+div.context-display td.r, div.context-display th.r {
+	border-right: 2px solid #66a;
+}
+
+/* editor */
+div.mb-cont div.mainContainer {
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 600px;
+	height: 316px;
+}
+
+div.mb-cont div.coreWrapper {
+	width: 506px;
+	position: absolute;
+	overflow: hidden;
+	height: 316px;
+	z-index: 20;
+	left: 0px;
+}
+
+div.mb-cont div.markerBar {
+	width: 88px;
+	background-color: transparent;
+	position: absolute;
+	left: 512px;
+	height: 316px;
+	z-index: 30;
+	cursor: default;
+}
+
+div.mb-cont div.markerBar a {
+	display: block;
+	position: absolute;
+}
+
+div.mb-cont div.markerBar div.menu a {
+	position: static;
+}
+
+div.mb-cont div.markerBar img {
+	display: block;
+}
+
+div.mb-cont div.markerBar div.linkrange {
+	background: transparent url('../images/link-small.png') no-repeat scroll left bottom;
+	border-color: #999999;
+	border-style: none dashed none none;
+	border-width: 1px;
+	cursor: pointer;
+	min-height: 14px;
+	padding-left: 12px;
+	position: absolute;
+	right: 2px;
+	width: 3px;
+}
+
+div.mb-cont iframe.editorbox {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	height: 316px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+div.mb-cont div.progressbox {
+	float: right;
+}
+
+div.mb-cont div.titleBox {
+	height: 24px;
+	padding: 8px 0;
+	width: 488px;
+	overflow: hidden;
+}
+
+div.mb-cont div.titleBox a.title, div.mb-cont div.titleBox input.title, div.mb-cont div.titleBox span.title {
+	font-size: 16px;
+	font-weight: bold;
+	max-height: 24px;
+	white-space: nowrap;
+}
+
+div.mb-cont div.titleBox input.title {
+	min-width: 100px;
+}
+
+div.mb-cont div.titleBox a.category {
+	float: right;
+	max-height: 24px;
+	overflow: hidden;
+	white-space: nowrap;
+	padding-top: 2px;
+	color: #999;
+}
+
+div.mb-cont div.tool-window {
+	background-color: #eee;
+	position: absolute;
+	width: 488px;
+	height: 100%;
+}
+
+div.mb-cont div.flashcarddisplay {
+	margin: 4px 0;
+	padding: 4px;
+	border: 1px solid #aaa;
+	background-color: #ffc;
+	overflow-y: auto;
+	height: 120px;
+}
+
+div.mb-cont div.flashcarddisplay hr {
+	border: 0 none;
+	background-color: #aaa;
+	color: #aaa;
+	height: 1px;
+}
+
+div.mb-cont div.flashcardbox {
+	margin-bottom: 12px;
+	min-height: 80px;
+	float: left;
+	border: 1px solid #aaa;
+	background-color: #eea;
+	max-height: 120px;
+	overflow-y: auto;
+	position: relative;
+}
+
+div.mb-cont div.flashcardbox.selected {
+	background-color: #ffc;
+}
+
+div.mb-cont div.flashcard {
+	clear: both;
+	height: 24px;
+}
+
+div.mb-cont div.flashcard * {
+	display: block;
+	float: left;
+}
+
+div.mb-cont div.flashcard span {
+	padding: 4px;
+	white-space: nowrap;
+}
+
+div.mb-cont div.flashcard.last {
+	background-color: #eec;
+}
+
+div.mb-cont div.flashcard.selected {
+	background-color: #cc2;
+}
+
+div.mb-cont div.context-display {
+	overflow-y: auto;
+	width: 488px;
+	padding: 0 4px;
+	background-color: #fafafa;
+	height: 320px;
+}
+div.mb-cont div.mb-logon {
+	width: 672px;
+	height: 464px;
+	position: absolute;
+}
+
+div.mb-logon div.toolbar {
+	position: relative;
+}
+
+div.mb-cont table.logonform .error {
+	display: none;
+	color: red;
+}
+
+div.mb-cont table.logonform td {
+	vertical-align: text-top;
+}
+/* desktop */
+div.mb-cont div.mb-desk {
+	background: transparent url('../images/desktop-background.png') 0 0 no-repeat;
+	width: 672px;
+	height: 464px;
+	position: absolute;
+}
+
+div.mb-cont a.close-button {
+	background: transparent url('../images/document-close-small.png') 0 0 no-repeat;
+	float: right;
+	width: 16px;
+	height: 16px;
+	margin: 0 0 4px 4px;
+	display: block;
+}
+
+div.mb-cont a.button {
+	position: absolute;
+	display: block;
+	border: 0 none;
+	z-index: 100;
+	background-repeat: no-repeat;
+}
+
+div.mb-cont a.alert-info {
+	background-image: url('../images/desktop-alert.png');
+	height: 24px;
+	left: 270px;
+	top: 363px;
+	width: 48px;
+	z-index: 89;
+}
+
+div.mb-cont a.shoutbox-link {
+	background-image: url('../images/desktop-shoutbox-link.png');
+	left: 7px;
+	top: 362px;
+	width: 24px;
+	height: 24px;
+	z-index: 50;
+}
+
+div.mb-cont a.button-left {
+	background-image: url('../images/desktop-button-left.png');
+	top: 396px;
+	left: 32px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-mapview {
+	background-image: url('../images/desktop-button-mapview.png');
+	top: 396px;
+	left: 88px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-right {
+	background-image: url('../images/desktop-button-right.png');
+	top: 396px;
+	left: 144px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-right.add {
+	background-image: url('../images/desktop-button-right-add.png');
+}
+
+div.mb-cont a.button-home {
+	background-image: url('../images/desktop-button-home.png');
+	top: 396px;
+	left: 248px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-organization {
+	background-image: url('../images/desktop-button-organization.png');
+	top: 396px;
+	left: 304px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-community {
+	background-image: url('../images/desktop-button-community.png');
+	top: 396px;
+	left: 360px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.button-community.notify {
+	background-image: url('../images/desktop-button-community-notify.png');
+}
+
+div.mb-cont a.button-search {
+	background-image: url('../images/desktop-button-search.png');
+	top: 396px;
+	left: 416px;
+	width: 48px;
+	height: 48px;
+}
+
+div.mb-cont a.flash-card-box {
+	background-image: url('../images/desktop-flash-card-box.png');
+	top: 368px;
+	left: 516px;
+	width: 76px;
+	height: 80px;
+}
+
+div.mb-cont a.flash-card-box.half {
+	background-image: url('../images/desktop-flash-card-box-half.png');
+}
+
+div.mb-cont a.flash-card-box.full {
+	background-image: url('../images/desktop-flash-card-box-full.png');
+}
+
+div.mb-cont a.clipboard-box {
+	background-image: url('../images/desktop-clipboard-box.png');
+	top: 368px;
+	left: 592px;
+	width: 64px;
+	height: 80px;
+}
+
+div.mb-cont a.clipboard-box.full {
+	background-image: url('../images/desktop-clipboard-box-full.png');
+}
+
+div.mb-cont a.clipboard-box.active {
+	background-image: url('../images/desktop-clipboard-box-pushed.png');
+}
+
+div.mb-cont div.note-container {
+	position: absolute;
+	width: 600px;
+	height: 316px;
+	top: 68px;
+	left: 43px;
+	z-index: 80;
+}
+
+div.mb-cont div.header-container {
+	position: absolute;
+	width: 508px;
+	height: 32px;
+	top: 30px;
+	left: 43px;
+	z-index: 80;
+}
+
+div.mb-cont div.full-container, div.mb-cont div.full-overlay {
+	background: transparent url('../images/desktop-container-background.png') 0 0 no-repeat;
+	position: absolute;
+	width: 500px;
+	padding: 20px;
+	height: 367px;
+}
+
+div.mb-cont div.full-overlay {
+	background: transparent url('../images/desktop-overlay-background.png') 0 0 no-repeat;
+	z-index: 100;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+}
+
+div.mb-cont div.full-container {
+	top: 12px;
+	left: 23px;
+	z-index: 90;
+}
+
+div.mb-cont div.full-container.layer {
+	z-index: 91;
+}
+
+div.mb-cont div.full-container div.toolbar, div.mb-cont div.balloon div.toolbar, div.mb-cont div.preview-container div.toolbar, div.mb-cont div.note-container div.toolbar {
+	background-color: transparent;
+}
+
+div.mb-cont div.container-hover, div.mb-cont div.progress-box, div.mb-cont div.alert-container {
+	background-color: #eee;
+	border: 1px solid #999;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+div.mb-cont div.tool-window, div.mb-cont div.container-hover, div.mb-cont div.progress-box, div.mb-cont a.panel-hover:hover, div.mb-cont div.alert-container {
+	-moz-box-shadow: 4px 4px 8px 0 #ccc;
+	-webkit-box-shadow: 4px 4px 8px #ccc;
+}
+
+div.mb-cont div.progress-box {
+	position: absolute;
+	max-width: 610px;
+	left: 32px;
+	bottom: 67px;
+	z-index: 110;
+	overflow-x: auto;
+	padding: 4px;
+}
+
+div.mb-cont div.progress-box div.progressboxcontainer {
+	margin: 4px 0 4px;
+	min-width: 160px;
+}
+
+div.mb-cont h3.progress-overview {
+	font-size: 1.0em;
+	font-weight: bold;
+	height: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	vertical-align: middle;
+	margin: 0;
+}
+
+div.mb-cont div.preview-container {
+	position: absolute;
+	width: 224px;
+	padding: 0 4px 4px;
+	bottom: 67px;
+	left: 232px;
+	z-index: 110;
+	-moz-border-radius-bottomright: 0;
+	-webkit-border-bottom-right-radius: 0;
+}
+
+div.mb-cont a.panel-hover:hover {
+	background-color: #eee;
+	border: 1px solid #999;
+	border-top-style: none;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	z-index: 120;
+	background-position: -1px 0;
+}
+
+div.mb-cont a.panel-hover.full-border:hover {
+	border-top-style: solid;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	background-position: -1px -1px;
+}
+
+div.mb-cont a.highlighting-pen {
+	background-image: url('../images/desktop-highlighting-pen.png');
+	top: 12px;
+	left: 560px;
+	width: 104px;
+	height: 56px;
+	z-index: 40;
+}
+
+div.mb-cont a.highlighting-pen:hover {
+	background-image: url('../images/desktop-highlighting-pen-active.png');
+}
+
+div.mb-cont a.highlighting-pen.active {
+	background-image: url('../images/desktop-highlighting-pen-pushed.png');
+}
+
+div.mb-cont a.tab-level-main {
+	background-image: url('../images/desktop-tab-level-main.png');
+	top: 120px;
+	left: 9px;
+	width: 26px;
+	height: 92px;
+}
+
+div.mb-cont a.tab-level-main:hover, div.mb-cont a.tab-level-main.active {
+	background-image: url('../images/desktop-tab-level-main-pushed.png');
+}
+
+div.mb-cont a.tab-level-main.de:hover, div.mb-cont a.tab-level-main.de.active {
+	background-image: url('../images/desktop-tab-level-main-pushed-de.png');
+}
+
+div.mb-cont a.tab-level-advanced {
+	background-image: url('../images/desktop-tab-level-advanced.png');
+	top: 12px;
+	left: 9px;
+	width: 26px;
+	height: 92px;
+}
+
+div.mb-cont a.tab-level-advanced.grey {
+	background-image: url('../images/desktop-tab-level-advanced-grey.png');
+}
+
+div.mb-cont a.tab-level-advanced:hover, div.mb-cont a.tab-level-advanced.active {
+	background-image: url('../images/desktop-tab-level-advanced-pushed.png');
+}
+
+div.mb-cont a.tab-level-advanced.de:hover, div.mb-cont a.tab-level-advanced.de.active {
+	background-image: url('../images/desktop-tab-level-advanced-pushed-de.png');
+}
+
+div.mb-cont a.tab-level-illustrative {
+	background-image: url('../images/desktop-tab-level-illustrative.png');
+	top: 230px;
+	left: 9px;
+	width: 26px;
+	height: 92px;
+}
+
+div.mb-cont a.tab-level-illustrative.grey {
+	background-image: url('../images/desktop-tab-level-illustrative-grey.png');
+}
+
+div.mb-cont a.tab-level-illustrative:hover, div.mb-cont a.tab-level-illustrative.active {
+	background-image: url('../images/desktop-tab-level-illustrative-pushed.png');
+}
+
+div.mb-cont a.tab-level-illustrative.de:hover, div.mb-cont a.tab-level-illustrative.de.active {
+	background-image: url('../images/desktop-tab-level-illustrative-pushed-de.png');
+}
+
+div.mb-cont div.header-container div.titleBox, div.mb-cont div.header-container div.toolbar {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+div.mb-cont div.tool-window {
+	background: #eee;
+	width: 500px;
+	height: auto;
+	padding: 0 14px 4px 4px;
+	border: 1px solid #aaa;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+div.mb-cont div.tool-window a.close-button {
+	margin-top: 6px;
+	margin-right: -8px;
+}
+
+div.mb-cont a.marker-button {
+	background-image: url('../images/desktop-marker-button-collapse.png');
+	left: -6px;
+	top: -2px;
+	width: 14px;
+	height: 17px;
+	float: left;
+	position: relative;
+}
+
+div.mb-cont a.marker-button.expand {
+	background-image: url('../images/desktop-marker-button-expand.png');
+}
+
+/* various */
+div.mb-cont div.topicList, div.mb-cont div.goalList {
+	clear: both;
+	margin: 2px 0;
+	border: 1px solid #ddd;
+}
+
+div.mb-cont div.topicList {
+	width: 300px;
+}
+
+div.mb-cont div.post {
+	clear: both;
+	white-space: normal;
+	text-align: left;
+	border-top: 1px solid #ddd;
+	text-indent: -10px;
+	padding-left: 10px;
+	min-height: 18px;
+	position: relative;
+}
+
+div.mb-cont a.postDeleter {
+	position: absolute;
+	right: 2px;
+	top: 1px;
+	text-indent: 0;
+}
+
+div.mb-cont div.showauthor {
+	float: left;
+	clear: both;
+}
+
+div.mb-cont div.alert-container {
+	position: absolute;
+	width: 50%;
+	top: 25%;
+	left: 19%;
+	z-index: 110;
+	background-color: #F5E216;
+	border: 2px solid #F9EF7B;
+}
+
+div.mb-cont div.alert-container p.alert-item {
+	text-align: center;
+	padding: 4px;
+}
+
+div.mb-cont div.alert-container p.alert-item a {
+	margin-left: 10px;
+}
+
+div.mb-cont div.alert-container h2 {
+	text-align: center;
+}
+div.mb-cont div.memberList, div.mb-cont div.groupTopicList {
+	overflow-y: auto;
+	height: 150px;
+	position: relative;
+}
+
+div.mb-cont div.pending-member {
+	line-height: 1.5em;
+}
+
+
+div.mb-cont div.messages div.message {
+	margin: 6px 0;
+	min-height: 24px;
+	position: relative;
+}
+
+div.mb-cont div.message a.title {
+	font-weight: bold;
+	margin-right: 15px;
+	float: left;
+}
+
+div.mb-cont div.message div.description {
+	line-height: 1.5em;
+}
+div.mb-cont div.mapView {
+	background-color: #e4e4e4;
+	overflow: auto;
+	margin: 4px 0;
+	position: relative;
+	clear: both;
+	max-height: 230px;
+}
+
+div.mb-cont div.mapView div.mapCardBox {
+	padding: 0;
+	margin: 0;
+}
+
+div.mb-cont div.mapPrerequisites {
+	background-color: #aaa;
+	width: 88px;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding-left: 4px;
+}
+
+div.mb-cont div.mapPrerequisites h3 {
+	color: #fff;
+	padding-left: 2px;
+}
+
+div.mb-cont div.mapPrerequisites a.mapPrerequisite {
+	float: left;
+	white-space: nowrap;
+	clear: both;
+	text-decoration: none;
+	overflow: hidden;
+	font-size: 10px;
+	color: #000;
+	padding: 4px;
+	width: 80px;
+	height: 16px;
+	margin-bottom: 4px;
+	background-image: url('../images/prereq-missing.png');
+}
+
+div.mb-cont div.mapPrerequisites a.mapPrerequisite.available {
+	background-image: url('../images/prereq-available.png');
+}
+
+div.mb-cont div.mapPrerequisites a.mapPrerequisite.create {
+	width: 77px;
+	height: 1px;
+	background-image: url('../images/create-sub.png');
+}
+
+div.mb-cont div.mapLevel {
+	clear: both;
+	margin-bottom: 4px;
+	min-height: 48px;
+	min-width: 100%;
+}
+
+div.mb-cont div.mapCardBox {
+	width: 100px;
+	float: left;
+}
+
+div.mb-cont div.mapLevel.lower div.mapCardBox {
+	height: 40px;
+}
+
+div.mb-cont div.mapCardBox a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	float: left;
+	height: 24px;
+	overflow: hidden;
+	font-size: 10px;
+	background-repeat: no-repeat;
+}
+
+div.mb-cont div.mapCardBox a.mapCard {
+	padding: 4px;
+}
+
+div.mb-cont div.mapCardBox a.mapCard span {
+	display: block;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+div.mb-cont div.mapCardBox.advanced a.mapCard {
+	white-space: nowrap;
+	width: 76px;
+	height: 16px;
+	margin-top: 4px;
+	background-image: url('../images/advanced-normal.png');
+}
+
+div.mb-cont div.mapCardBox.advanced a.mapCard.hidden {
+	background-image: url('../images/advanced-hidden.png');
+}
+
+div.mb-cont div.mapCardBox.advanced a.mapCard.empty {
+	background-image: url('../images/advanced-empty.png');
+}
+
+div.mb-cont div.mapCardBox.advanced a.mapCard.selected {
+	background-image: url('../images/advanced-active.png');
+}
+
+div.mb-cont div.mapCardBox.main a.mapCard {
+	width: 84px;
+	padding-right: 12px;
+	height: 40px;
+	background-image: url('../images/main-normal.png');
+}
+
+div.mb-cont div.mapCardBox.main a.mapCard.hidden {
+	background-image: url('../images/main-hidden.png');
+}
+
+div.mb-cont div.mapCardBox.main a.mapCard.empty {
+	background-image: url('../images/main-empty.png');
+}
+
+div.mb-cont div.mapCardBox.main a.mapCard.selected {
+	background-image: url('../images/main-active.png');
+}
+
+div.mb-cont div.mapCardBox.main.dragover a.mapCard {
+	width: 80px;
+	border-right: 4px solid #aaa;
+}
+
+div.mb-cont div.mapCardBox.illustrative a.mapCard {
+	white-space: nowrap;
+	width: 76px;
+	height: 16px;
+	margin-bottom: 4px;
+	background-image: url('../images/illustrative-normal.png');
+}
+
+div.mb-cont div.mapCardBox.illustrative a.mapCard.hidden {
+	background-image: url('../images/illustrative-hidden.png');
+}
+
+div.mb-cont div.mapCardBox.illustrative a.mapCard.empty {
+	background-image: url('../images/illustrative-empty.png');
+}
+
+div.mb-cont div.mapCardBox.illustrative a.mapCard.selected {
+	background-image: url('../images/illustrative-active.png');
+}
+
+div.mb-cont div.mapCardBox.create {
+	width: 24px;
+}
+
+div.mb-cont div.mapCardBox.create a.mapCreateMain {
+	width: 20px;
+	height: 48px;
+	display: block;
+	background-image: url('../images/create-main.png');
+}
+
+div.mb-cont div.mapLevel.advanced {
+	background: #c3dced url('../images/map-background-advanced.png') repeat-x bottom left;
+}
+
+div.mb-cont div.mapLevel.illustrative {
+	background: #b4eeb5 url('../images/map-background-illustrative.png') repeat-x top left;
+}
+
+div.mb-cont div.mapLevel div.mapCardBox.dragover {
+	background-color: #aaa;
+}
+
+div.mb-cont div.mapLevel.advanced div.mapCardBox.dragover {
+	background: #BDDAEF url('../images/map-move-advanced.png') no-repeat top center;
+}
+
+div.mb-cont div.mapLevel.advanced div.mapCardBox.de.dragover {
+	background: #BDDAEF url('../images/map-move-advanced-de.png') no-repeat top center;
+}
+
+div.mb-cont div.mapLevel.illustrative div.mapCardBox.dragover {
+	background: #A6F1A7 url('../images/map-move-illustrative.png') no-repeat bottom center;
+}
+
+div.mb-cont div.mapLevel.illustrative div.mapCardBox.de.dragover {
+	background: #A6F1A7 url('../images/map-move-illustrative-de.png') no-repeat bottom center;
+}
+
+div.mb-cont div.mapLevel.illustrative div.mapCardBox {
+	padding-bottom: 24px;
+}
+div.mb-cont div.progressboxcontainer img {
+	display: block;
+}
+
+div.mb-cont div.progressboxcontainer {
+	height: 68px;
+	overflow: hidden;
+}
+
+div.mb-cont div.results {
+	max-height: 260px;
+	overflow-y: auto;
+	position: relative;
+	overflow-x: hidden;
+}
+
+div.mb-cont div.results input.search {
+	float: right;
+	width: 100px;
+	margin-left: 20px;
+	margin-top: 4px;
+	position: relative;
+	z-index: 110;
+}
+
+div.mb-cont div.results div.author, div.mb-cont div.results div.provider {
+	float: right;
+	font-style: italic;
+	color: #666;
+	padding-right: 10px;
+}
+
+div.mb-cont div.results div.result {
+	padding: 4px 0;
+	min-height: 20px;
+	position: relative;
+}
+
+div.mb-cont div.results div.result {
+	background-color: #bfb;
+}
+
+div.mb-cont div.results div.result.even {
+	background-color: #dfb;
+}
+
+div.mb-cont div.results div.result.highlight {
+	background-color: #eee;
+}
+
+div.mb-cont div.results div.result.highlight.even {
+	background-color: #cee;
+}
+
+div.mb-cont div.results div.result.even { /* perhaps use different formatting */
+}
+
+div.mb-cont div.result input[type =
+"checkbox"] {
+	float: left;
+	margin: 0 6px 2px 2px;
+	padding: 0;
+	width: 16px;
+	height: 16px;
+}
+
+div.mb-cont div.result img.icon {
+	margin: 0 6px 2px 2px;
+}
+
+div.mb-cont div.result a.title {
+	font-weight: bold;
+	margin-right: 15px;
+	float: left;
+	max-width: 228px;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+div.mb-cont div.result div.description {
+	line-height: 1.5em;
+	clear: both;
+	margin-left: 24px;
+}
+
+div.mb-cont div.results div.resultList {
+	max-height: 400px;
+	max-width: 360px;
+}
+
+div.mb-cont .expander, div.mb-cont .placeHolder {
+	display: block;
+	float: left;
+	width: 18px;
+	height: 16px;
+}
+
+div.mb-cont .expander {
+	background: url('../images/expand.png') 0 0 no-repeat;
+}
+
+div.mb-cont .placeHolder {
+}
+
+div.mb-cont .expanded {
+	background: url('../images/collapse.png') 0 0 no-repeat;
+}
+
+div.mb-cont tr.header {
+	background-color: #eee;
+}
+
+div.mb-cont div.dialog tr.header, div.mb-cont div.tool-window tr.header {
+	background-color: #fff;
+}
+
+div.mb-cont div.headerAscending {
+}
+
+div.mb-cont div.headerDescending {
+}
+
+div.mb-cont td.column {
+	padding: 3px;
+}
+
+/* todo: put into a span and layout properly! */
+div.mb-cont input.checkbox {
+	margin: 0;
+	padding: 0;
+}

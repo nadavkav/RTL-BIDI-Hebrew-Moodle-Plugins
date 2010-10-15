@@ -1,0 +1,857 @@
+2009-06-29 Monday 18:19  fabiangebert
+
+	* view.php, js/client.js, server/helper.php: 
+	
+	supporting a wider view in trainer mode CONTRIB-1144
+
+2009-06-29 Monday 18:00  fabiangebert
+
+	* version.php, js/client.js, js/help.de.js, js/help.en.js,
+	server/data_handling.php: 
+	
+	updated help allowing for questions to be attached to repetition
+	markers fixed important marker save bug CONTRIB-1144
+
+2009-06-25 Thursday 17:48  fabiangebert
+
+	* version.php, js/client.js: 
+	
+	improving focus handling CONTRIB-1144
+
+2009-06-24 Wednesday 19:00  fabiangebert
+
+	* lang/de_utf8/studynotes.php, settings.php, version.php, view.php,
+	ext/overlay_snippet.php, lang/en_utf8/studynotes.php: 
+	
+	not showing note icon if working over https but overlay would be
+	http now using moodle proxy settings rather than module proxy
+	settings
+
+2009-06-24 Wednesday 02:21  fabiangebert
+
+	* css/style.css, js/client.js: 
+	
+	IE8 compat fixes CONTRIB-1144
+
+2009-06-23 Tuesday 17:32  fabiangebert
+
+	* version.php, css/style.css: 
+	
+	fixed css regression CONTRIB-1144
+
+2009-06-22 Monday 22:37  fabiangebert
+
+	* css/style.css, js/client.js: 
+	
+	another firefox 2 compat fix CONTRIB-1144
+
+2009-06-22 Monday 18:45  fabiangebert
+
+	* js/client.js: 
+	
+	fixed critical bug with firefox 2: cannot insert problem
+	CONTRIB-1144
+
+2009-06-22 Monday 15:37  fabiangebert
+
+	* js/client.js, index.php, version.php: 
+	
+	corrected redirect in Mediabird activity index.php added tooltips
+	to left and right navi button CONTRIB-1144
+
+2009-06-20 Saturday 18:34  fabiangebert
+
+	* js/: client.js, help.de.js, help.en.js: 
+	
+	slightly adjusted wording to make some functions easier-to-get
+	CONTRIB-1144
+
+2009-06-20 Saturday 18:06  fabiangebert
+
+	* settings.php, version.php, view.php, ext/overlay_snippet.php,
+	lang/de_utf8/studynotes.php, lang/en_utf8/studynotes.php: 
+	
+	reduced window size to fit 1024*768 displays now using correct page
+	title for auto-reference setting to disable quick help CONTRIB-1144
+
+2009-06-19 Friday 05:43  fabiangebert
+
+	* server/data_handling.php: 
+	
+	do not show public groups when no search term given CONTRIB-1144
+
+2009-06-19 Friday 00:02  fabiangebert
+
+	* js/client.js, server/data_handling.php, server/db_mysql.php,
+	server/helper.php, server/session_handler.php, server/utility.php: 
+	
+	easier method to edit note sheet titles CONTRIB-1144
+
+2009-06-18 Thursday 23:19  fabiangebert
+
+	* ext/overlay_snippet.php: 
+	
+	important fix: repairing appearance of in-place note taking button
+	CONTRIB-1144
+
+2009-06-18 Thursday 23:10  fabiangebert
+
+	* css/style.css, images/desktop-tab-level-advanced-pushed-de.png,
+	images/desktop-tab-level-illustrative-pushed-de.png,
+	images/desktop-tab-level-main-pushed-de.png,
+	images/map-move-advanced-de.png,
+	images/map-move-illustrative-de.png, js/client.js: 
+	
+	fixed a bug introduced in last commit: map view drag accept handler
+	not being restrictive enough in javascript translated level
+	handlers from main view and file-as images in map view CONTRIB-1144
+
+2009-06-18 Thursday 21:03  fabiangebert
+
+	* css/style.css, js/client.js, js/help.de.js, js/help.en.js,
+	server/helper.php, version.php, view.php, server/data_handling.php:
+	
+	
+	implemented history of recent note folders improved manage note
+	folders view improved stability CONTRIB-1144
+
+2009-06-18 Thursday 04:22  fabiangebert
+
+	* version.php, js/client.js: 
+	
+	making it easier to delete topics CONTRIB-1144
+
+2009-06-17 Wednesday 05:03  fabiangebert
+
+	* js/client.js, js/help.de.js, js/help.en.js, version.php,
+	view.php, ext/design.css: 
+	
+	added quick start help feature CONTRIB-1144
+
+2009-06-13 Saturday 21:14  fabiangebert
+
+	* ext/overlay_snippet.php, images/desktop-button-community.png,
+	images/desktop-button-left.png, images/desktop-button-mapview.png,
+	images/desktop-button-right.png, images/desktop-button-search.png,
+	version.php: 
+	
+	adjusted icons supporting site-wide activities for in-place note
+	taking button CONTRIB-1144
+
+2009-06-11 Thursday 15:17  fabiangebert
+
+	* css/style.css, js/client.js, server/data_handling.php,
+	server/helper.php, version.php, view.php: 
+	
+	fixed wrong target for reference links leading to moodle opening
+	twice in sub-frame optimized appearance CONTRIB-1144
+
+2009-06-05 Friday 05:08  fabiangebert
+
+	* js/client.js, version.php: 
+	
+	handle delete and back-space as changes to all the editors do not
+	reset text on question mode change if editor initially empty delete
+	answer text cache when having removed answer from question
+	CONTRIB-1144
+
+2009-06-04 Thursday 02:27  fabiangebert
+
+	* js/client.js, version.php: 
+	
+	fixed chrome compatibility issues CONTRIB-1144
+
+2009-05-28 Thursday 15:14  fabiangebert
+
+	* version.php, view.php, lang/de_utf8/studynotes.php,
+	lang/en_utf8/studynotes.php: 
+	
+	alert on PHP version lower than 5.2.0 CONTRIB-1144
+
+2009-05-26 Tuesday 22:31  fabiangebert
+
+	* version.php, js/client.js: 
+	
+	fixed handling of empty topics CONTRIB-1144
+
+2009-05-26 Tuesday 22:00  fabiangebert
+
+	* js/client.js, version.php: 
+	
+	updating javascript: don't close question editor when clicking on
+	note sheet
+
+2009-05-26 Tuesday 06:45  fabiangebert
+
+	* version.php, js/client.js: 
+	
+	javascript handling and compat fixes
+
+2009-05-24 Sunday 20:57  fabiangebert
+
+	* view.php: 
+	
+	removed obsolete variable reference CONTRIB-1144
+
+2009-05-24 Sunday 18:07  fabiangebert
+
+	* version.php, css/default.css, css/style.css,
+	ext/overlay_snippet.php, js/client.js: 
+	
+	removed orphaned debug message CONTRIB-1144
+
+2009-05-21 Thursday 01:54  fabiangebert
+
+	* version.php, js/client.js: 
+	
+	important try-catch for selection restoring CONTRIB-1144
+
+2009-05-20 Wednesday 22:58  fabiangebert
+
+	* css/default.css, css/dummy.css, css/style.css,
+	images/balloon-bottom.gif, js/client.js, version.php,
+	images/balloon-body.gif, images/balloon-top.gif: 
+	
+	fixed memorize session function fixed context-display table css
+	added reference trash menu entry fixed link chooser appearance
+	fixed pre br-replacing for IE7 fixed pre tag css fixed
+	unnecessarily update card box css after each change removed
+	unnecessary images CONTRIB-1144
+
+2009-05-20 Wednesday 19:52  fabiangebert
+
+	* lang/de_utf8/studynotes.php, settings.php, version.php, view.php,
+	ext/config_default.php, ext/design.css, js/client.js,
+	lang/en_utf8/studynotes.php, server/data_handling.php,
+	server/helper.php, server/session_handler.php, server/utility.php: 
+	
+	updated design updated javascript updated version number improved
+	group functions new settings for web server proxy CONTRIB-1144
+
+2009-05-19 Tuesday 05:58  fabiangebert
+
+	* version.php, css/default.css, js/client.js: 
+	
+	updating javascript to latest version (fixes several IE7 compat
+	problems) CONTRIB-1144
+
+2009-05-14 Thursday 21:59  fabiangebert
+
+	* js/client.js, server/data_handling.php,
+	server/session_handler.php, server/utility.php: 
+	
+	fixed some minor JS behaviors fixed group search and problem search
+	CONTRIB-1144
+
+2009-05-14 Thursday 19:13  frankwolf
+
+	* css/style.css, js/client.js, version.php, view.php: 
+	
+	Importance Marker and Translation Marker are now going to be
+	ignored when set in settings
+
+2009-05-11 Monday 22:37  fabiangebert
+
+	* version.php, doc/setup-de.html: 
+	
+	updated version number removed docs typo CONTRIB-1144
+
+2009-05-11 Monday 07:32  fabiangebert
+
+	* css/default.css, css/dummy.css, css/overlay.css, css/style.css,
+	js/client.js, server/data_handling.php, server/helper.php,
+	index.php, view.php, ext/design.css: 
+	
+	moved main view into iframe for better CSS compatibility improved
+	javascript functionality wrapped CSS for better compatibility
+	CONTRIB-1144
+
+2009-05-10 Sunday 03:27  fabiangebert
+
+	* js/client.js: 
+	
+	do not auto-save when drag operation starts do not hide review
+	button once it has been faded out CONTRIB-1144
+
+2009-05-09 Saturday 20:16  fabiangebert
+
+	* ext/overlay_snippet.php, js/client.js: 
+	
+	fixed linking between moodle page and note sheet (missing global
+	$id) fixed bug when deleting topics in overlay mode fixed bug when
+	trying to store selection in overlay mode CONTRIB-1144
+
+2009-05-09 Saturday 03:10  fabiangebert
+
+	* css/style.css, server/auth_manager.php, server/captcha.php,
+	server/data_handling.php, server/db_mysql.php, server/helper.php,
+	server/logon_handler.php, server/session_handler.php,
+	server/utility.php, server/equationsupport/LaTeXrender.php,
+	ext/moodle_auth.php, js/client.js: 
+	
+	added a few code comments fixed a few bugs CONTRIB-1144
+
+2009-05-07 Thursday 06:54  fabiangebert
+
+	* js/client.js: 
+	
+	corrected change handling for pasting and dropping content
+	CONTRIB-1144
+
+2009-05-07 Thursday 06:41  fabiangebert
+
+	* js/client.js: 
+	
+	corrected handling of buttons CONTRIB-1144
+
+2009-05-07 Thursday 00:17  fabiangebert
+
+	* ext/moodle_auth.php: 
+	
+	fixed condition for determining the visibility of a user's email
+	address CONTRIB-1144
+
+2009-05-06 Wednesday 18:48  fabiangebert
+
+	* doc/200px-MediabirdStudyNotesOverlay.png,
+	doc/MediabirdReview.png, doc/about.png, doc/merging-readme.txt,
+	doc/setup-de.html, doc/setup-en.html, doc/MediabirdCommunity.png,
+	doc/MediabirdSearch.png, doc/MediabirdStudyNotesOverlay.png,
+	doc/MediabirdTakeNotes.png, doc/overlay_intro.png, doc/setup.html,
+	server/session_handler.php: 
+	
+	updated docs included german docs as well fixed bug where
+	memberships couldn't be removed CONTRIB-1144
+
+2009-05-06 Wednesday 06:51  fabiangebert
+
+	* js/client.js, ext/moodle_auth.php: 
+	
+	support inviting known users from moodle course into groups
+	restoring selection when (auto) saving current card allow emails to
+	be separated by line feeds besides commas CONTRIB-1144
+
+2009-05-05 Tuesday 18:27  fabiangebert
+
+	* view.php, css/default.css, css/style.css, js/client.js,
+	server/data_handling.php, server/utility.php: 
+	
+	fixed wrong occurrence of search results and some javascript bugs
+	new way of handling uploads CONTRIB-1144
+
+2009-05-05 Tuesday 15:01  fabiangebert
+
+	* server/data_handling.php: 
+	
+	fixed order of group list CONTRIB-1144
+
+2009-05-05 Tuesday 14:45  fabiangebert
+
+	* server/session_handler.php: 
+	
+	fixed list of problems CONTRIB-1144
+
+2009-05-04 Monday 20:18  fabiangebert
+
+	* js/client.js, server/equationsupport/LaTeXrender.php,
+	db/install.xml, db/upgrade.php, doc/setup.html, ext/db_moodle.php,
+	ext/overlay_snippet.php, server/data_handling.php,
+	server/db_mysql.php, server/helper.php, server/logon_handler.php,
+	server/session_handler.php, server/utility.php: 
+	
+	optimized behaviour of in-place note taking function added info on
+	how to set up equation rendering to docs CONTRIB-1144
+
+2009-05-04 Monday 07:07  fabiangebert
+
+	* ext/config_default.php, js/client.js, server/data_handling.php,
+	server/session_handler.php: 
+	
+	another oracle compat fix CONTRIB-1144
+
+2009-05-04 Monday 06:31  fabiangebert
+
+	* js/client.js, ext/config_default.php, server/data_handling.php: 
+	
+	fix for oracle db support CONTRIB-1144
+
+2009-05-04 Monday 06:03  fabiangebert
+
+	* images/highlight-green.png, images/illustrate-goal.png,
+	images/illustrate-placeholder.png, images/average.png,
+	images/desktop-button-left.png,
+	images/desktop-button-right-add.png, images/highlight-none.png,
+	images/highlight-yellow.png, images/insert-page.png,
+	images/create-sub.png, images/highlight-red.png, db/install.xml,
+	images/desktop-button-mapview.png, images/desktop-button-right.png,
+	images/dropdown.png, images/highlight-blue.png, css/style.css,
+	db/upgrade.php, ext/config_default.php, server/data_handling.php,
+	server/db_mysql.php, server/helper.php, server/logon_handler.php,
+	server/session_handler.php, server/utility.php, settings.php,
+	version.php, view.php, js/client.js, doc/setup.html: 
+	
+	removed obsolete images made efforts to get the database
+	oracle-compatible replaced datetime fields with integer timestamps
+	fixed equation support moved uploads folder did a lot of minor bug
+	fixing improved note sheet handling CONTRIB-1144
+
+2009-04-30 Thursday 14:44  fabiangebert
+
+	* js/client.js: 
+	
+	fixed ability to re-insert markers CONTRIB-1144
+
+2009-04-30 Thursday 04:40  fabiangebert
+
+	* js/client.js, lang/de_utf8/studynotes.php, db/install.xml,
+	db/upgrade.php, ext/config_default.php, ext/db_moodle.php,
+	ext/overlay_snippet.php, server/auth_manager.php,
+	server/data_handling.php, server/db_mysql.php, server/helper.php,
+	server/logon_handler.php, server/session_handler.php,
+	server/utility.php, view.php, ext/config.php, ext/launcher.png,
+	lang/en_utf8/studynotes.php: 
+	
+	made XMLDB and DB access PostgreSQL compatible fixed a few
+	non-working SQL statements repaired equation rendering support
+	added message if cookies are disabled moved location of uploaded
+	files (please move existing ones or upload them again) fixed bug
+	when inserting elements onto empty note sheets CONTRIB-1144
+
+2009-04-28 Tuesday 19:06  fabiangebert
+
+	* css/style.css: 
+	
+	do not show clipboard box when hiding a view in in-place note mode
+	CONTRIB-1144
+
+2009-04-28 Tuesday 14:13  fabiangebert
+
+	* view.php: 
+	
+	invalid pass-by-reference leads to an error (if pass-by-reference
+	disabled in php.ini) CONTRIB-1144
+
+2009-04-27 Monday 20:14  fabiangebert
+
+	* view.php, css/default.css, css/overlay.css, css/style.css,
+	images/desktop-switch-full.png, images/overlay-bar.png,
+	server/data_handling.php, server/helper.php,
+	server/session_handler.php, db/upgrade.php, ext/design.css,
+	ext/overlay_snippet.php, js/overlay.js: 
+	
+	updated design improved upgrade from previous versions CONTRIB-1144
+
+2009-04-27 Monday 07:16  fabiangebert
+
+	* js/client.js: 
+	
+	fixed invalid order of selected nodes fixed losing changes to
+	markers when inserting from clipboard CONTRIB-1144
+
+2009-04-27 Monday 04:42  fabiangebert
+
+	* js/client.js, ext/config_default.php, ext/db_moodle.php,
+	server/session_handler.php, doc/about.png, doc/setup.html,
+	view.php: 
+	
+	fixed missing escaping for insert_record and update_record
+	statements updated latest Mediabird functionality updated docs
+	CONTRIB-1144
+
+2009-04-26 Sunday 06:29  fabiangebert
+
+	* ext/overlay_snippet.php, server/helper.php: 
+	
+	fixed bug with overlay integration in standardmediabird theme
+	breaking whole site
+
+2009-04-26 Sunday 05:51  arborrow
+
+	* images/document-arrow-down-small.png, images/edit-redo.png,
+	images/go-next.png, images/illustrative-normal.png,
+	images/thumbs-up.png, images/check.png,
+	images/definition-small.png, images/dialog-information.png,
+	images/emblem-important-small-yellow.png, images/flag-de.gif,
+	images/go-up-create.png, images/main-empty.png,
+	images/desktop-background.png,
+	images/desktop-tab-level-illustrative-grey.png,
+	images/emblem-important-small-blue.png,
+	images/format-text-underline.png, images/group-find.png,
+	images/mainback.png, images/progress-illustrative-none.png,
+	images/description, images/desktop-clipboard-box-full.png,
+	images/desktop-highlighting-pen.png,
+	images/desktop-tab-level-advanced.png, images/face-sad.png,
+	images/wikipedia-small.png, images/definition.png,
+	images/desktop-button-right.png, images/desktop-clipboard-box.png,
+	images/desktop-marker-button-expand.png, images/list-add.png,
+	images/private.png, images/desktop-tab-level-advanced-grey.png,
+	images/edit-find-replace.png, images/emblem-important-small.png,
+	images/progress-advanced-half.png, images/desktop-button-home.png,
+	images/desktop-marker-button-collapse.png,
+	images/desktop-shoutbox-link.png, images/edit-copy.png,
+	images/learn.png, images/balloon-bottom.gif,
+	images/create-map-small.png, images/delete-columns.png,
+	images/edit-paste.png, images/edit.png,
+	images/map-background-illustrative.png,
+	images/map-move-advanced.png, images/applications-office-small.png,
+	images/edit-cut.png, images/highlight-cursor.cur,
+	images/illustrative-active.png, images/document-revert.png,
+	images/editor.png, images/go-down.png, images/highlight-yellow.png,
+	images/media-playlist-repeat.png, images/train.png,
+	images/async-loader.gif, images/delete-rows.png,
+	images/edit-delete.png, images/highlight-red.png,
+	images/overlay-handle-sw.png, images/thumbs-up-small.png,
+	images/applications-multimedia.png, images/face-plain.png,
+	images/format-list-numbers.png, images/format-text-italic.png,
+	images/illustrative-hidden.png, images/map-share.png,
+	images/create-main.png, images/desktop-highlighting-pen-active.png,
+	images/expand.png, images/face-smile.png,
+	images/format-justify-fill.png, images/overlay-handle-se.png,
+	images/progress-illustrative-active.png,
+	images/desktop-tab-level-advanced-pushed.png,
+	images/group-small.png, images/desktop-clipboard-box-pushed.png,
+	images/format-indent-less.png, images/organizer.png,
+	images/advanced-normal.png, images/code.png,
+	images/desktop-button-search.png, images/main-hidden.png,
+	images/note.png, images/study-small.png,
+	images/go-previous-create.png, images/image-x-generic.png,
+	images/insert-rows.png, images/main-active.png,
+	images/study-tool-small.png, images/wikipedia.png,
+	images/dialog-question-small.png, images/format-indent-more.png,
+	images/format-list-bullets.png, images/go-home.png,
+	images/insert-image.png, images/locale-small.png,
+	images/map-move-illustrative.png, images/problem-marker-small.png,
+	images/progress-main-active.png, images/balloon-body.gif,
+	images/desktop-button-community-notify.png,
+	images/desktop-container-background.png,
+	images/desktop-flash-card-box-half.png, images/editor-small.png,
+	images/pixel.gif, images/desktop-overlay-background.png,
+	images/go-down-create.png, images/illustrate-goal.png,
+	images/map-view.png, images/progress-advanced-active.png,
+	images/progress-advanced-none.png,
+	images/progress-advanced-visited.png,
+	images/applications-office.png, images/document-close.png,
+	images/equation.png, images/go-previous.png, images/groups.png,
+	images/learner.png, images/trainer-small.png,
+	images/format-text-bold.png, images/main-normal.png,
+	images/prereq-available.png, images/advanced-empty.png,
+	images/desktop-button-left.png, images/exit.png, images/group.png,
+	images/link-internal.png, images/trainer.png, images/wrong.png,
+	images/average.png, images/desktop-tab-level-main-pushed.png,
+	images/dialog-information-small.png, images/edit-delete-small.png,
+	images/highlight-none.png, images/process-stop.png,
+	images/public-read.png, images/desktop-alert.png,
+	images/desktop-tab-level-illustrative-pushed.png, images/html.png,
+	images/link-small.png, images/mail-attachment.png,
+	images/right.png, images/advanced-active.png,
+	images/desktop-button-community.png, images/insert-columns.png,
+	images/list-remove.png, images/study-tool.png, images/dropdown.png,
+	images/emblem-important.png, images/progress-main-visited.png,
+	images/desktop-flash-card-box.png,
+	images/document-arrow-up-small.png,
+	images/document-close-small.png,
+	images/progress-illustrative-half.png,
+	images/progress-main-none.png, images/user-small.png,
+	images/create-map.png, images/document-save.png,
+	images/format-justify-center.png, images/go-next-create.png,
+	images/group-create-small.png, images/problem-marker.png,
+	images/public-write.png, images/balloon-top.gif,
+	images/check-checked.png, images/edit-find.png,
+	images/highlight-green.png, images/progress-main-half.png,
+	images/user-trash-small.png, images/create-sub.png,
+	images/desktop-tab-level-illustrative.png,
+	images/link-internal-small.png, images/map-background-advanced.png,
+	images/map-view-small.png, images/user-trash-full.png,
+	images/user.png, images/desktop-button-mapview.png,
+	images/desktop-button-organization.png, images/flag-en.gif,
+	images/link.png, images/locale.png, images/rename.png,
+	images/advanced-hidden.png,
+	images/emblem-important-small-green.png, images/go-up.png,
+	images/insert-table.png, images/progress-illustrative-visited.png,
+	images/view-refresh.png, images/desktop-flash-card-box-full.png,
+	images/dialog-apply.png, images/edit-undo.png,
+	images/format-text-strikethrough.png, images/highlight-blue.png,
+	images/illustrate-placeholder.png, images/edit-clear.png,
+	images/format-justify-left.png, images/group-create.png,
+	images/overlay-bar.png, images/collapse.png,
+	images/desktop-highlighting-pen-pushed.png,
+	images/desktop-tab-level-main.png, images/edit-small.png,
+	images/illustrative-empty.png, images/insert-page.png,
+	images/train-small.png, images/dialog-question.png,
+	images/format-justify-right.png,
+	images/media-playlist-repeat-small.png, images/prereq-missing.png,
+	images/study.png, images/train-studied.png,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Validator.php
+	,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/ValidatorAtom
+	.php, ext/launcher-friends.png, ext/launcher.png,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Exception.php
+	,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Interchange.p
+	hp,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/InterchangeBu
+	ilder.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema.ser,
+	server/filterlib/standalone/HTMLPurifier/Lexer/PEARSax3.php,
+	server/filterlib/standalone/HTMLPurifier/Lexer/PH5P.php,
+	ext/launcher-own.png, ext/back.jpg, ext/config_default.php,
+	ext/design.css, ext/launcher-new.png, ext/moodle_auth.php,
+	doc/setup.html, ext/config.php, ext/db_moodle.php,
+	ext/header_example.html, ext/overlay_snippet.php,
+	doc/overlay_intro.png,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.L
+	anguage.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.D
+	efaultTextDir.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.E
+	scapeInvalidTags.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	.ExtractStyleBlocks.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.RemoveEmpty.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	.YouTube.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.A
+	llowed.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.T
+	rusted.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.De
+	faultScheme.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.Linkify.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.C
+	olorKeywords.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.R
+	emoveScriptContents.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.T
+	idyAdd.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.I
+	DBlacklistRegexp.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.Ma
+	xImgLength.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.M
+	axImgLength.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.t
+	xt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.AutoParagraph.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.A
+	llowedElements.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Output
+	.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Al
+	lowedSchemes.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.De
+	finitionID.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.A
+	llowedRev.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.D
+	efinitionID.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/info.i
+	ni,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.A
+	llowedFrameTargets.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.I
+	DBlacklist.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmatParam.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.Al
+	lowImportant.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.E
+	scapeNonASCIICharacters.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.H
+	iddenElements.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.P
+	arent.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.De
+	finitionRev.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.A
+	llowedRel.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.D
+	efaultImageAlt.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.D
+	efaultInvalidImage.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmatParam.PurifierLinkifyDocURL.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Cache.
+	DefinitionImpl.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.C
+	onvertDocumentToFragment.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.E
+	scapeInvalidChildren.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	.Custom.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Output
+	.SortAttr.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Output
+	.TidyFormat.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Test.F
+	orceNoIconv.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Di
+	sable.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Di
+	sableExternalResources.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Ov
+	errideAllowedSchemes.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.Al
+	lowTricky.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.Al
+	lowedProperties.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.tx
+	t,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.D
+	irectLexLineNumberSyncInterval.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.L
+	exerImpl.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.A
+	llowedAttributes.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.D
+	efinitionRev.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.F
+	orbiddenAttributes.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Ho
+	stBlacklist.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.Custom.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.DisplayLinkURI.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.Pr
+	oprietary.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Cache.
+	txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.A
+	ggressivelyFixLt.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.C
+	ollectErrors.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.A
+	llowedModules.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.B
+	lockWrapper.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.P
+	roprietary.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.S
+	afeEmbed.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Mu
+	ngeSecretKey.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.I
+	DPrefixLocal.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.PurifierLinkify.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.C
+	oreModules.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.T
+	idyLevel.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Ba
+	se.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Di
+	sableExternal.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Ho
+	st.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Mu
+	nge.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/CSS.De
+	finitionRev.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.M
+	aintainLineNumbers.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.R
+	emoveInvalidImg.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.t
+	xt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	Param.ExtractStyleBlocksEscaping.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	Param.ExtractStyleBlocksScope.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	Param.ExtractStyleBlocksTidyImpl.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.S
+	afeObject.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Output
+	.Newline.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Ma
+	keAbsolute.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.D
+	efaultInvalidImageAlt.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.E
+	nableID.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Core.E
+	ncoding.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Filter
+	Param.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.S
+	trict.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.X
+	HTML.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Output
+	.CommentScriptContents.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Di
+	sableResources.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.Mu
+	ngeResources.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/URI.tx
+	t,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.I
+	DPrefix.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Attr.t
+	xt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/AutoFo
+	rmat.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Cache.
+	SerializerPath.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.C
+	ustomDoctype.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.D
+	octype.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.F
+	orbiddenElements.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/HTML.T
+	idyRemove.txt,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/schema/Test.t
+	xt, css/back.jpg, css/default.css, css/dummy.css,
+	css/headersmall.jpg, css/logo.jpg, css/overlay.css, css/style.css,
+	lang/de_utf8/studynotes.php,
+	server/filterlib/standalone/HTMLPurifier/Language/messages/en-x-tes
+	t.php,
+	server/filterlib/standalone/HTMLPurifier/Language/messages/en-x-tes
+	tmini.php,
+	server/filterlib/standalone/HTMLPurifier/Language/messages/en.php,
+	server/auth_manager.php, server/captcha.php,
+	server/data_handling.php, server/description, server/helper.php,
+	server/utility.php, server/filterlib/HTMLPurifier.standalone.php,
+	server/filterlib/standalone/HTMLPurifier/Printer/CSSDefinition.php,
+	server/filterlib/standalone/HTMLPurifier/Printer/ConfigForm.css,
+	server/filterlib/standalone/HTMLPurifier/Printer/ConfigForm.js,
+	server/filterlib/standalone/HTMLPurifier/Printer/ConfigForm.php,
+	server/filterlib/standalone/HTMLPurifier/Printer/HTMLDefinition.php
+	, dummy.php, index.php, lib.php, mod_form.php,
+	lang/en_utf8/studynotes.php, server/captcha_font.ttf,
+	server/db_mysql.php, server/logon_handler.php,
+	server/session_handler.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Interchange/D
+	irective.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Interchange/I
+	d.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Interchange/N
+	amespace.php, icon.gif, settings.php, version.php, view.php,
+	db/install.xml, db/upgrade.php, js/client.js, js/jquery.js,
+	js/overlay.js,
+	server/filterlib/standalone/HTMLPurifier/Printer.php,
+	server/filterlib/standalone/HTMLPurifier/EntityLookup/entities.ser,
+	lang/de_utf8/help/studynotes/index.html,
+	lang/de_utf8/help/studynotes/mods.html,
+	lang/en_utf8/help/studynotes/index.html,
+	lang/en_utf8/help/studynotes/mods.html,
+	server/equationsupport/LaTeXrender.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Builder/Confi
+	gSchema.php,
+	server/filterlib/standalone/HTMLPurifier/ConfigSchema/Builder/Xml.p
+	hp,
+	server/filterlib/standalone/HTMLPurifier/Filter/ExtractStyleBlocks.
+	php, server/filterlib/standalone/HTMLPurifier/Filter/YouTube.php,
+	server/filterlib/standalone/HTMLPurifier/Language/classes/en-x-test
+	.php, server/jsmin/jsmin.php: 
+	
+	CONTRIB-1144 - adding Mediabird's Study Notes module contributed by
+	Fabian Gebert
+

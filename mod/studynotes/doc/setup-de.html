@@ -1,0 +1,1019 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Setting up Mediabird Study Notes</title>
+		<style type="text/css">
+						/*
+			 ** MediaWiki 'moodledocs' style sheet for CSS2-capable browsers.
+			 ** Copyright Gabriel Wicke - http://wikidev.net/
+			 ** License: GPL (http://www.gnu.org/copyleft/gpl.html)
+			 **
+			 ** Loosely based on http://www.positioniseverything.net/ordered-floats.html by Big John
+			 ** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi,Joe Geldart & Tom Croucher,
+			 ** Michael Zeltner and Geir BÃ¦kholt)
+			 ** All you guys rock :)
+			 */
+			#column-content {
+				width: 100%;
+				float: right;
+				margin: 0 0 .6em -13.7em;
+				padding: 0;
+			} #content {
+				position: relative;
+				margin: 7.3em 0.75em 0 13.7em;
+				padding: 0 1em 1.5em 1.2em;
+				background: white;
+				color: black;
+				border: 1px solid #ddd;
+				line-height: 1.4em;
+				z-index: 2;
+				-moz-border-radius-bottomleft: 10px;
+				-moz-border-radius-bottomright: 10px;
+			} #column-one {
+				padding-top: 7.3em;
+			}
+			
+			/* the left column width is specified in class .portlet */
+			/* Font size:
+			 ** We take advantage of keyword scaling- browsers won't go below 9px
+			 ** More at http://www.w3.org/2003/07/30-font-size
+			 ** http://style.cleverchimp.com/font_size_intervals/altintervals.html
+			 */
+			body {
+				font-family: Arial, Verdana, Helvetica, sans-serif;
+				font-size: 13px;
+				background-color: #FAFAFA;
+				color: black;
+				margin: 0;
+				padding: 0;
+			}
+			
+			span.tocnumber {
+				margin-right: 0.5em;
+			}
+			
+			div.printfooter {
+				clear: both;
+				margin-top: 30px;
+			}
+			
+			.visualClear {
+				clear: both;
+			}
+			
+			/* general styles */
+			b, strong {
+				color: #111;
+			}
+			
+			table {
+				font-size: 100%;
+				background: white;
+				color: black;
+			}
+			
+			a {
+				text-decoration: none;
+				color: #002bb8;
+				background: none;
+			}
+			
+			a:visited {
+				color: #5a3696;
+			}
+			
+			a:active {
+				color: #faa700;
+			}
+			
+			a:hover {
+				text-decoration: underline;
+			}
+			
+			a.stub {
+				color: #772233;
+			}
+			
+			a.new, #p-personal a.new {
+				color: #ba0000;
+			}
+			
+			a.new:visited, #p-personal a.new:visited {
+				color: #a55858;
+			}
+			
+			img {
+				border: none;
+				vertical-align: middle;
+			}
+			
+			p {
+				margin: .4em 0 .5em 0;
+				line-height: 1.4em;
+			}
+			
+			p img {
+				margin: 0;
+			}
+			
+			hr {
+				height: 1px;
+				color: #ddd;
+				background-color: #ddd;
+				border: 0;
+				margin: .2em 0 .2em 0;
+			}
+			
+			h1, h2, h3, h4, h5, h6 {
+				color: black;
+				background: none;
+				font-weight: normal;
+				margin: 0;
+				padding-top: 0em;
+				padding-bottom: .17em;
+				border-bottom: 1px solid #ddd;
+				margin-top: 1.5em;
+			}
+			
+			h1 {
+				font-size: 188%;
+			}
+			
+			h2 {
+				font-size: 150%;
+				margin-top: 2.0em;
+			}
+			
+			h3, h4, h5, h6 {
+				border-bottom: none;
+				font-weight: bold;
+			}
+			
+			h3 {
+				font-size: 120%;
+			}
+			
+			h4 {
+				font-size: 100%;
+			}
+			
+			h5 {
+				font-size: 100%;
+			}
+			
+			h6 {
+				font-size: 100%;
+			}
+			
+			ul {
+				line-height: 1.4em;
+				list-style-type: square;
+				margin: .3em 0 0 1.5em;
+				padding: 0;
+			}
+			
+			ol {
+				line-height: 1.4em;
+				margin: .3em 0 0 3.2em;
+				padding: 0;
+				list-style-image: none;
+			}
+			
+			li {
+				margin-bottom: .1em;
+			}
+			
+			dt {
+				font-weight: bold;
+				margin-bottom: .1em;
+			}
+			
+			dl {
+				margin-top: .2em;
+				margin-bottom: .5em;
+			}
+			
+			dd {
+				line-height: 1.4em;
+				margin-left: 2em;
+				margin-bottom: .1em;
+			}
+			
+			fieldset {
+				border: 1px solid #FFB53A;
+				margin: 1em 0 1em 0;
+				padding: 0 1em 1em;
+				line-height: 1.4em;
+			}
+			
+			legend {
+				background: white;
+				padding: .5em;
+				font-size: 95%;
+			}
+			
+			form {
+				border: none;
+				margin: 0;
+			}
+			
+			textarea {
+				width: 100%;
+				padding: .1em;
+			}
+			
+			/* input, select, textarea {
+			 border: 1px solid #DDD;
+			 } */
+			input.historysubmit {
+				padding: 0 .3em .3em .3em !important;
+				font-size: 94%;
+				cursor: pointer;
+				height: 1.7em !important;
+				margin-left: 1.6em;
+			}
+			
+			select {
+				vertical-align: top;
+			}
+			
+			abbr, acronym, .explain {
+				border-bottom: 1px dotted black;
+				color: black;
+				background: none;
+				cursor: help;
+			}
+			
+			q {
+				font-family: Times, "Times New Roman", serif;
+				font-style: italic;
+			}
+			
+			/* disabled for now
+			 blockquote {
+			 font-family: Times, "Times New Roman", serif;
+			 font-style: italic;
+			 }*/
+			code {
+				background-color: #f9f9f9;
+				font-size: 120%;
+				line-height: 1.4em;
+			}
+			
+			pre {
+				padding: 1em;
+				border: 1px dashed #FFB53A;
+				color: black;
+				background-color: #f9f9f9;
+				font-size: 11px;
+				line-height: 1.4em;
+			}
+			
+			/*
+			 ** the main content area
+			 */ #siteSub {
+				display: none;
+			} #jump-to-nav {
+				display: none;
+			} #contentSub {
+				font-size: 84%;
+				line-height: 1.2em;
+				margin: 0 0 1.4em 1em;
+				color: #7d7d7d;
+				width: auto;
+			}
+			
+			span.subpages {
+				display: block;
+			}
+			
+			/* Some space under the headers in the content area */ #bodyContent h1, #bodyContent h2 {
+				margin-bottom: .6em;
+			} #bodyContent h3, #bodyContent h4, #bodyContent h5 {
+				margin-bottom: .3em;
+			} .firstHeading {
+				margin-bottom: .1em;
+			}
+			
+			h1 .editsection {
+				font-size: 55%;
+				font-weight: normal;
+			}
+			
+			h2 .editsection {
+				font-size: 67%;
+				font-weight: normal;
+			}
+			
+			h3 .editsection {
+				font-size: 83%;
+				font-weight: normal;
+			}
+			
+			h4 .editsection, h5 .editsection {
+				font-size: 100%;
+				font-weight: normal;
+			}
+			
+			/* user notification thing */
+			/* MoodleDocs notes */
+			p.note {
+				padding: 0.5em 1em;
+				border: 1px solid #FF0;
+				background: #FFA;
+				color: #444;
+				-moz-border-radius: 5px;
+			}
+			
+			p.note.green {
+				background: #EFA;
+			}
+			
+			p.note.orange {
+				background: #FEA;
+			} .small-info-right {
+				float: right;
+				background: #FFA;
+				margin-left: 1em;
+				padding: 0.2em 0.5em;
+				border: 1px solid #FF0;
+				-moz-border-radius: 5px;
+			} .small-info-right .text-small {
+				font-weight: normal;
+				font-size: 100%;
+			} .small-info-right .text-big {
+				font-weight: bold;
+				font-size: 180%;
+				color: #666;
+			} .small-info-right .new {
+				color: #E90;
+			} .usermessage {
+				background-color: #ffce7b;
+				border: 1px solid #ffa500;
+				color: black;
+				font-weight: bold;
+				margin: 2em 0 1em;
+				padding: .5em 1em;
+				vertical-align: middle;
+			} #siteNotice {
+				text-align: center;
+				font-size: 95%;
+				padding: 0 .9em;
+			} #siteNotice p {
+				margin: 0;
+				padding: 0;
+			} .error {
+				color: red;
+				font-size: larger;
+			} #catlinks {
+				border-left: 1em solid #EEE;
+				border-top: 1px solid #EEE;
+				padding: 5px;
+				margin-top: 1em;
+				clear: both;
+			}
+			
+			/* emulate center */ .center {
+				width: 100%;
+				text-align: center;
+			} *.center * {
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			/* small for tables and similar */ .small, .small * {
+				font-size: 94%;
+			}
+			
+			table.small {
+				font-size: 100%;
+			}
+			
+			/*
+			 ** content styles
+			 */ #toc, .toc {
+				border-left: 1em solid #EEE;
+				padding: 5px;
+				font-size: 95%;
+			} #toc h2, .toc h2 {
+				display: inline;
+				border: none;
+				padding: 0;
+				font-size: 100%;
+				font-weight: bold;
+			} #toc #toctitle, .toc #toctitle, #toc .toctitle, .toc .toctitle {
+				text-align: left;
+			} #toc ul, .toc ul {
+				list-style-type: none;
+				list-style-image: none;
+				margin-left: 0;
+				padding-left: 0;
+				text-align: left;
+			} #toc ul ul, .toc ul ul {
+				margin: 0 0 0 2em;
+			} #toc .toctoggle, .toc .toctoggle {
+				font-size: 94%;
+			}
+			
+			/* images */
+			div.floatright, table.floatright {
+				clear: right;
+				float: right;
+				position: relative;
+				margin: 0 0 .5em .5em;
+				border: 0;
+				/*
+				 border: .5em solid white;
+				 border-width: .5em 0 .8em 1.4em;
+				 */
+			}
+			
+			div.floatright p {
+				font-style: italic;
+			}
+			
+			div.floatleft, table.floatleft {
+				float: left;
+				position: relative;
+				margin: 0 .5em .5em 0;
+				border: 0;
+				/*
+				 margin: .3em .5em .5em 0;
+				 border: .5em solid white;
+				 border-width: .5em 1.4em .8em 0;
+				 */
+			}
+			
+			div.floatleft p {
+				font-style: italic;
+			}
+			
+			/* thumbnails */
+			div.thumb {
+				margin-bottom: .5em;
+				border-style: solid;
+				border-color: white;
+				width: auto;
+			}
+			
+			div.thumb div {
+				border: 1px solid #ccc;
+				padding: 3px !important;
+				background-color: #f9f9f9;
+				font-size: 94%;
+				text-align: center;
+				overflow: hidden;
+			}
+			
+			div.thumb div a img {
+				border: 1px solid #ccc;
+			}
+			
+			div.thumb div div.thumbcaption {
+				border: none;
+				text-align: left;
+				line-height: 1.4em;
+				padding: .3em 0 .1em 0;
+			}
+			
+			div.magnify {
+				float: right;
+				border: none !important;
+				background: none !important;
+			}
+			
+			div.magnify a, div.magnify img {
+				display: block;
+				border: none !important;
+				background: none !important;
+			}
+			
+			div.tright {
+				clear: right;
+				float: right;
+				border-width: .5em 0 .8em 1.4em;
+			}
+			
+			div.tleft {
+				float: left;
+				margin-right: .5em;
+				border-width: .5em 1.4em .8em 0;
+			} .hiddenStructure {
+				display: none;
+			}
+			
+			img.tex {
+				vertical-align: middle;
+			}
+			
+			span.texhtml {
+				font-family: serif;
+			}
+			
+			/* disable interwiki styling */ #bodyContent a.extiw, #bodyContent a.extiw:active {
+				color: #36b;
+				background: none;
+				padding: 0;
+			} #bodyContent a.external {
+				color: #36b;
+			}
+			
+			/*
+			 ** the navigation portlet
+			 */ #p-navigation {
+				position: relative;
+				z-index: 3;
+			}
+			
+			/*
+			 ** Search portlet
+			 */ #p-search {
+				position: relative;
+				z-index: 3;
+			} #p-search .content {
+				text-align: center;
+			}
+			
+			input.searchButton {
+				margin-top: 1px;
+				font-size: 95%;
+			} #searchGoButton {
+				padding-left: .5em;
+				padding-right: .5em;
+				font-weight: bold;
+			} #searchInput {
+				width: 10.9em;
+				margin: 0;
+				font-size: 95%;
+			} #p-search .content {
+				padding: .5em .4em .4em .4em;
+			}
+			
+			/* more IE fixes */
+			/* float/negative margin brokenness */ * html #footer {
+				margin-top: 0;
+			} * html #column-content {
+				display: inline;
+				margin-bottom: 0;
+			} * html div.editsection {
+				font-size: smaller;
+			} #pagehistory li.selected {
+				position: relative;
+			}
+			
+			div.patrollink {
+				font-size: 75%;
+				text-align: right;
+			}
+			
+			span.newpage, span.minor, span.searchmatch {
+				font-weight: bold;
+			}
+			
+			span.unpatrolled {
+				font-weight: bold;
+				color: red;
+			}
+			
+			span.searchmatch {
+				color: red;
+			} .sharedUploadNotice {
+				font-style: italic;
+			}
+			
+			span.updatedmarker {
+				color: black;
+				background-color: #0f0;
+			}
+			
+			span.newpageletter {
+				font-weight: bold;
+				color: black;
+				background-color: yellow;
+			}
+			
+			span.minoreditletter {
+				color: black;
+				background-color: #c5ffe6;
+			}
+			
+			table.gallery {
+				border: 1px solid #ccc;
+				margin: 2px;
+				padding: 2px;
+				background-color: white;
+			}
+			
+			table.gallery tr {
+				vertical-align: top;
+			}
+			
+			table.gallery td {
+				vertical-align: top;
+				background-color: #f9f9f9;
+				border: solid 2px white;
+			}
+			
+			div.gallerybox {
+				margin: 2px;
+				width: 150px;
+			}
+			
+			div.gallerybox div.thumb {
+				text-align: center;
+				border: 1px solid #ccc;
+				margin: 2px;
+			}
+			
+			div.gallerytext {
+				font-size: 94%;
+				padding: 2px 4px;
+			}
+			
+			span.comment {
+				font-style: italic;
+			}
+			
+			span.changedby {
+				font-size: 95%;
+			} .previewnote {
+				text-align: center;
+				color: #cc0000;
+			} .editExternally {
+				border: 1px solid gray;
+				background-color: #ffffff;
+				padding: 3px;
+				margin-top: 0.5em;
+				float: left;
+				font-size: small;
+				text-align: center;
+			} .editExternallyHelp {
+				font-style: italic;
+				color: gray;
+			}
+			
+			li span.deleted {
+				text-decoration: line-through;
+				color: #888;
+				font-style: italic;
+			} .toggle {
+				margin-left: 2em;
+				text-indent: -2em;
+			}
+			
+			/* Classes for EXIF data display */
+			table.metadata {
+				font-size: 80%;
+				margin-left: 0.5em;
+				margin-bottom: 0.5em;
+			}
+			
+			table.metadata caption {
+				font-weight: bold;
+			}
+			
+			table.metadata th {
+				font-weight: normal;
+			}
+			
+			table.metadata td {
+				padding: 0.1em;
+			}
+			
+			table.metadata {
+				border: none;
+				border-collapse: collapse;
+			}
+			
+			table.metadata td, table.metadata th {
+				text-align: center;
+				border: 1px solid #ddd;
+				padding-left: 0.1em;
+				padding-right: 0.1em;
+			}
+			
+			table.metadata th {
+				background-color: #f9f9f9;
+			}
+			
+			table.metadata td {
+				background-color: #fcfcfc;
+			}
+			
+			div.editsection {
+				padding-top: 2em;
+			}
+		</style>
+	</head>
+	<body>
+	<div id="content">
+		<a name="top" id="top"></a>
+		<h1 class="firstHeading">Mediabird Notizen verwenden</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">Aus MoodleDocs</h3>
+			<div id="contentSub">
+			</div>
+			<div id="jump-to-nav">
+				Wechseln zu: <a href="#column-one">Navigation</a>, <a href="#searchInput">Suche</a>
+			</div>
+			<!-- start content -->
+			<table id="toc" class="toc" summary="Inhaltsverzeichnis">
+				<tr>
+					<td>
+						<div id="toctitle">
+							<h2>Inhaltsverzeichnis</h2>
+						</div>
+						<ul>
+							<li class="toclevel-1">
+								<a href="#Einleitung"><span class="tocnumber">1</span><span class="toctext">Einleitung</span></a>
+								<ul>
+									<li class="toclevel-2">
+										<a href="#Kontext-basierte.2C_kollaborative_Notizen_in_Moodle"><span class="tocnumber">1.1</span><span class="toctext">Kontext-basierte, kollaborative Notizen in Moodle</span></a>
+									</li>
+								</ul>
+							</li>
+							<li class="toclevel-1">
+								<a href="#Setup"><span class="tocnumber">2</span><span class="toctext">Setup</span></a>
+								<ul>
+									<li class="toclevel-2">
+										<a href="#Einrichten_der_Kontext-Notiz-Funktion_.28empfohlen.29"><span class="tocnumber">2.1</span><span class="toctext">Einrichten der Kontext-Notiz-Funktion (empfohlen)</span></a>
+										<ul>
+											<li class="toclevel-3">
+												<a href="#Einrichten_mit_dem_mitgelieferten_Design"><span class="tocnumber">2.1.1</span><span class="toctext">Einrichten mit dem mitgeliferten Design</span></a>
+											</li>
+											<li class="toclevel-3">
+												<a href="#Mit_eigenem_Design_arbeiten"><span class="tocnumber">2.1.2</span><span class="toctext">Mit eigenem Design arbeiten</span></a>
+											</li>
+										</ul>
+									</li>
+									<li class="toclevel-2">
+										<a href="#Einrichtung_des_Formel-Editors"><span class="tocnumber">2.2</span><span class="toctext">Einrichtung des Formel-Editors</span></a>
+										<ul>
+											<li class="toclevel-3">
+												<a href="#Windows"><span class="tocnumber">2.2.1</span><span class="toctext">Windows</span></a>
+											</li>
+											<li class="toclevel-3">
+												<a href="#Linux_.28Debian.2FUbuntu.29"><span class="tocnumber">2.2.2</span><span class="toctext">Linux (Debian/Ubuntu)</span></a>
+											</li>
+										</ul>
+									</li>
+									<li class="toclevel-2">
+										<a href="#Systemvoraussetzungen"><span class="tocnumber">2.3</span><span class="toctext">Systemvoraussetzungen</span></a>
+									</li>
+								</ul>
+							</li>
+							<li class="toclevel-1">
+								<a href="#Arbeitsweise"><span class="tocnumber">3</span><span class="toctext">Arbeitsweise</span></a>
+								<ul>
+									<li class="toclevel-2">
+										<a href="#Notizen_im_Kontext_erstellen"><span class="tocnumber">3.1</span><span class="toctext">Notizen im Kontext erstellen</span></a>
+									</li>
+									<li class="toclevel-2">
+										<a href="#Nachbereiten_erstellter_Notizen"><span class="tocnumber">3.2</span><span class="toctext">Nachbereiten erstellter Notizen</span></a>
+									</li>
+									<li class="toclevel-2">
+										<a href="#Notizen_freigeben_und_freigegebene_Notizen_finden"><span class="tocnumber">3.3</span><span class="toctext">Notizen freigeben und freigegebene Notizen finden</span></a>
+										<ul>
+											<li class="toclevel-3">
+												<a href="#Einladungen_annehmen_und_freigegebene_Notizen_finden"><span class="tocnumber">3.3.1</span><span class="toctext">Einladungen annehmen und freigegebene Notizen finden</span></a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			<a name="Einleitung"></a>
+			<h1><span class="mw-headline">Einleitung</span></h1>
+			<div class="thumb tright">
+				<div class="thumbinner" style="width:202px;">
+					<a href="MediabirdStudyNotesOverlay.png" class="image" title="Notizen im Kontext erstellen mit Study Notes."><img alt="Notizen im Kontext erstellen mit Study Notes." src="200px-MediabirdStudyNotesOverlay.png" width="200" height="146" border="0" class="thumbimage" /></a>
+					<div class="thumbcaption">
+						<div class="magnify">
+							<a href="MediabirdStudyNotesOverlay.png" class="internal" title="vergrößern"><img src="/de/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a>
+						</div>Notizen im Kontext erstellen mit Study Notes.
+					</div>
+				</div>
+			</div><a name="Kontext-basierte.2C_kollaborative_Notizen_in_Moodle"></a>
+			<h2><span class="mw-headline">Kontext-basierte, kollaborative Notizen in Moodle</span></h2>
+			<p>
+				Mit <a href="http://www.mediabird.net/" class="external text" title="http://www.mediabird.net/" rel="nofollow">Mediabird Study Notes</a>
+				ist es möglich, sich Notizen zu irgendeiner Kursseite in Moodle zu machen. Auf dem kollaborativen Mediabird-Notizblock lässt sich direkt alles notieren, was einem gerade zur aktuellen Moodle-Kursseite einfällt. Außerdem kann man per Drag &amp; Drop Inhalte aus dem Kurs auf den Notizblock kopieren und freigegebene Notizen seiner Kollegen und Lernpartner einsehen.
+			</p>
+			<p>
+				Alle mit <a href="http://www.mediabird.net/" class="external text" title="http://www.mediabird.net/" rel="nofollow">Study Notes</a>
+				erstellten Notizen lassen sich mit Anmerkungen und Tags versehen und selbst-organisierten Lerngruppen freigeben. Auf diese Art und Weise können Verständnisprobleme schnell und kollaborativ gelöst werden. 
+			</p>
+			<a name="Setup"></a>
+			<h1><span class="mw-headline">Setup</span></h1>
+			<p>
+				Die grundlegende Installation ist sehr einfach.
+			</p>
+			<ul>
+				<li>
+					Laden Sie das <a href="http://download.moodle.org/download.php/packages/studynotes_package.zip" class="external text" title="http://download.moodle.org/download.php/packages/studynotes_package.zip" rel="nofollow">Mediabird Study Notes-Paket</a>
+					herunter.
+				</li>
+				<li>
+					Extrahieren Sie das Archiv in den Moodle-Ordner Ihrer Moodle-Installation.
+				</li>
+				<li>
+					Loggen Sie sich als Administrator in die Moodle-Installation ein und gehen Sie zur Administrations-Seite.
+				</li>
+				<li>
+					Die Aktivität sollte sich nun eigenständig installieren.
+				</li>
+				<li>
+					Fügen Sie anschließend die Aktivität in einem Kurs ein.
+				</li>
+			</ul>
+			<a name="Einrichten_der_Kontext-Notiz-Funktion_.28empfohlen.29"></a>
+			<h2><span class="mw-headline">Einrichten der Kontext-Notiz-Funktion (empfohlen)</span></h2>
+			<p>
+				Sollen die Lernenden sich während der Arbeit im Moodle-Kurs Notizen machen können, sollte die Kontext-Notiz-Funktion aktiviert werden. Es wird dann ein Symbol auf allen Moodle-Seiten angezeigt, welches direkt vor Ort das Anlegen von Notizen ermöglicht. Die so entstandenen Notizen werden direkt mit der Kursseite verlinkt und lassen sich später in der Aktivität gesondert nachbereiten und freigeben.
+			</p>
+			<a name="Einrichten_mit_dem_mitgeliferten_Design"></a>
+			<h3><span class="mw-headline">Einrichten mit dem mitgeliferten Design</span></h3>
+			<p>
+				Wenn Sie ohnehin das Standard-Design verwenden, können Sie einfach
+			</p>
+			<ul>
+				<li>
+					auf <i>Darstellung</i>
+					im Admin-Panel klicken
+				</li>
+				<li>
+					bei <i>Designs</i>
+					auf <i>Design-Auswahl</i>
+					klicken und dann <i>standardmediabird</i>
+					auswählen
+				</li>
+			</ul>
+			<p>
+				<b>Hinweis:</b>
+				Wenn das <i>standardmediabird</i>
+				Design nicht in der Liste ist, stellen Sie sicher, dass Sie es aus dem <a href="http://download.moodle.org/download.php/packages/studynotes_package.zip" class="external text" title="http://download.moodle.org/download.php/packages/studynotes_package.zip" rel="nofollow">Mediabird Study Notes-Archiv</a>
+				in den theme-Ordner der Moodle-Installation extrahiert haben.
+			</p>
+			<a name="Mit_eigenem_Design_arbeiten"></a>
+			<h3><span class="mw-headline">Mit eigenem Design arbeiten</span></h3>
+			<p>
+				Wenn Sie ein angepasstes Design benutzen, müssen Sie lediglich die folgenden Anpassungen vornehmen. Fügen Sie die folgende Zeile in die Datei header.html des Design-Ordners (befindet sich im theme-Ordner)
+			</p>
+			<pre class="php"><span style="color: #000000; font-weight: bold;">&lt;?php</span><br />  <span style="color: #b1b100;">include_once</span><span style="color: #009900;">&#40;</span><span style="color: #000033;">$CFG</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">dirroot</span><span style="color: #339933;">.</span><span style="color: #0000ff;">'/mod/studynotes/ext/overlay_snippet.php'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br /><span style="color: #000000; font-weight: bold;">?&gt;</span></pre>
+			<p>
+				nach der Zeile
+			</p>
+			<pre class="html4strict"><span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;div</span> <span style="color: #000066;">class</span><span style="color: #66cc66;">=</span><span style="color: #ff0000;">&quot;navbar clearfix&quot;</span><span style="color: #000000; font-weight: bold;">&gt;</span></span></pre>
+			<p>
+				ein, welche sich etwa in der Mitte der Datei befindet.
+			</p>
+			<a name="Einrichtung_des_Formel-Editors"></a>
+			<h2><span class="mw-headline">Einrichtung des Formel-Editors</span></h2>
+			<ul>
+				<li>
+					Installieren Sie eine LaTeX-Distribution (siehe unten)
+				</li>
+				<li>
+					Stellen Sie sicher, dass das dvipng-Programm installiert ist
+				</li>
+				<li>
+					Stellen Sie sicher, dass die LaTeX-Pakete <i>AMSFonts</i>, <i>AMSMath</i>, <i>xypic</i>
+					installiert sind
+				</li>
+				<li>
+					Lokalisieren Sie <i>dvipng</i>
+					und <i>latex</i>
+					und geben Sie die Pfade zu diesen Dateien in den Einstellungen der Aktivität im <b>Admin-Panel</b>
+					an
+				</li>
+			</ul>
+			<a name="Windows"></a>
+			<h3><span class="mw-headline">Windows</span></h3>
+			<ul>
+				<li>
+					Installieren Sie MikTeX und überprüfen Sie dass das xypic-Paket installiert ist, alles andere sollte mit installiert werden
+				</li>
+				<li>
+					Sowohl dvipng.exe als auch latex.exe werden normalerweise in <i>C:\Programme\MiKTeX 2.7\miktex\bin</i>
+					gespeichert (Pfad kann leicht abweichen)
+				</li>
+			</ul>
+			<a name="Linux_.28Debian.2FUbuntu.29"></a>
+			<h3><span class="mw-headline">Linux (Debian/Ubuntu)</span></h3>
+			<ul>
+				<li>
+					Installieren Sie die System-Pakete texlive, texlive-pictures und dvipng
+				</li>
+				<li>
+					Die Pfade für Moodle sind gewöhnlich /usr/bin/dvipng und /usr/bin/latex
+				</li>
+			</ul>
+			<a name="Systemvoraussetzungen"></a>
+			<h2><span class="mw-headline">Systemvoraussetzungen</span></h2>
+			<p>
+				Moodle 1.9.4+ und PHP 5.2+
+			</p>
+			<a name="Arbeitsweise"></a>
+			<h1><span class="mw-headline">Arbeitsweise</span></h1>
+			<p>
+				Das Arbeiten mit Mediabird Study Notes gliedert sich in zwei Schritte: Notizen anlegen und Nachbearbeiten.
+			</p>
+			<a name="Notizen_im_Kontext_erstellen"></a>
+			<h2><span class="mw-headline">Notizen im Kontext erstellen</span></h2>
+			<div class="floatright">
+				<span><a href="MediabirdTakeNotes.png" class="image" title="Notizen-Button"><img alt="Notizen-Button" src="MediabirdTakeNotes.png" width="60" height="60" border="0" /></a></span>
+			</div>
+			<p>
+				Es lässt sich auf Kursseiten wie beispielsweise Arbeitsmaterialien, Forenbeiträgen oder Quizzen direkt Notizen im Kontext anlegen.
+			</p>
+			<ul>
+				<li>
+					Klicken Sie auf den Notizen-Button.
+				</li>
+				<li>
+					Warten Sie bis der Notizblock geladen ist.
+				</li>
+				<li>
+					Ziehen Sie Inhalte aus der Kursseite auf den Notizblock oder geben Sie direkte Notizen auf dem Zettel ein.
+				</li>
+				<li>
+					Navigieren Sie zwischen den Notizzetteln mit den gelben Buttons am linken unteren Rand des Notizblocks.
+				</li>
+			</ul>
+			<a name="Nachbereiten_erstellter_Notizen"></a>
+			<h2><span class="mw-headline">Nachbereiten erstellter Notizen</span></h2>
+			<div class="floatright">
+				<span><a href="MediabirdReview.png" class="image" title="Nachbereiten-Button"><img alt="Nachbereiten-Button" src="MediabirdReview.png" width="60" height="60" border="0" /></a></span>
+			</div>
+			<ul>
+				<li>
+					Klicken Sie auf den Nachbereiten-Button in der rechten unteren Ecke des Notizblocks.
+				</li>
+			</ul>
+			<a name="Notizen_freigeben_und_freigegebene_Notizen_finden"></a>
+			<h2><span class="mw-headline">Notizen freigeben und freigegebene Notizen finden</span></h2>
+			<div class="floatright">
+				<span><a href="MediabirdCommunity.png" class="image" title="Community-Button"><img alt="Community-Button" src="MediabirdCommunity.png" width="60" height="60" border="0" /></a></span>
+			</div>
+			<ul>
+				<li>
+					Klicken Sie auf den Community-Button
+				</li>
+				<li>
+					Klicken Sie auf <b>mehr...</b>
+					neben <i>Freigeben</i>
+				</li>
+				<li>
+					Wenn Sie eine neue Gruppe einrichten wollen:
+					<ul>
+						<li>
+							Klicken Sie auf <b>Gruppe erstellen</b>
+						</li>
+						<li>
+							Geben Sie einen Namen ein und klicken Sie auf <b>Erstellen</b>
+						</li>
+						<li>
+							Laden Sie Lernpartner mit dem <b>Freunde einladen</b>-Knopf
+						</li>
+					</ul>
+				</li>
+				<li>
+					Klicken Sie auf <b>Notizmappe freigeben</b>
+				</li>
+				<li>
+					Klicken Sie auf <b>Erstellen</b>
+				</li>
+			</ul>
+			<a name="Einladungen_annehmen_und_freigegebene_Notizen_finden"></a>
+			<h3><span class="mw-headline">Einladungen annehmen und freigegebene Notizen finden</span></h3>
+			<p>
+				Sie können Gruppeneinladungen mit dem Community-Button annehmen.
+			</p>
+			<div class="floatright">
+				<span><a href="MediabirdSearch.png" class="image" title="Suchen-Button"><img alt="Suchen-Button" src="MediabirdSearch.png" width="60" height="60" border="0" /></a></span>
+			</div>
+			<p>
+				Sie finden freigegebene Notizen mit dem Suchen-Button.
+			</p>
+			<!--
+			NewPP limit report
+			Preprocessor node count: 22/1000000
+			Post-expand include size: 0/2097152 bytes
+			Template argument size: 0/2097152 bytes
+			Expensive parser function count: 0/100
+			--><!-- Saved in parser cache with key docs_de:pcache:idhash:3266-0!1!0!!de!2!edit=0 and timestamp 20090505183338 -->
+			<div class="printfooter">
+				Von „<a href="http://docs.moodle.org/de/Mediabird_Notizen_verwenden">http://docs.moodle.org/de/Mediabird_Notizen_verwenden</a>“
+			</div>
+			<!-- end content -->
+			<div class="visualClear">
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

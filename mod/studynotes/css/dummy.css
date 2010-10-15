@@ -1,0 +1,161 @@
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	padding-bottom: 1px;
+	line-height: 1.6em;
+}
+
+pre {
+	line-height: 1.0em;
+	font-size: 10px;
+}
+
+body.highlight-cursor {
+	cursor: url('../images/highlight-cursor.cur'), text;
+}
+
+h1 {
+	font-size: 1.2em;
+}
+
+h2 {
+	font-size: 1.16em;
+}
+
+h3 {
+	font-size: 1em;
+}
+
+td, th {
+	font-size: 13px;
+}
+
+h1, h2, h3, p, li, pre {
+	margin: 5px 0;
+}
+
+h1, h2 {
+	margin-top: 10px;
+}
+
+body .marker {
+	background-color: #ffff99;
+}
+
+body td.marker, body th.marker {
+	background-color: #ccffff;
+}
+
+body .marker .marker {
+	background-color: #ddff77;
+}
+
+body .marker.mine {
+	background-color: #ffff00;
+}
+
+body td.marker.mine, body th.marker.mine {
+	background-color: #99ffff;
+}
+
+
+body .marker .marker.mine {
+	background-color: #ffee00;
+}
+
+body .marker.red {
+	background-color: #ffaa77;
+}
+
+body .marker.red.mine {
+	background-color: #ff6600;
+}
+
+body .marker.red.highlight, body .marker.red.highlight.mine {
+	background-color: #ff4411;
+}
+
+body .marker.highlight, body .marker.mine.highlight {
+	background-color: #eeee11;
+}
+
+body td.marker.highlight, body td.marker.mine.highlight, body th.marker.highlight, body th.marker.mine.highlight {
+	background-color: #66ffff;
+}
+
+body .marker.transparent {
+	background-color: transparent;
+}
+
+img {
+	max-width: 375px;
+}
+
+img.equation {
+	vertical-align: middle;
+}
+
+img.equation.block {
+	vertical-align: inherit;
+	display: block;
+	margin: 4px auto;
+	max-width: 100%;
+}
+
+ul, ol {
+	padding-left: 20px;
+	margin: 0;
+}
+
+ol {
+	padding-left: 25px;
+	/* for the numbers to be displayed for numbers greater than 20 */
+}
+
+ol ol, li ol {
+	list-style-type: lower-alpha;
+	padding-left: 20px;
+}
+
+ol ol ol, li ol li ol {
+	list-style-type: lower-roman;
+	padding-left: 20px;
+}
+
+*.pointer {
+	cursor: pointer;
+}
+
+
+table {
+	caption-side: bottom;
+	border: 2px solid #aaf;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+tr {
+	padding: 0;
+}
+
+th {
+	background-color: #bbf;
+	padding: 4px;
+	border-bottom: 2px solid #66a;
+	text-align: center;
+}
+
+td {
+	background-color: #eee;
+	padding: 4px;
+	text-align: left;
+}
+
+td.r, th.r {
+	border-right: 2px solid #66a;
+}
