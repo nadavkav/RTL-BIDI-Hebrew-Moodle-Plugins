@@ -1,0 +1,16 @@
+<p><img alt="" src="<?php echo $CFG->wwwroot?>/mod/swf/icon.gif" />&nbsp;<b>SWF</b><strong> Quality</strong></p>
+<div class="indent">
+<p><strong>Function</strong>: Defines the visual playback quality of the embedded SWF file.</p>
+<p><strong>Parameters</strong>:  low, high, autolow, autohigh, best.  </p>
+<ul>
+  <li><strong>low</strong> favors playback speed over appearance and never uses anti-aliasing. </li>
+  <li><strong>autolow</strong> emphasizes speed at first but improves  appearance whenever possible. Playback begins with anti-aliasing turned  off. If the Flash Player detects that the processor can handle it,  anti-aliasing is turned on. </li>
+  <li><strong>autohigh</strong> emphasizes playback speed and  appearance equally at first but sacrifices appearance for playback  speed if necessary. Playback begins with anti-aliasing turned on. If  the actual frame rate drops below the specified frame rate,  anti-aliasing is turned off to improve playback speed. Use this setting  to emulate the View &gt; Antialias setting in Flash. </li>
+  <li><strong>medium</strong> applies some anti-aliasing and does not  smooth bitmaps. It produces a better quality than the Low setting, but  lower quality than the High setting. </li>
+  <li><strong>high</strong> favors appearance over playback speed and  always applies anti-aliasing. If the movie does not contain animation,  bitmaps are smoothed; if the movie has animation, bitmaps are not  smoothed. </li>
+  <li><strong>best</strong> provides the best display quality and does  not consider playback speed. All output is anti-aliased and all bitmaps  are smoothed. </li>
+</ul>
+<p><strong>Default</strong>: best</p>
+<p><strong>Developed by Matt Bury - <a href="http://matbury.com/">http://matbury.com/</a></strong></p>
+<p align="center"><a href="help.php?module=swf&amp;file=index.html">Help Files Index</a></p>
+</div>

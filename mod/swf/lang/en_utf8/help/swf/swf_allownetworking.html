@@ -1,0 +1,45 @@
+<p><img alt="" src="<?php echo $CFG->wwwroot?>/mod/swf/icon.gif" />&nbsp;<b>SWF </b><strong>Allow Networking</strong></p>
+<div class="indent">
+<p><strong>Function</strong>: Controls the SWF application's access to network functionality.</p>
+<p><strong>Parameters</strong>: all, internal, none</p>
+<p><strong>all</strong>: All networking APIs are permitted in the SWF.</p>
+<p><strong>internal</strong>: The following APIs are prevented: </p>
+<ul>
+  <li>getURL</li>
+  <li>MovieClip.getURL</li>
+  <li>fscommand()</li>
+  <li>ExternalInterface.call()</li>
+</ul>
+<p><strong>none</strong>: As well as the previous APIs, the following APIs are prevented: </p>
+<ul>
+  <li>XML.load</li>
+  <li>XML.send</li>
+  <li>XML.sendAndLoad</li>
+  <li>Loader.load()</li>
+  <li>LoadVars.load()</li>
+  <li>LoadVars.send</li>
+  <li>LoadVars.sendAndLoad</li>
+  <li>loadVariables</li>
+  <li>loadVariablesNum</li>
+  <li>MovieClip.loadVariables</li>
+  <li>NetConnection.connect</li>
+  <li>NetStream.play</li>
+  <li>loadMovie</li>
+  <li>loadMovieNum</li>
+  <li>MovieClip.loadMovie</li>
+  <li>MovieClipLoader.loadClip</li>
+  <li>Sound.loadSound</li>
+  <li>LocalConnection.connect</li>
+  <li>LocalConnection.send</li>
+  <li>SharedObject.getLocal</li>
+  <li>SharedObject.getRemote</li>
+  <li>FileReference.upload</li>
+  <li>FileReference.download</li>
+  <li>System.security.loadPolicyFile</li>
+  <li>XMLSocket.connect</li>
+</ul>
+<p><strong>Default</strong>: internal</p>
+<p><strong>Please note</strong>: NetConnection functions are necessary for video stream playback and Flash Remoting (AMF). </p>
+<p><strong>Developed by Matt Bury - <a href="http://matbury.com/">http://matbury.com/</a></strong></p>
+<p align="center"><a href="help.php?module=swf&amp;file=index.html">Help Files Index</a></p>
+</div>

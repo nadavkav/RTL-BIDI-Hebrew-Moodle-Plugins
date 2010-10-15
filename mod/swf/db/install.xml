@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/swf/db" VERSION="20070401" COMMENT="XMLDB file for Moodle mod/swf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+	<TABLES>
+		<TABLE NAME="swf" COMMENT="Instances of SWF activity module" NEXT="swf_grades">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+				<FIELD NAME="course" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Course swf activity belongs to" PREVIOUS="id" NEXT="name"/>
+				<FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
+				<FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Description of the swf activity" PREVIOUS="name" NEXT="introformat"/>
+				<FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Format of the intro field" PREVIOUS="intro" NEXT="timecreated"/>
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="introformat" NEXT="timemodified"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated" NEXT="swfurl"/>
+				<FIELD NAME="swfurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="URL to SWF application" PREVIOUS="timemodified" NEXT="width"/>
+				<FIELD NAME="width" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" DEFAULT="900" SEQUENCE="false" ENUM="false" COMMENT="Width of SWF" PREVIOUS="swfurl" NEXT="height"/>
+				<FIELD NAME="height" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="480" SEQUENCE="false" ENUM="false" COMMENT="Height of SWF" PREVIOUS="width" NEXT="version"/>
+				<FIELD NAME="version" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="9.0.0" SEQUENCE="false" ENUM="false" COMMENT="Minimum Flash Player version" PREVIOUS="height" NEXT="interaction"/>
+				<FIELD NAME="interaction" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID for AMF interaction data" PREVIOUS="version" NEXT="xmlurl"/>
+				<FIELD NAME="xmlurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="URL to interaction data XML" PREVIOUS="interaction" NEXT="apikey"/>
+				<FIELD NAME="apikey" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="API key" PREVIOUS="xmlurl" NEXT="play"/>
+				<FIELD NAME="play" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="true" SEQUENCE="false" ENUM="false" COMMENT="Auto play SWF" PREVIOUS="apikey" NEXT="loopswf"/>
+				<FIELD NAME="loopswf" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="true" SEQUENCE="false" ENUM="false" COMMENT="Loop SWF playback" PREVIOUS="play" NEXT="menu"/>
+				<FIELD NAME="menu" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="true" SEQUENCE="false" ENUM="false" COMMENT="Use default SWF context menu" PREVIOUS="loopswf" NEXT="quality"/>
+				<FIELD NAME="quality" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="best" SEQUENCE="false" ENUM="false" COMMENT="SWF playback quality" PREVIOUS="menu" NEXT="scale"/>
+				<FIELD NAME="scale" TYPE="char" LENGTH="30" NOTNULL="true" DEFAULT="noscale" SEQUENCE="false" ENUM="false" COMMENT="SWF stage scale mode" PREVIOUS="quality" NEXT="salign"/>
+				<FIELD NAME="salign" TYPE="char" LENGTH="2" NOTNULL="true" DEFAULT="tl" SEQUENCE="false" ENUM="false" COMMENT="SWF stage align" PREVIOUS="scale" NEXT="wmode"/>
+				<FIELD NAME="wmode" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="opaque" SEQUENCE="false" ENUM="false" COMMENT="SWF window mode" PREVIOUS="salign" NEXT="bgcolor"/>
+				<FIELD NAME="bgcolor" TYPE="char" LENGTH="6" NOTNULL="true" DEFAULT="FFFFFF" SEQUENCE="false" ENUM="false" COMMENT="Background colour of SWF" PREVIOUS="wmode" NEXT="devicefont"/>
+				<FIELD NAME="devicefont" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="true" SEQUENCE="false" ENUM="false" COMMENT="Use Flash Player default fonts" PREVIOUS="bgcolor" NEXT="seamlesstabbing"/>
+				<FIELD NAME="seamlesstabbing" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="true" SEQUENCE="false" ENUM="false" COMMENT="Enable tabbing to go outside Flash Player window" PREVIOUS="devicefont" NEXT="allowfullscreen"/>
+				<FIELD NAME="allowfullscreen" TYPE="char" LENGTH="5" NOTNULL="true" DEFAULT="false" SEQUENCE="false" ENUM="false" COMMENT="Allow SWF to enter full screen mode" PREVIOUS="seamlesstabbing" NEXT="allowscriptaccess"/>
+				<FIELD NAME="allowscriptaccess" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="sameDomain" SEQUENCE="false" ENUM="false" COMMENT="Allow SWF to access external scripting" PREVIOUS="allowfullscreen" NEXT="allownetworking"/>
+				<FIELD NAME="allownetworking" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="all" SEQUENCE="false" ENUM="false" COMMENT="Allow SWF to access network" PREVIOUS="allowscriptaccess" NEXT="align"/>
+				<FIELD NAME="align" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="middle" SEQUENCE="false" ENUM="false" COMMENT="SWF alignment on web page" PREVIOUS="allownetworking" NEXT="flashvar1"/>
+				<FIELD NAME="flashvar1" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="String data passed into SWF" PREVIOUS="align" NEXT="flashvar2"/>
+				<FIELD NAME="flashvar2" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="String data passed into SWF" PREVIOUS="flashvar1" NEXT="flashvar3"/>
+				<FIELD NAME="flashvar3" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="String data passed into SWF" PREVIOUS="flashvar2" NEXT="grading"/>
+				<FIELD NAME="grading" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Grade weight for activity instance" PREVIOUS="flashvar3" NEXT="skin"/>
+				<FIELD NAME="skin" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="String data passed into SWF" PREVIOUS="grading" NEXT="configxml"/>
+				<FIELD NAME="configxml" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="String data passed into SWF" PREVIOUS="skin"/>
+			</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table"/>
+		</KEYS>
+		<INDEXES>
+			<INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+		</INDEXES>
+	</TABLE>
+	<TABLE NAME="swf_grades" COMMENT="User data pushed by learning interactions" PREVIOUS="swf" NEXT="swf_interactions">
+		<FIELDS>
+			<FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table" NEXT="course"/>
+			<FIELD NAME="course" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="course id" PREVIOUS="id" NEXT="instance"/>
+			<FIELD NAME="instance" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="moodle module instance id" PREVIOUS="course" NEXT="swfid"/>
+			<FIELD NAME="swfid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="swf module instance id" PREVIOUS="instance" NEXT="userid"/>
+			<FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="user id" PREVIOUS="swfid" NEXT="grade"/>
+			<FIELD NAME="grade" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="user grade" PREVIOUS="userid" NEXT="maxgrade"/>
+			<FIELD NAME="maxgrade" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="maximum possible grade" PREVIOUS="grade" NEXT="starttime"/>
+			<FIELD NAME="starttime" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time interaction started" PREVIOUS="maxgrade" NEXT="endtime"/>
+			<FIELD NAME="endtime" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time interaction ended" PREVIOUS="starttime" NEXT="timecreated"/>
+			<FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time created" PREVIOUS="endtime" NEXT="timemodified"/>
+			<FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time modified" PREVIOUS="timecreated"/>
+		</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table"/>
+		</KEYS>
+	</TABLE>
+	<TABLE NAME="swf_interactions" COMMENT="List of interaction data sets recorded in swf_interaction_data" PREVIOUS="swf_grades" NEXT="swf_interaction_data">
+		<FIELDS>
+			<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table" NEXT="course"/>
+			<FIELD NAME="course" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="course id" PREVIOUS="id" NEXT="name"/>
+			<FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name of interaction data set" PREVIOUS="course" NEXT="intro"/>
+			<FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="description of learning interaction data set" PREVIOUS="name" NEXT="introformat"/>
+			<FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="formatting for intro text" PREVIOUS="intro" NEXT="amftable"/>
+			<FIELD NAME="amftable" TYPE="char" LENGTH="50" NOTNULL="false" DEFAULT="swf_interaction_data" SEQUENCE="false" ENUM="false" COMMENT="table that contains learning interaction data" PREVIOUS="introformat" NEXT="timecreated"/>
+			<FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time created" PREVIOUS="amftable" NEXT="timemodified"/>
+			<FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time modified" PREVIOUS="timecreated"/>
+		</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table, please edit me"/>
+		</KEYS>
+	</TABLE>
+		<TABLE NAME="swf_interaction_data" COMMENT="data for learning interaction data sets" PREVIOUS="swf_interactions">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="interaction"/>
+				<FIELD NAME="interaction" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="unique id in swf_interactions identifies learning interaction data set" PREVIOUS="id" NEXT="ordernum"/>
+				<FIELD NAME="ordernum" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="order in which rows are presented in some learning applications" PREVIOUS="interaction" NEXT="pmp3"/>
+				<FIELD NAME="pmp3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="paragraph audio" PREVIOUS="ordernum" NEXT="qmp3"/>
+				<FIELD NAME="qmp3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="question audio" PREVIOUS="pmp3" NEXT="cmp3"/>
+				<FIELD NAME="cmp3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="correct answer audio" PREVIOUS="qmp3" NEXT="wmp3"/>
+				<FIELD NAME="wmp3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="wrong answer audio" PREVIOUS="cmp3" NEXT="smp3"/>
+				<FIELD NAME="smp3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="time stretched audio" PREVIOUS="wmp3" NEXT="image"/>
+				<FIELD NAME="image" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="image URL" PREVIOUS="smp3" NEXT="video"/>
+				<FIELD NAME="video" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="video URL" PREVIOUS="image" NEXT="ptext"/>
+				<FIELD NAME="ptext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="paragraph text" PREVIOUS="video" NEXT="qtext"/>
+				<FIELD NAME="qtext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="question text" PREVIOUS="ptext" NEXT="ctext"/>
+				<FIELD NAME="ctext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="correct answer text" PREVIOUS="qtext" NEXT="wtext"/>
+				<FIELD NAME="wtext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="wrong answer text" PREVIOUS="ctext" NEXT="keyword"/>
+				<FIELD NAME="keyword" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="key word vocabulary" PREVIOUS="wtext" NEXT="timecreated"/>
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time created" PREVIOUS="keyword" NEXT="timemodified"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="time modified" PREVIOUS="timecreated"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table, please edit me"/>
+			</KEYS>
+		</TABLE>
+	</TABLES>
+</XMLDB>

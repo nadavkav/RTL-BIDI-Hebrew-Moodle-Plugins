@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<swfmoddata>
+	<metadata>
+		<course>9</course>
+		<name>Title of learning interaction</name>
+		<intro>A brief description of learning interaction</intro>
+		<author>Matt Bury</author>
+		<email>matbury@gmail.com</email>
+		<skype>matt.bury</skype>
+		<datecreated>20091128</datecreated>
+		<datemodified>20091128</datemodified>
+	</metadata>
+	<interaction>
+		<node>
+			<question>
+				<audio>interaction_name/mp3/question_01.mp3</audio>
+				<stretched>interaction_name/mp3/question_01_str.mp3</stretched>
+				<text>Is this a question?</text>
+				<image>interaction_name/pix/question_01.jpg</image>
+			</question>
+			<answer>
+				<audio>interaction_name/mp3/answer_01.mp3</audio>
+				<stretched>interaction_name/mp3/answer_01.mp3</stretched>
+				<text>Yes, it is. Isn't that wierd?</text>
+				<image>interaction_name/mp3/answer_01.mp3</image>
+			</answer>
+			<gapfill>
+				<beg>The beginning of this sentence</beg>
+				<mid>is followed by the middle</mid>
+				<end>and then the end.</end>
+			</gapfill>
+			<correct>
+				<audio>
+					<option>interaction_name/mp3/correct_option_01.mp3</option>
+					<option>interaction_name/mp3/correct_option_02.mp3</option>
+				</audio>
+				<stretched>
+					<option>interaction_name/mp3/correct_option_01_str.mp3</option>
+					<option>interaction_name/mp3/correct_option_02_str.mp3</option>
+					<option>interaction_name/mp3/correct_option_03_str.mp3</option>
+				</stretched>
+				<text>
+					<option>This is correct option 1</option>
+					<option>This is correct option 2</option>
+					<option>This is correct option 3</option>
+					<option>This is correct option 4</option>
+				</text>
+				<image>
+					<option>interaction_name/pix/correct_option_01.jpg</option>
+					<option>interaction_name/pix/correct_option_02.jpg</option>
+					<option>interaction_name/pix/correct_option_03.jpg</option>
+					<option>interaction_name/pix/correct_option_04.jpg</option>
+					<option>interaction_name/pix/correct_option_05.jpg</option>
+				</image>
+			</correct>
+			<wrong>
+				<audio>
+					<option>interaction_name/mp3/wrong_option_01.mp3</option>
+					<option>interaction_name/mp3/wrong_option_02.mp3</option>
+					<option>interaction_name/mp3/wrong_option_03.mp3</option>
+					<option>interaction_name/mp3/wrong_option_04.mp3</option>
+					<option>interaction_name/mp3/wrong_option_05.mp3</option>
+					<option>interaction_name/mp3/wrong_option_06.mp3</option>
+				</audio>
+				<stretched>
+					<option>interaction_name/mp3/wrong_option_01_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_02_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_03_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_04_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_05_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_06_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_07_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_08_str.mp3</option>
+					<option>interaction_name/mp3/wrong_option_09_str.mp3</option>
+				</stretched>
+				<text>
+					<option>This is wrong option 1</option>
+					<option>This is wrong option 2</option>
+					<option>This is wrong option 3</option>
+					<option>This is wrong option 4</option>
+				</text>
+				<image>
+					<option>interaction_name/pix/wrong_option_01.jpg</option>
+					<option>interaction_name/pix/wrong_option_02.jpg</option>
+					<option>interaction_name/pix/wrong_option_03.jpg</option>
+					<option>interaction_name/pix/wrong_option_04.jpg</option>
+					<option>interaction_name/pix/wrong_option_05.jpg</option>
+					<option>interaction_name/pix/wrong_option_06.jpg</option>
+					<option>interaction_name/pix/wrong_option_07.jpg</option>
+					<option>interaction_name/pix/wrong_option_08.jpg</option>
+					<option>interaction_name/pix/wrong_option_09.jpg</option>
+					<option>interaction_name/pix/wrong_option_10.jpg</option>
+				</image>
+			</wrong>
+			<keywords>
+				<option>one</option>
+				<option>two</option>
+				<option>three</option>
+				<option>four</option>
+				<option>five</option>
+				<option>six</option>
+				<option>seven</option>
+				<option>eight</option>
+				<option>nine</option>
+				<option>ten</option>
+				<option>eleven</option>
+			</keywords>
+			<speaker>Mr. Smith</speaker>
+			<video>
+				<source>flv/fluffer_01.flv</source>
+				<text>This can be any kind of text or HTML so should most probably be stored as cdata.</text>
+				<captions>xml/fluffer_01_subtitles.xml</captions>
+			</video>
+		</node>
+	</interaction>
+</swfmoddata>
