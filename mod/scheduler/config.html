@@ -1,0 +1,35 @@
+<form method="post" action="module.php" id="form">
+<div>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<table cellpadding="9" cellspacing="0" >
+
+<tr>
+  <td colspan="3" align="center">
+     <div><b><?php print_string('generalconfig', 'scheduler')?></b></div>
+     <div style="font-size: 0.8em;">(<?php print_string('explaingeneralconfig', 'scheduler')?>)</div>
+  </td>
+</tr>
+
+<tr valign="top">
+  <td align="right">scheduler_allteachersgrading:</td>
+  <td>
+    <?php
+       unset($options);
+       $options[0]    = get_string('no');
+       $options[1]    = get_string('yes');
+       choose_from_menu ($options, 'scheduler_allteachersgrading', @$CFG->scheduler_allteachersgrading, '', '', '');
+    ?>
+    </td>
+    <td>
+    <?php print_string('allteachersgrading', 'scheduler') ?>
+    </td>
+</tr>
+
+<tr>
+  <td colspan="3" align="center">
+     <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>
+</div>
+</form>

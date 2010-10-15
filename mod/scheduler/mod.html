@@ -1,0 +1,154 @@
+<!-- This page defines the form to create or edit an instance of this module -->
+<!-- It is used from /course/mod.php.  The whole instance is available as $form. -->
+
+
+<?php
+define ('MEAN_GRADE', 0); // Used for grading strategy
+define ('MAX_GRADE', 1); // Used for grading strategy
+
+if (!isset($form->name)) {
+    $form->name = '';
+}
+if (!isset($form->description)) {
+    $form->description = '';
+}
+if (!isset($form->format)) {
+    $form->format = $defaultformat;
+}
+if (empty($form->staffrolename)) {
+    $form->staffrolename = get_string('staffmember', 'scheduler');
+}
+if (!isset($form->schedulermode)) {
+    $form->schedulermode = 'oneonly';
+}
+if (!isset($form->reuseguardtime)) {
+    $form->reuseguardtime = 'oneonly';
+}
+if (!isset($form->defaultslotduration)) {
+    $form->defaultslotduration = 15;
+}
+if (!isset($form->allownotifications)) {
+    $form->allownotifications = 1;
+}
+if (!isset($form->scale)) {
+    $form->scale = 0;
+}
+if (!isset($form->gradingstrategy)) {
+    $form->gradingstrategy = MEAN_GRADE;
+}
+?>
+
+<form name="form" method="post" action="mod.php">
+<center>
+<table cellpadding="5">
+<tr valign="top">
+    <td align="right"><b><?php print_string('name', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <input type="text" name="name" style="width: 100%" value="<?php p($form->name) ?>" />
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('description') ?>:</b></td>
+    <td>
+        <?php
+            print_textarea($usehtmleditor, 20, 60, 680, 400, 'description', $form->description);
+         
+            if ($usehtmleditor) {
+                echo '<input type="hidden" name="format" value="'.FORMAT_HTML.'" />';
+            } else {
+                echo '<p align="right">';
+                helpbutton('textformat', get_string('formattexttype'));
+                print_string("formattexttype");
+                echo ':&nbsp;';
+                choose_from_menu(format_text_menu(), 'format', $form->format, ''); 
+                echo '';
+            }
+        ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('staffrolename', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <input type="text" name="staffrolename" size="30" value="<?php p($form->staffrolename) ?>" />
+        <?php helpbutton('staffrolename', get_string('staffrolename', 'scheduler'), 'scheduler'); ?>
+
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('mode', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <select name="schedulermode" size="1">
+            <option <?php if ($form->schedulermode == 'onetime'){ echo "selected=\"selected\""; } ?> value="onetime"><?php print_string('oneatatime', 'scheduler') ; ?></option>
+            <option <?php if ($form->schedulermode == 'oneonly'){ echo "selected=\"selected\""; } ?> value="oneonly"><?php print_string('oneappointmentonly', 'scheduler') ; ?></option>
+        </select>
+        <?php helpbutton('appointmentmode', get_string('mode', 'scheduler'), 'scheduler'); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('reuseguardtime', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <select name="reuseguardtime" size="1">
+            <option <?php if ($form->reuseguardtime == '24'){ echo "selected=\"selected\""; } ?> value="24">24 <?php print_string('hours') ?></option>
+            <option <?php if ($form->reuseguardtime == '48'){ echo "selected=\"selected\""; } ?> value="48">48 <?php print_string('hours') ?></option>
+            <option <?php if ($form->reuseguardtime == '72'){ echo "selected=\"selected\""; } ?> value="72">3 <?php print_string('days') ?></option>
+            <option <?php if ($form->reuseguardtime == '96'){ echo "selected=\"selected\""; } ?> value="96">4 <?php print_string('days') ?></option>
+            <option <?php if ($form->reuseguardtime == '168'){ echo "selected=\"selected\""; } ?> value="168">1 <?php print_string('week') ?></option>
+        </select>
+        <?php helpbutton('reuseguardtime', get_string('reuseguardtime', 'scheduler'), 'scheduler'); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('defaultslotduration', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <input type="text" name="defaultslotduration" value="<?php echo $form->defaultslotduration ?>" />
+        <?php helpbutton('defaultslotduration', get_string('defaultslotduration', 'scheduler'), 'scheduler'); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('scale') ?>:</b></td>
+    <td align="left">
+
+        <?php
+        print_grade_menu($course->id, 'scale', "$form->scale");
+        ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('notifications', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <select name="allownotifications" size="1">
+            <option <?php if ($form->allownotifications){ echo "selected=\"selected\""; } ?> value="1"><?php print_string('yes') ; ?></option>
+            <option <?php if (!$form->allownotifications){ echo "selected=\"selected\""; } ?> value="0"><?php print_string('no') ; ?></option>
+        </select>
+        <?php helpbutton('notifications', get_string('notifications', 'scheduler'), 'scheduler'); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string('gradingstrategy', 'scheduler') ?>:</b></td>
+    <td align="left">
+        <select name="gradingstrategy" size="1">
+            <option <?php if ($form->gradingstrategy == MEAN_GRADE){ echo "selected=\"selected\""; } ?> value="<?php echo MEAN_GRADE ?>"><?php print_string('meangrade', 'scheduler') ; ?></option>
+            <option <?php if ($form->gradingstrategy == MAX_GRADE){ echo "selected=\"selected\""; } ?> value="<?php echo MAX_GRADE ?>"><?php print_string('maxgrade', 'scheduler') ; ?></option>
+        </select>
+        <?php helpbutton('gradingstrategy', get_string('gradingstrategy', 'scheduler'), 'scheduler'); ?>
+    </td>
+</tr>
+<?php 
+print_visible_setting($form);
+print_groupmode_setting($form); 
+?>
+
+</table>
+<input type="hidden" name="teacher" value="<?php  p($USER->id) ?>" />
+<!-- these hidden variables are always the same -->
+<input type="hidden" name="course"        value="<?php p($form->course) ?>" />
+<input type="hidden" name="sesskey"       value="<?php p($form->sesskey) ?>" />
+<input type="hidden" name="coursemodule"  value="<?php p($form->coursemodule) ?>" />
+<input type="hidden" name="section"       value="<?php p($form->section) ?>" />
+<input type="hidden" name="module"        value="<?php p($form->module) ?>" />
+<input type="hidden" name="modulename"    value="<?php p($form->modulename) ?>" />
+<input type="hidden" name="instance"      value="<?php p($form->instance) ?>" />
+<input type="hidden" name="mode"          value="<?php p($form->mode) ?>" />
+<input type="submit" value="<?php print_string('savechanges') ?>" />
+</center>
+</form>
