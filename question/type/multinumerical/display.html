@@ -1,0 +1,43 @@
+<div class="qtext">
+  <?php echo $questiontext; ?>
+</div>
+
+<?php if ($image) { ?>
+  <img class="qimage" src="<?php echo $image; ?>" alt="" />
+<?php } ?>
+
+<div class="ablock clearfix">
+  <div class="prompt">
+    <?php echo get_string("answer", "quiz").': '; ?>
+  </div>
+
+  <div class="answer"><table>
+<?php
+
+	unset($param);
+	foreach ($params as $param) {
+		$param = trim($param);
+    	$paramparts = explode(" ", $param);
+    	$paramname = trim($paramparts[0]);
+    	$paramunity = trim($paramparts[1]);
+		echo '<tr><td align="right">'.$param.' = </td>';
+		echo '<td><input type="text" class="'.$class.'" '.$readonly.' '.$inputname[$paramname].' '.$value[$paramname].' size="20"/></td>';
+		echo '</tr>';
+	}
+	
+?>
+    </table>
+    <?php echo $feedbackimg; ?>
+  </div>
+  <?php if ($feedback) { ?>
+    <div class="feedback">
+      <?php echo $feedback ?>
+    </div>
+  <?php } ?>
+  <?php if ($feedbackperconditions) { ?>
+    <div class="feedback">
+      <?php echo '<ul><li>'.filter_text($feedbackperconditions).'</li></ul>'; ?>
+    </div>
+  <?php } ?>
+  <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
+</div>
