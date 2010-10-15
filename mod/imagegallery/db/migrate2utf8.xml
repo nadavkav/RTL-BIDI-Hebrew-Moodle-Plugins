@@ -1,0 +1,39 @@
+<DBMIGRATION type="mod/imagegallery" VERSION="2005120100">
+  <TABLES>
+    <TABLE name="imagegallery_images">
+      <FIELDS>
+        <FIELD name="description" method="PHP_FUNCTION" type="text" length="0">
+          <PHP_FUNCTION>
+          migrate2utf8_imagegallery_images_description(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+    <TABLE name="imagegallery_categories">
+      <FIELDS>
+        <FIELD name="description" method="PHP_FUNCTION" type="text" length="0">
+          <PHP_FUNCTION>
+          migrate2utf8_imagegallery_categories_description(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+        <FIELD name="name" method="PHP_FUNCTION" type="varchar" length="255">
+        migrate2utf8_imagegallery_categories_name(RECORDID)
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+    <TABLE name="imagegallery">
+      <FIELDS>
+        <FIELD name="intro" method="PHP_FUNCTION" type="text" length="0">
+          <PHP_FUNCTION>
+          migrate2utf8_imagegallery_intro(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+        <FIELD name="name" method="PHP_FUNCTION" type="varchar" length="255">
+          <PHP_FUNCTION>
+          migrate2utf8_imagegallery_name(RECORDID)
+          </PHP_FUNCTION>
+        </FIELD>
+      </FIELDS>
+    </TABLE>
+  </TABLES>
+</DBMIGRATION>

@@ -1,0 +1,33 @@
+<form method="post" action="categories.php">
+<input type="hidden" name="id"        value="<?php p($form->id) ?>" />
+<input type="hidden" name="sesskey"   value="<?php p($form->sesskey) ?>" />
+<input type="hidden" name="categoryid" value="<?php p($form->categoryid) ?>" />
+<input type="hidden" name="galleryid" value="<?php p($form->galleryid) ?>" />
+<input type="hidden" name="action"    value="<?php p($form->action) ?>" />
+<table border="0" cellpadding="4">
+<tr valign="top">
+    <td align="right"><strong><?php print_string('name') ?>:</strong></td>
+    <td><input type="tex" name="name" value="<?php p($form->name) ?>" size="40" />
+    <?php print(!empty($form->errname) ? ' <span style="color: red;">' .
+                                         s($form->errname) .'</span>': ''); ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><strong><?php print_string('description') ?>:</strong></td>
+    <td><?php print_textarea(false, "5", "50", "", "", "description", $form->description, $this->course->id); ?></td>
+</tr>
+<tr>
+    <td align="right"><strong><?php print_string('setasdefaultcategory','imagegallery') ?></strong></td>
+    <td><?php
+    $options = array(get_string('no'), get_string('yes'));
+    choose_from_menu($options, "defaultcategory", $form->defaultcategory, "");
+    helpbutton("defaultcategory", get_string("defaultcategory","imagegallery"), 'imagegallery');
+    ?></td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="<?php print_string('savechanges') ?>" />
+    <input type="submit" name="cancel" value="<?php print_string('cancel') ?>" /></td>
+</tr>
+</table>
+</form>
