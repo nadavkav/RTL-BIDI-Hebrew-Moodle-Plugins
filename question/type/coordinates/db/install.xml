@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLDB PATH="question/type/coordinates/db" VERSION="20100418" COMMENT="XMLDB file for Moodle question/type/coordinates" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TABLES>
+    <TABLE NAME="question_coordinates" COMMENT="Options for coordinates question type" NEXT="question_coordinates_answers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="questionid"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="answerids"/>
+        <FIELD NAME="answerids" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="questionid" NEXT="varsrandom"/>
+        <FIELD NAME="varsrandom" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="answerids" NEXT="varsglobal"/>
+        <FIELD NAME="varsglobal" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="varsrandom" NEXT="retrymarkseq"/>
+        <FIELD NAME="retrymarkseq" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="varsglobal" NEXT="peranswersubmit"/>
+        <FIELD NAME="peranswersubmit" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="retrymarkseq" NEXT="showperanswermark"/>
+        <FIELD NAME="showperanswermark" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="false" DEFAULT="1" SEQUENCE="false" PREVIOUS="peranswersubmit"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="questionid"/>
+        <KEY NAME="questionid" TYPE="foreign" FIELDS="questionid" REFTABLE="question" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="question_coordinates_answers" COMMENT="Answers for coordinates question type" PREVIOUS="question_coordinates">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="questionid"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="placeholder"/>
+        <FIELD NAME="placeholder" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" PREVIOUS="questionid" NEXT="answermark"/>
+        <FIELD NAME="answermark" TYPE="float" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="placeholder" NEXT="vars1"/>
+        <FIELD NAME="vars1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="answermark" NEXT="answer"/>
+        <FIELD NAME="answer" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="vars1" NEXT="vars2"/>
+        <FIELD NAME="vars2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="answer" NEXT="correctness"/>
+        <FIELD NAME="correctness" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="vars2" NEXT="unitpenalty"/>
+        <FIELD NAME="unitpenalty" TYPE="float" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="correctness" NEXT="preunit"/>
+        <FIELD NAME="preunit" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="unitpenalty" NEXT="postunit"/>
+        <FIELD NAME="postunit" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="preunit" NEXT="ruleid"/>
+        <FIELD NAME="ruleid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="postunit" NEXT="otherrule"/>
+        <FIELD NAME="otherrule" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="ruleid" NEXT="subqtext"/>
+        <FIELD NAME="subqtext" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="otherrule" NEXT="feedback"/>
+        <FIELD NAME="feedback" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="subqtext"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="questionid"/>
+        <KEY NAME="questionid" TYPE="foreign" FIELDS="questionid" REFTABLE="question" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
