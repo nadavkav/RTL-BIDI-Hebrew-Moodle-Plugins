@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/econsole/db" VERSION="2009021701" COMMENT="XMLDB file for Moodle mod/econsole"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="econsole" COMMENT="E-Console main table...">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="content"/>		
+        <FIELD NAME="content" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="unitstring"/>
+        <FIELD NAME="unitstring" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="content" NEXT="showunit"/>	
+        <FIELD NAME="showunit" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="unitstring" NEXT="lessonstring"/>			
+        <FIELD NAME="lessonstring" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="showunit" NEXT="showlesson"/>					
+        <FIELD NAME="showlesson" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="lessonstring" NEXT="url1name"/>
+        <FIELD NAME="url1name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="showlesson" NEXT="url1"/>					
+        <FIELD NAME="url1" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url1name" NEXT="url2name"/>					
+        <FIELD NAME="url2name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url1" NEXT="url2"/>					
+        <FIELD NAME="url2" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url2name" NEXT="url3name"/>	
+        <FIELD NAME="url3name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url2" NEXT="url3"/>				
+        <FIELD NAME="url3" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url3name" NEXT="url4name"/>
+        <FIELD NAME="url4name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url3" NEXT="url4"/>				
+        <FIELD NAME="url4" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url4name" NEXT="url5name"/>
+        <FIELD NAME="url5name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url4" NEXT="url5"/>				
+        <FIELD NAME="url5" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url5name" NEXT="url6name"/>				
+        <FIELD NAME="url6name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url5" NEXT="url6"/>					
+        <FIELD NAME="url6" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url6name" NEXT="glossary"/>			
+        <FIELD NAME="glossary" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="url6" NEXT="journal"/>
+        <FIELD NAME="journal" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="glossary" NEXT="forum"/>						
+        <FIELD NAME="forum" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="journal" NEXT="chat"/>
+        <FIELD NAME="chat" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="forum" NEXT="choice"/>
+        <FIELD NAME="choice" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="chat" NEXT="quiz"/>		
+        <FIELD NAME="quiz" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="choice" NEXT="assignment"/>
+        <FIELD NAME="assignment" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="quiz" NEXT="wiki"/>
+        <FIELD NAME="wiki" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="assignment" NEXT="theme"/>										
+        <FIELD NAME="theme" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="wiki" NEXT="imagebartop"/>				
+        <FIELD NAME="imagebartop" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="theme" NEXT="imagebarbottom"/>
+        <FIELD NAME="imagebarbottom" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="imagebartop" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="imagebarbottom" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert log_display" TYPE="insert" TABLE="log_display" COMMENT="Initial insert of records on table log_display. Each record describes how data will be showed by log reports.">
+      <SENTENCES>
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('econsole', 'add', 'econsole', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('econsole', 'update', 'econsole', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('econsole', 'view', 'econsole', 'name')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>

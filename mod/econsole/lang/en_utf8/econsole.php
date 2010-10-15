@@ -1,0 +1,35 @@
+<?php
+$string['econsole'] = 'E-Console';
+$string['modulename'] = 'E-Console';
+$string['modulenameplural'] = 'E-Consoles';
+$string['econsolename'] = 'Name';
+$string['econsolecontent'] = 'Content';
+$string['econsoleunit'] = 'Class';
+$string['econsolelesson'] = 'Lesson';
+$string['econsoleheader'] = 'Header';
+$string['econsoleimagetop'] = 'Image More';
+$string['econsoleimagebottom'] = 'Image Below';
+$string['econsoleshow'] = 'View';
+$string['econsoleof'] = 'to';
+$string['econsolehelp'] = 'Help';
+$string['econsoleprevious'] = 'Previous';
+$string['econsolenext'] = 'Next';
+$string['econsolereload'] = 'Return to the lesson';
+$string['econsoleclose'] = 'Close';
+$string['econsoleglossary'] = 'Glossary';
+$string['econsolejournal'] = 'Journal';
+$string['econsoleforum'] = 'Forum';
+$string['econsolechat'] = 'Chat';
+$string['econsolequiz'] = 'Quiz';
+$string['econsolechoice'] = 'Choise';
+$string['econsoleassignment'] = 'Task';
+$string['econsolewiki'] = 'Wiki';
+$string['econsolesurvey'] = 'Assessment Research (plug-in Questionnaire)';
+$string['econsoleurl'] = 'URL';
+$string['econsoleappearance'] = 'Appearance ';
+$string['econsoletheme'] = 'Theme';
+$string['econsoleadvanced'] = 'Advanced';
+$string['econsolemore'] = '(know more)';
+$string['econsoleimagetophelp'] = 'Help the image above';
+$string['econsoleimagebottomhelp'] = 'Help the image below';
+?>

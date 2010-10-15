@@ -1,0 +1,35 @@
+<?php
+$string['econsole'] = 'E-Console';
+$string['modulename'] = 'E-Console';
+$string['modulenameplural'] = 'E-Consoles';
+$string['econsolename'] = 'Nome';
+$string['econsolecontent'] = 'Conte&uacute;do';
+$string['econsolediving'] = 'Mergulho';
+$string['econsoleunit'] = 'Aula';
+$string['econsolelesson'] = 'Li&ccedil;&atilde;o';
+$string['econsoleheader'] = 'Cabe&ccedil;alho';
+$string['econsoleimagetop'] = 'Imagem superior';
+$string['econsoleimagebottom'] = 'Imagem inferior';
+$string['econsoleshow'] = 'Exibir';
+$string['econsoleof'] = 'de';
+$string['econsolehelp'] = 'Ajuda';
+$string['econsoleprevious'] = 'Anterior';
+$string['econsolenext'] = 'Pr&oacute;ximo';
+$string['econsolereload'] = 'Retornar &agrave; li&ccedil;&atilde;o';
+$string['econsoleclose'] = 'Fechar';
+$string['econsoleglossary'] = 'Gloss&aacute;rio';
+$string['econsolejournal'] = 'Di&aacute;rio';
+$string['econsoleforum'] = 'F&oacute;rum';
+$string['econsolechat'] = 'Chat';
+$string['econsolequiz'] = 'Exerc&iacute;cio';
+$string['econsolechoice'] = 'Escolha';
+$string['econsoleassignment'] = 'Tarefa';
+$string['econsolewiki'] = 'Wiki';
+$string['econsoleurl'] = 'URL';
+$string['econsoleappearance'] = 'Apar&ecirc;ncia';
+$string['econsoletheme'] = 'Tema';
+$string['econsoleadvanced'] = 'Avan&ccedil;ado';
+$string['econsolemore'] = '(Saiba +)';
+$string['econsoleimagetophelp'] = 'Help da imagem superior';
+$string['econsoleimagebottomhelp'] = 'Help da imagem inferior';
+?>
