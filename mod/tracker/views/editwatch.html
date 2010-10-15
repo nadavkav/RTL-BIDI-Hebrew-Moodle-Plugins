@@ -1,0 +1,93 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* A form for updating a watch record
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+print_heading(get_string('editwatch', 'tracker'));
+print_simple_box_start('center', '100%', '', '', 'generalbox', 'bugreport');
+$open = ($form->events & EVENT_OPEN) ? 'checked="checked"' : '' ;
+$resolving = ($form->events & EVENT_RESOLVING) ? 'checked="checked"' : '' ;
+$waiting = ($form->events & EVENT_WAITING) ? 'checked="checked"' : '' ;
+$resolved = ($form->events & EVENT_RESOLVED) ? 'checked="checked"' : '' ;
+$abandonned = ($form->events & EVENT_ABANDONNED) ? 'checked="checked"' : '' ;
+$notopen = ($form->events & EVENT_OPEN) ? '' : 'checked="checked"' ;
+$notresolving = ($form->events & EVENT_RESOLVING) ? '' : 'checked="checked"';
+$notwaiting = ($form->events & EVENT_WAITING) ? '' : 'checked="checked"';
+$notresolved = ($form->events & EVENT_RESOLVED) ? '' : 'checked="checked"';
+$notabandonned = ($form->events & EVENT_ABANDONNED) ? '' : 'checked="checked"';
+?>
+<center>
+
+<!-- Print Watch Form -->
+
+<form name="editqueryform" action="view.php" method="post">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="what" value="updatewatch" />
+<input type="hidden" name="ccid" value="<?php p($form->id) ?>" />
+<input type="hidden" name="screen" value="mywatches" />
+
+<table border="0" cellpadding="5 width="800">
+	<tr>
+		<td align="right"><b><?php print_string('issuename', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <?php echo "$tracker->ticketprefix.$form->issueid - $form->summary" ?>
+		</td>
+	</tr>
+	<tr>
+	    <td valign="top" align="right"><b><?php print_string('setwhenopens', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <input type="radio" name="open" value="1" <?php echo $open ?> /> <?php print_string('yes') ?> -
+		    <input type="radio" name="open" value="0" <?php echo $notopen ?> /> <?php print_string('no') ?>
+		</td>
+	</tr>
+	<tr>
+	    <td valign="top" align="right"><b><?php print_string('setwhenworks', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <input type="radio" name="resolving" value="1" <?php echo $resolving ?> /> <?php print_string('yes') ?> -
+		    <input type="radio" name="resolving" value="0" <?php echo $notresolving ?> /> <?php print_string('no') ?>
+		</td>
+	</tr>
+	<tr>
+	    <td valign="top" align="right"><b><?php print_string('setwhenwaits', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <input type="radio" name="waiting" value="1" <?php echo $waiting ?> /> <?php print_string('yes') ?> -
+		    <input type="radio" name="waiting" value="0" <?php echo $notwaiting ?> /> <?php print_string('no') ?>
+		</td>
+	</tr>
+	<tr>
+	    <td valign="top" align="right"><b><?php print_string('setwhenresolves', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <input type="radio" name="resolved" value="1" <?php echo $resolved ?> /> <?php print_string('yes') ?> -
+		    <input type="radio" name="resolved" value="0" <?php echo $notresolved ?> /> <?php print_string('no') ?>
+		</td>
+	</tr>
+	<tr>
+	    <td valign="top" align="right"><b><?php print_string('setwhenthrown', 'tracker') ?>:</b></td>
+		<td colspan="3" align="left">
+		    <input type="radio" name="abandonned" value="1" <?php echo $abandonned ?> /> <?php print_string('yes') ?> -
+		    <input type="radio" name="abandonned" value="0" <?php echo $notabandonned ?> /> <?php print_string('no') ?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="center" colspan="4">
+			<input type="submit" name="go_btn" value="<?php print_string('savechanges') ?>" />
+			<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>" onclick="document.forms['editqueryform'].what.value = ''; document.forms['editqueryform'].submit()" />
+		</td>
+	</tr>
+</table>
+</form>
+<?php
+print_simple_box_end();
+$nohtmleditorneeded = true;
+?>
+</center>

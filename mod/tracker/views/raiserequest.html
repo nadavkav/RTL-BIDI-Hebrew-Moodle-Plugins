@@ -1,0 +1,46 @@
+<center>
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Valery Fremaux > 1.8
+* @date 06/05/2009
+*
+* Prints a request for raising priority form
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+echo "<br/><center>";
+print_heading(get_string('raiserequesttitle', 'tracker'));
+?>
+<form name="raiserequest" method="post" action="#">
+<input type="hidden" name="issueid" value="<?php p($issueid) ?>" />
+<input type="hidden" name="what" value="doaskraise" />
+<table width="80%" cellspacing="10">
+<tr valign="top">
+    <td align="right" width="30%"><b><?php print_string('reason', 'tracker') ?>:</b></td>
+    <td align="left" width="70%">
+        <textarea name="reason" rows="7" cols="40"></textarea>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right" width="30%">
+        <b><?php print_string('emergency', 'tracker') ?>:</b>
+        <?php helpbutton('urgentquery', get_string('urgency', 'tracker'), 'tracker'); ?>
+    </td>
+    <td align="left" width="70%">
+        <input type="checkbox" name="urgent" value="1">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="center" colspan="2">
+        <input type="submit" name="go_btn" value="<?php print_string('sendrequest', 'tracker') ?>" />
+    </td>
+</tr>
+</table>
+</form>
+</center>

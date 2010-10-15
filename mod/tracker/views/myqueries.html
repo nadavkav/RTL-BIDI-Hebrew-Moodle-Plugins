@@ -1,0 +1,49 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* Prints list of user's stored queries
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+$queries = get_records_select('tracker_query', "userid = {$USER->id} AND trackerid = {$tracker->id} ");
+echo "<br/>";
+print_heading(get_string('myqueries', 'tracker'));
+print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+?>
+<center>
+<?php
+if (!empty($queries)){
+    $searchstr = get_string('query', 'tracker');
+    $namestr = get_string('name');
+    $descriptionstr = get_string('description');
+    $actionstr = get_string('action', 'tracker');
+    
+    $table->head = array("<b>$searchstr</b>", "<b>$namestr</b>", "<b>$descriptionstr</b>", "<b>$actionstr</b>");
+    $table->size = array(50, 100, 500, 100);
+    $table->align = array('center', 'left', 'center', 'center');
+	foreach ($queries as $query){
+        $fields = tracker_extractsearchparametersfromdb($query->id);
+    	$query->description = tracker_printsearchfields($fields);
+    	$searchlink = "<a href=\"view.php?id={$cm->id}&amp;view=view&amp;screen=browse&amp;what=usequery&amp;queryid={$query->id}\" title=\"".get_string('searchwiththat', 'tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/search.gif\" border=\"0\" /></a>";
+        $action = "<a href=\"view.php?id={$cm->id}&amp;what=editquery&amp;queryid={$query->id}\" title=\"".get_string('update')."\" ><img src=\"{$CFG->pixpath}/t/edit.gif\" /></a>";
+		$action .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=deletequery&amp;queryid={$query->id}\" title=\"".get_string('delete')."\" ><img src=\"{$CFG->pixpath}/t/delete.gif\" /></a>";
+        $table->data[] = array($searchlink, "&nbsp;{$query->name}", format_string($query->description), $action);
+	}
+	print_table($table);
+}
+else{
+     print_string('noqueryssaved', 'tracker');
+}
+?>
+</center>
+<?php
+print_simple_box_end();
+?>

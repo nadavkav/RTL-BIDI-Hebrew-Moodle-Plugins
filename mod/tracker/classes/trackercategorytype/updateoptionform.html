@@ -1,0 +1,49 @@
+<?php
+
+/**
+* @package tracker
+* @author Clifford Tham
+* @review Valery Fremaux / 1.8
+* @date 02/12/2007
+*
+* A formfor updating option name and value
+*/
+
+$strname = get_string('name');
+$strdescription = get_string('description');
+$straction = get_string('action');
+?>
+<form name="updateoptionform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="what" value="updateelementoption" />
+<input type="hidden" name="type" value="<?php p($form->type) ?>" />
+<input type="hidden" name="elementid" value="<?php p($form->elementid) ?>" />
+<input type="hidden" name="optionid" value="<?php p($form->optionid) ?>" />
+<table border="1" width="800">
+	<tr>
+		<td width="100">&nbsp;</td>
+		<td width="110" align="center">
+		    <b><?php echo $strname ?></b>
+		</td>
+		<td width="240" align="center">
+		    <b><?php echo $strdescription ?></b>            
+        </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td align="center" <?php print_error_class(@$errors, 'name') ?> >
+		    <input type="text" name="name" value="<?php echo @$form->name ?>" size="32" maxlength="32" />
+		</td>
+		<td align="center" <?php print_error_class(@$errors, 'description') ?> >
+		    <input type="text" name="description" value="<?php echo htmlspecialchars(stripslashes(@$form->description)) ?>" size="80" maxlength="255" />
+		</td>
+	</tr>
+</table>
+
+<center>
+<br/>
+<input type="button" name="go_btn" value="<?php print_string('update') ?>" onclick="document.forms['updateoptionform'].submit();" />
+<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>" onclick="document.forms['updateoptionform'].what.value = 'viewelementoptions'; document.forms['updateoptionform'].submit();" />
+</center>	
+</table>
+</form>

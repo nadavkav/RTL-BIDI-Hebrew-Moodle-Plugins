@@ -1,0 +1,189 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* A form for updating an issue
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+$issue = get_record('tracker_issue', 'id', $issueid);
+$issue->reporter = get_record('user', 'id', $issue->reportedby, '', 'id,lastname,firstname');
+tracker_loadelementsused($tracker, $elementsused);
+
+$enctype = '';
+if (tracker_requiresfile($tracker->id)){
+    $enctype = ' enctype="multipart/form-data" ';
+}
+?>
+<center>
+
+<!-- Print Bug Form -->
+
+<table border="1" cellpadding="5">
+<?php
+if (has_capability('mod/tracker:resolve', $context)){
+    /// Opens the issue if I have capability to resolve
+    if ($issue->status < OPEN){
+        $issue->status = OPEN;
+        set_field('tracker_issue', 'status', OPEN, 'id', $issueid);
+    }
+?>
+    <tr>
+        <td colspan="4" align="right">
+            <form method="POST" action="view.php?id=<?php p($cm->id) ?>&amp;screen=viewanissue&amp;issueid=<?php echo $issue->id ?>">
+                <input type="submit" name="go_btn" value="<?php print_string('turneditingoff', 'tracker') ?>" />
+            </form>
+        </td>
+        
+    </tr>
+<?php
+}
+?>  
+    <form action="view.php" name="editissue" method="post" <?php echo $enctype ?> >
+    <input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+    <input type="hidden" name="issueid" value="<?php p($issueid) ?>" />
+    <input type="hidden" name="screen" value="viewanissue" />
+    <input type="hidden" name="what" value="updateanissue" />
+    <tr>
+        <td align="right" width="200"><b><?php print_string('issuenumber', 'tracker') ?>:</b></td>
+        <td width="200">
+            <?php echo $tracker->ticketprefix.$issueid; ?>
+        </td>
+        <td align="right" width="150"><b><?php print_string('dependson', 'tracker') ?>:</b></td>
+        <td width="250">
+            <?php 
+            $dependancies = tracker_getpotentialdependancies($tracker->id, $issueid);
+            ?>
+            <select name="dependancies[]" multiple="multiple" size="5">
+            <?php 
+            foreach($dependancies as $dependancy){
+                $selected = ($dependancy->isparent) ? "selected=\"selected\"" : '' ;
+                echo "<option value=\"$dependancy->id\" {$selected} >{$tracker->ticketprefix}{$dependancy->id} - ".shorten_text(format_string($dependancy->summary))."</option>\n";
+            } 
+            ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('reportedby', 'tracker') ?>:</b><br /></td>
+        <td width="200">
+            <?php echo fullname($issue->reporter);  ?>
+        </td>
+        <td align="right" width="150">
+            <b><?php print_string('datereported', 'tracker') ?>:</b>
+        </td>
+        <td width="250">
+            <?php echo userdate($issue->datereported); ?>
+            <input type="hidden" name="datereported" value="<?php p($issue->datereported) ?>"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('assignedto', 'tracker') ?>:</b><br /></td>
+        <td width="200">
+            <?php 
+            $resolvers = tracker_getresolvers($context);
+            foreach($resolvers as $resolver){
+                $resolversmenu[$resolver->id] = fullname($resolver);
+            }
+            choose_from_menu($resolversmenu, 'assignedto', @$issue->assignedto);
+            ?>
+        </td>
+        <td align="right" width="150"><b><?php print_string('status', 'tracker') ?>:</b></td>
+        <td width="250" class="<?php echo 'status_'.$STATUSCODES[$issue->status] ?>">
+            <?php choose_from_menu($STATUSKEYS, 'status', $issue->status); ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('summary', 'tracker') ?>:</b></td>
+        <td colspan="3">
+            <input type="text" name="summary" size="70" value="<?php echo $issue->summary ?>" />
+        </td>
+    </tr>
+    <tr valign="top">
+        <td align="right" height="200"><b><?php print_string('description') ?>:</b></td>
+        <td align="left" colspan="3" width="600">
+<?php
+            print_textarea($usehtmleditor, 20, 60, 680, 400, 'description', $issue->description);
+            if ($usehtmleditor) {
+                echo '<input type="hidden" name="format" value="'.FORMAT_HTML.'" />';
+            } 
+            else {
+                echo '<p align="right">';
+                helpbutton('textformat', get_string('formattexttype'));
+                print_string('formattexttype');
+                echo ':&nbsp;';
+                if (empty($form->format)) {
+                    $form->format = "MOODLE";
+                }
+                choose_from_menu(format_text_menu(), 'format', $form->format, ""); 
+                echo '</p>';
+            }
+?>
+        </td>
+    </tr>
+    
+<!--Print Bug Attributes-->
+<?php       
+if (is_array($elementsused)){   
+    $keys = array_keys($elementsused);
+            
+    if(!empty($keys)){      
+        for ($i=0; $i < count($keys); $i++){
+            // Print first category in one column
+            $key = $keys[$i];
+            echo "<tr valign=\"top\">";
+            echo "<td align=\"right\">";
+            echo "<b>";
+                echo format_string($elementsused[$key]->description);
+            echo ":</b><br />";
+            echo "</td>";   
+            
+            echo "<td colspan=\"3\" align=\"left\">";           
+                echo $elementsused[$key]->view(true, $issue->id);
+            echo "</td>";
+            echo "</tr>";
+        }
+    }
+}
+?>
+    <tr valign="top">
+        <td align="right" height="200"><b><?php print_string('resolution', 'tracker') ?>:</b></td>
+        <td align="left" colspan="3">
+<?php
+            print_textarea($usehtmleditor, 20, 60, 680, 400, 'resolution', $issue->resolution);
+            if ($usehtmleditor) {
+                echo '<input type="hidden" name="resolutionformat" value="'.FORMAT_HTML.'" />';
+            } else {
+                echo '<p align="right">';
+                helpbutton('textformat', get_string('formattexttype'));
+                print_string('formattexttype');
+                echo ':&nbsp;';
+                if (empty($form->format)) {
+                    $form->format = "MOODLE";
+                }
+                choose_from_menu(format_text_menu(), 'resolutionformat', $form->resolutionformat, ""); 
+                echo '</p>';
+            }
+?>
+        </td>
+    </tr>
+    <tr valign="top">
+        <td align="center" colspan="4">
+            <input type="submit" value="<?php print_string('savechanges') ?>" />
+        </td>
+    </tr>
+    </form>
+</table>
+
+<?php
+print_simple_box_end();
+?>
+</center>

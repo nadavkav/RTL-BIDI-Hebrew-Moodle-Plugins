@@ -1,0 +1,87 @@
+<?php
+
+/**
+* @package tracker
+* @author Clifford Tham
+* @review Valery Fremaux / 1.8
+* @date 02/12/2007
+*
+* A form for editing a textfield element
+*/
+
+print_heading('createatextelement', 'tracker') ;
+?>
+<form name="editelementform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="what" value="<?php echo $form->action ?>" />
+<input type="hidden" name="type" value="<?php echo $form->type ?>" />
+<?php
+if ($action == 'editelement')
+{
+?>
+<input type="hidden" name="elementid" value="{$form->id}">
+<?php
+}
+?>
+<table border="1" width="800">
+	<tr>
+		<td valign="top" align="right"><b><?php print_string('name') ?>:</b></td>		
+		<td align="left">
+			<?php
+				if ($action == 'editelement'){
+					$form->name;
+				}
+				else{	
+					$name = '';
+				}
+			?>
+			<input type="text" name="name" value="<?php echo @$form->name ?>" size="80">			
+		</td>
+	</tr>	
+	<tr>
+		<td valign="top" align="right">
+			<b><?php print_string('description') ?>:</b>
+		</td>
+		<td align="left">
+        <?php
+            print_textarea($usehtmleditor, 20, 60, 680, 400, 'description', $form->description);
+         
+            if ($usehtmleditor) {
+                echo '<input type="hidden" name="format" value="'.FORMAT_HTML.'" />';
+            } else {
+                echo '<p align="right">';
+                helpbutton('textformat', get_string('formattexttype'));
+                print_string("formattexttype");
+                echo ':&nbsp;';
+                choose_from_menu(format_text_menu(), 'format', $form->format, ''); 
+                echo '';
+            }
+        ?>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right">
+			<b><?php print_string('sharing', 'tracker') ?>:</b>
+		</td>
+		<td align="left">
+		    <input type="checkbox" name="shared" value="1"> <?php print_string('sharethiselement', 'tracker') ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+		    <?php
+		    $onsubmitcall = ($usehtmleditor) ? "document.forms['editelementform'].onsubmit();" : '' ;
+		    ?>
+    		<input type="submit" name="go_btn" value="<?php print_string('submit') ?>" />&nbsp;
+<?php
+if ($action != 'editelement'){
+?>
+    		<input type="submit" name="go_add_btn" value="<?php print_string('add', 'tracker') ?>" />&nbsp;
+<?
+}
+?>
+			<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>" onclick="document.forms['editelementform'].what.value = '';<?php p($onsubmitcall) ?>document.forms['editelementform'].submit();" />
+		</td>
+	</tr>
+</table>
+</form>

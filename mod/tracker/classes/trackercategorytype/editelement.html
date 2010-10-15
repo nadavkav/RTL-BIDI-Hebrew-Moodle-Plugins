@@ -1,0 +1,58 @@
+<?php
+
+/**
+* @package tracker
+* @author Clifford Tham
+* @review Valery Fremaux / 1.8
+* @date 02/12/2007
+*
+* Form for editing an elements
+*/
+
+print_heading(get_string("{$form->action}{$form->type}", 'tracker'));
+?>
+<form name="editelementform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<input type="hidden" name="what" value="<?php p($form->action) ?>" />
+<input type="hidden" name="type" value="<?php p($form->type) ?>" />
+<?php
+if ($action == 'editelement'){
+?>
+<input type="hidden" name="elementid" value="<?php p($form->elementid) ?>" />
+<?php
+}
+?>
+<table border="1" width="800">
+	<tr>
+		<td valign="top" align="right"><b><?php print_string('name') ?>:</b></td>		
+		<td align="left">
+            <input type="text" name="name" value="<?php echo @$form->name ?>" size="32" maxlength="32" />
+            <?php helpbutton('elements', get_string('name'), 'tracker'); ?>			
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><b><?php print_string('description') ?>:</b></td>
+		<td colspan="3" align="left">
+            <input type="text" name="description" value="<?php echo htmlspecialchars(stripslashes(@$form->description)) ?>" size="80" maxlength="255" />			
+            <?php helpbutton('elements', get_string('description'), 'tracker'); ?>			
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right">
+			<b><?php print_string('sharing', 'tracker') ?>:</b>
+		</td>
+		<td align="left">
+		    <input type="checkbox" name="shared" value="1" <?php echo (@$form->shared) ? 'checked="checked"' : '' ; ?> /> <?php print_string('sharethiselement', 'tracker') ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+    		<input type="submit" name="go_btn" value="<?php print_string('submit') ?>" />&nbsp;
+			<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>" onclick="document.forms['editelementform'].what.value = '';document.forms['editelementform'].submit();" />
+		</td>
+	</tr>
+</table>
+</form>
+<?php
+$nohtmleditorneeded = true;
+?>

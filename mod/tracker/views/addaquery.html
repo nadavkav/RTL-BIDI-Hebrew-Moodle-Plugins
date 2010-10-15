@@ -1,0 +1,74 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* From for adding a stored query
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+print_heading(get_string('addaquerytomemo', 'tracker'));
+print_simple_box_start('center', '100%', '', '', 'generalbox', 'bugreport');
+?>
+<center>
+<!-- Print Query Form -->
+<form name="form" action="view.php" method="post">
+	<input type="hidden" name="what" value="<?php p($form->action) ?>">
+	<input type="hidden" name="screen" value="myqueries">
+	<input type="hidden" name="fields" value="<?php p($form->fields) ?>">
+	<input type="hidden" name="id" value="<?php p($cm->id) ?>">
+
+<table border="0" cellpadding="5" width="100%">
+	<tr>
+		<td align="right" width="200">
+			<b><?php print_string('name') ?>:</b>
+		</td>
+		<td align="left">
+			<input type="text" name="name" value="" style="width:100%" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="200" valign="top">
+			<b><?php print_string('description') ?>:</b>
+		</td>
+		<td valign="top" align="left">
+<?php
+            print_textarea($usehtmleditor, 20, 60, 680, 400, 'description', $form->description);
+            if ($usehtmleditor) {
+                echo '<input type="hidden" name="format" value="'.FORMAT_HTML.'" />';
+            } 
+            else {
+                echo '<p align="right">';
+                helpbutton('textformat', get_string('formattexttype'));
+                print_string('formattexttype');
+                echo ':&nbsp;';
+                if (empty($form->format)) {
+                    $form->format = "MOODLE";
+                }
+                choose_from_menu(format_text_menu(), 'format', $form->format, ""); 
+                echo '</p>';
+            }
+?>
+		</td>
+	</tr>
+    <tr>
+        <td colspan="2">
+		    <?php
+		    $onsubmitcall = ($usehtmleditor) ? "document.forms['form'].onsubmit();" : '' ;
+		    ?>
+			<input type="submit" name="save" value="<?php print_string('continue') ?>" />
+			<input type="button" name="cancel_btn" value="<?php print_string('cancel') ?>" onclick="document.forms['form'].what.value = '';document.forms['form'].screen.value = 'search';<?php p($onsubmitcall) ?>document.forms['form'].submit();" />
+		</td>
+	</tr>
+</table>
+</form>
+<?php
+print_simple_box_end();
+?>
+</center>

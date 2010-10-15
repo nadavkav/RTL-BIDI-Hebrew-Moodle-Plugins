@@ -1,0 +1,34 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* A view that layouts the element administration
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+?>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+			<?php
+				include $CFG->dirroot.'/mod/tracker/views/admin_elements_used.php'; 
+			?>
+		</td>
+		<td valign="top">
+			<?php
+				include $CFG->dirroot.'/mod/tracker/views/admin_elements.php'; 
+			?>
+		</td>
+	</tr>
+</table>
+<?php
+$nohtmleditorneeded = true;
+?>

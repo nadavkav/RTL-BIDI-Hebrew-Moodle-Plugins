@@ -1,0 +1,115 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* Prints prints user's profile and stats
+*/
+    if (!defined('MOODLE_INTERNAL')) {
+        die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+    }
+
+    print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+?>
+
+<center>
+
+<!-- Print Bug Form -->
+<form name="byidform" action="view.php" method="get">
+<input type="hidden" name="what" value="searchforissues" />
+<input type="hidden" name="screen" value="browse" />
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+
+<table border="0" cellpadding="5">
+    <tr>
+        <td align="right" width="150"><b><?php print_string('issuenumber', 'tracker') ?>:</b></td>
+        <td width="200" align="left">
+            <input type="text" name="issuenumber" value="" size="5" />
+        </td>
+        <td width="200">&nbsp;</td>
+        <td width="200">
+            <input type="submit" name="search" value="<?php print_string('search', 'tracker') ?>" />
+        </td>
+    </tr>
+</table>
+</form>
+<?php
+    print_simple_box_end();
+    print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+?>
+<form name="searchform" action="view.php" method="get">
+<input type="hidden" name="what" value="searchforissues" />
+<input type="hidden" name="screen" value="<?php echo ($tracker->supportmode == 'bugtracker') ? 'browse' : 'mytickets' ; ?>" />
+<input type="hidden" name="view" value="view" />
+<input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+<script type="text/javascript" language="javascript">
+var datereporteditems = ['day','month','year'];
+</script>
+
+<table border="0" cellpadding="5" width="800">
+    <tr>
+        <td align="right" width="130" valign="top"><b><?php print_string('reportedby', 'tracker') ?>:</b><br /></td>
+        <td width="180" valign="top" align="left">
+<?php
+    $reporters = tracker_getreporters($tracker->id);
+
+    $reportersmenu = array();
+    if ($reporters){
+        foreach($reporters as $reporter){
+            $reportersmenu[$reporter->id] = fullname($reporter);
+        }
+        choose_from_menu($reportersmenu, 'reportedby', '', get_string('any', 'tracker'));
+    }
+    else{
+        print_string('noreporters', 'tracker');
+    }
+?>
+        </td>
+        <td align="right" width="200"><b><?php print_string('datereported', 'tracker') ?>:</b></td>
+        <td width="240" valign="top" align="left">
+            <input type="checkbox" name="checkdate" value="1" onclick="return lockoptions('searchform', 'checkdate', datereporteditems)" checked="checked" />
+            <?php print_date_selector('day', 'month', 'year', '');  ?>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="right" valign="top"><b><?php print_string('summary', 'tracker') ?>:</b><br /></td>
+        <td colspan="3" align="left" valign="top">
+            <input type="text" name="summary" size="70" value="" maxlength="100" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top">
+            <b><?php print_string('description') ?>:</b>
+        </td>
+        <td align="left" colspan="3">
+             <input name="description" type="text" value="" size="70" maxlength="100">
+        </td>
+    </tr>
+    
+    <!--Print Bug Category Dropdowns-->
+    <tr>
+        <td>
+            <?php tracker_printelements($tracker, null, 'search'); ?>
+        </td>
+    </tr>
+        
+    <tr valign="top">
+        <td align="center" colspan="4">
+            <input type="submit" name="search" value="<?php print_string('search', 'tracker') ?>" />
+            <input type="button" name="savequery_btn" value="<?php print_string('savequery', 'tracker') ?>" onclick="document.forms['searchform'].view.value = 'profile';document.forms['searchform'].screen.value = 'myqueries';document.forms['searchform'].what.value = 'savequery';document.forms['searchform'].submit();" />
+        </td>
+    </tr>
+</table>
+</form>
+<?php
+print_simple_box_end();
+$nohtmleditorneeded = true;
+?>
+</center>
+<script type="text/javascript">
+lockoptions('searchform','checkdate', datereporteditems);
+</script>

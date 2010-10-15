@@ -1,0 +1,389 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* HTML form
+* Print Bug Description
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+?>
+<center>
+
+<?php
+print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+
+// set initial view mode for additional pannels
+$initialviewmode = ($action == 'doaddcomment') ? 'visiblediv' : 'hiddendiv' ;
+$initialviewmodeforccs = ($action == 'register' || $action == 'unregister') ? 'visiblediv' : 'hiddendiv' ;
+
+$issue = get_record('tracker_issue', 'id', $issueid);
+if (!$issue){
+    if ($tracker->supportmode == 'bugtrack'){
+        redirect("view.php?view=view&amp;screen=browse&amp;a=$tracker->id");
+    } else {
+        redirect("view.php?view=view&amp;screen=mytickets&amp;a=$tracker->id");
+    }
+}
+
+$issue->reporter = get_record('user', 'id', $issue->reportedby, '', 'id,lastname,firstname,image');
+$issue->owner = get_record('user', 'id', $issue->assignedto, '', 'id,lastname,firstname,image');
+tracker_loadelementsused($tracker, $elementsused);
+
+// check for lower dependancies
+$childtree = tracker_printchilds($tracker, $issue->id, true, 20);
+$parenttree = tracker_printparents($tracker, $issue->id, true, -20);
+$ccs = get_records('tracker_issuecc', 'issueid', $issue->id);
+$cced = array();
+$history = get_records_select('tracker_issueownership', " trackerid = {$tracker->id} AND issueid = {$issue->id} ", 'timeassigned DESC');
+$showdependancieslink = (!empty($childtree) || !empty($parenttree)) ? "<a id=\"toggledependancieslink\" href=\"javascript:toggledependancies()\">".get_string(($initialviewmode == 'visiblediv') ? 'hidedependancies' : 'showdependancies', 'tracker').'</a>&nbsp;-&nbsp;' : '' ;
+$showccslink = (!empty($ccs)) ? "<a id=\"toggleccslink\" href=\"javascript:toggleccs()\">".get_string(($initialviewmodeforccs == 'visiblediv') ? 'hideccs' : 'showccs', 'tracker').'</a>&nbsp;-&nbsp;' : '' ;
+$showhistorylink = (!empty($history)) ? "<a id=\"togglehistorylink\" href=\"javascript:togglehistory()\">".get_string(($initialviewmode == 'visiblediv') ? 'hidehistory' : 'showhistory', 'tracker').'</a>&nbsp;-&nbsp;' : '' ;
+?>
+
+<!-- Print Bug Form -->
+
+<table border="1" cellpadding="5">
+<script type="text/javascript">
+    var showhistory = "<?php print_string('showhistory', 'tracker') ?>";
+    var hidehistory = "<?php print_string('hidehistory', 'tracker') ?>";
+    function togglehistory(){
+        historydiv = document.getElementById("issuehistory");
+        historylink = document.getElementById("togglehistorylink");
+        if (historydiv.className == "visiblediv"){
+            historydiv.className = "hiddendiv";
+            historylink.innerText = showhistory;
+        }
+        else{
+            historydiv.className = "visiblediv";
+            historylink.innerText = hidehistory;
+        }
+    }
+
+    var showccs = "<?php print_string('showccs', 'tracker') ?>";
+    var hideccs = "<?php print_string('hideccs', 'tracker') ?>";
+    function toggleccs(){
+        ccsdiv = document.getElementById("issueccs");
+        ccslink = document.getElementById("toggleccslink");
+        if (ccsdiv.className == "visiblediv"){
+            ccsdiv.className = "hiddendiv";
+            ccslink.innerText = showccs;
+        }
+        else{
+            ccsdiv.className = "visiblediv";
+            ccslink.innerText = hideccs;
+        }
+    }
+
+    var showdependancies = "<?php print_string('showdependancies', 'tracker') ?>";
+    var hidedependancies = "<?php print_string('hidedependancies', 'tracker') ?>";
+    function toggledependancies(){
+        dependanciesdiv = document.getElementById("issuedependancytrees");
+        dependancieslink = document.getElementById("toggledependancieslink");
+        if (dependanciesdiv.className == "visiblediv"){
+            dependanciesdiv.className = "hiddendiv";
+            dependancieslink.innerText = showdependancies;
+        }
+        else{
+            dependanciesdiv.className = "visiblediv";
+            dependancieslink.innerText = hidedependancies;
+        }
+    }
+
+    var showcomments = "<?php print_string('showcomments', 'tracker') ?>";
+    var hidecomments = "<?php print_string('hidecomments', 'tracker') ?>";
+    function togglecomments(){
+        commentdiv = document.getElementById("issuecomments");
+        commentlink = document.getElementById("togglecommentlink");
+        if (commentdiv.className == "visiblediv comments"){
+            commentdiv.className = "hiddendiv comments";
+            commentlink.innerText = showcomments;
+        }
+        else{
+            commentdiv.className = "visiblediv comments";
+            commentlink.innerText = hidecomments;
+        }
+    }
+</script>
+<?php
+
+if (has_capability('mod/tracker:resolve', $context)){
+    // If I can resolve and I have seen, the bug is open
+    if ($issue->status < OPEN){
+        $issue->status = OPEN;
+        set_field('tracker_issue', 'status', OPEN, 'id', $issueid);
+    }
+?>
+    <tr>
+        <td colspan="4" align="right" width="800">
+            <form method="post" action="view.php?id=<?php p($cm->id) ?>&amp;screen=editanissue&amp;issueid=<?php echo $issue->id ?>">
+                <input type="submit" name="go_btn" value="<?php print_string('turneditingon', 'tracker') ?>">
+            </form>
+        </td>
+
+    </tr>
+<?php
+}
+?>
+    <tr>
+        <td align="right" width="200">
+            <b><?php print_string('issuenumber', 'tracker') ?>:</b><br />
+        </td>
+        <td width="200">
+            <?php echo $tracker->ticketprefix.$issueid; ?>
+        </td>
+        <td align="right" width="200"><b><?php print_string('status', 'tracker') ?>:</b></td>
+        <td width="200" class="<?php echo 'status_'.$STATUSCODES[$issue->status] ?>"><b><?php echo $STATUSKEYS[$issue->status] ?></b></td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('reportedby', 'tracker') ?>:</b></td>
+        <td width="200">
+            <?php
+            print_user_picture ($issue->reporter->id, $COURSE->id, !empty($issue->reporter->image));
+            echo fullname($issue->reporter);
+            ?>
+        </td>
+        <td align="right" width="200">
+            <b><?php print_string('datereported', 'tracker') ?>:</b>
+        </td>
+        <td width="200">
+            <?php echo userdate($issue->datereported); ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('assignedto', 'tracker') ?>:</b></td>
+        <td width="200">
+            <?php
+            if (!$issue->owner){
+                print_string('unassigned', 'tracker');
+            }
+            else{
+            print_user_picture ($issue->owner->id, $COURSE->id, !empty($issue->owner->image));
+            echo fullname($issue->owner);
+            }
+            ?>
+        </td>
+        <td align="right" width="200"><b><?php print_string('cced', 'tracker') ?>:</b></td>
+        <td width="200">
+            <?php echo (empty($ccs) || count(array_keys($ccs)) == 0) ? 0 : count($ccs) ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="200"><b><?php print_string('summary', 'tracker') ?>:</b></td>
+        <td colspan="3" width="600" align="right">
+            <?php echo format_string($issue->summary); ?>
+        </td>
+    </tr>
+    <tr valign="top">
+        <td align="right" height="200"><b><?php print_string('description') ?>:</b></td>
+        <td align="right" colspan="3" width="600">
+            <?php echo format_string($issue->description); ?>
+
+        </td>
+    </tr>
+
+    <!--Print Bug Attributes-->
+
+<?php
+if (is_array($elementsused)){
+    $keys = array_keys($elementsused);
+    if(!empty($keys)){
+        for ($i=0; $i < count($keys);){
+            // Print first category in one column
+            $key = $keys[$i];
+            echo "<tr valign=\"top\">";
+            echo "<td align=\"right\" colspan=\"1\">";
+            echo "<b>";
+            echo format_string($elementsused[$key]->description);
+            echo ":</b><br />";
+            echo "</td>";
+
+            echo "<td colspan=\"3\" align=\"right\" >";
+            echo $elementsused[$key]->view(false, $issue->id);
+            echo "</td>";
+            echo "</tr>";
+            $i++;
+        }
+    }
+}
+if (!empty($issue->resolution)){
+?>
+    <tr valign="top">
+        <td align="right" height="200"><b><?php print_string('resolution', 'tracker') ?>:</b></td>
+        <td align="right" colspan="3">
+            <?php echo format_text(format_string($issue->resolution), $issue->resolutionformat); ?>
+        </td>
+    </tr>
+<?php
+}
+if ($tracker->enablecomments){
+    $addcommentlink = '';
+    if (has_capability('mod/tracker:comment', $context)){
+        $addcommentlink = "<a href=\"view.php?id={$cm->id}&amp;what=addacomment&amp;issueid={$issueid}\">".get_string('addacomment', 'tracker').'</a>';
+    }
+    $showcommentslink = '';
+    if (count_records('tracker_issuecomment', 'issueid', $issue->id)){
+        $showcommentslink = "<a id=\"togglecommentlink\" href=\"javascript:togglecomments()\">".get_string('showcomments', 'tracker').'</a>&nbsp;-&nbsp;';
+    }
+    else{
+        $showcommentslink = '<i>'.get_string('nocomments','tracker').'</i>&nbsp;-&nbsp;';
+    }
+}
+
+$transferlink = '';
+if ($tracker->parent && $issue->status != TRANSFERED && (has_capability('mod/tracker:manage', $context) || has_capability('mod/tracker:resolve', $context) || has_capability('mod/tracker:develop', $context))){
+    $transferlink = " - <a href=\"view.php?id={$cm->id}&amp;what=cascade&amp;issueid={$issueid}\">".get_string('cascade','tracker')."</a>";
+}
+?>
+    <tr valign="top">
+        <td align="right" colspan="4">
+            <?php echo $showhistorylink.$showccslink.$showdependancieslink.$showcommentslink.$addcommentlink.$transferlink; ?>
+        </td>
+    </tr>
+<?php
+if ($tracker->enablecomments){
+?>
+    <tr>
+        <td colspan="4">
+            <div id="issuecomments" class="<?php echo $initialviewmode ?> comments">
+            <table width="100%">
+                <?php tracker_printcomments($issue->id); ?>
+            </table>
+            </div>
+        </td>
+    </tr>
+<?php
+}
+?>
+    <tr>
+        <td colspan="4" align="center" width="100%">
+            <table id="issuedependancytrees" class="<?php echo $initialviewmode ?>">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td align="right" style="white-space : nowrap">
+                    <?php
+                        echo $parenttree;
+                        echo $tracker->ticketprefix.$issue->id.' - '.format_string($issue->summary).'<br/>';
+                        echo $childtree;
+                    ?>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+<?php
+if ($showccslink){
+?>
+    <tr>
+        <td colspan="4" align="center" width="100%">
+            <table id="issueccs" class="<?php echo $initialviewmodeforccs ?>" width="100%">
+                <tr>
+                    <td colspan="3">
+                        <?php print_heading(get_string('cced', 'tracker')) ?>
+                    </td>
+                </tr>
+<?php
+    foreach($ccs as $cc){
+?>
+                <tr>
+                    <td width="20%" valign="top">&nbsp;</td>
+                    <td align="right" style="white-space : nowrap" valign="top">
+                        <?php
+                        $user = get_record('user', 'id', $cc->userid);
+                        tracker_print_user($user);
+                        $cced[] = $cc->userid;
+                        ?>
+                    </td>
+                    <td align="right">
+                        <?php
+                        if (has_capability('mod/tracker:managewatches', $context)){
+                            echo "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=unregister&amp;issueid={$issueid}&amp;ccid={$cc->userid}\" title=\"".get_string('delete')."\"><img src=\"{$CFG->pixpath}/t/delete.gif\" /></a>";
+                        }
+                        ?>
+                    </td>
+                </tr>
+<?php
+    }
+?>
+            </table>
+        </td>
+    </tr>
+<?php
+}
+if (has_capability('mod/tracker:managewatches', $context)){
+?>
+    <tr>
+        <td>&nbsp;</td>
+        <td colspan="3" align="right">
+            <form name="addccform" method="get" action="view.php">
+            <input type="hidden" name="id" value="<?php p($cm->id) ?>" />
+            <input type="hidden" name="what" value="register" />
+            <input type="hidden" name="issueid" value="<?php p($issueid) ?>" />
+            <?php
+            echo get_string('addawatcher', 'tracker').':&nbsp;';
+            $contextmodule = get_context_instance(CONTEXT_MODULE, $cm->id);
+            $potentials = get_users_by_capability($contextmodule, 'mod/tracker:canbecced', 'u.id, firstname, lastname, picture, email,emailstop', 'lastname,firstname');
+            $potentialsmenu = array();
+            if ($potentials){
+                foreach($potentials as $potential){
+                    if (in_array($potential->id, $cced)) continue;
+                    $potentialsmenu[$potential->id] = fullname($potential);
+                }
+            }
+            choose_from_menu($potentialsmenu, 'ccid');
+            ?>
+            <input type="submit" name="go_btn" value="<?php print_string('add') ?>" />
+            </form>
+        </td>
+    </tr>
+<?php
+}
+if ($showhistorylink){
+?>
+    <tr>
+        <td colspan="4" align="center" width="100%">
+            <table id="issuehistory" class="<?php echo $initialviewmode ?>" width="100%">
+                <tr>
+                    <td colspan="3">
+                        <?php print_heading(get_string('history', 'tracker')) ?>
+                    </td>
+                </tr>
+<?php
+    foreach($history as $owner){
+        $user = get_record('user', 'id', $owner->userid);
+        $bywhom = get_record('user', 'id', $owner->bywhomid);
+?>
+                <tr>
+                    <td align="right">
+                        <?php echo userdate($owner->timeassigned) ?>
+                    </td>
+                    <td align="right">
+                        <?php tracker_print_user($user); ?>
+                    </td>
+                    <td align="right">
+                        <?php echo get_string('by', 'tracker') . ' ' . fullname($bywhom); ?>
+                    </td>
+                </tr>
+<?php
+    }
+?>
+            </table>
+         </td>
+     </tr>
+<?php
+}
+?>
+</table>
+<?php
+print_simple_box_end();
+$nohtmleditorneeded = true;
+?>
+</center>

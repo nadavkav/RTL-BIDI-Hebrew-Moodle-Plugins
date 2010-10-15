@@ -1,0 +1,99 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* Prints prints user's profile and stats
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+echo "<br/>";
+print_heading(get_string('me', 'tracker')); 
+?>
+<center>
+<?php print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport'); ?>
+<table border="1" cellpadding="3" width="800">
+	<tr>
+		<td align="right" valign="top"><b><?php print_string('name') ?>:</b></td>
+		<td align="left" valign="top">
+			<?php echo fullname($USER) ?>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" valign="top"><b><?php print_string('tracker-levelaccess', 'tracker') ?>:</b></td>
+		<td align="left" valign="top">
+			<?php 
+			    echo ($reporter = has_capability('mod/tracker:report', $context)) ? '<span class="green">'.get_string('icanreport', 'tracker').'</span>' : '<span class="red">'.get_string('icannotreport', 'tracker').'</span>' ;
+			    echo '<br/>';
+			    echo ($developer = has_capability('mod/tracker:develop', $context)) ? '<span class="green">'.get_string('iamadeveloper', 'tracker').'</span>' : '<span class="red">'.get_string('iamnotadeveloper', 'tracker').'</span>' ;
+			    echo '<br/>';
+			    echo ($resolver = has_capability('mod/tracker:resolve', $context)) ? '<span class="green">'.get_string('icanresolve', 'tracker').'</span>' : '<span class="red">'.get_string('icannotresolve', 'tracker').'</span>' ;
+			    echo '<br/>';
+			    echo ($manager = has_capability('mod/tracker:manage', $context)) ? '<span class="green">'.get_string('icanmanage', 'tracker').'</span>' : '<span class="red">'.get_string('icannotmanage', 'tracker').'</span>' ;
+			?>
+		</td>
+	</tr>
+<?php
+if ($manager){
+?>
+    <tr>
+        <td colspan="2"><?php print_heading(get_string('manager', 'tracker')); ?></td>
+    </tr>
+    <tr>
+        <td align="right" valign="top"><b><?php print_string('myassignees', 'tracker') ?>:</b></td>
+        <td align="left" valign="top">
+            <?php
+                $assignees = tracker_getassignees($USER->id);
+                if ($assignees){
+                    foreach($assignees as $assignee){
+                        tracker_print_user($assignee);
+                        echo ' ('.$assignee->issues.')<br />';
+                    }
+                }
+                else{
+                    print_string('noassignees', 'tracker');
+                }
+            ?>
+        </td>
+    </tr>
+<?php
+}
+if ($resolver){
+?>
+    <tr>
+        <td colspan="2"><?php print_heading(get_string('resolver', 'tracker')); ?></td>
+    </tr>
+    <tr>
+        <td align="right" valign="top"><b><?php print_string('myissues', 'tracker') ?>:</b></td>
+        <td align="left" valign="top">
+            <?php
+                $issues = tracker_getownedissuesforresolve($tracker->id, $USER->id);
+                if ($issues){
+                    foreach($issues as $issue){
+                        echo $tracker->ticketprefix.$issue->id . " - <a href=\"view.php?id={$cm->id}&amp;view=view&amp;screen=viewanissue&amp;issueid={$issue->id}\">".$issue->summary.'</a>';
+                        echo "&nbsp;<span class=\"status_{$STATUSCODES[$issue->status]}\">".$STATUSKEYS[$issue->status].'</span>';
+                        echo '<br />';
+                    }
+                }
+                else{
+                    print_string('noresolvingissue', 'tracker');
+                }
+            ?>
+        </td>
+    </tr>
+<?php
+}
+?>
+</table>
+<?php 
+print_simple_box_end(); 
+$nohtmleditorneeded = true;
+?>
+
+</center>

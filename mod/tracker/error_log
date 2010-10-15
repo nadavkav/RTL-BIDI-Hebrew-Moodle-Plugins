@@ -1,0 +1,3 @@
+[27-Feb-2010 16:15:46] PHP Notice:  Undefined property: stdClass::$rootwww in /home/tikshuvp/public_html/moodle/mod/tracker/view.php on line 96
+[27-Feb-2010 16:15:48] PHP Notice:  Undefined property: stdClass::$rootwww in /home/tikshuvp/public_html/moodle/mod/tracker/view.php on line 96
+[27-Feb-2010 16:16:52] PHP Notice:  Undefined property: stdClass::$optionid in /home/tikshuvp/public_html/moodle/mod/tracker/classes/trackercategorytype/editoptionform.html on line 20

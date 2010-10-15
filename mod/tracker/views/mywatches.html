@@ -1,0 +1,101 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* Prints a form for user preferences
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+
+echo "<br/>";
+print_heading(get_string('mywatches', 'tracker'));
+print_simple_box_start('center', '80%', '', '', 'generalbox', 'bugreport');
+$mywatches = tracker_getwatches($tracker->id, $USER->id);
+?>
+<center>
+<form name="watchesform" method="post" action="view.php">
+<input type="hidden" name="id" value="<?php p($cm->id) ?>">
+<input type="hidden" name="what" value="unregisterall">
+<input type="hidden" name="userid" value="<?php p($USER->id) ?>">
+<?php
+if(empty($mywatches)){
+    print_string('nowatches', 'tracker');
+}
+else{
+    $idstr = get_string('id', 'tracker');
+    $summarystr = get_string('summary', 'tracker');
+    $peoplestr = get_string('observers', 'tracker');
+    $actionstr = get_string('action', 'tracker');
+    $notificationstr = get_string('notifications', 'tracker');
+    
+    
+    $table->head = array("<b>$idstr</b>", "<b>$summarystr</b>", "<b>$peoplestr</b>", "<b>$actionstr</b>", "<b>$notificationstr</b>");
+    $table->size = array('10%', '50%', '10%', '10%', '%20');
+    $table->align = array('left', 'left', 'center', 'center', 'center');
+    foreach($mywatches as $awatch){
+        $actions = "<a href=\"view.php?id={$cm->id}&amp;what=unregister&amp;issueid={$awatch->issueid}&amp;ccid={$awatch->userid}\" title=\"".get_string('delete')."\"><img src=\"{$CFG->pixpath}/t/delete.gif\" border=\"0\" /></a>";
+        $actions .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=editwatch&amp;ccid={$awatch->userid}\" title=\"".get_string('update')."\"><img src=\"{$CFG->pixpath}/t/edit.gif\" border=\"0\" /></a>";
+        if ($awatch->events & EVENT_OPEN){
+            $notifications = "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;open=0\" title=\"".get_string('unsetwhenopens','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/open.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications = "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;open=1\" title=\"".get_string('setwhenopens','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/open_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & EVENT_RESOLVING){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;resolving=0\" title=\"".get_string('unsetwhenworks','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/resolving.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;resolving=1\" title=\"".get_string('setwhenworks','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/resolving_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & EVENT_WAITING){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;waiting=0\" title=\"".get_string('unsetwhenwaits','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/waiting.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;waiting=1\" title=\"".get_string('setwhenwaits','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/waiting_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & EVENT_TESTING){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;testing=0\" title=\"".get_string('unsetwhentesting','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/testing.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;testing=1\" title=\"".get_string('setwhentesting','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/testing_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & EVENT_RESOLVED){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;resolved=0\" title=\"".get_string('unsetwhenresolves','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/resolved.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;resolved=1\" title=\"".get_string('setwhenresolves','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/resolved_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & EVENT_ABANDONNED){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;abandonned=0\" title=\"".get_string('unsetwhenthrown','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/abandonned.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;abandonned=1\" title=\"".get_string('setwhenthrown','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/abandonned_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        if ($awatch->events & ON_COMMENT){
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;oncomment=0\" title=\"".get_string('unsetoncomment','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/comments.gif\" border=\"0\" /></a>";
+        } else {
+            $notifications .= "&nbsp;<a href=\"view.php?id={$cm->id}&amp;what=updatewatch&amp;ccid={$awatch->id}&amp;oncomment=1\" title=\"".get_string('setoncomment','tracker')."\"><img src=\"{$CFG->wwwroot}/mod/tracker/pix/comments_shadow.gif\" border=\"0\" /></a>";
+        }
+
+        
+        $watchid = "<a href=\"{$CFG->wwwroot}/mod/tracker/view.php?id={$cm->id}&view=view&screen=viewanissue&issueid=$awatch->issueid\">".$tracker->ticketprefix.$awatch->issueid.'</a>';
+
+        $table->data[] = array($watchid, $awatch->summary, $awatch->people, $actions, $notifications);
+    }
+    print_table($table);
+?>
+<br/><input type="submit" name="go_btn" value="<?php print_string('unregisterall', 'tracker') ?>" />
+<?php
+}
+?>
+</form>
+</center>
+<?php
+print_simple_box_end();
+?>

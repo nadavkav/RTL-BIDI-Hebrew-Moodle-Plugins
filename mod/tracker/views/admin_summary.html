@@ -1,0 +1,136 @@
+<?php
+
+/**
+* @package mod-tracker
+* @category mod
+* @author Clifford Tham, Valery Fremaux > 1.8
+* @date 02/12/2007
+*
+* Summary for administrators
+*/
+
+if (!defined('MOODLE_INTERNAL')) {
+    die('Direct access to this script is forbidden.');    ///  It must be included from view.php in mod/tracker
+}
+echo '<br/>';
+print_simple_box_start('center', '100%', '', '', 'generalbox', 'bugreport');
+?>
+<center>
+<table border="1" cellpadding="3" width="100%">
+	<tr valign="top">
+		<td align="right" width="20%"><b><?php print_string('trackername', 'tracker') ?>: </b></td>
+		<td width="80%" align="right">
+			<?php echo format_string($tracker->name) ?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right" valign="top"><b><?php print_string('description') ?>:</b></td>
+		<td align="right">
+			<?php echo format_string($tracker->description) ?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right" valign="top"><b><?php print_string('numberofissues', 'tracker') ?>:</b></td>
+		<td valign="top" align="right">
+			<?php
+			echo get_string('sum_reported', 'tracker').': '.tracker_getnumissuesreported($tracker->id).'<br />';
+			echo get_string('sum_posted', 'tracker').': '.tracker_getnumissuesreported($tracker->id, POSTED).'<br />';
+			echo get_string('sum_opened', 'tracker').': '.tracker_getnumissuesreported($tracker->id, OPEN).'<br />';
+			echo get_string('sum_resolved', 'tracker').': '.tracker_getnumissuesreported($tracker->id, RESOLVED);
+			?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right"><b><?php print_string('elements', 'tracker') ?>:</b></td>
+		<td align="right">
+<?php
+				tracker_loadelements($tracker, $elements);
+				if (!empty($elements)){
+					$keys = array_keys($elements);
+					for ($i = 0; $i< sizeof($keys); $i++){
+						$element = $elements[$keys[$i]];
+						echo "<a href=\"view.php?id={$cm->id}&amp;what=editelement&amp;elementid=" . $element->id . '">';
+						echo format_string($element->description);
+						echo '</a>';
+						if ($i < sizeof ($keys)-1){
+							echo ', ';
+						}
+					}
+				}
+				else{
+					print_string('noelementscreated', 'tracker');
+					echo '<br/>';
+				}
+?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right"><b><?php print_string('administrators', 'tracker') ?>:</b></td>
+		<td align="right">
+<?php
+				$admins = tracker_getadministrators($context);
+
+				if (!empty($admins)){
+					$keys = array_keys($admins);
+					for ($j = 0; $j < sizeof($keys); $j++){
+						$admin = $admins[$keys[$j]];
+						echo fullname($admin);
+						if ($j < sizeof ($keys)-1){
+							echo ', ';
+						}
+					}
+				}
+				else{
+					print_string('notrackeradmins', 'tracker');
+					echo '<br/>';
+				}
+?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right"><b><?php print_string('resolvers', 'tracker') ?>:</b></td>
+		<td align="right">
+<?php
+				$resolvers = tracker_getresolvers($context);
+				if (!empty($resolvers)){
+					$keys = array_keys($resolvers);
+					for ($j = 0; $j < sizeof($keys); $j++){
+						$resolver = $resolvers[$keys[$j]];
+						echo fullname($resolver);
+						if ($j < sizeof ($keys)-1){
+							echo ', ';
+						}
+					}
+				}
+				else{
+					print_string('noresolvers', 'tracker');
+					echo '<br/>';
+				}
+?>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td align="right"><b><?php print_string('potentialresolvers', 'tracker') ?>:</b></td>
+		<td align="right">
+<?php
+				$developers = tracker_getdevelopers($context);
+				if (!empty($developers)){
+					$keys = array_keys($developers);
+					for ($j = 0; $j < sizeof($keys); $j++){
+						$developer = $developers[$keys[$j]];
+						echo fullname($developer);
+						if ($j < sizeof ($keys)-1){
+							echo ', ';
+						}
+					}
+				}
+				else{
+					print_string('nodevelopers', 'tracker');
+					echo '<br/>';
+				}
+?>
+		</td>
+	</tr>
+</table>
+<?php print_simple_box_end() ?>
+</center>
