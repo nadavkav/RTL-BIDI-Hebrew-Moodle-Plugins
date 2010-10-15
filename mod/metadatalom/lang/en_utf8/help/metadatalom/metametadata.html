@@ -1,0 +1,61 @@
+<!--
+// Translated by 	  	: Vitor Gonçalves
+// Date of translation		: 2006/10/01
+-->
+<img alt="LOM" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/metadatalom/icon.gif">&nbsp;<b>LOM Metadata <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MetaMetadata</b>
+<div class="indent">
+  <p>This category describes how the metadata
+    instance can be identified, who created this
+    metadata instance, how, when, and with what
+    references.
+    (This is not the information that describes
+  the learning object itself.)</p>
+  <ul>
+    <li><strong>Identifier</strong>: A globally unique label that identifies this
+      metadata record..
+      <ul>
+        <li><strong>Catalog: </strong>The name or designator of the identification
+          or cataloging scheme for this entry. A
+        namespace scheme.</li>
+        <li><strong>Entry:</strong> The value of the identifier within the
+          identification or cataloging scheme that
+          designates or identifies this metadata record.
+        A namespace specific string: URL or ISBN number.</li>
+      </ul>
+  </li>
+    <li><strong>Contribute:</strong>Those entities (i.e., people or organizations)
+      that have affected the state of this metadata
+      instance during its life cycle (e.g., creation,
+      validation).
+      <ul>
+        <li><strong>Role: </strong>Kind of contribution.</li>
+        <li><strong>Entity: </strong>The identification of and information about
+          entities (i.e., people, organizations)
+          contributing to this metadata instance. The
+        entities shall be ordered as most relevant first. Use vCard. You don't need to add &quot;BEGIN:VCARD&quot; neither &quot;END:VCARD&quot;. </li>
+        <li><strong>Date:</strong> The date of the contribution. </li>
+      </ul>
+    </li>
+    <li><strong>Metadata Schema:</strong> The name and version of the authoritative
+      specification used to create this metadata
+    instance. (by default, LOMv1.0). </li>
+    <li><strong>Language: </strong>Language of this metadata instance. This is
+      the default language for all LangString values
+      in this metadata instance. If a value for this
+      data element is not present in a metadata<br />
+      instance, then there is no default language for
+    LangString values.(see c)). </li>
+  </ul>
+  <p>Note:<br />
+a) 0-1 (0 minimum elements - 1 maximum elements) or 1-n (1 minimum elements - n maximum elements).<br />
+b) To add more than one value use &quot;;; &quot; to separate the values.<br />
+c) You can choose the  option &ldquo;Insert new value&rdquo; to transform a combo box into input text box and  click button &ldquo;Refresh metadata automatically&rdquo;.<br />
+d) In a combo box, choose the option &ldquo; &ldquo;(empty  or null) to not use values to the DC element.<br />
+e) If you want restore the predefined values,  cleans the fields in question, save and come back to edit the register of  metadata so that the values are restore automatically.</p>
+  <p>For more information see: <a href="http://ieeeltsc.org/wg12LOM/" target="_blank">http://ieeeltsc.org/wg12LOM/</a> </p>
+  <p align="center"><?php helpbutton('mods', '&iacute;ndice', 'metadatalom'); ?>
+    Index of Help  LOM metadata
+  <?php helpbutton('mods', '&iacute;ndice', 'metadatalom'); ?></p>  
+</div>
+

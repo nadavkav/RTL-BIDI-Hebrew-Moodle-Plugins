@@ -1,0 +1,1676 @@
+<!-- This page defines the form to create or edit an instance of this module -->
+<!-- It is used from /course/mod.php.  The whole instance is available as $form. -->
+
+<?php
+
+$ds = DIRECTORY_SEPARATOR;
+require_once("$CFG->dirroot{$ds}lib{$ds}moodlelib.php");
+require_once("$CFG->dirroot{$ds}mod{$ds}metadatalom{$ds}lib.php");
+
+//actual application to generate keywords from resource data.
+include('class.autokeyword.php');
+
+//current date
+$today = date("Y-m-d");
+
+//current year
+$year = date (Y);
+
+//Cut final ;; if exists
+function metadatalom_cut_final($field)
+{
+	$findme1 = ';;';
+	$findme2 = '; ';
+	$findme3 = ';; ';
+	$findme4 = '; ;';		
+	$f2chars = substr($field, -2, 2);
+	$f3chars = substr($field, -3, 3);	
+		if (($f3chars == $findme3) || ($f3chars == $findme4)) {
+		$string = substr($field, 0, -3);
+		} elseif (($f2chars == $findme1) || ($f2chars == $findme2)) {
+		$string = substr($field, 0, -2);		
+	} else {
+	$string = $field;
+	}
+return $string;
+}
+
+//Verify if URL exists
+function metadatalom_url_exists($url)
+{
+ $handle = @fopen($url, "r");
+ if ($handle === false)
+  return false;
+ fclose($handle);
+ return true;
+}
+
+//Cut _utf8 if exists
+function metadatalom_max_char_lang($lg)
+{
+	$findme = '_utf8';
+	$pos = strpos($lg, $findme);
+	if (!$pos === false) {
+	$lang = substr($lg, 0, -5);
+	} else {
+	$lang = $lg;
+	}
+return $lang;
+}
+
+/// First we check that form variables have been initialised
+
+$lo = optional_param('lo', 0, PARAM_INT); // LO ID
+
+function get_idlo($lo) {
+	if ((!($lo == NULL)) || (!($lo == 0))) {
+	$resource = $lo; 
+	$form->resource = $lo;	
+	} else {
+	$resource = 'id';
+	}
+	return $resource;
+}
+	
+	
+if (!isset($form->name)) {
+    $form->name = get_string('modulename','metadatalom');
+}
+if (!isset($form->resource)) {
+    $form->resource = get_idlo($lo);
+}
+if ((!isset($form->userid)) || ($form->userid == '0')) {
+    $form->userid = $USER->id;
+}
+
+if (! $metadataloms = get_all_instances_in_course("metadatalom", $course)) {
+}
+foreach ($metadataloms as $metadatalom) {
+				if ($metadatalom->resource == get_idlo($lo)) {
+					$link = $CFG->wwwroot.'/course/mod.php?update='.$metadatalom->coursemodule.'&amp;section='.$cm->section.'&amp;sesskey='.$USER->sesskey.'&amp;sr='.$cm->section;
+					$msg = get_string('exists', 'metadatalom');
+					redirect($link,$msg,'3');						
+				}
+			}
+?>
+
+<form name="form" method="post" action="mod.php">
+<center>
+<table cellpadding="5">
+<tr valign="top">
+    <td align="right"><strong><?php  print_string("name") ?>:</strong></td>
+    <td align="left">
+        <input type="text" name="name" size="50" value="<?php  p($form->name) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><strong><?php  print_string("resource","metadatalom") ?>:</strong></td>
+    <td align="left">
+		    <?php
+			//  get_array_of_activities($course->id);
+			//  cm - course module id
+			//  mod - name of the module (eg forum)
+			//  section - the number of the section (eg week or topic)
+			//  name - the name of the instance
+			//  visible - is the instance visible or not
+			//  extra - contains extra string to include in any link
+
+/// Get all the appropriate data
+
+
+			$modsmetadata = array();
+			$losannotated = array();
+			
+			$lines = get_array_of_activities($course->id);
+			foreach ($lines as $key => $line) {
+				$modfname = get_string("modulename", "$line->mod");
+				// resources or activities id-name and module name in course
+				$los[$key] = $line->cm . ' - ' . substr(trim(strip_tags(urldecode($line->name))),0,50) . ' (' . $modfname . ')';	
+				if (($line->mod == 'metadatalom') | ($line->mod == 'metadatadc')) {
+				array_push($modsmetadata, $line->cm . ' - ' . trim(strip_tags(urldecode($line->name))) . ' (' . $modfname . ')');
+				}
+			    if (! $metadataloms = get_all_instances_in_course("metadatalom", $course)) {
+				} else {
+					foreach ($metadataloms as $key => $metadatalom) {
+						if ($line->cm == $metadatalom->resource) {
+						array_push($losannotated, $line->cm . ' - ' . substr(trim(strip_tags(urldecode($line->name))),0,50) . ' (' . $modfname . ')');
+						}
+					}
+				}	
+			}
+			//Don't show the metadatalom/metadatadc mods in course
+			$loscourse = array_diff($los, $modsmetadata);
+			//Don't show the LOs annotated with LOM
+			$loswithoutmeta = array_diff($loscourse, $losannotated);
+			
+			if (($form->resource == NULL) | ($form->resource == "id") | ($form->resource == "0")) {			
+			//function choose_from_menu ($options, $name, $selected='', $nothing='choose', $script='', $nothingvalue='0', $return=false, $disabled=false, $tabindex=0)
+			choose_from_menu($loswithoutmeta, "resource", $form->resource, 'choose', '', '0', $return=false, $disabled=false, $tabindex=0);
+			} else {
+			choose_from_menu($loscourse, "resource", $form->resource, 'choose', '', '0', $return=false, $disabled=true, $tabindex=0);
+			?>
+			<input type="hidden" name=resource value="<?php  p($form->resource) ?>" />
+			<?php
+			}
+	        helpbutton('resource', get_string('resource','metadatalom'), 'metadatalom');
+			?>	
+    </td>
+</tr>
+
+<?php
+
+/////If is adding new register -> don't show metadata fields
+
+if (($form->resource == "id") || ($form->resource == 0)) {
+
+} else { 
+
+		///////////////////////////////////////////////////////////
+		//Find information in DB to generate metadata automatically
+		$lines = get_array_of_activities($course->id); 
+		foreach ($lines as $key => $line) {
+			$cmlo[$key] = $line->cm; //LO course module id
+			$modlo[$key] = $line->mod; //LO module name
+			$namelo[$key] = trim(strip_tags(urldecode($line->name))); //LO name	(instance name)
+			$vislo[$key] = $line->visible; //O LO é visivel
+		}
+
+		//get_field($table, $return, $field1, $value1, $field2='', $value2='', $field3='', $value3='')
+		$ccost = get_field(course, "cost", "id", $form->course, "id", $course->id);	
+		if (($ccost === FALSE) | ($ccost == "0") | ($ccost == NULL)) {
+		$coursecost = 'no';
+		} else {
+		$coursecost = 'yes';
+		}
+		//get_field($table, $return, $field1, $value1, $field2='', $value2='', $field3='', $value3='')
+		$modver = get_field("modules", "version", "name", $modlo[$form->resource]);	
+		if (($modver === FALSE) | ($modver == "0") | ($modver == NULL)) {
+		$modver = '';
+		}		
+		//get_field($table, $return, $field1, $value1, $field2='', $value2='', $field3='', $value3='')
+		$resource_summary = get_field($modlo[$form->resource], "summary", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_summary === FALSE) | ($resource_summary == "0") | ($resource_summary == NULL)) {
+		$resource_summary = '';
+		}
+		$resource_alltext = get_field($modlo[$form->resource], "alltext", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_alltext === FALSE) | ($resource_alltext == "0") | ($resource_alltext == NULL)) {
+		$resource_alltext = '';
+		}		
+		$resource_intro = get_field($modlo[$form->resource], "intro", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_intro === FALSE) | ($resource_intro == "0") | ($resource_intro == NULL)) {
+		$resource_intro = '';
+		}			
+		$resource_description = get_field($modlo[$form->resource], "description", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_description === FALSE) | ($resource_description == "0") | ($resource_description == NULL)) {
+		$resource_description = '';
+		}			
+		$resource_introduction = get_field($modlo[$form->resource], "introduction", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_introduction === FALSE) | ($resource_introduction == "0") | ($resource_introduction == NULL)) {
+		$resource_introduction = '';
+		}			
+		$resource_text = get_field($modlo[$form->resource], "text", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_text === FALSE) | ($resource_text == "0") | ($resource_text == NULL)) {
+		$resource_text = '';
+		}			
+		$resource_content = get_field($modlo[$form->resource], "content", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_content === FALSE) | ($resource_content == "0") | ($resource_content == NULL)) {
+		$resource_content = '';
+		}
+		$resource_pagename = get_field($modlo[$form->resource], "pagename", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_pagename === FALSE) | ($resource_pagename == "0") | ($resource_pagename == NULL)) {
+		$resource_pagename = '';
+		}
+		$resource_date = get_field($modlo[$form->resource], "timemodified", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_date === FALSE) | ($resource_date == "0") | ($resource_date == NULL)) {
+		$resource_date = userdate($resource_date,"%Y-%m-%d");				
+		}
+		$scorm_version = get_field($modlo[$form->resource], "version", "name", $namelo[$form->resource], "course", $course->id);
+		if (($scorm_version === FALSE) | ($scorm_version == "0") | ($scorm_version == NULL)) {
+		$scorm_version = 'v1.0';				
+		}
+
+if ($form->General_Identifier_Catalog == NULL) {
+    $form->General_Identifier_Catalog = 'URI';
+}
+if ($form->General_Identifier_Entry == NULL) {
+	$form->General_Identifier_Entry = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/view.php?id=' . $form->resource;
+}
+if (($form->General_Title == NULL) || ($form->General_Title == $form->name . ' - ') || (strlen($form->General_Title) < 4)){
+	$subtitle = trim(strip_tags(urldecode($namelo[$form->resource])));
+	$form->General_Title = $subtitle;
+}
+if ($form->General_Language == NULL) {
+	if ($languages = get_list_of_languages()) {
+		if (!$user->lang) {
+		$user->lang = $CFG->lang; }
+	}
+    $form->General_Language = $user->lang;
+}
+if ($form->General_Description == NULL) {
+    $form->General_Description = '';
+}
+if ($form->General_Keyword == NULL) {
+    $form->General_Keyword = ' ';
+}
+if ($form->General_Coverage == NULL) {
+    $form->General_Coverage = '';
+}
+if ($form->General_Structure == NULL) {
+	$atomic = get_string("atomic","metadatalom");
+    $form->General_Structure = $atomic;
+}
+if ($form->General_AggregationLevel == NULL) {
+    $form->General_AggregationLevel = '1';
+}
+if ($form->LifeCycle_Version == NULL) {
+    $form->LifeCycle_Version = 'v1.0';
+}
+if ($form->LifeCycle_Status == NULL) {
+	$draft = get_string('draft','metadatalom');
+    $form->LifeCycle_Status = $draft;
+}
+if ($form->LifeCycle_Contribute_Role == NULL) {
+	$creator = get_string('creator','metadatalom');
+    $form->LifeCycle_Contribute_Role = $creator;
+}
+if ($form->LifeCycle_Contribute_Entity == NULL) {
+    $form->LifeCycle_Contribute_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+}
+if ($form->LifeCycle_Contribute_Date == NULL) {
+    $form->LifeCycle_Contribute_Date = '';
+}
+if ($form->MetaMetadata_Identifier_Catalog == NULL) {
+    $form->MetaMetadata_Identifier_Catalog = 'URI';
+}
+if ($form->MetaMetadata_Identifier_Entry == NULL) {
+	$form->MetaMetadata_Identifier_Entry = '';
+}
+if ($form->MetaMetadata_Contribute_Role == NULL) {
+	$creator = get_string('creator','metadatalom');
+    $form->MetaMetadata_Contribute_Role = $creator;
+}
+if ($form->MetaMetadata_Contribute_Entity == NULL) {
+    $form->MetaMetadata_Contribute_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+}
+if ($form->MetaMetadata_Contribute_Date == NULL) {
+    $form->MetaMetadata_Contribute_Date = $today;
+}
+if ($form->MetaMetadata_MetadataScheme == NULL) {
+    $form->MetaMetadata_MetadataScheme = 'LOMv1.0';
+}
+if ($form->MetaMetadata_Language == NULL) {	
+	if ($languages = get_list_of_languages()) {
+		if (!$user->lang) {
+		$user->lang = $CFG->lang; }
+	}
+    $form->MetaMetadata_Language = $user->lang;
+}
+if ($form->Technical_Format == NULL) {
+	$url_resource = $form->Technical_Location;
+	$findme = 'http://localhost';
+	$pos = strpos($url_resource, $findme);
+	if (($pos === false) && (metadatalom_url_exists($url_resource))) {
+	$ary_header = get_headers($url_resource, 1); 
+	$filesize = $ary_header['Content-Length'];
+	$type = $ary_header['Content-Type']; 
+	$form->Technical_Format = $type; 	
+	$form->Technical_Size = $filesize . " bytes"; 
+	} else {
+	$form->Technical_Format = "unknown"; 	
+	$form->Technical_Size = "unknown"; 
+	}
+}
+if ($form->Technical_Size == NULL) {
+    $form->Technical_Size = 'unknown';
+}
+if ($form->Technical_Location == NULL) {
+	$form->Technical_Location = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/view.php?id=' . $form->resource;
+}
+if ($form->Technical_Requirement_Type == NULL) {
+	$browser = get_string('browser','metadatalom');
+    $form->Technical_Requirement_Type = 'moodle';
+}
+if ($form->Technical_Requirement_Name == NULL) {
+    $form->Technical_Requirement_Name = 'LMS/CMS/LCMS';
+}
+if ($form->Technical_Requirement_MinimumVersion == NULL) {
+    $form->Technical_Requirement_MinimumVersion = '';
+}
+if (!isset($form->Technical_Requirement_MaximumVersion)) {
+    $form->Technical_Requirement_MaximumVersion = '';
+}
+if ($form->Technical_InstalationRemarks == NULL) {
+    $form->Technical_InstalationRemarks = '';
+}
+if ($form->Technical_OtherPlatformRequirements == NULL) {
+    $form->Technical_OtherPlatformRequirements = '';
+}
+if ($form->Technical_Duration == NULL) {
+    $form->Technical_Duration = '';
+}
+if ($form->Educational_InteractivityType == NULL) {
+    $form->Educational_InteractivityType = '';
+}
+if ($form->Educational_LearningResourceType == NULL) {
+    $form->Educational_LearningResourceType = $modlo[$form->resource];
+}
+if ($form->Educational_InteractivityLevel == NULL) {
+    $form->Educational_InteractivityLevel = '';
+}
+if ($form->Educational_SemanticDensity == NULL) {
+    $form->Educational_SemanticDensity = '';
+}
+if ($form->Educational_IntendedEndUserRole == NULL) {
+    $form->Educational_IntendedEndUserRole = '';
+}
+if ($form->Educational_Context == NULL) {
+	$training = get_string('training','metadatalom');
+    $form->Educational_Context = $training;
+}
+if ($form->Educational_TypicalAgeRange == NULL) {
+    $form->Educational_TypicalAgeRange = '18-';
+}
+if ($form->Educational_Difficulty == NULL) {
+    $form->Educational_Difficulty = '';
+}
+if ($form->Educational_TypicalLearningTime == NULL) {
+    $form->Educational_TypicalLearningTime = '';
+}
+if ($form->Educational_Description == NULL) {
+    $form->Educational_Description = '';
+}
+if ($form->Educational_Language == NULL) {
+	if ($languages = get_list_of_languages()) {
+		if (!$user->lang) {
+		$user->lang = $CFG->lang; }
+	}
+    $form->Educational_Language = $user->lang;
+}
+if ($form->Rights_Cost == NULL) {
+    $form->Rights_Cost = $coursecost;
+}
+if ($form->Rights_CopyrightAndOtherRestrictions == NULL) {
+    $form->Rights_CopyrightAndOtherRestrictions = 'yes';
+}
+if ($form->Rights_Description == NULL) {
+    $form->Rights_Description = 'Copyright ' . $year . ' - ' . $USER->firstname . ' ' . $USER->lastname . ' - ' . $SITE->fullname . ' - All rights reserved.';
+}
+if ($form->Relation_Kind == NULL) {
+	$isPartOf = get_string('isPartOf','metadatalom');
+    $form->Relation_Kind = $isPartOf;
+}
+if ($form->Relation_Resource_Identifier_Catalog == NULL) {
+    $form->Relation_Resource_Identifier_Catalog = 'URI';
+}
+if ($form->Relation_Resource_Identifier_Entry == NULL) {
+		if ($form->Relation_Kind == $isPartOfisReferencedByrequires) {
+		$form->Relation_Resource_Identifier_Entry = $CFG->wwwroot . '/course/view.php?id=' . $course->id . ';; ' . $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/index.php?id=' . $course->id . ';; ' . $CFG->wwwroot;
+		$form->Relation_Resource_Description =  get_string("Auto_isPartOf","metadatalom") . " " . $course->fullname . ";; " .  get_string("Auto_isReferencedBy","metadatalom") . " " . $course->fullname . ";; " . get_string("Auto_requires","metadatalom") . " " . $SITE->fullname;
+		}
+}
+if ($form->Relation_Resource_Description == NULL) {
+    $form->Relation_Resource_Description = '';
+}
+if ($form->Annotation_Entity == NULL) {
+    $form->Annotation_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+}
+if ($form->Annotation_Date == NULL) {
+    $form->Annotation_Date = $today;
+}
+if ($form->Annotation_Description == NULL) {
+    $form->Annotation_Description = '';
+}
+if ($form->Classification_Purpose == NULL) {
+    $form->Classification_Purpose = '';
+}
+if ($form->Classification_TaxonPath_Source == NULL) {
+    $form->Classification_TaxonPath_Source = 'UDC';
+}
+if ($form->Classification_TaxonPath_Taxon_ID == NULL) {
+    $form->Classification_TaxonPath_Taxon_ID = '';
+}
+if ($form->Classification_TaxonPath_Taxon_Entry == NULL) {
+    $form->Classification_TaxonPath_Taxon_Entry = '';
+}
+if ($form->Classification_Description == NULL) {
+    $form->Classification_Description = '';
+}
+if ($form->Classification_Keyword == NULL) {
+    $form->Classification_Keyword = '';
+}
+?>
+<tr valign="top">
+<td colspan="2" align="right"><input type="submit" value="<?php  print_string("refresh","metadatalom") ?>" />
+</td>
+</tr>
+<tr valign="top">
+<td colspan="2"><hr /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("General","metadatalom");
+							 helpbutton('general', get_string('General','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("General_Identifier","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("General_Identifier_Catalog","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php
+	$empty = get_string('emptynew','metadatalom');
+	$newvalue = get_string('newvalue','metadatalom');
+	
+	if ($form->General_Identifier_Catalog == 'newvalue') {
+	$form->General_Identifier_Catalog = 'URI'	?>
+    <input type="text" name="General_Identifier_Catalog" size="30" value="<?php  p($form->General_Identifier_Catalog) ?>">
+	<?php } else { 	$form->General_Identifier_Catalog = metadatalom_cut_final($form->General_Identifier_Catalog); ?>	
+<select name='General_Identifier_Catalog'><option value='<?php  p($form->General_Identifier_Catalog) ?>'><?php  p($form->General_Identifier_Catalog) ?></option><option value='URI'>URI</option><option value='ISBN'>ISBN</option><option value='ARIADNE'>ARIADNE</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>
+		<font size=1>0-1</font>	<br />
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("General_Identifier_Entry","metadatalom") ?>:*</strong></td>
+    <td align="left"><?php
+		
+		/////
+						
+		if (($form->General_Identifier_Entry == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+		$form->General_Identifier_Entry = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/view.php?id=' . $form->resource;
+		$form->General_Identifier_Entry = metadatalom_cut_final($form->General_Identifier_Entry); ?>	
+        <input type="text" name="General_Identifier_Entry" size="50" value="<?php p($form->General_Identifier_Entry) ?>">
+		<?php } else { 
+		$form->General_Identifier_Entry = metadatalom_cut_final($form->General_Identifier_Entry); ?>
+        <input type="text" name="General_Identifier_Entry" size="50" value="<?php p($form->General_Identifier_Entry) ?>">
+		<?php } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Title","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		if (($form->General_Title == NULL) || ($form->General_Title == $form->name . ' - ') || (strlen($form->General_Title) < 4)) {
+		$subtitle = trim(strip_tags(urldecode($namelo[$form->resource])));
+		$form->General_Title = $form->name . ' - ' . $subtitle ?>
+		<input type="text" name="General_Title" size="50" value="<?php p($form->General_Title) ?>">
+		<?php } else { $form->General_Title = metadatalom_cut_final($form->General_Title); ?>
+        <input type="text" name="General_Title" size="50" value="<?php p($form->General_Title) ?>">
+		<font size=1>0-1</font>
+		<?php } ?>	
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Language","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php 
+		$currlang = current_language();
+		$langs = get_list_of_languages();
+		if ($form->General_Language == 'newvalue') {
+		$lg = $currlang;
+	    $form->General_Language = $lg; 
+		?>
+		<input type="text" name="General_Language" size="30" value="<?php  p($form->General_Language) ?>">
+		<?php
+		} elseif (array_key_exists($form->General_Language, $langs)) {
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);		
+			choose_from_menu ($mylangs, "General_Language", $form->General_Language, "", "", "");
+		} elseif ($form->General_Language == "none") {
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			choose_from_menu ($mylangs, "General_Language", $form->General_Language, "", "", "");
+		} else {
+			$form->General_Language = metadatalom_cut_final($form->General_Language); 
+			$clg = array ($form->General_Language => $form->General_Language, "none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			choose_from_menu ($mylangs, "General_Language", $form->General_Language, "", "", "");
+		}
+		?>
+		<font size=1>0-n</font>			
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		$usehtmleditor = can_use_html_editor();
+		if (($form->General_Description == NULL) || (strlen($form->General_Description) < 4)) {	
+		$resource_summary = $resource_summary . $resource_intro . $resource_description . $resource_introduction . $resource_text . $resource_content;
+		$form->General_Description = trim(strip_tags(urldecode($resource_summary)));
+		$form->General_Description = metadatalom_cut_final($form->General_Description);
+		//print_textarea($usehtmleditor, $rows, $cols, $width, $height, $name, $value='', $courseid=0)
+        //print_textarea($usehtmleditor, 3, 40, 680, 400, "General_Description", $form->General_Description);
+        //print_textarea(false, 3, 40, 680, 400, "General_Description", $form->General_Description);
+		print '<textarea name="General_Description" rows="3" cols="40" wrap ="virtual">'.$form->General_Description.'</textarea>';
+		} else {
+		$form->General_Description = metadatalom_cut_final($form->General_Description);
+        print_textarea(false, 3, 40, 680, 400, 'General_Description', "$form->General_Description");
+		//print '<textarea name="General_Description" rows="3" cols="40" wrap ="virtual">'.$form->General_Description.'</textarea>';
+		} ?>
+		<font size=1>0-n</font>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Keyword","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+
+		$data = $resource_pagename . $resource_summary . $resource_alltext . $resource_intro . 
+				$resource_description . $resource_introduction . $resource_text . $resource_content;
+
+		$params['content'] = $data; //resource page content
+		//set the length of keywords you like
+		$params['min_word_length'] = 5;  //minimum length of single words
+		$params['min_word_occur'] = 3;  //minimum occur of single words
+
+		$params['min_2words_length'] = 3;  //minimum length of words for 2 word phrases
+		$params['min_2words_phrase_length'] = 10; //minimum length of 2 word phrases
+		$params['min_2words_phrase_occur'] = 2; //minimum occur of 2 words phrase
+
+		$params['min_3words_length'] = 3;  //minimum length of words for 3 word phrases
+		$params['min_3words_phrase_length'] = 10; //minimum length of 3 word phrases
+		$params['min_3words_phrase_occur'] = 2; //minimum occur of 3 words phrase
+
+		$keyword = new autokeyword($params, "iso-8859-1");
+		//$keyword = new autokeyword($params, "utf-8");			
+        
+		//$form->General_Keyword = $keyword->get_keywords(); //single words and frases with 2 or 3 words
+		//$form->General_Keyword = $keyword->parse_2words(); //frases with 2 words
+		//$form->General_Keyword = $keyword->parse_3words(); //frases with 3 words
+		//$form->General_Keyword = $keyword->parse_words(); //single words		
+		
+		if (($form->General_Keyword == NULL) | ($form->General_Keyword == "0") | ($form->General_Keyword == " ")) {		
+		$form->General_Keyword = $keyword->parse_words(); //single words	
+		$form->General_Keyword = metadatalom_cut_final($form->General_Keyword); 
+		//print_textarea(false, 3, 40, 680, 400, "General_Keyword", $form->General_Keyword);
+		print '<textarea name="General_Keyword" rows="3" cols="40" wrap ="virtual">'.$form->General_Keyword.'</textarea>';
+		} else {
+		$form->General_Keyword = metadatalom_cut_final($form->General_Keyword); 		
+        //print_textarea(false, 3, 40, 680, 400, "General_Keyword", $form->General_Keyword);
+		print '<textarea name="General_Keyword" rows="3" cols="40" wrap ="virtual">'.$form->General_Keyword.'</textarea>';
+		} ?>
+		<font size=1>0-n</font>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Coverage","metadatalom") ?>:*</strong></td>
+    <td align="left">
+        <?php
+			$form->General_Coverage = metadatalom_cut_final($form->General_Coverage);			
+            //print_textarea(false, 3, 40, 680, 400, "General_Coverage", $form->General_Coverage);
+			print '<textarea name="General_Coverage" rows="3" cols="40" wrap ="virtual">'.$form->General_Coverage.'</textarea>';			
+        ?>
+		<font size=1>0-n</font>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_Structure","metadatalom") ?>:</strong></td>
+    <td align="left">
+<?php
+$atomic = get_string("atomic","metadatalom");
+$collection = get_string('collection','metadatalom');
+$hierarchical = get_string('hierarchical','metadatalom');
+$linear = get_string('linear','metadatalom');
+$networked = get_string('networked','metadatalom');
+$branched = get_string('branched','metadatalom');
+$mixed = get_string('mixed','metadatalom');
+$parceled = get_string('parceled','metadatalom');
+//$op = array ($op1, $op2, ..., ''=>$empty);
+//choose_from_menu($opgs, "General_Structure", $form->General_Structure, $form->General_Structure, '', '0', $return=false, $disabled=false, $tabindex=0);
+$opgs = array ($atomic=>$atomic, $collection=>$collection, $hierarchical=>$hierarchical, $linear=>$linear, $networked=>$networked, $branched=>$branched, $mixed=>$mixed, $parceled=>$parceled, ''=>$empty, 'newvalue'=>$newvalue);
+
+	if ($form->General_Structure == 'newvalue') {
+	    $form->General_Structure = $atomic; ?>
+		<input type="text" name="General_Structure" size="30" value="<?php  p($form->General_Structure) ?>">
+	<?php } else {
+	choose_from_menu($opgs, "General_Structure", $form->General_Structure, $form->General_Structure, '', '0', $return=false, $disabled=false, $tabindex=0);
+	} ?>
+<!--	<select name='General_Structure'><option value='<?php  p($form->General_Structure) ?>'><?php  p($form->General_Structure) ?></option><option value='atomic'><?php echo $atomic; ?></option><option value='collection'><?php echo $collection; ?></option><option value='hierarchical'><?php echo $hierarchical; ?></option><option value='linear'><?php echo $linear; ?></option><option value='networked'><?php echo $networked; ?></option><option value='branched'><?php echo $branched; ?></option><option value='mixed'><?php echo $mixed; ?></option><option value='parceled'><?php echo $parceled; ?></option></select>	 -->
+	<font size=1>0-1</font>
+	</td>
+</tr>	
+
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("General_AggregationLevel","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php
+	if ($form->General_AggregationLevel == 'newvalue') {
+	    $form->General_AggregationLevel = 1 ?>
+		<input type="text" name="General_AggregationLevel" size="30" value="<?php  p($form->General_AggregationLevel) ?>">
+	<?php } else { ?>	
+        <select name='General_AggregationLevel'><option value='<?php  p($form->General_AggregationLevel) ?>'><?php  p($form->General_AggregationLevel) ?></option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>			
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("LifeCycle","metadatalom");
+								helpbutton('lifecycle', get_string('LifeCycle','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("LifeCycle_Version","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($modlo[$form->resource] == "scorm") {
+		$form->LifeCycle_Version = $scorm_version; ?>
+        <input type="text" name="LifeCycle_Version" size="50" value="<?php  p($form->LifeCycle_Version) ?>">
+		<?php } else {
+		$form->LifeCycle_Version = 'v1.0' ?>
+        <input type="text" name="LifeCycle_Version" size="50" value="<?php  p($form->LifeCycle_Version) ?>">
+		<?php }	?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<?php
+$draft = get_string('draft','metadatalom');
+$final = get_string('final','metadatalom');
+$revised = get_string('revised','metadatalom');
+$unavailable = get_string('unavailable','metadatalom');
+$oplcs = array ($draft=>$draft, $final=>$final, $revised=>$revised, $unavailable=>$unavailable, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("LifeCycle_Status","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php
+	if ($form->LifeCycle_Status == 'newvalue') {
+	    $form->LifeCycle_Status = $draft ?>
+		<input type="text" name="LifeCycle_Status" size="30" value="<?php  p($form->LifeCycle_Status) ?>">
+	<?php } else {	
+		choose_from_menu($oplcs, "LifeCycle_Status", $form->LifeCycle_Status, $form->LifeCycle_Status, '', '0', $return=false, $disabled=false, $tabindex=0);	
+	} ?>
+<!--        <select name='LifeCycle_Status'><option value='<?php  p($form->LifeCycle_Status) ?>'><?php  p($form->LifeCycle_Status) ?></option><option value='draft'><?php echo $draft; ?></option><option value='final'><?php echo $final; ?></option><option value='revised'><?php echo $revised; ?></option><option value='unavailable'><?php echo $unavailable; ?></option></select> -->
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("LifeCycle_Contribute","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<?php
+$creator = get_string('creator','metadatalom');
+$publisher = get_string('publisher','metadatalom');
+$unknown = get_string('unknown','metadatalom');
+$initiator = get_string('initiator','metadatalom');
+$terminator = get_string('terminator','metadatalom');
+$validator = get_string('validator','metadatalom');
+$editor = get_string('editor','metadatalom');
+$graphicaldesigner = get_string('graphicaldesigner','metadatalom');
+$technicalimplementer = get_string('technicalimplementer','metadatalom');
+$contentprovider = get_string('contentprovider','metadatalom');
+$technicalvalidator = get_string('technicalvalidator','metadatalom');
+$educationalvalidator = get_string('educationalvalidator','metadatalom');
+$scriptwriter = get_string('scriptwriter','metadatalom');
+$instructionaldesigner = get_string('instructionaldesigner','metadatalom');
+$subjectmatterexpert = get_string('subjectmatterexpert','metadatalom');
+$oplccr = array ($creator=>$creator, $publisher=>$publisher, $unknown=>$unknown, $initiator=>$initiator, $terminator=>$terminator, $validator=>$validator, $editor=>$editor, $graphicaldesigner=>$graphicaldesigner, $technicalimplementer=>$technicalimplementer, $contentprovider=>$contentprovider, $technicalvalidator=>$technicalvalidator, $educationalvalidator=>$educationalvalidator, $scriptwriter=>$scriptwriter, $instructionaldesigner=>$instructionaldesigner, $subjectmatterexpert=>$subjectmatterexpert, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("LifeCycle_Contribute_Role","metadatalom") ?>:</strong></td>
+    <td align="left">
+		<?php if ($form->LifeCycle_Contribute_Role == "newvalue") {
+		$form->LifeCycle_Contribute_Role = $creator; ?>
+        <input type="text" name="LifeCycle_Contribute_Role" size="50" value="<?php  p($form->LifeCycle_Contribute_Role) ?>">			
+
+<!--        <select name='LifeCycle_Contribute_Role'><option value='<?php  p($form->LifeCycle_Contribute_Role) ?>'><?php  p($form->LifeCycle_Contribute_Role) ?></option><option value='creator'><?php echo $creator; ?></option><option value='publisher'><?php echo $publisher; ?></option><option value='unknown'><?php echo $unknown; ?></option><option value='initiator'><?php echo $initiator; ?></option><option value='terminator'><?php echo $terminator; ?></option><option value='validator'><?php echo $validator; ?></option><option value='editor'><?php echo $editor; ?></option><option value='graphical designer'><?php echo $graphicaldesigner; ?></option><option value='technical implementer'><?php echo $technicalimplementer; ?></option><option value='content provider'><?php echo $contentprovider; ?></option><option value='technical validator'><?php echo $technicalvalidator; ?></option><option value='educational validator'><?php echo $educationalvalidator; ?></option><option value='script writer'><?php echo $scriptwriter; ?></option><option value='instructional designer'><?php echo $instructionaldesigner; ?></option><option value='subject matter expert'><?php echo $subjectmatterexpert; ?></option><option value=''></option></select> -->	
+		<?php } else {
+		$form->LifeCycle_Contribute_Role = metadatalom_cut_final($form->LifeCycle_Contribute_Role);	
+		choose_from_menu($oplccr, "LifeCycle_Contribute_Role", $form->LifeCycle_Contribute_Role, $form->LifeCycle_Contribute_Role, '', '0', $return=false, $disabled=false, $tabindex=0);		
+		} ?>		
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("LifeCycle_Contribute_Entity","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php if ($form->LifeCycle_Contribute_Entity == NULL) { 	
+$form->LifeCycle_Contribute_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+		$form->LifeCycle_Contribute_Entity = metadatalom_cut_final($form->LifeCycle_Contribute_Entity);
+		print_textarea(false, 3, 40, 680, 400, 'LifeCycle_Contribute_Entity', "$form->LifeCycle_Contribute_Entity");
+	} else { 
+		$form->LifeCycle_Contribute_Entity = metadatalom_cut_final($form->LifeCycle_Contribute_Entity);
+		print_textarea(false, 3, 40, 680, 400, 'LifeCycle_Contribute_Entity', "$form->LifeCycle_Contribute_Entity");		
+	} ?>
+	<font size=1>0-n</font>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("LifeCycle_Contribute_Date","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php
+	if (($form->LifeCycle_Contribute_Date == NULL) | ($form->LifeCycle_Contribute_Date == "1970-01-1")){	 	
+    $form->LifeCycle_Contribute_Date = userdate($resource_date,"%Y-%m-%d"); ?>
+    <input type="text" name="LifeCycle_Contribute_Date" size="40" value="<?php  p($form->LifeCycle_Contribute_Date) ?>">
+	<?php } elseif (!$form->LifeCycle_Contribute_Date = userdate($resource_date,"%Y-%m-%d")) {
+    $form->LifeCycle_Contribute_Date = userdate($resource_date,"%Y-%m-%d"); ?>
+    <input type="text" name="LifeCycle_Contribute_Date" size="40" value="<?php  p($form->LifeCycle_Contribute_Date) ?>">	
+	<?php } else { 
+	$form->LifeCycle_Contribute_Date = metadatalom_cut_final($form->LifeCycle_Contribute_Date); ?>
+    <input type="text" name="LifeCycle_Contribute_Date" size="10" value="<?php  p($form->LifeCycle_Contribute_Date) ?>">
+	<?php } ?>
+	<font size=1>0-1</font>
+    </td>
+</tr>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("MetaMetadata","metadatalom");
+								helpbutton('metametadata', get_string('MetaMetadata','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("MetaMetadata_Identifier","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("MetaMetadata_Identifier_Catalog","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php if ($form->MetaMetadata_Identifier_Catalog == 'newvalue') {
+		$form->MetaMetadata_Identifier_Catalog = 'URI';	?>
+    	<input type="text" name="MetaMetadata_Identifier_Catalog" size="30" value="<?php  p($form->MetaMetadata_Identifier_Catalog) ?>">
+	<?php } else { 		 
+	$form->MetaMetadata_Identifier_Catalog = metadatalom_cut_final($form->MetaMetadata_Identifier_Catalog);	?>
+<select name='MetaMetadata_Identifier_Catalog'><option value='<?php  p($form->MetaMetadata_Identifier_Catalog) ?>'><?php  p($form->MetaMetadata_Identifier_Catalog) ?></option><option value='URI'>URI</option><option value='ISBN'>ISBN</option><option value='ARIADNE'>ARIADNE</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("MetaMetadata_Identifier_Entry","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->MetaMetadata_Identifier_Entry;
+		$findme = 'view.php?id=';
+		$pos = strpos($url_resource, $findme);			
+		if (($form->MetaMetadata_Identifier_Entry == NULL) | (!$pos === false)) { 
+    	$form->MetaMetadata_Identifier_Entry = $CFG->wwwroot . '/mod/metadatalom/view.php?id=' . $form->coursemodule; 
+		$form->MetaMetadata_Identifier_Entry = metadatalom_cut_final($form->MetaMetadata_Identifier_Entry); ?>
+        <input type="text" name="MetaMetadata_Identifier_Entry" size="50" value="<?php p($form->MetaMetadata_Identifier_Entry) ?>">
+		<?php } else { 
+		$form->MetaMetadata_Identifier_Entry = metadatalom_cut_final($form->MetaMetadata_Identifier_Entry); ?>
+        <input type="text" name="MetaMetadata_Identifier_Entry" size="50" value="<?php p($form->MetaMetadata_Identifier_Entry) ?>">
+		<?php } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("MetaMetadata_Contribute","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>	
+</tr>
+
+
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("MetaMetadata_Contribute_Role","metadatalom") ?>:</strong></td>
+    <td align="left">
+		<?php $opmmcr = array ($creator=>$creator, $validator=>$validator, ''=>$empty, 'newvalue'=>$newvalue);
+		if ($form->MetaMetadata_Contribute_Role == 'newvalue') {
+		$form->MetaMetadata_Contribute_Role = $creator;	?>
+        <input type="text" name="MetaMetadata_Contribute_Role" size="50" value="<?php  p($form->MetaMetadata_Contribute_Role) ?>">
+		<?php } else {
+		$form->MetaMetadata_Contribute_Role = metadatalom_cut_final($form->MetaMetadata_Contribute_Role);
+		choose_from_menu($opmmcr, "MetaMetadata_Contribute_Role", $form->MetaMetadata_Contribute_Role, $form->MetaMetadata_Contribute_Role, '', '0', $return=false, $disabled=false, $tabindex=0);		
+		} ?>		
+<!--<select name='MetaMetadata_Contribute_Role'><option value='<?php  p($form->MetaMetadata_Contribute_Role) ?>'><?php  p($form->MetaMetadata_Contribute_Role) ?></option><option value='creator'><?php echo $creator; ?></option><option value='validator'><?php echo $validator; ?></option><option value=''></option></select> -->
+	<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("MetaMetadata_Contribute_Entity","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php if ($form->MetaMetadata_Contribute_Entity == NULL) { 	
+	$form->MetaMetadata_Contribute_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+		$form->MetaMetadata_Contribute_Entity = metadatalom_cut_final($form->MetaMetadata_Contribute_Entity);
+		print_textarea(false, 3, 40, 680, 400, 'MetaMetadata_Contribute_Entity', "$form->MetaMetadata_Contribute_Entity");
+	} else { 
+		$form->MetaMetadata_Contribute_Entity = metadatalom_cut_final($form->MetaMetadata_Contribute_Entity);
+		print_textarea(false, 3, 40, 680, 400, 'MetaMetadata_Contribute_Entity', "$form->MetaMetadata_Contribute_Entity");
+	} ?>
+	<font size=1>0-n</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("MetaMetadata_Contribute_Date","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php if ($form->MetaMetadata_Contribute_Date == NULL) { 	
+    $form->MetaMetadata_Contribute_Date = $today;	?>
+        <input type="text" name="MetaMetadata_Contribute_Date" size="10" value="<?php  p($form->MetaMetadata_Contribute_Date) ?>">
+	<?php } else { 
+		$form->MetaMetadata_Contribute_Date = metadatalom_cut_final($form->MetaMetadata_Contribute_Date); ?>
+        <input type="text" name="MetaMetadata_Contribute_Date" size="10" value="<?php  p($form->MetaMetadata_Contribute_Date) ?>">
+	<?php } ?>
+	<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("MetaMetadata_MetadataScheme","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php $form->MetaMetadata_MetadataScheme = metadatalom_cut_final($form->MetaMetadata_MetadataScheme); ?>
+        <input type="text" name="MetaMetadata_MetadataScheme" size="50" value="<?php  p($form->MetaMetadata_MetadataScheme) ?>">
+		<font size=1>0-n</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("MetaMetadata_Language","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php 
+		$currlang = current_language();
+		$langs = get_list_of_languages();
+		if ($form->MetaMetadata_Language == 'newvalue') {
+		$lg = $currlang;
+	    $form->MetaMetadata_Language = $lg; ?>
+		<input type="text" name="MetaMetadata_Language" size="30" value="<?php  p($form->MetaMetadata_Language) ?>">
+		<?php
+		} elseif (array_key_exists($form->MetaMetadata_Language, $langs)) {
+			$form->MetaMetadata_Language = metadatalom_cut_final($form->MetaMetadata_Language);
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);		
+			choose_from_menu ($mylangs, "MetaMetadata_Language", $form->MetaMetadata_Language, "", "", "");
+		} elseif ($form->MetaMetadata_Language == "none") {
+			$form->MetaMetadata_Language = metadatalom_cut_final($form->MetaMetadata_Language);
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			//array_unshift($langs, ' ', $form->MetaMetadata_Language);
+			choose_from_menu ($mylangs, "MetaMetadata_Language", $form->MetaMetadata_Language, "", "", "");
+		} else {
+			$form->MetaMetadata_Language = metadatalom_cut_final($form->MetaMetadata_Language);
+			$clg = array ($form->MetaMetadata_Language => $form->MetaMetadata_Language, "none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			choose_from_menu ($mylangs, "MetaMetadata_Language", $form->MetaMetadata_Language, "", "", "");
+		}
+		?>		
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Technical","metadatalom");
+								helpbutton('technical', get_string('Technical','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Technical_Format","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->Technical_Location;
+		$findme = 'http://localhost';
+		$pos = strpos($url_resource, $findme);		
+		if ((!$form->Technical_Format == NULL) & (!$form->Technical_Format == 'unknown') & (!$form->Technical_Format == 'newvalue')) { 
+		$form->Technical_Format = metadatalom_cut_final($form->Technical_Format); ?>
+<select name='Technical_Format'><option value='<?php  p($form->Technical_Format) ?>'><?php  p($form->Technical_Format) ?></option><option value='application/excel'>application/excel</option><option value='application/mspowerpoint'>application/mspowerpoint</option><option value='application/msword'>application/msword</option><option value='application/pdf'>application/pdf</option><option value='application/x-javascript'>application/x-javascript</option><option value='application/x-toff-msvideo'>application/x-toff-msvideo</option><option value='application/x-shockwave-flash'>application/x-shockwave-flash</option><option value='application/x-compressed'>application/x-compressed</option><option value='application/zip'>application/zip</option><option value='audio/zip'>audio/zip</option><option value='audio/aiff'>audio/aiff</option><option value='audio/x-aiff'>audio/x-aiff</option><option value='audio/midi'>audio/midi</option><option value='audio/mpegaudio/mpeg'>audio/mpegaudio/mpeg</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/wav'>audio/wav</option><option value='audio/x-wav'>audio/x-wav</option><option value='image/bmp'>image/bmp</option><option value='image/x-windows-bmp'>image/x-windows-bmp</option><option value='image/gif'>image/gif</option><option value='image/jpeg'>image/jpeg</option><option value='image/x-quicktime'>image/x-quicktime</option><option value='image/tiff'>image/tiff</option><option value='image/x-tiff'>image/x-tiff</option><option value='text/x-asm'>text/x-asm</option><option value='text/plain'>text/plain</option><option value='text/css'>text/css</option><option value='text/html'>text/html</option><option value='text/richtext'>text/richtext</option><option value='text/xml'>text/xml</option><option value='video/x-ms-asf'>video/x-ms-asf</option><option value='video/avi'>video/avi</option><option value='video/msvideo'>video/msvideo</option><option value='video/mpeg'>video/mpeg</option><option value='video/x-mpeg'>video/x-mpeg</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } elseif ($form->Technical_Format == 'newvalue') {
+	    $form->Technical_Format = 'text/xml'; ?>
+		<input type="text" name="Technical_Format" size="30" value="<?php  p($form->Technical_Format) ?>">	
+		<?php } elseif (($form->Technical_Format == 'unknown') || ($pos === false) && (metadatalom_url_exists($url_resource))) {
+			$ary_header = get_headers($url_resource, 1); 
+			$filesize = $ary_header['Content-Length'];
+			$type = $ary_header['Content-Type'];
+			$form->Technical_Format = $type;
+			$form->Technical_Size = $filesize;			
+			$form->Technical_Format = metadatalom_cut_final($form->Technical_Format); ?>
+<select name='Technical_Format'><option value='<?php  p($form->Technical_Format) ?>'><?php  p($form->Technical_Format) ?></option><option value='application/excel'>application/excel</option><option value='application/mspowerpoint'>application/mspowerpoint</option><option value='application/msword'>application/msword</option><option value='application/pdf'>application/pdf</option><option value='application/x-javascript'>application/x-javascript</option><option value='application/x-toff-msvideo'>application/x-toff-msvideo</option><option value='application/x-shockwave-flash'>application/x-shockwave-flash</option><option value='application/x-compressed'>application/x-compressed</option><option value='application/zip'>application/zip</option><option value='audio/zip'>audio/zip</option><option value='audio/aiff'>audio/aiff</option><option value='audio/x-aiff'>audio/x-aiff</option><option value='audio/midi'>audio/midi</option><option value='audio/mpegaudio/mpeg'>audio/mpegaudio/mpeg</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/wav'>audio/wav</option><option value='audio/x-wav'>audio/x-wav</option><option value='image/bmp'>image/bmp</option><option value='image/x-windows-bmp'>image/x-windows-bmp</option><option value='image/gif'>image/gif</option><option value='image/jpeg'>image/jpeg</option><option value='image/x-quicktime'>image/x-quicktime</option><option value='image/tiff'>image/tiff</option><option value='image/x-tiff'>image/x-tiff</option><option value='text/x-asm'>text/x-asm</option><option value='text/plain'>text/plain</option><option value='text/css'>text/css</option><option value='text/html'>text/html</option><option value='text/richtext'>text/richtext</option><option value='text/xml'>text/xml</option><option value='video/x-ms-asf'>video/x-ms-asf</option><option value='video/avi'>video/avi</option><option value='video/msvideo'>video/msvideo</option><option value='video/mpeg'>video/mpeg</option><option value='video/x-mpeg'>video/x-mpeg</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>						
+		<?php } else {
+			$form->Technical_Format = 'unknown'; ?>			
+<select name='Technical_Format'><option value='<?php  p($form->Technical_Format) ?>'><?php  p($form->Technical_Format) ?></option><option value='application/excel'>application/excel</option><option value='application/mspowerpoint'>application/mspowerpoint</option><option value='application/msword'>application/msword</option><option value='application/pdf'>application/pdf</option><option value='application/x-javascript'>application/x-javascript</option><option value='application/x-toff-msvideo'>application/x-toff-msvideo</option><option value='application/x-shockwave-flash'>application/x-shockwave-flash</option><option value='application/x-compressed'>application/x-compressed</option><option value='application/zip'>application/zip</option><option value='audio/zip'>audio/zip</option><option value='audio/aiff'>audio/aiff</option><option value='audio/x-aiff'>audio/x-aiff</option><option value='audio/midi'>audio/midi</option><option value='audio/mpegaudio/mpeg'>audio/mpegaudio/mpeg</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/x-mpeg3'>audio/x-mpeg3</option><option value='audio/wav'>audio/wav</option><option value='audio/x-wav'>audio/x-wav</option><option value='image/bmp'>image/bmp</option><option value='image/x-windows-bmp'>image/x-windows-bmp</option><option value='image/gif'>image/gif</option><option value='image/jpeg'>image/jpeg</option><option value='image/x-quicktime'>image/x-quicktime</option><option value='image/tiff'>image/tiff</option><option value='image/x-tiff'>image/x-tiff</option><option value='text/x-asm'>text/x-asm</option><option value='text/plain'>text/plain</option><option value='text/css'>text/css</option><option value='text/html'>text/html</option><option value='text/richtext'>text/richtext</option><option value='text/xml'>text/xml</option><option value='video/x-ms-asf'>video/x-ms-asf</option><option value='video/avi'>video/avi</option><option value='video/msvideo'>video/msvideo</option><option value='video/mpeg'>video/mpeg</option><option value='video/x-mpeg'>video/x-mpeg</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } ?>
+		<font size=1>0-n</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Technical_Size","metadatalom") ?>:</strong></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->Technical_Location;
+		$findme = 'http://localhost';
+		$pos = strpos($url_resource, $findme);		
+		if ((!$form->Technical_Size == NULL) & (!$form->Technical_Size == "unknown")) { ?>
+        <input type="text" name="Technical_Size" size="50" value="<?php p($form->Technical_Size) ?>">
+		<?php } elseif (($form->Technical_Size = "unknown") | (($pos === false) && (metadatalom_url_exists($url_resource)))) {
+			$ary_header = get_headers($url_resource, 1); 
+			$filesize = $ary_header['Content-Length'];
+			$type = $ary_header['Content-Type']; 
+			$form->Technical_Size = $filesize . " bytes"; 			
+			$form->Technical_Size = metadatalom_cut_final($form->Technical_Size); ?>
+        	<input type="text" name="Technical_Size" size="50" value="<?php p($form->Technical_Size) ?>">								
+		<?php } else {
+			$form->Technical_Size = "unknown"; ?>
+        <input type="text" name="Technical_Size" size="50" value="<?php p($form->Technical_Size) ?>">
+		<?php } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Technical_Location","metadatalom") ?>:*</strong></td>
+    <td align="left"><?php
+		$url_resource = $form->Technical_Location;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);		
+		if (($form->Technical_Location == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+	    $form->Technical_Location = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/view.php?id=' . $form->resource; 
+		$form->Technical_Location = metadatalom_cut_final($form->Technical_Location); ?>
+        <input type="text" name="Technical_Location" size="50" value="<?php p($form->Technical_Location) ?>">
+		<?php } else { 
+		$form->Technical_Location = metadatalom_cut_final($form->Technical_Location); ?>
+        <input type="text" name="Technical_Location" size="50" value="<?php p($form->Technical_Location) ?>">
+		<?php } ?>
+		<font size=1>0-n</font>
+    </td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("Technical_Requirement","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr>
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Technical_OrComposite","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<?php
+$browser = get_string('browser','metadatalom');
+$operatingsystem = get_string('operatingsystem','metadatalom');
+?>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Technical_Requirement_Type","metadatalom") ?>:</strong></td>
+    <td align="left">
+			<?php
+			$browser = get_string('browser','metadatalom');
+			$operatingsystem = get_string('operatingsystem','metadatalom');			
+			$empty = get_string('emptynew','metadatalom');
+			$optrt = array ('browser'=>$browser, 'operating system'=>$operatingsystem, 'LMS/CMS/LCMS'=>'LMS/CMS/LCMS', ''=>$empty, 'newvalue'=>$newvalue);
+			
+			if ($form->Technical_Requirement_Type == 'newvalue') {
+			$form->Technical_Requirement_Type = 'browser;; operating system;; LMS/CMS/LCMS'; ?>			
+        	<input type="text" name="Technical_Requirement_Type" size="50" value="<?php p($form->Technical_Requirement_Type) ?>">
+			<?php } else {
+			$form->Technical_Requirement_Type = metadatalom_cut_final($form->Technical_Requirement_Type);
+			choose_from_menu($optrt, "Technical_Requirement_Type", $form->Technical_Requirement_Type, $form->Technical_Requirement_Type, '', '0', $return=false, $disabled=false, $tabindex=0);			
+			} ?>
+<!--        <select name='Technical_Requirement_Type'><option value='<?php  p($form->Technical_Requirement_Type) ?>'><?php  p($form->Technical_Requirement_Type) ?></option><option value='browser'><?php echo $browser ?></option><option value='operating system'><?php echo $operatingsystem ?></option><option value=''></option></select> -->
+			<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Technical_Requirement_Name","metadatalom") ?>:</strong></td>
+    <td align="left">
+		<?php if ($form->Technical_Requirement_Name == 'newvalue') { 
+		$form->Technical_Requirement_Type = 'browser;; operating system;; LMS/CMS/LCMS'; ?>		
+		$form->Technical_Requirement_Name = 'any;; multi-os;; moodle';					
+        <input type="text" name="Technical_Requirement_Name" size="50" value="<?php p($form->Technical_Requirement_Name) ?>">	
+		<?php } elseif ($form->Technical_Requirement_Type == "browser") {
+		$form->Technical_Requirement_Name = 'any'; 
+		$form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>
+        <select name='Technical_Requirement_Name'><option value='<?php  p($form->Technical_Requirement_Name) ?>'><?php  p($form->Technical_Requirement_Name) ?></option><option value='amaya'>amaya</option><option value='ms-internet explorer'>ms-internet explorer</option><option value='netscape comunicator'>netscape comunicator</option><option value='opera'>opera</option><option value='mozilla firefox'>mozilla firefox</option><option value='any'>any</option><option value='mac-os'>mac-os</option><option value='ms-windows'>ms-windows</option><option value='multi-os'>multi-os</option><option value='pc-dos'>pc-dos</option><option value='unix'>unix</option><option value='none'>none</option><option value='moodle'>moodle</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } elseif ($form->Technical_Requirement_Type == "operating system") { 
+		$form->Technical_Requirement_Name = 'multi-os';		
+		$form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>
+        <select name='Technical_Requirement_Name'><option value='<?php  p($form->Technical_Requirement_Name) ?>'><?php  p($form->Technical_Requirement_Name) ?></option><option value='mac-os'>mac-os</option><option value='ms-windows'>ms-windows</option><option value='multi-os'>multi-os</option><option value='pc-dos'>pc-dos</option><option value='unix'>unix</option><option value='none'>none</option><option value='amaya'>amaya</option><option value='ms-internet explorer'>ms-internet explorer</option><option value='netscape comunicator'>netscape comunicator</option><option value='opera'>opera</option><option value='mozilla firefox'>mozilla firefox</option><option value='any'>any</option><option value='moodle'>moodle</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } elseif ($form->Technical_Requirement_Type == "LMS/CMS/LCMS") { 
+		$form->Technical_Requirement_Name = 'moodle';
+		$form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>
+        <select name='Technical_Requirement_Name'><option value='<?php  p($form->Technical_Requirement_Name) ?>'><?php  p($form->Technical_Requirement_Name) ?></option><option value='moodle'>moodle</option><option value='mac-os'>mac-os</option><option value='ms-windows'>ms-windows</option><option value='multi-os'>multi-os</option><option value='pc-dos'>pc-dos</option><option value='unix'>unix</option><option value='none'>none</option><option value='amaya'>amaya</option><option value='ms-internet explorer'>ms-internet explorer</option><option value='netscape comunicator'>netscape comunicator</option><option value='opera'>opera</option><option value='mozilla firefox'>mozilla firefox</option><option value='any'>any</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>		
+		<?php } elseif ($form->Technical_Requirement_Type == "browser;; operating system") { 
+			$form->Technical_Requirement_Name = 'any;; multi-os';		
+			$form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>			
+        	<input type="text" name="Technical_Requirement_Name" size="50" value="<?php p($form->Technical_Requirement_Name) ?>">
+		<?php } elseif ($form->Technical_Requirement_Type == "browser;; operating system;; LMS/CMS/LCMS") {
+			$form->Technical_Requirement_Name = 'any;; multi-os;; moodle';		 
+			$form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>			
+        	<input type="text" name="Technical_Requirement_Name" size="50" value="<?php p($form->Technical_Requirement_Name) ?>">							
+		<?php } else { $form->Technical_Requirement_Name = metadatalom_cut_final($form->Technical_Requirement_Name); ?>
+        <select name='Technical_Requirement_Name'><option value='<?php  p($form->Technical_Requirement_Name) ?>'><?php  p($form->Technical_Requirement_Name) ?></option><option value='amaya'>amaya</option><option value='any'>any</option><option value='ms-internet explorer'>ms-internet explorer</option><option value='netscape comunicator'>netscape comunicator</option><option value='opera'>opera</option><option value='mozilla firefox'>mozilla firefox</option><option value='mac-os'>mac-os</option><option value='ms-windows'>ms-windows</option><option value='multi-os'>multi-os</option><option value='none'>none</option><option value='pc-dos'>pc-dos</option><option value='unix'>unix</option><option value='moodle'>moodle</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Technical_Requirement_MinimumVersion","metadatalom") ?>:</strong></td>
+    <td align="left">
+		<?php if (($form->Technical_Requirement_MinimumVersion == NULL) & ($form->Technical_Requirement_Name == 'ms-internet explorer')) { 
+		$form->Technical_Requirement_MinimumVersion = '5.5';
+		$form->Technical_Requirement_MaximumVersion = '6.x';
+		} elseif (($form->Technical_Requirement_MinimumVersion == NULL) & ($form->Technical_Requirement_Name == 'netscape comunicator')) {
+		$form->Technical_Requirement_MinimumVersion = '6.01';
+		$form->Technical_Requirement_MaximumVersion = '8.x';
+		} elseif (($form->Technical_Requirement_MinimumVersion == NULL) & ($form->Technical_Requirement_Name == 'mozilla firefox')) {
+		$form->Technical_Requirement_MinimumVersion = '1.5';
+		$form->Technical_Requirement_MaximumVersion = '2.x';
+		} elseif (($form->Technical_Requirement_MinimumVersion == NULL) & ($form->Technical_Requirement_Name == 'any')) {
+		$form->Technical_Requirement_MinimumVersion = 'MSIE 5.5, MF 1.5';
+		$form->Technical_Requirement_MaximumVersion = 'MSIE 6.x, MF 2.x';		
+		} elseif (($form->Technical_Requirement_MinimumVersion == NULL) & ($form->Technical_Requirement_Name == 'moodle')) {
+		$form->Technical_Requirement_MinimumVersion = $CFG->release.' ('.$CFG->version.')';
+		$form->Technical_Requirement_MaximumVersion = $CFG->release.' ('.$CFG->version.')';		
+		} else {
+		$form->Technical_Requirement_MinimumVersion = 'Moodle '.$CFG->release.' ('.$CFG->version.')';
+		$form->Technical_Requirement_MaximumVersion = 'Moodle '.$CFG->release.' ('.$CFG->version.')';
+		}
+		?>					
+        <input type="text" name="Technical_Requirement_MinimumVersion" size="50" value="<?php  p($form->Technical_Requirement_MinimumVersion) ?>">
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Technical_Requirement_MaximumVersion","metadatalom") ?>:</strong></td>
+    <td align="left">
+        <input type="text" name="Technical_Requirement_MaximumVersion" size="50" value="<?php  p($form->Technical_Requirement_MaximumVersion) ?>">
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php print_string("Technical_InstalationRemarks","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Technical_InstalationRemarks == NULL) {
+		$form->Technical_InstalationRemarks = get_string("Auto_InstalationRemarks","metadatalom");		
+        //print_textarea(false, 3, 40, 680, 400, "Technical_InstalationRemarks", $form->Technical_InstalationRemarks); 
+		print '<textarea name="Technical_InstalationRemarks" rows="3" cols="40" wrap ="virtual">'.$form->Technical_InstalationRemarks.'</textarea>';		
+		} else {
+		$form->Technical_InstalationRemarks = metadatalom_cut_final($form->Technical_InstalationRemarks); 		
+        //print_textarea(false, 3, 40, 680, 400, "Technical_InstalationRemarks", $form->Technical_InstalationRemarks);
+		print '<textarea name="Technical_InstalationRemarks" rows="3" cols="40" wrap ="virtual">'.$form->Technical_InstalationRemarks.'</textarea>';		
+		} ?>
+		<font size=1>0-1</font>
+	</td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Technical_OtherPlatformRequirements","metadatalom") ?>:</strong></td>
+    <td align="left">
+	    <?php
+		$strver = get_string('version');
+		$form->Technical_OtherPlatformRequirements = $strver.' '.$modlo[$form->resource].': '.$modver;
+		$form->Technical_OtherPlatformRequirements = metadatalom_cut_final($form->Technical_OtherPlatformRequirements); 			
+        //print_textarea(false, 3, 40, 680, 400, "Technical_OtherPlatformRequirements", $form->Technical_OtherPlatformRequirements);
+		print '<textarea name="Technical_OtherPlatformRequirements" rows="3" cols="40" wrap ="virtual">'.$form->Technical_OtherPlatformRequirements.'</textarea>';		
+        ?>
+		<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Technical_Duration","metadatalom") ?>:</strong></td>
+    <td align="left">
+        <input type="text" name="Technical_Duration" size="50" value="<?php  p($form->Technical_Duration) ?>">
+		<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Educational","metadatalom");
+								helpbutton('educational', get_string('Educational','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<?php
+$active = get_string('active','metadatalom');
+$expositive = get_string('expositive','metadatalom');
+$mixed = get_string('mixed','metadatalom');
+$opeit = array ($active=>$active, $expositive=>$expositive, $mixed=>$mixed, ''=>$empty, 'newvalue'=>$newvalue);
+
+$verylow = get_string('verylow','metadatalom');
+$low = get_string('low','metadatalom');
+$medium = get_string('medium','metadatalom');
+$high = get_string('high','metadatalom');
+$veryhigh = get_string('veryhigh','metadatalom');
+
+$veryeasy = get_string('veryeasy','metadatalom');
+$easy = get_string('easy','metadatalom');
+$difficult = get_string('difficult','metadatalom');
+$verydifficult = get_string('verydifficult','metadatalom');
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_InteractivityType","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_InteractivityType == 'newvalue') { 
+			$form->Educational_InteractivityType = $expositive; ?>			
+        	<input type="text" name="Educational_InteractivityType" size="30" value="<?php p($form->Educational_InteractivityType) ?>">	
+		<?php } elseif ((($form->Educational_InteractivityType == NULL) || ($form->Educational_InteractivityLevel == NULL) || ($form->Educational_SemanticDensity == NULL) || ($form->Educational_Difficulty == NULL)) & (($modlo[$form->resource] == 'quiz') || ($modlo[$form->resource] == 'exercise') || ($modlo[$form->resource] == 'questionnarie') || ($modlo[$form->resource] == 'assignment') || ($modlo[$form->resource] == 'choice') || ($modlo[$form->resource] == 'database') || ($modlo[$form->resource] == 'glossary') || ($modlo[$form->resource] == 'hotpot') || ($modlo[$form->resource] == 'feedback') || ($modlo[$form->resource] == 'scorm') || ($modlo[$form->resource] == 'survey') || ($modlo[$form->resource] == 'wiki') || ($modlo[$form->resource] == 'webwork') || ($modlo[$form->resource] == 'journal') || ($modlo[$form->resource] == 'lams') || ($modlo[$form->resource] == 'chat'))) {
+		$form->Educational_InteractivityType = $active;
+		$form->Educational_InteractivityLevel = $high;
+		$form->Educational_SemanticDensity = $medium;	
+		$form->Educational_Difficulty = $easy;
+		choose_from_menu($opeit, "Educational_InteractivityType", $form->Educational_InteractivityType, $form->Educational_InteractivityType, '', '0', $return=false, $disabled=false, $tabindex=0);		
+		} elseif ((($form->Educational_InteractivityType == NULL) || ($form->Educational_InteractivityLevel == NULL) || ($form->Educational_SemanticDensity == NULL)  || ($form->Educational_Difficulty == NULL)) & (($modlo[$form->resource] == 'resource') || ($modlo[$form->resource] == 'book') || ($modlo[$form->resource] == 'flash') || ($modlo[$form->resource] == 'gallery'))) {
+		$form->Educational_InteractivityType = $expositive;
+		$form->Educational_InteractivityLevel = $low;
+		$form->Educational_SemanticDensity = $low;
+		$form->Educational_Difficulty = $veryeasy;		
+		choose_from_menu($opeit, "Educational_InteractivityType", $form->Educational_InteractivityType, $form->Educational_InteractivityType, '', '0', $return=false, $disabled=false, $tabindex=0);				
+		} elseif ((($form->Educational_InteractivityType == NULL) || ($form->Educational_InteractivityLevel == NULL) || ($form->Educational_SemanticDensity == NULL) || ($form->Educational_Difficulty == NULL)) & (($modlo[$form->resource] == 'lesson') || ($modlo[$form->resource] == 'forum') || ($modlo[$form->resource] == 'workshop'))) {
+		$form->Educational_InteractivityType = $mixed;
+		$form->Educational_InteractivityLevel = $medium;
+		$form->Educational_SemanticDensity = $high;
+		$form->Educational_Difficulty = $difficult;			
+		choose_from_menu($opeit, "Educational_InteractivityType", $form->Educational_InteractivityType, $form->Educational_InteractivityType, '', '0', $return=false, $disabled=false, $tabindex=0);			
+		} else {
+		choose_from_menu($opeit, "Educational_InteractivityType", $form->Educational_InteractivityType, $form->Educational_InteractivityType, '', '0', $return=false, $disabled=false, $tabindex=0);
+	} ?>
+<!--        <select name='Educational_InteractivityType'><option value='<?php  p($form->Educational_InteractivityType) ?>'><?php  p($form->Educational_InteractivityType) ?></option><option value='active'><?php echo $active; ?></option><option value='expositive'><?php echo $expositive; ?></option><option value='mixed'><?php echo $mixed; ?></option></select> -->
+		<font size=1>0-1</font>		
+    </td>
+</tr>
+<?php
+$diagram = get_string('diagram','metadatalom');
+$exam = get_string('exam','metadatalom');
+$exercise = get_string('exercise','metadatalom');
+$figure = get_string('figure','metadatalom');
+$graph = get_string('graph','metadatalom');
+$index = get_string('index','metadatalom');
+$lecture = get_string('lecture','metadatalom');
+$narrativetext = get_string('narrativetext','metadatalom');
+$problemstatement = get_string('problemstatement','metadatalom');
+$questionary = get_string('questionary','metadatalom');
+$selfassessment = get_string('selfassessment','metadatalom');
+$simulation = get_string('simulation','metadatalom');
+$slide = get_string('slide','metadatalom');
+$table = get_string('table','metadatalom');
+$rtlomterms = array ($diagram=>$diagram, $exam=>$exam, $exercise=>$exercise, $figure=>$figure, $graph=>$graph, $index=>$index, $lecture=>$lecture, $narrativetext=>$narrativetext, $problemstatement=>problemstatement, $questionary=>$questionary, $expositive=>$expositive, $simulation=>$simulation, $slide=>$slide, $table=>$table, ''=>$empty, 'newvalue'=>$newvalue);
+get_all_mods($course->id, &$mods, &$modnames, &$modnamesplural, &$modnamesused);
+$modsmetadata = array ("metadatadc"=>get_string('modulename', 'metadatadc'), "metadatalom"=>get_string('modulename', 'metadatalom'));
+$modnamessingular = array_diff($modnames, $modsmetadata);
+$rtlomoodle = array_merge($rtlomterms,$modnamessingular);
+
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_LearningResourceType","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_LearningResourceType == 'newvalue') { 
+			$form->Educational_LearningResourceType = $modlo[$form->resource]; ?>			
+        	<input type="text" name="Educational_LearningResourceType" size="30" value="<?php p($form->Educational_LearningResourceType) ?>">
+		<?php } else {
+			$form->Educational_LearningResourceType = metadatalom_cut_final($form->Educational_LearningResourceType);
+			choose_from_menu($rtlomoodle, "Educational_LearningResourceType", $form->Educational_LearningResourceType, $form->Educational_LearningResourceType, '', '0', $return=false, $disabled=false, $tabindex=0);			
+		} ?>
+			<font size=1>0-n</font>				
+    </td>
+</tr>
+<?php
+
+$opeilsd = array ($verylow=>$verylow, $low=>$low, $medium=>$medium, $high=>$high, $veryhigh=>$veryhigh, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_InteractivityLevel","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_InteractivityLevel == 'newvalue') { 
+			$form->Educational_InteractivityLevel = $verylow; ?>			
+        	<input type="text" name="Educational_InteractivityLevel" size="30" value="<?php p($form->Educational_InteractivityLevel) ?>">
+		<?php } else {	
+		choose_from_menu($opeilsd, "Educational_InteractivityLevel", $form->Educational_InteractivityLevel, $form->Educational_InteractivityLevel, '', '0', $return=false, $disabled=false, $tabindex=0);
+		} ?>	
+<!--        <select name='Educational_InteractivityLevel'><option value='<?php  p($form->Educational_InteractivityLevel) ?>'><?php  p($form->Educational_InteractivityLevel) ?></option><option value='very low'>verylow</option><option value='low'>low</option><option value='medium'>medium</option><option value='high'>high</option><option value='very high'>veryhigh</option></select> -->
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_SemanticDensity","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_SemanticDensity == 'newvalue') { 
+			$form->Educational_SemanticDensity = $verylow; ?>			
+        	<input type="text" name="Educational_SemanticDensity" size="30" value="<?php p($form->Educational_SemanticDensity) ?>">
+		<?php } else {		
+	choose_from_menu($opeilsd, "Educational_SemanticDensity", $form->Educational_SemanticDensity, $form->Educational_SemanticDensity, '', '0', $return=false, $disabled=false, $tabindex=0);
+		} ?>	
+<!--        <select name='Educational_SemanticDensity'><option value='<?php  p($form->Educational_SemanticDensity) ?>'><?php  p($form->Educational_SemanticDensity) ?></option><option value='very low'>very low</option><option value='low'>low</option><option value='medium'>medium</option><option value='high'>high</option><option value='very high'>very high</option></select> -->
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<?php
+$author = get_string('author','metadatalom');
+$learner = get_string('learner','metadatalom');
+$manager = get_string('manager','metadatalom');
+$teacher = get_string('teacher','metadatalom');
+$opeieur = array ($author=>$author, $learner=>$learner, $manager=>$manager, $teacher=>$teacher, ''=>$empty, 'newvalue'=>$newvalue);
+
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_IntendedEndUserRole","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_IntendedEndUserRole == 'newvalue') { 
+			$form->Educational_IntendedEndUserRole = $learner; ?>			
+        	<input type="text" name="Educational_IntendedEndUserRole" size="30" value="<?php p($form->Educational_IntendedEndUserRole) ?>">
+			<?php } elseif (($form->Educational_IntendedEndUserRole == NULL) & ($vislo[$form->resource] == 0)) {
+			$form->Educational_IntendedEndUserRole = $teacher;
+			$form->Educational_IntendedEndUserRole = metadatalom_cut_final($form->Educational_IntendedEndUserRole);			
+			choose_from_menu($opeieur, "Educational_IntendedEndUserRole", $form->Educational_IntendedEndUserRole, $form->Educational_IntendedEndUserRole, '', '0', $return=false, $disabled=false, $tabindex=0);			
+			 } else {
+			$form->Educational_IntendedEndUserRole = $learner;		
+			$form->Educational_IntendedEndUserRole = metadatalom_cut_final($form->Educational_IntendedEndUserRole); 
+			choose_from_menu($opeieur, "Educational_IntendedEndUserRole", $form->Educational_IntendedEndUserRole, $form->Educational_IntendedEndUserRole, '', '0', $return=false, $disabled=false, $tabindex=0);			
+			} ?>
+<!--        <select name='Educational_IntendedEndUserRole'><option value='<?php  p($form->Educational_IntendedEndUserRole) ?>'><?php  p($form->Educational_IntendedEndUserRole) ?></option><option value='author'>author</option><option value='learner'>learner</option><option value='manager'>manager</option><option value='teacher'>teacher</option><option value=''></option></select> -->
+			<font size=1>0-n</font>			
+    </td>
+</tr>
+<?php
+$school = get_string('school','metadatalom');
+$highereducation = get_string('highereducation','metadatalom');
+$training = get_string('training','metadatalom');
+$other = get_string('other','metadatalom');
+$opec = array ($school=>$school, $highereducation=>$highereducation, $training=>$training, $other=>$other, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_Context","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_Context == 'newvalue') { 
+			$form->Educational_Context = $training; ?>			
+        	<input type="text" name="Educational_Context" size="50" value="<?php p($form->Educational_Context) ?>">
+		<?php } else {	
+			$form->Educational_Context = metadatalom_cut_final($form->Educational_Context); 
+			choose_from_menu($opec, "Educational_Context", $form->Educational_Context, $form->Educational_Context, '', '0', $return=false, $disabled=false, $tabindex=0);			
+			} ?>
+<!--        <select name='Educational_Context'><option value='<?php  p($form->Educational_Context) ?>'><?php  p($form->Educational_Context) ?></option><option value='school'>school</option><option value='higher education'>highereducation</option><option value='training'>training</option><option value='other'>other</option><option value=''></option></select> -->
+			<font size=1>0-n</font>			
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_TypicalAgeRange","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php $form->Educational_TypicalAgeRange = metadatalom_cut_final($form->Educational_TypicalAgeRange); ?>	
+        <input type="text" name="Educational_TypicalAgeRange" size="50" value="<?php  p($form->Educational_TypicalAgeRange) ?>">
+		<font size=1>0-n</font>
+    </td>
+</tr>
+<?php
+
+$oped = array ($veryeasy=>$veryeasy, $easy=>$easy, $medium=>$medium, $difficult=>$difficult, $verydifficult=>$verydifficult, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_Difficulty","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Educational_Difficulty == 'newvalue') { 
+			$form->Educational_Difficulty = $veryeasy; ?>			
+        	<input type="text" name="Educational_Difficulty" size="30" value="<?php p($form->Educational_Difficulty) ?>">
+		<?php } else {		
+		choose_from_menu($oped, "Educational_Difficulty", $form->Educational_Difficulty, $form->Educational_Difficulty, '', '0', $return=false, $disabled=false, $tabindex=0);
+		} ?>	
+<!--        <select name='Educational_Difficulty'><option value='<?php  p($form->Educational_Difficulty) ?>'><?php  p($form->Educational_Difficulty) ?></option><option value='very easy'>very easy</option><option value='easy'>easy</option><option value='medium'>medium</option><option value='difficult'>difficult</option><option value='very difficult'>very difficult</option></select> -->
+	<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_TypicalLearningTime","metadatalom") ?>:*</strong></td>
+    <td align="left">
+        <input type="text" name="Educational_TypicalLearningTime" size="50" value="<?php  p($form->Educational_TypicalLearningTime) ?>">
+		<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	    <?php
+           //print_textarea(false, 3, 40, 680, 400, "Educational_Description", $form->Educational_Description);
+			print '<textarea name="Educational_Description" rows="3" cols="40" wrap ="virtual">'.$form->Educational_Description.'</textarea>'; 
+        ?>
+		<font size=1>0-n</font>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Educational_Language","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php 
+		$currlang = current_language();
+		$langs = get_list_of_languages();
+		if ($form->Educational_Language == 'newvalue') {
+		$lg = $currlang;
+	    $form->Educational_Language = $lg; ?>
+		<input type="text" name="Educational_Language" size="30" value="<?php  p($form->Educational_Language) ?>">
+		<?php
+		} elseif (array_key_exists($form->Educational_Language, $langs)) {
+			$form->Educational_Language = metadatalom_cut_final($form->Educational_Language);	
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);		
+			choose_from_menu ($mylangs, "Educational_Language", $form->Educational_Language, "", "", "");
+		} elseif ($form->Educational_Language == "none") {
+			$form->Educational_Language = metadatalom_cut_final($form->Educational_Language);	
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			//array_unshift($langs, ' ', $form->Educational_Language);
+			choose_from_menu ($mylangs, "Educational_Language", $form->Educational_Language, "", "", "");
+		} else {
+			$form->Educational_Language = metadatalom_cut_final($form->Educational_Language);		
+			$clg = array ($form->Educational_Language => $form->Educational_Language, "none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			//array_unshift($langs, ' ', $form->Educational_Language);
+			choose_from_menu ($mylangs, "Educational_Language", $form->Educational_Language, "", "", "");
+		}
+		?>
+		<font size=1>0-n</font>		
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Rights","metadatalom");
+								helpbutton('rights', get_string('Rights','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Rights_Cost","metadatalom") ?>:*</strong></td>
+    <td align="left">
+        <select name='Rights_Cost'><option value='<?php  p($form->Rights_Cost) ?>'><?php  p($form->Rights_Cost) ?></option><option value='no'>no</option><option value='yes'>yes</option><option value=''><?php echo $empty ?></option></select>
+	<font size=1>0-1</font>			
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Rights_CopyrightAndOtherRestrictions","metadatalom") ?>:*</strong></td>
+    <td align="left">
+        <select name='Rights_CopyrightAndOtherRestrictions'><option value='<?php  p($form->Rights_CopyrightAndOtherRestrictions) ?>'><?php  p($form->Rights_CopyrightAndOtherRestrictions) ?></option><option value='no'>no</option><option value='yes'>yes</option></select>
+	<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Rights_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php if ($form->Rights_Description == NULL) { 
+    	$form->Rights_Description = 'Copyright ' . $year . ' - ' . $USER->firstname . ' ' . $USER->lastname . ' - ' . $SITE->fullname . ' - All rights reserved.';
+        //print_textarea(false, 3, 40, 680, 400, "Rights_Description", $form->Rights_Description);
+		print '<textarea name="Rights_Description" rows="3" cols="40" wrap ="virtual">'.$form->Rights_Description.'</textarea>';	
+	} else {
+		$form->Rights_Description = metadatalom_cut_final($form->Rights_Description); 
+        //print_textarea(false, 3, 40, 680, 400, "Rights_Description", $form->Rights_Description);
+		print '<textarea name="Rights_Description" rows="3" cols="40" wrap ="virtual">'.$form->Rights_Description.'</textarea>';		
+	} ?>
+	<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Relation","metadatalom");
+								helpbutton('relation', get_string('Relation','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<?php
+$hasFormat = get_string('hasFormat','metadatalom');
+$hasPart = get_string('hasPart','metadatalom');
+$hasVersion = get_string('hasVersion','metadatalom');
+$isBasedOn = get_string('isBasedOn','metadatalom');
+$isBasisFor = get_string('isBasisFor','metadatalom');
+$isFormatOf = get_string('isFormatOf','metadatalom');
+$isPartOf = get_string('isPartOf','metadatalom');
+$isReferencedBy = get_string('isReferencedBy','metadatalom');
+$isVersionOf = get_string('isVersionOf','metadatalom');
+$references = get_string('references','metadatalom');
+$requires = get_string('requires','metadatalom');
+$isPartOfisReferencedByrequires = get_string('isPartOfisReferencedByrequires','metadatalom');
+$oprk = array ($hasFormat=>$hasFormat, $hasPart=>$hasPart, $hasVersion=>$hasVersion, $isBasedOn=>$isBasedOn, $isBasisFor=>$isBasisFor, $isFormatOf=>$isFormatOf, $isPartOf=>$isPartOf, $isReferencedBy=>$isReferencedBy, $isVersionOf=>$isVersionOf, $references=>$references, $requires=>$requires, $isPartOfisReferencedByrequires=>$isPartOfisReferencedByrequires, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Relation_Kind","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Relation_Kind == 'newvalue') { 
+			$form->Relation_Kind = $isPartOfisReferencedByrequires; ?>			
+        	<input type="text" name="Relation_Kind" size="50" value="<?php p($form->Relation_Kind) ?>">
+		<?php } elseif ($form->Relation_Kind == NULL) {
+    		$form->Relation_Kind = $isPartOf;
+			choose_from_menu($oprk, "Relation_Kind", $form->Relation_Kind, $form->Relation_Kind, '', '0', $return=false, $disabled=false, $tabindex=0);
+		} else {		
+			$form->Relation_Kind = metadatalom_cut_final($form->Relation_Kind); 
+			choose_from_menu($oprk, "Relation_Kind", $form->Relation_Kind, $form->Relation_Kind, '', '0', $return=false, $disabled=false, $tabindex=0);			
+		} ?>
+<!--        <select name='Relation_Kind'><option value='<?php  p($form->Relation_Kind) ?>'><?php  p($form->Relation_Kind) ?></option><option value='hasFormat'>hasFormat</option><option value='hasPart'>hasPart</option><option value='hasVersion'>hasVersion</option><option value='isBasedOn'>isBasedOn</option><option value='isBasisFor'>isBasisFor</option><option value='isFormatOf'>isFormatOf</option><option value='isPartOf'>isPartOf</option><option value='isReferencedBy'>isReferencedBy</option><option value='isVersionOf'>isVersionOf</option><option value='references'>references</option><option value='requires'>requires</option><option value='isPartOf;; isReferencedBy;; requires'>isPartOf;; isReferencedBy;; requires</option><option value=''></option></select> -->
+	<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("Relation_Resource","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr>
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Relation_Resource_Identifier","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Relation_Resource_Identifier_Catalog","metadatalom") ?>:</strong></td>
+    <td align="left">
+	<?php if ($form->Relation_Resource_Identifier_Catalog == 'newvalue') { 
+		$form->Relation_Resource_Identifier_Catalog = 'URI'; ?>	
+        <input type="text" name="Relation_Resource_Identifier_Catalog" size="30" value="<?php  p($form->Relation_Resource_Identifier_Catalog) ?>">
+	<?php } else {			
+		$form->Relation_Resource_Identifier_Catalog = metadatalom_cut_final($form->Relation_Resource_Identifier_Catalog); ?>
+<select name='Relation_Resource_Identifier_Catalog'><option value='<?php  p($form->Relation_Resource_Identifier_Catalog) ?>'><?php  p($form->Relation_Resource_Identifier_Catalog) ?></option><option value='URI'>URI</option><option value='ISBN'>ISBN</option><option value='ARIADNE'>ARIADNE</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>
+	<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Relation_Resource_Identifier_Entry","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		if (!$form->Relation_Resource_Identifier_Entry == NULL) { 
+		$form->Relation_Resource_Identifier_Entry = metadatalom_cut_final($form->Relation_Resource_Identifier_Entry); ?>
+		<input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">
+		<?php } else {
+		if ($form->Relation_Kind == $isPartOf) { 
+	    $form->Relation_Resource_Identifier_Entry = $CFG->wwwroot . '/course/view.php?id=' . $course->id; ?>	
+        <input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">
+		<?php } elseif ($form->Relation_Kind == $isReferencedBy) {
+		$form->Relation_Resource_Identifier_Entry = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/index.php?id=' . $course->id;	?>
+        <input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">	
+		<?php } elseif ($form->Relation_Kind == $requires) {
+		$form->Relation_Resource_Identifier_Entry = $CFG->wwwroot; ?>
+        <input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">
+		<?php } elseif ($form->Relation_Kind == $isPartOfisReferencedByrequires) {
+		$form->Relation_Resource_Identifier_Entry = $CFG->wwwroot . '/course/view.php?id=' . $course->id . ';; ' . $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/index.php?id=' . $course->id . ';; ' . $CFG->wwwroot; ?>
+        <input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">					
+						
+		<?php } else {
+		$form->Relation_Resource_Identifier_Entry = 'http://'; ?>
+        <input type="text" name="Relation_Resource_Identifier_Entry" size="50" value="<?php  p($form->Relation_Resource_Identifier_Entry) ?>">	
+		<?php } } ?>
+		<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Relation_Resource_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php
+		if (!$form->Relation_Resource_Description == NULL) {
+		$form->Relation_Resource_Description = metadatalom_cut_final($form->Relation_Resource_Description);		
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';		   
+		} else {
+		if ($form->Relation_Kind == $isPartOf) { 
+	    $form->Relation_Resource_Description = get_string("Auto_isPartOf","metadatalom") . " " . $course->fullname;	
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';			   
+		} elseif ($form->Relation_Kind == $isReferencedBy) {
+		$form->Relation_Resource_Description =  get_string("Auto_isReferencedBy","metadatalom") . " " . $course->fullname;	
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';			   
+		} elseif ($form->Relation_Kind == $requires) {
+		$form->Relation_Resource_Description =  get_string("Auto_requires","metadatalom") . " " . $course->fullname;	
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';			   
+		} elseif ($form->Relation_Kind == $isPartOfisReferencedByrequires) {
+		$form->Relation_Resource_Description =  get_string("Auto_isPartOf","metadatalom") . " " . $course->fullname . ";; " .  get_string("Auto_isReferencedBy","metadatalom") . " " . $course->fullname . ";; " . get_string("Auto_requires","metadatalom") . " " . $SITE->fullname;	
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';			    			   		
+		} else {
+		$form->Relation_Resource_Identifier_Entry = '';
+           //print_textarea(false, 3, 40, 680, 400, "Relation_Resource_Description", $form->Relation_Resource_Description);	
+			print '<textarea name="Relation_Resource_Description" rows="3" cols="40" wrap ="virtual">'.$form->Relation_Resource_Description.'</textarea>';			   
+		} } ?>
+	<font size=1>0-n</font>	
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Annotation","metadatalom");
+								helpbutton('annotation', get_string('Annotation','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Annotation_Entity","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php if ($form->Annotation_Entity == NULL) { 	
+	$form->Annotation_Entity = '\nFN:' . $USER->firstname . ' ' . $USER->lastname . '\nTITLE:Professor' . '\nADR:' . $USER->address . '\nTEL:' . $USER->phone1 . '\nEMAIL\;TYPE=INTERNET:' . $USER->email . '\nURL:' . $CFG->wwwroot . '/user/view.php?id=' . $USER->id  . '\n';
+		print_textarea(false, 3, 40, 680, 400, 'Annotation_Entity', "$form->Annotation_Entity");
+	} else {
+		print_textarea(false, 3, 40, 680, 400, 'Annotation_Entity', "$form->Annotation_Entity");
+	} ?>
+	<font size=1>0-1</font>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Annotation_Date","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php if ($form->Annotation_Date == NULL) { 	
+    $form->Annotation_Date = $today;	?>
+        <input type="text" name="Annotation_Date" size="10" value="<?php  p($form->Annotation_Date) ?>">
+	<?php } else { ?>
+        <input type="text" name="Annotation_Date" size="10" value="<?php  p($form->Annotation_Date) ?>">
+	<?php } ?>
+	<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Annotation_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	    <?php
+           //print_textarea(false, 3, 40, 680, 400, "Annotation_Description", $form->Annotation_Description);
+			print '<textarea name="Annotation_Description" rows="3" cols="40" wrap ="virtual">'.$form->Annotation_Description.'</textarea>';			   
+        ?>
+	<font size=1>0-1</font>
+    </td>
+</tr>
+<tr><td colspan="2" align="right"><input type="submit" value=" > " /></td>
+</tr>
+<tr bgcolor="#FF9900">
+    <td colspan="2"><strong><?php  print_string("Classification","metadatalom");
+								helpbutton('classification', get_string('Classification','metadatalom'), 'metadatalom'); ?></strong></td>
+</tr>
+<?php
+$accessibilityrestrictions = get_string('accessibilityrestrictions','metadatalom');
+$competency = get_string('competency','metadatalom');
+$discipline = get_string('discipline','metadatalom');
+$educationallevel = get_string('educationallevel','metadatalom');
+$educationalobjective = get_string('educationalobjective','metadatalom');
+$idea = get_string('idea','metadatalom');
+$prerequisite = get_string('prerequisite','metadatalom');
+$securitylevel = get_string('securitylevel','metadatalom');
+$skilllevel = get_string('skilllevel','metadatalom');
+$opcp = array ($accessibilityrestrictions=>$accessibilityrestrictions, $competency=>$competency, $discipline=>$discipline, $educationallevel=>$educationallevel,  $educationalobjective=>$educationalobjective, $idea=>$idea, $prerequisite=>$prerequisite, $securitylevel=>$securitylevel, $skilllevel=>$skilllevel, ''=>$empty, 'newvalue'=>$newvalue);
+?>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Classification_Purpose","metadatalom") ?>:*</strong></td>
+    <td align="left">
+		<?php if ($form->Classification_Purpose == 'newvalue') { 
+			$form->Classification_Purpose = $educationalobjective; ?>			
+        	<input type="text" name="Classification_Purpose" size="50" value="<?php p($form->Classification_Purpose) ?>">
+		<?php } elseif (($form->Classification_Purpose == NULL) & (($modlo[$form->resource] == 'quiz') || ($modlo[$form->resource] == 'exercise') || ($modlo[$form->resource] == 'questionnarie') || ($modlo[$form->resource] == 'assignment') || ($modlo[$form->resource] == 'choice') || ($modlo[$form->resource] == 'hotpot') || ($modlo[$form->resource] == 'feedback') || ($modlo[$form->resource] == 'survey') || ($modlo[$form->resource] == 'lesson'))) {
+		$form->Classification_Purpose = $skilllevel;
+		choose_from_menu($opcp, "Classification_Purpose", $form->Classification_Purpose, $form->Classification_Purpose, '', '0', $return=false, $disabled=false, $tabindex=0);				
+		} elseif (($form->Classification_Purpose == NULL) & (($modlo[$form->resource] == 'resource') || ($modlo[$form->resource] == 'book') || ($modlo[$form->resource] == 'flash') || ($modlo[$form->resource] == 'gallery'))) {
+		$form->Classification_Purpose = $competency;
+		choose_from_menu($opcp, "Classification_Purpose", $form->Classification_Purpose, $form->Classification_Purpose, '', '0', $return=false, $disabled=false, $tabindex=0);		
+		} elseif (($form->Classification_Purpose == NULL) & (($modlo[$form->resource] == 'wiki') || ($modlo[$form->resource] == 'webwork') || ($modlo[$form->resource] == 'journal') || ($modlo[$form->resource] == 'workshop') || ($modlo[$form->resource] == 'glossary'))) {
+		$form->Classification_Purpose = $educationalobjective;
+		choose_from_menu($opcp, "Classification_Purpose", $form->Classification_Purpose, $form->Classification_Purpose, '', '0', $return=false, $disabled=false, $tabindex=0);
+		} elseif (($form->Classification_Purpose == NULL) & (($modlo[$form->resource] == 'scorm') || ($modlo[$form->resource] == 'lams') || ($modlo[$form->resource] == 'chat') || ($modlo[$form->resource] == 'forum'))) {
+		$form->Classification_Purpose = $educationallevel;
+		choose_from_menu($opcp, "Classification_Purpose", $form->Classification_Purpose, $form->Classification_Purpose, '', '0', $return=false, $disabled=false, $tabindex=0);					
+		} else {
+		choose_from_menu($opcp, "Classification_Purpose", $form->Classification_Purpose, $form->Classification_Purpose, '', '0', $return=false, $disabled=false, $tabindex=0);					
+		} ?>
+<!--        <select name='Classification_Purpose'><option value='<?php  p($form->Classification_Purpose) ?>'><?php  p($form->Classification_Purpose) ?></option><option value='accessibilityrestrictions'>accessibility restrictions (restrições de acessibilidade)</option><option value='competency'>competency (competência)</option><option value='discipline'>discipline (disciplinar)</option><option value='educational level'>educational level (nível educativo)</option><option value='educational objective'>educational objective (objectivo educativo)</option><option value='Idea'>idea (ideia)</option><option value='prerequisite'>prerequisite (pré-requisito)</option><option value='security level'>security level (nível de segurança)</option><option value='skill level'>skill level (nível de avaliação)</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select> -->		
+	<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr>
+    <td align="left"><strong><?php  print_string("Classification_TaxonPath","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Classification_TaxonPath_Source","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	<?php if ($form->Classification_TaxonPath_Source == 'newvalue') { 
+	$form->Classification_TaxonPath_Source = UDC;	?>
+        <input type="text" name="Classification_TaxonPath_Source" size="50" value="<?php  p($form->Classification_TaxonPath_Source) ?>">
+	<?php } else { $form->Classification_TaxonPath_Source = metadatalom_cut_final($form->Classification_TaxonPath_Source); ?>			
+<select name='Classification_TaxonPath_Source'><option value='<?php  p($form->Classification_TaxonPath_Source) ?>'><?php  p($form->Classification_TaxonPath_Source) ?></option><option value='ACM'>ACM (Association for Computing Machinery - Computing Classification System)</option><option value='ARIADNE'>ARIADNE </option><option value='LCSH'>LCSH (Library of Congress Subject Headings)</option><option value='MESH'>MESH (Medical Subject Headings)</option><option value='NLM'>NLM (National Library of Medicine Classification)</option><option value='DDC'>DDC (Dewey Decimal Classification)</option><option value='LCC'>LCC (Library of Congress Classification)</option><option value='UDC'>UDC (Universal Decimal Classification)</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>
+	<font size=1>0-n</font>	
+    </td>
+</tr>
+
+<tr>
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Classification_TaxonPath_Taxon","metadatalom") ?></strong></td>
+	<td align="right"><font size=1>0-n</font></td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Classification_TaxonPath_Taxon_ID","metadatalom") ?>:</strong>
+</td>
+    <td align="left">
+        <input type="text" name="Classification_TaxonPath_Taxon_ID" size="50" value="<?php  p($form->Classification_TaxonPath_Taxon_ID) ?>">
+	<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  print_string("Classification_TaxonPath_Taxon_Entry","metadatalom") ?>:</strong></td>
+    <td align="left">
+        <input type="text" name="Classification_TaxonPath_Taxon_Entry" size="50" value="<?php  p($form->Classification_TaxonPath_Taxon_Entry) ?>">
+	<font size=1>0-1</font>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Classification_Description","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	    <?php
+           //print_textarea(false, 3, 40, 680, 400, "Classification_Description", $form->Classification_Description);
+			print '<textarea name="Classification_Description" rows="3" cols="40" wrap ="virtual">'.$form->Classification_Description.'</textarea>';	   
+        ?>
+	<font size=1>0-1</font>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><strong><?php  print_string("Classification_Keyword","metadatalom") ?>:*</strong></td>
+    <td align="left">
+	    <?php
+           //print_textarea(false, 3, 40, 680, 400, "Classification_Keyword", $form->Classification_Keyword);
+			print '<textarea name="Classification_Keyword" rows="3" cols="40" wrap ="virtual">'.$form->Classification_Keyword.'</textarea>';	   
+        ?>
+	<font size=1>0-n</font>		
+    </td>
+</tr>
+<tr valign="top">
+<td colspan="2"><hr /></td>
+</tr>
+
+<!-- More rows go in here... -->
+
+<!-- The following line for Moodle 1.5 prints the visibility setting form element -->
+<?php
+	if ($CFG->version > 2005000000) {
+		print_visible_setting($form);
+	} else {
+	$comversion = get_string("Comment_version","metadatalom");	
+	echo "<tr valign='top'><td colspan='2'>$comversion</td></tr>";
+	}
+?>
+<!-- and if your module uses groups you would also have -->
+<!-- < ? php print_groupmode_setting($form); ? > -->
+<td align="left" colspan="2"><hr />* <?php  print_string("Comment_form","metadatalom") ?></td>
+</tr>
+<?php
+//final do if is adding
+}
+?>
+</table>
+
+<?php if ($usehtmleditor) {    use_html_editor();} ?>
+
+<!-- These hidden variables are always the same -->
+<input type="hidden" name=course        value="<?php  p($form->course) ?>" />
+<input type="hidden" name="sesskey"     value="<?php  p($form->sesskey) ?>" />
+<input type="hidden" name=coursemodule  value="<?php  p($form->coursemodule) ?>" />
+<input type="hidden" name=section       value="<?php  p($form->section) ?>" />
+<input type="hidden" name=module        value="<?php  p($form->module) ?>" />
+<input type="hidden" name=modulename    value="<?php  p($form->modulename) ?>" />
+<input type="hidden" name=instance      value="<?php  p($form->instance) ?>" />
+<input type="hidden" name=mode          value="<?php  p($form->mode) ?>" />
+<input type="hidden" name=userid        value="<?php  p($form->userid) ?>" />
+<?php if ($form->resource == "id") { ?>
+<input type="submit" value="<?php  print_string("next") ?>" />
+<?php } else { ?>
+<input type="submit" value="<?php  print_string("savechanges") ?>" />
+<?php } ?>
+</center>
+
+</form>
