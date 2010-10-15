@@ -1,0 +1,20 @@
+<?php
+    // check the default settings
+    require_once "defaultsettings.php";
+
+    // get strings
+    $txt = new Object;
+    $txt->wikipediacallsshowkeys = get_string( 'wikipediacalls_showkeys','wikipediacalls' );
+    $txt->yes = get_string( 'yes' );
+    $txt->no = get_string( 'no' );
+
+    $yesno = array( $txt->no, $txt->yes );
+?>
+
+<table cellpadding="9" cellspacing="0">
+    <tr valign="top">
+        <td align="right"><?php echo $txt->wikipediacallsshowkeys ?></td>
+        <td><?php choose_from_menu( $yesno,'filter_wikipediacalls_showkeys',
+             $CFG->filter_wikipediacalls_showkeys ); ?></td> 
+    </tr>
+</table>
