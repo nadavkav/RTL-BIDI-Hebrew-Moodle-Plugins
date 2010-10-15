@@ -1,0 +1,20 @@
+/*** MODULE PODCAST MOODLE ***/
+
+// VERSION //
+Module Podcast version 1.1 Beta (actuellement en test)
+
+// SPECIFICATIONS //
+* Module permettant de à un professeur de créer un fil RSS 2.0, ou podcast.
+* Les fichiers multimédia devant être accessible via http ne peuvent être stockés dans le répertoire MoodleData
+  et sont donc stockés dans le répertoire du module Podcast (Adresse http : $CFG->wwwroot."mod/podcast/media/").
+  Idem pour les fichiers RSS  (Adresse http : $CFG->wwwroot."mod/podcast/publication/").
+  Ces 2 dossiers doivent être accessible en écriture.
+* Ce podcast est diffusé aux étudiants qui s'abonnent via un lecteur de podcast (Itunes, Google Reader, Juice, ...).
+* Il est aussi possible pour les étudiants de le visualiser depuis la plate-forme Moodle.
+* Compatible backup/restore
+
+// TODO //
+* Bug lors de l'ajout d'un fichier de taille supérieur à la limite su serveur ou du php.ini
+* Bug lors de l'import d'un podcast avec la copie des fichiers des répertoires mod/podcast/media/id_cours 
+  et mod/podcast/publication/id_cours.
+* Script d'installation pour postgres.

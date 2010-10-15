@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<audacityproject projname="טסט 2_data" version="1.1.0" audacityversion="1.2.6" sel0="0.2127653795" sel1="0.2127653795" vpos="0" h="0.0000000000" zoom="42.3001148953" rate="44100.000000" >
+	<tags title="" artist="" album="" track="-1" year="" genre="-1" comments="" id3v2="1" />
+	<wavetrack name="טסט 2" channel="0" linked="1" offset="0.00000000" rate="44100.000000" gain="1.000000" pan="0.000000" >
+		<sequence maxsamples="524288" sampleformat="131073" numsamples="579658" >
+			<waveblock start="0" >
+				<simpleblockfile filename='b00010.au' len='524288' min='-1.000000' max='1.000000' rms='0.432606'/>
+			</waveblock>
+			<waveblock start="524288" >
+				<simpleblockfile filename='b00012.au' len='55370' min='-0.029648' max='0.029557' rms='0.003986'/>
+			</waveblock>
+		</sequence>
+		<envelope numpoints='0'>
+		</envelope>
+	</wavetrack>
+	<wavetrack name="פתיח 3" channel="1" linked="0" offset="0.00000000" rate="44100.000000" gain="1.000000" pan="0.000000" >
+		<sequence maxsamples="524288" sampleformat="131073" numsamples="579658" >
+			<waveblock start="0" >
+				<simpleblockfile filename='b00011.au' len='524288' min='-1.000000' max='1.000000' rms='0.431320'/>
+			</waveblock>
+			<waveblock start="524288" >
+				<simpleblockfile filename='b00013.au' len='55370' min='-0.039109' max='0.029404' rms='0.004074'/>
+			</waveblock>
+		</sequence>
+		<envelope numpoints='0'>
+		</envelope>
+	</wavetrack>
+	<wavetrack name="גלעד 2" channel="2" linked="0" offset="8.22160207" rate="44100.000000" gain="1.000000" pan="0.000000" >
+		<sequence maxsamples="524288" sampleformat="131073" numsamples="649728" >
+			<waveblock start="0" >
+				<simpleblockfile filename='b00026.au' len='524288' min='-0.756283' max='1.000000' rms='0.138789'/>
+			</waveblock>
+			<waveblock start="524288" >
+				<simpleblockfile filename='b00027.au' len='125440' min='-0.921202' max='1.000000' rms='0.135325'/>
+			</waveblock>
+		</sequence>
+		<envelope numpoints='2'>
+			<controlpoint t='0.723413667026' val='0.969230769231'/>
+			<controlpoint t='4.810281998891' val='1.000000000000'/>
+		</envelope>
+	</wavetrack>
+</audacityproject>

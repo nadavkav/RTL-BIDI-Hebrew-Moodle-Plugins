@@ -1,0 +1,19 @@
+[14-Jan-2010 17:39:40] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 72
+[14-Jan-2010 17:39:40] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 125
+[14-Jan-2010 17:39:40] PHP Notice:  Undefined variable: currenttab in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 204
+[14-Jan-2010 17:40:31] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 72
+[14-Jan-2010 17:40:31] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 125
+[14-Jan-2010 17:40:31] PHP Notice:  Undefined variable: currenttab in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 204
+[14-Jan-2010 17:40:31] PHP Notice:  Undefined variable: item in /home/tikshuvp/public_html/moodle/mod/podcast/lib.php on line 124
+[14-Jan-2010 17:40:31] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/podcast/lib.php on line 124
+[14-Jan-2010 17:40:35] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 72
+[14-Jan-2010 17:40:35] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 125
+[14-Jan-2010 17:40:35] PHP Notice:  Undefined variable: currenttab in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 204
+[17-Jan-2010 11:13:01] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 72
+[17-Jan-2010 11:13:01] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 125
+[17-Jan-2010 11:13:01] PHP Notice:  Undefined variable: currenttab in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 204
+[17-Jan-2010 11:18:02] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 72
+[17-Jan-2010 11:18:02] PHP Notice:  Undefined property: stdClass::$action in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 125
+[17-Jan-2010 11:18:02] PHP Notice:  Undefined variable: currenttab in /home/tikshuvp/public_html/moodle/mod/podcast/view.php on line 204
+[18-Sep-2010 21:56:31] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[18-Sep-2010 21:56:36] ADODB Error: Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)

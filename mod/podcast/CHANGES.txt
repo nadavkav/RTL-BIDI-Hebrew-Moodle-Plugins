@@ -1,0 +1,3 @@
+CHANGES OF MODULE PODCAST ACTIVITYVersion 1.0 Beta 2 to 1.1 Beta (May 14 2007)    * Italian language added    * Documentation updated    * Specific file added for Moodle 1.6 version 
+    * Compatibility with Moodle 1?9 Dev checked
+Version 1.0 Beta 1 to 1.0 Beta 2 (May 4 2007)    * Spain language added    * Fix database bug installation    * English language updated    * Fix MACOSX folder bug 

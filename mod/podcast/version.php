@@ -1,0 +1,1 @@
+<?php // Poscast - version.php, 24/02/2007/** * Mise à jour de la strucutre SQL */ $module->version  = 2007022400;  	// The current module version (Date: YYYYMMDDXX)$module->cron     = 3600;           // Period for cron to check this module (secs)?>

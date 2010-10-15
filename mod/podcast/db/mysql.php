@@ -1,0 +1,1 @@
+<?php // Poscast - mysql/mysql.php, 24/02/2007/** * Mise à jour de la strucutre SQL */function podcast_upgrade($oldversion) {    global $CFG;    if ($oldversion < 2007022400) {		// A définir     }    return true;}?>
