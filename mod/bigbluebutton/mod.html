@@ -1,0 +1,186 @@
+<?php
+
+///////////////////////////////////////////////////////////////////////////
+//                                                                       //
+// NOTICE OF COPYRIGHT                                                   //
+//                                                                       //
+//                                                                       //
+// Copyright (C) 2010 Dual Code Inc. (www.dualcode.com)                  //
+//                                                                       //
+// This program is free software; you can redistribute it and/or modify  //
+// it under the terms of the GNU General Public License as published by  //
+// the Free Software Foundation; either version 2 of the License, or     //
+// (at your option) any later version.                                   //
+//                                                                       //
+// This program is distributed in the hope that it will be useful,       //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of        //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         //
+// GNU General Public License for more details:                          //
+//                                                                       //
+//          http://www.gnu.org/copyleft/gpl.html                         //
+//                                                                       //
+///////////////////////////////////////////////////////////////////////////
+
+/// BBB doesn not allow you to update a meeting, nor end/re-create them.
+/// So if a meeting already exists, we need to make the parameters read-only
+/// Otherwise, a teacher could update the passwords in Moodle but BBB would not synch up.
+
+  $currentroom = $form->meetingid;
+  $meetingroom = $CFG->bbb_meetingrooms;
+
+
+// Determine if you the meeting is an "old" one that is being updated
+  $old = True;	
+  if ($currentroom=='') {
+    $old = False;
+  }
+
+
+/// Create a list of meeting rooms
+  if ($meetingroom=='*' && $currentroom=='') {
+    $meetingrooms[0]=rand(10000,99999);
+  }
+  else if ($meetingroom=='*' && $currentroom!='') {
+    $meetingrooms[0]=($form->meetingid);
+  }
+  else if ($meetingroom!='*') {
+    $meetingrooms = split(',',$meetingroom); 
+    if (sizeof($meetingrooms)==1 && $currentroom==$meetingroom) {
+      $meetingrooms[0]=($form->meetingid);
+    }
+    else if (sizeof($meetingrooms)==1 && $currentroom!=$meetingroom) {
+      $meetingrooms[0]=$meetingroom;
+    }
+    else {
+      $meetingrooms = split(',',$meetingroom);
+    }
+  }
+?>
+
+<script language="javascript">
+function updateMeetingName() {
+  document.getElementById('id_name').value = document.getElementById('id_meetingname').value;
+  return true;
+}
+
+function unmaskPassword(id) {
+  var pw = document.getElementById(id);
+  var chb = document.getElementById(id+'unmask');
+
+  try {
+    // first try IE way - it can not set name attribute later
+    if (chb.checked) {
+      var newpw = document.createElement('<input type="text" name="'+pw.name+'">');
+    } else {
+      var newpw = document.createElement('<input type="password" name="'+pw.name+'">');
+    }
+    newpw.attributes['class'].nodeValue = pw.attributes['class'].nodeValue;
+  } catch (e) {
+    var newpw = document.createElement('input');
+    newpw.setAttribute('name', pw.name);
+    if (chb.checked) {
+      newpw.setAttribute('type', 'text');
+    } else {
+      newpw.setAttribute('type', 'password');
+    }
+    newpw.setAttribute('class', pw.getAttribute('class'));
+  }
+  newpw.id = pw.id;
+  newpw.size = pw.size;
+  newpw.onblur = pw.onblur;
+  newpw.onchange = pw.onchange;
+  newpw.value = pw.value;
+  newpw.disabled = pw.disabled;
+  pw.parentNode.replaceChild(newpw, pw);
+}
+</script>
+
+<form name="form" method="post" action="mod.php" autocomplete="off" onsubmit="return updateMeetingName();">
+  <input type="hidden" name="course" value="<?php  p($form->course) ?>" />
+  <input type="hidden" name="sesskey" value="<?php  p($form->sesskey) ?>" />
+  <input type="hidden" name="coursemodule" value="<?php  p($form->coursemodule) ?>" />
+  <input type="hidden" name="section" value="<?php  p($form->section) ?>" />
+  <input type="hidden" name="module" value="<?php  p($form->module) ?>" />
+  <input type="hidden" name="modulename" value="<?php  p($form->modulename) ?>" />
+  <input type="hidden" name="instance" value="<?php  p($form->instance) ?>" />
+  <input type="hidden" name="mode" value="<?php  p($form->mode) ?>" />
+  <table cellpadding="5">
+    <tr valign="top">
+      <td align="left" colspan="2"><?php print_string('mod_instructions', 'bigbluebutton')?> <?php if($old) print_string('cannot_edit', 'bigbluebutton') ?><br />
+        <br /></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><?php print_string('meetingname', 'bigbluebutton')?>:</td>
+      <td><input type="text" name="meetingname" id="id_meetingname" size="30" value="<?php p($form->name) ?>" tabindex="1" alt="<?php print_string('meetingname', 'bigbluebutton') ?>" <?php if($old) echo 'disabled="disabled"' ?>  /><input type="hidden" name="name" id="id_name" value="<?php p($form->name) ?>" /></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><?php print_string('meetingid', 'bigbluebutton')?>:</td>
+      <td>
+        <?php 
+          if (sizeof($meetingrooms)==0 || $meetingroom=='') {
+            print_string('meetingid_empty', 'bigbluebutton'); 
+          }
+          else if (sizeof($meetingrooms)==1) {
+           echo $meetingrooms[0]; 
+          ?>
+           <input type="hidden" name="meetingid" value="<?php  echo $meetingrooms[0]; ?>" />
+         <?php
+          }
+          else {
+      ?>    
+      <select name="meetingid" tabindex="2" alt="<?php print_string('meetingid', 'bigbluebutton') ?>" <?php if($old) echo 'disabled="disabled"' ?>/>
+        <?php
+      $currentSelection = ($form->meetingid);
+      for ($i=0;$i<sizeof($meetingrooms);$i++) {
+        echo '<option value="'.$meetingrooms[$i].'"';
+        if ($meetingrooms[$i] == $currentSelection) {
+          echo ' selected ';
+        }
+        echo '>'.$meetingrooms[$i].'</option>';
+      }
+      ?>
+        </select><?php } ?></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><?php print_string('attendeepw', 'bigbluebutton')?>:</td>
+      <td><input type="password" name="attendeepw" size="30" id="id_attendeepw" value="<?php p($form->attendeepw) ?>" tabindex="3" alt="<?php print_string('attendeepw', 'bigbluebutton') ?>" <?php if($old) echo 'disabled="disabled"' ?>/>
+      <input id="id_attendeepwunmask" value="1" type="checkbox" onclick="unmaskPassword('id_attendeepw')"/>Unmask</td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><?php print_string('moderatorpw', 'bigbluebutton')?>:</td>
+      <td><input size="30" name="moderatorpw" type="password" id="id_moderatorpw" value="<?php p($form->moderatorpw) ?>" tabindex="4" alt="<?php print_string('moderatorpw', 'bigbluebutton') ?>" <?php if($old) echo 'disabled="disabled"' ?>/>
+<input id="id_moderatorpwunmask" value="1" type="checkbox" onclick="unmaskPassword('id_moderatorpw')"/>Unmask
+</td>
+    </tr>
+    <tr valign="top">
+    <td align="right"><?php print_string('loginrules', 'bigbluebutton')?>:</td>
+    <td><select name="autologin" disabled="disabled">
+    <?php $currentLoginRule = ($form->autologin); ?>
+    <option value="0"<?php if ($currentLoginRule=='0') {echo ' selected';} ?>>Force users to enter a password</option>
+    <option value="1"<?php if ($currentLoginRule=='1') {echo ' selected';} ?> selected>Automatically log in attendees</option>
+    </select>
+    <input type="hidden" name="autologin" value="1" />
+    </td>
+    </tr>
+    <tr valign="top">
+    <td align="right"><?php print_string('newwindow', 'bigbluebutton')?>:</td>
+    <td><select name="newwindow" tabindex="5">
+    <?php $newwindow = ($form->newwindow); ?>
+    <option value="0"<?php if ($newwindow=='0') {echo ' selected';} ?>>Open in current window</option>
+    <option value="1"<?php if ($newwindow=='1') {echo ' selected';} ?>>Launch in new browser window</option>
+    </select>
+    </td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><?php print_string('welcomemsg', 'bigbluebutton')?>:</td>
+      <td><textarea name="welcomemsg" cols="50" rows="3" tabindex="6" <?php if($old) echo 'disabled="disabled"' ?>><?php p($form->welcomemsg) ?></textarea></td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2" style="text-align:center;">
+        <input type="submit" value="<?php  print_string('savechanges')?>" tabindex="7" />
+        <input type="submit" name="cancel" value="<?php  print_string('cancel') ?>" tabindex="8" />
+      </td>
+    </tr>
+    
+  </table>
+</form>
