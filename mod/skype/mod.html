@@ -1,0 +1,64 @@
+<?php
+    if (!isset($form->name)) {
+        $form->name = 'skype';
+    }
+    if (!isset($form->description)) { //initialize $form->description if needed
+        $form->description = '';
+    }
+    if (!isset($form->participants)) { //initialize $form->participants if needed
+        $form->participants = 0;
+    }
+?>
+
+<form name="form" method="post" action="mod.php">
+<center>
+<table cellpadding="5">
+<tr valign="top">
+    <td align="left"><p><b><?php  print_string("skypetext", "skype") ?>:</b>
+    </font>
+    </td>
+    <td >
+    <input type="text" name="name" size=60 value="<?php p($form->name) ?>" >
+    </td>
+</tr>
+<tr valign="top">
+    <td align="left"><p><b><?php  print_string("description") ?>:</b>
+    </font>
+    </td>
+    <td >
+   <?php print_textarea($usehtmleditor, 10, 40, 680, 400, 'description', $form->description); ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <td align="left"><p><b><?php  print_string("participants", "skype") ?>:</b>
+    </font>
+    </td>
+    <td >
+    <select name="participants" >
+	<option value="0" <?php if ($form->participants =="0" ) echo " selected"?>>All Group Users</option>
+	<option value="1" <?if($form->participants =="1" ) echo " selected"?> >All Course Teachers</option>
+	</select>
+    </td>
+</tr>
+
+
+<?php print_visible_setting($form); ?>
+
+
+
+
+
+</table>
+<!-- these hidden variables are always the same -->
+<input type="hidden" name="course"        value="<?php  p($form->course) ?>" />
+<input type="hidden" name="sesskey"       value="<?php  p($form->sesskey) ?>" />
+<input type="hidden" name="coursemodule"  value="<?php  p($form->coursemodule) ?>" />
+<input type="hidden" name="section"       value="<?php  p($form->section) ?>" />
+<input type="hidden" name="module"        value="<?php  p($form->module) ?>" />
+<input type="hidden" name="modulename"    value="<?php  p($form->modulename) ?>" />
+<input type="hidden" name="instance"      value="<?php  p($form->instance) ?>" />
+<input type="hidden" name="mode"          value="<?php  p($form->mode) ?>" />
+<input type="submit" value="<?php  print_string("savechanges") ?>" />
+</center>
+</form>
