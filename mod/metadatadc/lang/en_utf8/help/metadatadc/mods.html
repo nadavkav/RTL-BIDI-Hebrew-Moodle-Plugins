@@ -1,0 +1,39 @@
+<!--
+// Translated by 	  	: Vitor Gonçalves
+// Date of translation		: 2006/10/01
+-->
+<img alt="DCMES" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/metadatadc/icon.gif">&nbsp;<b>Metadados DCMES </b>
+
+<div class="indent">
+  <p>Metadata is &ldquo;data about data&rdquo;. Metadata is structured data set that  describes, explains and facilitates the localization and recovery of  information.<br />
+  <strong>The Dublin Core metadata (DCMES - Dublin Core Metadata Element Set)</strong>  standard is a simple yet effective element set for   describing a wide range of networked resources. Some of the resources and activities in  a moodle course  can be annotated with DCMES, because some  of the LOs ( <em>Learning Objects</em>) 
+  <?php helpbutton('resource', 'LOs', 'metadatadc'); ?>
+  are articles, papers,  posters, tutorials and other similar documents or bibliographic references.  It is desirable that the metadata creation  occurs when the LO (resource/activity) creation and that the LO&rsquo;s author is  also the author of the LO metadata.</p>
+  <p>Simple Dublin Core comprises fifteen elements (called <strong><em>Core Elements</em></strong>):</p>
+  <ul>
+    <li><strong><em>Title</em></strong> (The name given to the resource.);</li>
+    <li><strong><em>Creator </em></strong>(An entity primarily responsible for making the content of the resource.); </li>
+    <li><strong><em>Subject</em></strong> (The topic of the content of the resource.);</li>
+    <li><strong><em>Description</em></strong> (An account of the content of the resource. Example: abstract or table of contents,); </li>
+    <li><strong><em>Publisher</em></strong> (The entity responsible for making the resource available.); </li>
+    <li><strong><em>Contributor</em></strong> (An entity responsible for making contributions to the content of the resource.); </li>
+    <li><strong><em>Date</em></strong> (A date associated with an event in the life cycle of the resource.); </li>
+    <li><strong><em>Type</em></strong> (The nature or genre of the content of the resource); </li>
+    <li><strong><em>Format</em></strong> (The physical or digital manifestation of the resource: media-type or dimensions of the resource);</li>
+    <li> <strong><em>Identifier</em></strong> (An unambiguous reference to the resource within a given context: URI, ISBN, DOI.);</li>
+    <li><strong><em>Source</em></strong> (A Reference to a resource from which the present resource is derived.);</li>
+    <li> <strong><em>Language</em></strong> ( A language of the intellectual content of the resource: pt, en, fr);</li>
+    <li> <strong><em>Relation</em></strong> (A reference to a related resource.);</li>
+    <li> <strong><em>Coverage</em></strong> (The extent or scope of the content of the resource.);</li>
+    <li> <strong><em>Rights</em></strong> (Information about rights held in and over the resource.). </li>
+  </ul>
+  <p>
+    <?php helpbutton('simpledc', 'Simple DC Metadata', 'metadatadc'); ?>
+    Simple Dublin Core only includes these fifteen elements. </p>
+  <p>
+    <?php helpbutton('qualifieddc', 'Qualified DC Metadata', 'metadatadc'); ?>
+  Qualified Dublin Core includes three additional elements (Audience, Provenance   and RightsHolder), as well as a group of element refinements (also called   <strong>qualifiers</strong>) that refine the semantics of the elements in ways that may be useful   in resource discovery</p>
+  <p>Both, Simple DC and Qualified DC, can be expressed in XML and RDF.</p>
+  <p>For more information see: <a href="http://www.dublincore.org" target="_blank">http://www.dublincore.org</a> </p>
+</div>
+

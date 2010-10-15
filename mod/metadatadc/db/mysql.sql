@@ -1,0 +1,109 @@
+# This file contains a complete database schema for all the
+# tables used by this module, written in SQL
+
+# It may also contain INSERT statements for particular data
+# that may be used, especially new entries in the table log_display
+
+
+
+-- phpMyAdmin SQL Dump
+-- version 2.7.0-pl1
+-- http://www.phpmyadmin.net
+-- 
+-- M�quina: 193.136.194.192
+-- Data de Cria��o: 25-Jul-2006 �s 20:42
+-- Vers�o do servidor: 5.0.18
+-- vers�o do PHP: 5.1.1
+-- 
+-- Base de Dados: `moodle`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Estrutura da tabela `mdl_metadatadc`
+-- 
+
+CREATE TABLE IF NOT EXISTS `prefix_metadatadc` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `course` int(10) unsigned NOT NULL default 0,
+  `userid` int(10) unsigned NOT NULL default 0,
+  `resource` int(10) unsigned NOT NULL default 0,
+  `name` varchar(250) NOT NULL,
+  `title` text NOT NULL,
+  `alternative` text NOT NULL,
+  `creator` text NOT NULL,
+  `subject` text NOT NULL,
+  `description` text NOT NULL,
+  `descriptionout` text NOT NULL,
+  `abstract` text NOT NULL,
+  `tableOfContents` text NOT NULL,
+  `publisher` text NOT NULL,
+  `contributor` text NOT NULL,
+  `date` text NOT NULL,
+  `created` text NOT NULL,
+  `valid` text NOT NULL,
+  `available` text NOT NULL,
+  `issued` text NOT NULL,
+  `modified` text NOT NULL,
+  `dateAccepted` text NOT NULL,
+  `dateCopyrighted` text NOT NULL,
+  `dateSubmitted` text NOT NULL,
+  `type` text NOT NULL,
+  `format` text NOT NULL,
+  `extent` text NOT NULL,
+  `medium` text NOT NULL,
+  `identifier` text NOT NULL,
+  `bibliographicCitation` text NOT NULL,
+  `source` text NOT NULL,
+  `language` text NOT NULL,
+  `relation` text NOT NULL,
+  `isVersionOf` text NOT NULL,
+  `hasVersion` text NOT NULL,
+  `isReplacedBy` text NOT NULL,
+  `replaces` text NOT NULL,
+  `isRequiredBy` text NOT NULL,
+  `requires` text NOT NULL,
+  `isPartOf` text NOT NULL,
+  `hasPart` text NOT NULL,
+  `isReferencedBy` text NOT NULL,
+  `reference` text NOT NULL,
+  `isFormatOf` text NOT NULL,
+  `hasFormat` text NOT NULL,
+  `conformsTo` text NOT NULL,
+  `coverage` text NOT NULL,
+  `espatial` text NOT NULL,
+  `temporal` text NOT NULL,
+  `rights` text NOT NULL,
+  `accessRights` text NOT NULL,
+  `license` text NOT NULL,
+  `audience` text NOT NULL,
+  `mediator` text NOT NULL,
+  `educationLevel` text NOT NULL,
+  `provenance` text NOT NULL,
+  `rightsHolder` text NOT NULL,
+  `instructionalMethod` text NOT NULL,
+  `accrualMethod` text NOT NULL,
+  `accrualPeriodicity` text NOT NULL,
+  `accrualPolicy` text NOT NULL,
+  `interactivityType` text NOT NULL,
+  `interactivityLevel` text NOT NULL,
+  `typicalLearningTime` text NOT NULL,
+  `timemodified` int(10) unsigned NOT NULL default 0,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id_2` (`id`),
+  KEY `id` (`id`),
+  KEY `resource` (`resource`),
+  KEY `course` (`course`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Created by VG';
+
+
+#
+# Dumping data for table `mdl_log_display`
+#
+
+#INSERT INTO `prefix_log_display` (module, action, mtable, field) VALUES (`metadatadc`, `view`, `metadatadc`, `name`);
+#INSERT INTO `prefix_log_display` (`module`, `action`, `mtable`, `field`) VALUES (`metadatadc`, `update`, `metadatadc`, `name`);
+#INSERT INTO `prefix_log_display` (`module`, `action`, `mtable`, `field`) VALUES (`metadatadc`, `add`, `metadatadc`, `name`);
+

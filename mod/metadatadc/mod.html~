@@ -1,0 +1,1048 @@
+<!-- This page defines the form to create or edit an instance of this module -->
+<!-- It is used from /course/mod.php.  The whole instance is available as $form. -->
+
+<?php
+
+$ds = DIRECTORY_SEPARATOR;
+require_once("$CFG->dirroot{$ds}lib{$ds}moodlelib.php");
+require_once("$CFG->dirroot{$ds}mod{$ds}metadatadc{$ds}lib.php");
+
+//actual application to generate keywords from resource data.
+include('class.autokeyword.php');
+
+//current date
+$today = date("Y-m-d");
+
+//current year
+$year = date (Y);
+
+//Cut final ;; if exists
+function metadatadc_cut_final($field)
+{
+	$findme1 = ';;';
+	$findme2 = '; ';
+	$findme3 = ';; ';
+	$findme4 = '; ;';		
+	$f2chars = substr($field, -2, 2);
+	$f3chars = substr($field, -3, 3);	
+		if (($f3chars == $findme3) || ($f3chars == $findme4)) {
+		$string = substr($field, 0, -3);
+		} elseif (($f2chars == $findme1) || ($f2chars == $findme2)) {
+		$string = substr($field, 0, -2);		
+	} else {
+	$string = $field;
+	}
+return $string;
+}
+
+//Verify if URL exists
+function metadatadc_url_exists($url)
+{
+ $handle = @fopen($url, "r");
+ if ($handle === false)
+  return false;
+ fclose($handle);
+ return true;
+}
+
+//Cut _utf8 if exists
+function metadatadc_max_char_lang($lg)
+{
+	$findme = '_utf8';
+	$pos = strpos($lg, $findme);
+	if (!$pos === false) {
+	$lang = substr($lg, 0, -5);
+	} else {
+	$lang = $lg;
+	}
+return $lang;
+}
+
+/// First we check that form variables have been initialised
+
+$lo = optional_param('lo', 0, PARAM_INT); // LO ID
+
+function get_idlo($lo) {
+	if ((!($lo == NULL)) || (!($lo == 0))) {
+	$resource = $lo; 
+	$form->resource = $lo;	
+	} else {
+	$resource = 'id';
+	}
+	return $resource;
+}
+
+
+if (!isset($form->name)) {
+    $form->name = get_string('modulename','metadatadc');;
+}
+if (!isset($form->resource)) {
+    $form->resource = get_idlo($lo);
+}
+if ((!isset($form->userid)) || ($form->userid == '0')) {
+    $form->userid = $USER->id;
+}
+
+if (! $metadatadcs = get_all_instances_in_course("metadatadc", $course)) {
+}
+foreach ($metadatadcs as $metadatadc) {
+				if ($metadatadc->resource == get_idlo($lo)) {
+					$link = $CFG->wwwroot.'/course/mod.php?update='.$metadatadc->coursemodule.'&amp;section='.$cm->section.'&amp;sesskey='.$USER->sesskey.'&amp;sr='.$cm->section;
+					$msg = get_string('exists', 'metadatadc');
+					redirect($link,$msg,'3');						
+				}
+			}
+?>
+
+<form name="form" method="post" action="mod.php">
+<center>
+<table cellpadding="5">
+<tr valign="top">
+    <td align="right"><b><?php  print_string("name") ?>:</b></td>
+    <td align="left">
+        <input type="text" name="name" size="50" value="<?php  p($form->name) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("resource","metadatadc") ?>:</b></td>
+    <td align="left">	            
+		    <?php
+			//  get_array_of_activities($course->id);
+			//  cm - course module id
+			//  mod - name of the module (eg forum)
+			//  section - the number of the section (eg week or topic)
+			//  name - the name of the instance
+			//  visible - is the instance visible or not
+			//  extra - contains extra string to include in any link
+
+			$modsmetadata = array();
+			$losannotated = array();
+			
+			$lines = get_array_of_activities($course->id);
+			foreach ($lines as $key => $line) {
+				$modfname = get_string("modulename", "$line->mod");
+				// resources or activities id-name and module name in course
+				$los[$key] = $line->cm . ' - ' . trim(strip_tags(urldecode($line->name))) . ' (' . $modfname . ')';	
+				if (($line->mod == 'metadatalom') | ($line->mod == 'metadatadc')) {
+				array_push($modsmetadata, $line->cm . ' - ' . trim(strip_tags(urldecode($line->name))) . ' (' . $modfname . ')');
+				}
+			    if (! $metadatadcs = get_all_instances_in_course("metadatadc", $course)) {
+				} else {			
+					foreach ($metadatadcs as $key => $metadatadc) {
+						if ($line->cm == $metadatadc->resource) {
+						array_push($losannotated, $line->cm . ' - ' . trim(strip_tags(urldecode($line->name))) . ' (' . $modfname . ')');
+						}
+					}
+				}		
+			}
+			//Don't show the metadatalom/metadatadc mods in course
+			$loscourse = array_diff($los, $modsmetadata);
+			//Don't show the LOs annotated with DC
+			$loswithoutmeta = array_diff($loscourse, $losannotated);
+			
+			if (($form->resource == NULL) | ($form->resource == "id") | ($form->resource == "0")) {			
+			//function choose_from_menu ($options, $name, $selected='', $nothing='choose', $script='', $nothingvalue='0', $return=false, $disabled=false, $tabindex=0)
+			choose_from_menu($loswithoutmeta, "resource", $form->resource, 'choose', '', '0', $return=false, $disabled=false, $tabindex=0);
+			} else {
+			echo $lo[$metadatadc->resource];
+			choose_from_menu($loscourse, "resource", $form->resource, 'choose', '', '0', $return=false, $disabled=true, $tabindex=0);
+			?>
+			<input type="hidden" name=resource value="<?php  p($form->resource) ?>" />
+			<?php			
+			}		
+			helpbutton('resource', get_string('resource','metadatadc'), 'metadatadc');
+			//get_records_menu($table, $field='', $value='', $sort='', $fields='*')
+			//$options = get_records_menu("resource", "course", $course->id, "name", "id, name");
+			//choose_from_menu($options, "resource", $form->resource);
+			?>			
+    </td>
+</tr>
+
+<?php
+
+/////If is adding new register -> don't show metadata fields
+
+if (($form->resource == "id") || ($form->resource == 0))  {
+
+} else { 
+			
+		///////////////////////////////////////////////////////////
+		//Find information in DB to generate metadata automatically
+		$lines = get_array_of_activities($course->id); 
+		foreach ($lines as $key => $line) {
+			$cmlo[$key] = $line->cm; //LO course module id
+			$modlo[$key] = $line->mod; //LO module name
+			$namelo[$key] = trim(strip_tags(urldecode($line->name))); //LO name	(instance name)
+		}
+		
+		//get_field($table, $return, $field1, $value1, $field2='', $value2='', $field3='', $value3='')
+		$resource_summary = get_field($modlo[$form->resource], "summary", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_summary === FALSE) | ($resource_summary == "0") | ($resource_summary == NULL)) {
+		$resource_summary = '';
+		}
+		$resource_alltext = get_field($modlo[$form->resource], "alltext", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_alltext === FALSE) | ($resource_alltext == "0") | ($resource_alltext == NULL)) {
+		$resource_alltext = '';
+		}		
+		$resource_intro = get_field($modlo[$form->resource], "intro", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_intro === FALSE) | ($resource_intro == "0") | ($resource_intro == NULL)) {
+		$resource_intro = '';
+		}			
+		$resource_description = get_field($modlo[$form->resource], "description", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_description === FALSE) | ($resource_description == "0") | ($resource_description == NULL)) {
+		$resource_description = '';
+		}			
+		$resource_introduction = get_field($modlo[$form->resource], "introduction", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_introduction === FALSE) | ($resource_introduction == "0") | ($resource_introduction == NULL)) {
+		$resource_introduction = '';
+		}			
+		$resource_text = get_field($modlo[$form->resource], "text", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_text === FALSE) | ($resource_text == "0") | ($resource_text == NULL)) {
+		$resource_text = '';
+		}			
+		$resource_content = get_field($modlo[$form->resource], "content", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_content === FALSE) | ($resource_content == "0") | ($resource_content == NULL)) {
+		$resource_content = '';
+		}
+		$resource_pagename = get_field($modlo[$form->resource], "pagename", "name", $namelo[$form->resource], "course", $course->id);	
+		if (($resource_pagename === FALSE) | ($resource_pagename == "0") | ($resource_pagename == NULL)) {
+		$resource_pagename = '';
+		}
+		$resource_date = get_field($modlo[$form->resource], "timemodified", "name", $namelo[$form->resource], "course", $course->id);
+		if (($resource_date === FALSE) | ($resource_date == "0") | ($resource_date == NULL)) {
+		$resource_date = userdate($resource_date,"%Y-%m-%d");				
+		}
+		$scorm_version = get_field($modlo[$form->resource], "version", "name", $namelo[$form->resource], "course", $course->id);
+		if (($scorm_version === FALSE) | ($scorm_version == "0") | ($scorm_version == NULL)) {
+		$scorm_version = 'v1.0';				
+		}		
+		/////	
+
+if (!isset($form->title)) {
+    $form->title = '';
+}
+if (!isset($form->alternative)) {
+    $form->alternative = '';
+}
+if (!isset($form->creator)) {
+    $form->creator = '';
+}
+if (!isset($form->subject)) {
+    $form->subject = '';
+}
+if (!isset($form->description)) {
+    $form->description = '';
+}
+if (!isset($form->descriptionout)) {
+    $form->descriptionout = '';
+}
+if (!isset($form->abstract)) {
+    $form->abstract = '';
+}
+if (!isset($form->tableOfContents)) {
+    $form->tableOfContents = '';
+}
+if (!isset($form->publisher)) {
+    $form->publisher = '';
+}
+if (!isset($form->contributor)) {
+    $form->contributor = '';
+}
+if (!isset($form->date)) {
+    $form->date = $today;
+}
+if (!isset($form->type)) {
+    $form->type = $modlo[$form->resource];
+}
+if (!isset($form->format)) {
+    $form->format = 'Web Page Moodle';
+}
+if (!isset($form->identifier)) {
+    $form->identifier = '';
+}
+if (!isset($form->source)) {
+    $form->source = '';
+}
+if (!isset($form->language)) {
+	if ($languages = get_list_of_languages()) {
+		if (!$user->lang) {
+		$user->lang = $CFG->lang; }
+	}
+    $form->language = $user->lang;		
+}
+if (!isset($form->relation)) {
+	$form->relation = $CFG->wwwroot . '/course/view.php?id=' . $course->id;	
+}
+if (!isset($form->coverage)) {
+    $form->coverage = '';
+}
+if (!isset($form->rights)) {
+    $form->rights = 'Copyright ' . $year . ' - ' . $USER->firstname . ' ' . $USER->lastname . ' - ' . $SITE->fullname . ' - All rights reserved.';
+}
+if (!isset($form->audience)) {
+    $form->audience = 'Learners/Students';
+}
+// More similar blocks go here...	
+?>
+
+<tr valign="top">
+<td colspan="2" align="right"><br /><?php helpbutton('simpledc', 'simple DC', 'metadatadc'); ?> Simple DC&nbsp;&nbsp;&nbsp;&nbsp;
+									<?php helpbutton('qualifieddc', 'qualified DC', 'metadatadc'); ?> Qualified DC&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="submit" value="<?php  print_string("refresh","metadatadc") ?>" /></td>
+</tr>
+<tr valign="top">
+<td colspan="2"><hr /></td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("title","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php	
+		$url_resource = $form->identifier;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);
+		
+		if (($form->title == NULL) || (strlen($form->title) < 4)) {
+		$titleresource = trim(strip_tags(urldecode($namelo[$form->resource])));
+		$form->title = $titleresource ?>
+		
+        <input type="text" name="title" size="50" value="<?php  p($form->title) ?>">
+		<?php } else { $form->title = metadatadc_cut_final($form->title); ?>
+        <input type="text" name="title" size="50" value="<?php  p($form->title) ?>">
+		<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("alternative","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+		if (($form->alternative == NULL) || ($form->alternative == $form->name . ' - ') || (strlen($form->alternative) < 4)) {
+		$titleresource = trim(strip_tags(urldecode($namelo[$form->resource])));
+		$form->alternative = $form->name . ' - ' . $titleresource; ?>
+        <input type="text" name="alternative" size="50" value="<?php  p($form->alternative) ?>">
+		<?php } else { 	$form->alternative = metadatadc_cut_final($form->alternative); ?>
+        <input type="text" name="alternative" size="50" value="<?php  p($form->alternative) ?>">
+		<?php } ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("creator","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php if ($form->creator == NULL) { 	
+	$form->creator = $USER->lastname . ', ' . $USER->firstname . '. ' . $USER->institution . '. ' . $USER->department . '. ';	?>
+        <input type="text" name="creator" size="50" value="<?php  p($form->creator) ?>">
+	<?php } else { $form->creator = metadatadc_cut_final($form->creator); ?>
+        <input type="text" name="creator" size="50" value="<?php  p($form->creator) ?>">
+	<?php } ?>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("subject","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php 
+		
+		$data = $resource_pagename . $resource_summary . $resource_alltext . $resource_intro . 
+				$resource_description . $resource_introduction . $resource_text . $resource_content;
+		
+		$params['content'] = $data; //resource page content
+		//set the length of keywords you like
+		$params['min_word_length'] = 5;  //minimum length of single words
+		$params['min_word_occur'] = 3;  //minimum occur of single words
+
+		$params['min_2words_length'] = 3;  //minimum length of words for 2 word phrases
+		$params['min_2words_phrase_length'] = 10; //minimum length of 2 word phrases
+		$params['min_2words_phrase_occur'] = 2; //minimum occur of 2 words phrase
+
+		$params['min_3words_length'] = 3;  //minimum length of words for 3 word phrases
+		$params['min_3words_phrase_length'] = 10; //minimum length of 3 word phrases
+		$params['min_3words_phrase_occur'] = 2; //minimum occur of 3 words phrase
+
+		$keyword = new autokeyword($params, "iso-8859-1");		
+        
+		//$form->subject = $keyword->get_keywords(); //single words and frases with 2 or 3 words
+		//$form->subject = $keyword->parse_2words(); //frases with 2 words
+		//$form->subject = $keyword->parse_3words(); //frases with 3 words
+		$form->subject = $keyword->parse_words(); //single words
+
+		if (($form->subject == NULL) | ($form->subject == "0")) {		
+		$subject = $keyword->parse_words(); //single words
+		$form->subject = trim(strip_tags(urldecode($subject)));			
+		$form->subject = metadatadc_cut_final($form->subject); 
+        //print_textarea(false, 3, 40, 680, 400, "subject", $form->subject);
+		print '<textarea name="subject" rows="3" cols="40" wrap ="virtual">'.$form->subject.'</textarea>';
+		} else {
+		$form->subject = metadatadc_cut_final($form->subject); 		
+        //print_textarea(false, 3, 40, 680, 400, "subject", $form->subject);
+		print '<textarea name="subject" rows="3" cols="40" wrap ="virtual">'.$form->subject.'</textarea>';
+		} ?>	
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("description","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php if (($form->description == NULL) || (strlen($form->description) < 4)) {	
+		$resource_summary = $resource_summary . $resource_intro . $resource_description . $resource_introduction . $resource_text . $resource_content;
+		$form->description = trim(strip_tags(urldecode($resource_summary)));
+		$form->description = metadatadc_cut_final($form->description);
+	        print_textarea(false, 3, 40, 680, 400, "description", $form->description);
+		} else {
+			$form->description = metadatadc_cut_final($form->description);		
+            print_textarea(false, 3, 40, 680, 400, "description", $form->description);
+		} ?>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("descriptionout","metadatadc") ?>:</td>
+    <td align="left">
+        <?php
+			$form->descriptionout = metadatadc_cut_final($form->descriptionout);	
+            print_textarea($nousehtmleditor, 3, 40, 680, 400, "descriptionout", $form->descriptionout);
+        ?>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("abstract","metadatadc") ?>:</td>
+    <td align="left">
+		<?php if (($form->abstract == NULL) || (strlen($form->abstract) < 4)) {	
+		$resource_summary = $resource_summary . $resource_intro . $resource_description . $resource_introduction . $resource_text . $resource_content;
+		$form->abstract = trim(strip_tags(urldecode($resource_summary)));
+		$form->abstract = metadatadc_cut_final($form->abstract);
+            print_textarea(false, 3, 40, 680, 400, "abstract", $form->abstract);
+		} else {
+			$form->abstract = metadatadc_cut_final($form->abstract);		
+            print_textarea(false, 3, 40, 680, 400, "abstract", $form->abstract);
+		} ?>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("tableOfContents","metadatadc") ?>:</td>
+    <td align="left">
+        <?php
+			$form->tableOfContents = metadatadc_cut_final($form->tableOfContents);
+            print_textarea(false, 3, 40, 680, 400, "tableOfContents", $form->tableOfContents);
+        ?>
+    </td>	
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("publisher","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php if ($form->publisher == NULL) { 	
+	$form->publisher = $USER->lastname . ', ' . $USER->firstname . '. ' . $USER->institution . '. ' . $USER->department . '. ';	?>
+        <input type="text" name="publisher" size="50" value="<?php  p($form->publisher) ?>">
+	<?php } else { $form->publisher = metadatadc_cut_final($form->publisher); ?>
+        <input type="text" name="publisher" size="50" value="<?php  p($form->publisher) ?>">
+	<?php } ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("contributor","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php if ($form->contributor == NULL) { 	
+	$form->contributor = $USER->lastname . ', ' . $USER->firstname . '. ' . $USER->institution . '. ' . $USER->department . '. ';	?>
+        <input type="text" name="contributor" size="50" value="<?php  p($form->contributor) ?>">
+	<?php } else { $form->contributor = metadatadc_cut_final($form->contributor); ?>
+        <input type="text" name="contributor" size="50" value="<?php  p($form->contributor) ?>">
+	<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("date","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php
+	if (($form->date == NULL) | ($form->date == "1970-01-1")){		 	
+    $form->date = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="date" size="10" value="<?php  p($form->date) ?>">
+	<?php } elseif (!$form->date = userdate($resource_date,"%Y-%m-%d")) {
+    $form->date = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="date" size="10" value="<?php  p($form->date) ?>">		
+	<?php } else { $form->date = metadatadc_cut_final($form->date); ?>	
+        <input type="text" name="date" size="10" value="<?php  p($form->date) ?>">
+	<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("created","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->created == NULL) | ($form->created == "1970-01-1")){ 	
+    $form->created = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="created" size="10" value="<?php  p($form->created) ?>">
+	<?php } else { $form->created = metadatadc_cut_final($form->created); ?>
+        <input type="text" name="created" size="10" value="<?php  p($form->created) ?>">
+	<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("valid","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->valid == NULL) | ($form->valid == "1970-01-1")){		 	
+    $form->valid = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="valid" size="10" value="<?php  p($form->valid) ?>">
+	<?php } else { $form->valid = metadatadc_cut_final($form->valid); ?>
+        <input type="text" name="valid" size="10" value="<?php  p($form->valid) ?>">
+	<?php } ?>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("available","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->available == NULL) | ($form->available == "1970-01-1")){		 	
+    $form->available = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="available" size="10" value="<?php  p($form->available) ?>">
+	<?php } else { $form->available = metadatadc_cut_final($form->available); ?>
+        <input type="text" name="available" size="10" value="<?php  p($form->available) ?>">
+	<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("issued","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->issued == NULL) | ($form->issued == "1970-01-1")){	 	
+    $form->issued = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="issued" size="10" value="<?php  p($form->issued) ?>">
+	<?php } else { $form->issued = metadatadc_cut_final($form->issued); ?>
+        <input type="text" name="issued" size="10" value="<?php  p($form->issued) ?>">
+	<?php } ?>	
+    </td align="left">
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("modified","metadatadc") ?>:</td>
+    <td align="left">
+	<?php
+	if (($form->modified == NULL) | ($form->modified == "1970-01-1")){		 	
+    $form->modified = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="modified" size="10" value="<?php  p($form->modified) ?>">
+	<?php } elseif (!$form->modified = userdate($resource_date,"%Y-%m-%d")) {
+    $form->modified = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="modified" size="10" value="<?php  p($form->modified) ?>">		
+	<?php } else { $form->modified = metadatadc_cut_final($form->modified); ?>	
+        <input type="text" name="modified" size="10" value="<?php  p($form->modified) ?>">
+	<?php } ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("dateAccepted","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->dateAccepted == NULL) | ($form->dateAccepted == "1970-01-1")){	 	
+    $form->dateAccepted = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="dateAccepted" size="10" value="<?php  p($form->dateAccepted) ?>">
+	<?php } else { $form->dateAccepted = metadatadc_cut_final($form->dateAccepted); ?>
+        <input type="text" name="dateAccepted" size="10" value="<?php  p($form->dateAccepted) ?>">
+	<?php } ?>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("dateCopyrighted","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->dateCopyrighted == NULL) | ($form->dateCopyrighted == "1970-01-1")){	
+    $form->dateCopyrighted = $today; ?>
+        <input type="text" name="dateCopyrighted" size="10" value="<?php  p($form->dateCopyrighted) ?>">
+	<?php } else { $form->dateCopyrighted = metadatadc_cut_final($form->dateCopyrighted); ?>
+        <input type="text" name="dateCopyrighted" size="10" value="<?php  p($form->dateCopyrighted) ?>">
+	<?php } ?>		
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("dateSubmitted","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->dateSubmitted == NULL) | ($form->dateSubmitted == "1970-01-1")){	 	
+    $form->dateSubmitted = userdate($resource_date,"%Y-%m-%d"); ?>
+        <input type="text" name="dateSubmitted" size="10" value="<?php  p($form->dateSubmitted) ?>">
+	<?php } else { $form->dateSubmitted = metadatadc_cut_final($form->dateSubmitted); ?>
+        <input type="text" name="dateSubmitted" size="10" value="<?php  p($form->dateSubmitted) ?>">
+	<?php } ?>		
+    </td>
+</tr>
+<?php
+$empty = get_string('emptynew','metadatadc');
+$newvalue = get_string('newvalue','metadatadc');
+$collection = get_string('collection','metadatadc');
+$dataset = get_string('dataset','metadatadc');
+$event = get_string('event','metadatadc');
+$image = get_string('image','metadatadc');
+$interactiveresource = get_string('interactiveresource','metadatadc');
+$movingimage = get_string('movingimage','metadatadc');
+$physicalobject = get_string('physicalobject','metadatadc');
+$service = get_string('service','metadatadc');
+$software = get_string('software','metadatadc');
+$sound = get_string('sound','metadatadc');
+$stillimage = get_string('stillimage','metadatadc');
+$text = get_string('text','metadatadc');
+$rtlomterms = array ($collection=>$collection, $dataset=>$dataset, $event=>$event, $image=>$image, $interactiveresource=>$interactiveresource, $movingimage=>$movingimage, $physicalobject=>$physicalobject, $service=>$service, $software=>$software, $sound=>$sound, $stillimage=>$stillimage, $text=>$text, ''=>$empty, 'newvalue'=>$newvalue);
+get_all_mods($course->id, &$mods, &$modnames, &$modnamesplural, &$modnamesused);
+$modsmetadata = array ("metadatadc"=>get_string('modulename', 'metadatadc'), "metadatalom"=>get_string('modulename', 'metadatalom'));
+$modnamessingular = array_diff($modnames, $modsmetadata);
+$rtlomoodle = array_merge($rtlomterms,$modnamessingular);
+?>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("type","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php if (($form->type == 'newvalue') || ($form->type == NULL)) {
+	    $form->type = $modlo[$form->resource];	?>
+        <input type="text" name="type" size="30" value="<?php  p($form->type) ?>">	
+	<?php } else {		
+		$form->type = metadatadc_cut_final($form->type);
+		choose_from_menu($rtlomoodle, "type", $form->type, $form->type, '', '0', $return=false, $disabled=false, $tabindex=0);
+	} ?>
+<!--		<select name='type'><option value='<?php  p($form->type) ?>'><?php  p($form->type) ?></option><option value='Collection'>Collection</option><option value='Dataset'>Dataset</option><option value='Event'>Event</option><option value='Image'>Image</option><option value='InteractiveResource'>InteractiveResource</option><option value='MovingImage'>MovingImage</option><option value='PhysicalObject'>PhysicalObject</option><option value='Service'>Service</option><option value='Software'>Software</option><option value='Sound'>Sound</option><option value='StillImage'>StillImage</option><option value='Text'>Text</option><option value=''></option></select> -->
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("format","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->identifier;
+		$findme = 'http://localhost';
+		$pos = strpos($url_resource, $findme);
+		if (((!$form->format == NULL) | (!$form->format == 'newvalue')) & (!$form->extent == 'unknown')) {
+		$form->format = metadatadc_cut_final($form->format); ?>	
+		<select name='format'><option value='<?php  p($form->format) ?>'><?php  p($form->format) ?></option><option value='application'>application</option><option value='audio'>audio</option><option value='image'>image</option><option value='message'>message</option><option value='model'>model</option><option value='multipart'>multipart</option><option value='text'>text</option><option value='video'>video</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+		<?php } elseif (($form->format == 'newvalue') || ($form->format == NULL)) {
+	    $form->format = 'Web Page Moodle';	?>
+        <input type="text" name="format" size="30" value="<?php  p($form->format) ?>">		
+		<?php } elseif (($pos === false) && (metadatadc_url_exists($url_resource))) {
+			$ary_header = get_headers($url_resource, 1);
+			$filesize = $ary_header['Content-Length'];
+			$typeformat = $ary_header['Content-Type'];
+			$form->format = $typeformat; ?>
+		<select name='format'><option value='<?php  p($form->format) ?>'><?php  p($form->format) ?></option><option value='application'>application</option><option value='audio'>audio</option><option value='image'>image</option><option value='message'>message</option><option value='model'>model</option><option value='multipart'>multipart</option><option value='text'>text</option><option value='video'>video</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>	
+		<?php } else {
+			$form->format = "unknown"; ?>
+		<select name='format'><option value='<?php  p($form->format) ?>'><?php  p($form->format) ?></option><option value='application'>application</option><option value='audio'>audio</option><option value='image'>image</option><option value='message'>message</option><option value='model'>model</option><option value='multipart'>multipart</option><option value='text'>text</option><option value='video'>video</option><option value='unknown'>unknown</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>			
+		<?php } ?>								
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("extent","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+		$url_resource = $form->identifier;
+		$findme = 'http://localhost';
+		$pos = strpos($url_resource, $findme);		
+		if ((!$form->extent == NULL) & (!$form->extent == "unknown")) {
+		$form->extent = metadatadc_cut_final($form->extent); ?>
+        <input type="text" name="extent" size="50" value="<?php  p($form->extent) ?>">
+		<?php } elseif (($form->Technical_Size = "unknown") | (($pos === false) && (metadatadc_url_exists($url_resource)))) {
+			$ary_header = get_headers($url_resource, 1); 
+			$filesize = $ary_header['Content-Length'];	
+			$typeformat = $ary_header['Content-Type']; 
+			$form->extent = $filesize . " bytes"; ?>
+        <input type="text" name="extent" size="50" value="<?php  p($form->extent) ?>">							
+		<?php } else {
+			$form->extent = "unknown"; ?>
+        <input type="text" name="extent" size="50" value="<?php  p($form->extent) ?>">
+		<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("medium","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+		$url_resource = $form->identifier;
+		$findme = 'http://localhost';
+		$pos = strpos($url_resource, $findme);		
+		if ((!$form->medium == NULL) & (!$form->medium == "unknown")) { 
+		$form->medium = metadatadc_cut_final($form->medium); ?>
+        <input type="text" name="medium" size="50" value="<?php  p($form->medium) ?>">
+		<?php } elseif (($form->Technical_Size = "unknown") | (($pos === false) && (metadatadc_url_exists($url_resource)))) {
+			$ary_header = get_headers($url_resource, 1); 
+			$server = $ary_header['Server'];	
+			$typeformat = $ary_header['Content-Type']; 
+			$server_name = $_SERVER['SERVER_NAME'];				
+			$form->medium = $typeformat . " " . $server_name . " " . $server; ?>
+        <input type="text" name="medium" size="50" value="<?php  p($form->medium) ?>">						
+		<?php } else {
+			$form->medium = "unknown"; ?>
+        <input type="text" name="medium" size="50" value="<?php  p($form->medium) ?>">
+		<?php } ?>	
+	
+
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("identifier","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->identifier;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);		
+				
+		if (($form->identifier == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+		$form->identifier = $CFG->wwwroot . '/mod/'.$modlo[$form->resource].'/view.php?id=' . $form->resource;
+		$form->identifier = metadatadc_cut_final($form->identifier); 
+	    //$form->identifier = $CFG->wwwroot . '/mod/resource/view.php?r=' . $form->resource; // only for resources, not activities 
+		?>	
+        <input type="text" name="identifier" size="50" value="<?php  p($form->identifier) ?>">
+		<?php } else { $form->identifier = metadatadc_cut_final($form->identifier); ?>
+        <input type="text" name="identifier" size="50" value="<?php  p($form->identifier) ?>">
+		<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("bibliographicCitation","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+			$form->bibliographicCitation = metadatadc_cut_final($form->bibliographicCitation);
+           print_textarea(false, 3, 40, 680, 400, "abstract", $form->bibliographicCitation);
+		?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("source","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php $form->source = metadatadc_cut_final($form->source); ?>
+        <input type="text" name="source" size="50" value="<?php  p($form->source) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("language","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php 
+		$currlang = current_language();
+		$langs = get_list_of_languages();
+		if (($form->language == 'newvalue') || ($form->language == NULL)) {
+		$lg = $currlang;
+	    $form->language = $lg; 
+		?>
+		<input type="text" name="language" size="30" value="<?php  p($form->language) ?>">
+		<?php
+		} elseif (array_key_exists($form->language, $langs)) {
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);		
+			choose_from_menu ($mylangs, "language", $form->language, "", "", "");
+		} elseif ($form->language == "none") {
+			$clg = array ("none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			choose_from_menu ($mylangs, "language", $form->language, "", "", "");
+		} else {
+			$form->language = metadatadc_cut_final($form->language); 
+			$clg = array ($form->language => $form->language, "none" => "none", $empty => " ", "newvalue"=>$newvalue);
+			$mylangs = array_merge($langs, $clg);
+			choose_from_menu ($mylangs, "language", $form->language, "", "", "");
+		}
+		?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("relation","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php
+		$url_resource = $form->relation;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);			
+		if (($form->relation == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+	    $form->relation = $CFG->wwwroot . '/course/view.php?id=' . $course->id; ?>	
+        <input type="text" name="relation" size="50" value="<?php  p($form->relation) ?>">
+		<?php } else { $form->relation = metadatadc_cut_final($form->relation); ?>
+        <input type="text" name="relation" size="50" value="<?php  p($form->relation) ?>">
+		<?php } ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isVersionOf","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->isVersionOf = metadatadc_cut_final($form->isVersionOf); ?>
+        <input type="text" name="isVersionOf" size="50" value="<?php  p($form->isVersionOf) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("hasVersion","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->hasVersion = metadatadc_cut_final($form->hasVersion); ?>	
+        <input type="text" name="hasVersion" size="50" value="<?php  p($form->hasVersion) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isReplacedBy","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->isReplacedBy = metadatadc_cut_final($form->isReplacedBy); ?>	
+        <input type="text" name="isReplacedBy" size="50" value="<?php  p($form->isReplacedBy) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("replaces","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->replaces = metadatadc_cut_final($form->replaces); ?>	
+        <input type="text" name="replaces" size="50" value="<?php  p($form->replaces) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isRequiredBy","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->isRequiredBy = metadatadc_cut_final($form->isRequiredBy); ?>	
+        <input type="text" name="isRequiredBy" size="50" value="<?php  p($form->isRequiredBy) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("requires","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->requires = metadatadc_cut_final($form->requires); ?>
+        <input type="text" name="requires" size="50" value="<?php  p($form->requires) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isPartOf","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+		$url_resource = $form->isPartOf;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);		
+		if (($form->isPartOf == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+	    $form->isPartOf = $CFG->wwwroot . '/course/view.php?id=' . $course->id; ?>	
+        <input type="text" name="isPartOf" size="50" value="<?php  p($form->isPartOf) ?>">
+		<?php } else { $form->isPartOf = metadatadc_cut_final($form->isPartOf); ?>
+        <input type="text" name="isPartOf" size="50" value="<?php  p($form->isPartOf) ?>">
+		<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("hasPart","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->hasPart = metadatadc_cut_final($form->hasPart); ?>
+        <input type="text" name="hasPart" size="50" value="<?php  p($form->hasPart) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isReferencedBy","metadatadc") ?>:</td>
+    <td align="left">
+		<?php
+		$url_resource = $form->isReferencedBy;
+		$findme1 = '=0';
+		$findme2 = '=id';
+		$pos1 = strpos($url_resource, $findme1);
+		$pos2 = strpos($url_resource, $findme2);		
+		if (($form->isReferencedBy == NULL) | (!$pos1 === false) | (!$pos2 === false)) { 
+	    $form->isReferencedBy = $CFG->wwwroot . '/mod/resource/index.php?id=' . $course->id; ?>	
+        <input type="text" name="isReferencedBy" size="50" value="<?php  p($form->isReferencedBy) ?>">
+		<?php } else { $form->isReferencedBy = metadatadc_cut_final($form->isReferencedBy); ?>
+        <input type="text" name="isReferencedBy" size="50" value="<?php  p($form->isReferencedBy) ?>">
+		<?php } ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("reference","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->reference = metadatadc_cut_final($form->reference); ?>
+        <input type="text" name="reference" size="50" value="<?php  p($form->reference) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("isFormatOf","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->isFormatOf = metadatadc_cut_final($form->isFormatOf); ?>
+        <input type="text" name="isFormatOf" size="50" value="<?php  p($form->isFormatOf) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("hasFormat","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->hasFormat = metadatadc_cut_final($form->hasFormat); ?>	
+        <input type="text" name="hasFormat" size="50" value="<?php  p($form->hasFormat) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("conformsTo","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->conformsTo = metadatadc_cut_final($form->conformsTo); ?>	
+        <input type="text" name="conformsTo" size="50" value="<?php  p($form->conformsTo) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("coverage","metadatadc") ?>:</b></td>
+    <td align="left">
+		<?php $form->coverage = metadatadc_cut_final($form->coverage); ?>		
+        <input type="text" name="coverage" size="50" value="<?php  p($form->coverage) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("espatial","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->espatial = metadatadc_cut_final($form->espatial); ?>		
+        <input type="text" name="espatial" size="50" value="<?php  p($form->espatial) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("temporal","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->temporal = metadatadc_cut_final($form->temporal); ?>	
+        <input type="text" name="temporal" size="50" value="<?php  p($form->temporal) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php  print_string("rights","metadatadc") ?>:</b></td>
+    <td align="left">
+	<?php if ($form->rights == NULL) { 
+    $form->rights = 'Copyright ' . $year . ' - ' . $USER->firstname . ' ' . $USER->lastname . ' - ' . $SITE->fullname . ' - All rights reserved.'; ?>
+        <input type="text" name="rights" size="50" value="<?php  p($form->rights) ?>">	
+	<?php } else { $form->rights = metadatadc_cut_final($form->rights); ?>	
+        <input type="text" name="rights" size="30" value="<?php  p($form->rights) ?>">
+	<?php } ?>	
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("accessRights","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->accessRights = metadatadc_cut_final($form->accessRights); ?>		
+        <input type="text" name="accessRights" size="50" value="<?php  p($form->accessRights) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("license","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->license = metadatadc_cut_final($form->license); ?>	
+        <input type="text" name="license" size="50" value="<?php  p($form->license) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("audience","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if (($form->audience == 'newvalue') || ($form->language == NULL)) {
+	    $form->audience =  'Learners/Students'; ?>
+        <input type="text" name="audience" size="50" value="<?php  p($form->audience) ?>">	
+	<?php } else {	
+	$form->audience = metadatadc_cut_final($form->audience); ?>
+        <select name='audience'><option value='<?php  p($form->audience) ?>'><?php  p($form->audience) ?></option><option value='learners'>learners</option><option value='teachers'>teachers</option><option value='higher education'>higher education</option><option value='school (Secondary Education)'>school (Secondary Education)</option><option value='school (Primary Education)'>school (Primary Education)</option><option value='training'>training</option><option value='Learners/Students'>Learners/Students</option><option value=''><?php echo $empty ?></option><option value='newvalue'><?php echo $newvalue ?></option></select>
+	<?php } ?>	
+
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("mediator","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if ($form->mediator == NULL) { 
+    $form->mediator =  $SITE->fullname . ' (' . $USER->firstname . ' ' . $USER->lastname . ') '; ?>
+        <input type="text" name="mediator" size="50" value="<?php  p($form->mediator) ?>">
+	<?php } else { $form->mediator = metadatadc_cut_final($form->mediator); ?>	
+        <input type="text" name="mediator" size="50" value="<?php  p($form->mediator) ?>">
+	<?php } ?>		
+
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("educationLevel","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->educationLevel = metadatadc_cut_final($form->educationLevel); ?>		
+        <input type="text" name="educationLevel" size="50" value="<?php  p($form->educationLevel) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("provenance","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->provenance = metadatadc_cut_final($form->provenance); ?>	
+        <input type="text" name="provenance" size="50" value="<?php  p($form->provenance) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("rightsHolder","metadatadc") ?>:</td>
+    <td align="left">
+	<?php if ($form->rightsHolder == NULL) { 
+    $form->rightsHolder =  $USER->firstname . ' ' . $USER->lastname . ' (' . $SITE->fullname . ') '; ?>
+        <input type="text" name="rightsHolder" size="50" value="<?php  p($form->rightsHolder) ?>">
+	<?php } else { $form->rightsHolder = metadatadc_cut_final($form->rightsHolder); ?>	
+        <input type="text" name="rightsHolder" size="50" value="<?php  p($form->rightsHolder) ?>">
+	<?php } ?>	
+
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("instructionalMethod","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->instructionalMethod = metadatadc_cut_final($form->instructionalMethod); ?>		
+        <input type="text" name="instructionalMethod" size="50" value="<?php  p($form->instructionalMethod) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("accrualMethod","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->accrualMethod = metadatadc_cut_final($form->accrualMethod); ?>		
+        <input type="text" name="accrualMethod" size="50" value="<?php  p($form->accrualMethod) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("accrualPeriodicity","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->accrualPeriodicity = metadatadc_cut_final($form->accrualPeriodicity); ?>		
+        <input type="text" name="accrualPeriodicity" size="50" value="<?php  p($form->accrualPeriodicity) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("accrualPolicy","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->accrualPolicy = metadatadc_cut_final($form->accrualPolicy); ?>	
+        <input type="text" name="accrualPolicy" size="50" value="<?php  p($form->accrualPolicy) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("interactivityType","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->interactivityType = metadatadc_cut_final($form->interactivityType); ?>	
+        <input type="text" name="interactivityType" size="50" value="<?php  p($form->interactivityType) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("interactivityLevel","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->interactivityLevel = metadatadc_cut_final($form->interactivityLevel); ?>	
+        <input type="text" name="interactivityLevel" size="50" value="<?php  p($form->interactivityLevel) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php  print_string("typicalLearningTime","metadatadc") ?>:</td>
+    <td align="left">
+		<?php $form->typicalLearningTime = metadatadc_cut_final($form->typicalLearningTime); ?>		
+        <input type="text" name="typicalLearningTime" size="50" value="<?php  p($form->typicalLearningTime) ?>">
+    </td>
+</tr>
+
+<tr valign="top">
+<td colspan="2"><hr /></td>
+</tr>
+
+<!-- More rows go in here... -->
+
+<!-- The following line for Moodle 1.5 prints the visibility setting form element -->
+<?php
+	if ($CFG->version > 2005000000) {
+		print_visible_setting($form);
+	} else {
+	$comversion = get_string("Comment_version","metadatadc");	
+	echo "<tr valign='top'><td colspan='2'>$comversion</td></tr>";
+	}
+?>
+<!-- and if your module uses groups you would also have -->
+<!-- < ? php print_groupmode_setting($form); ? > -->
+
+<?php
+//final do if is adding
+}
+?>
+
+</table>
+
+<?php if ($usehtmleditor) {    use_html_editor();} ?>
+
+
+<!-- These hidden variables are always the same -->
+<input type="hidden" name=course        value="<?php  p($form->course) ?>" />
+<input type="hidden" name="sesskey"     value="<?php  p($form->sesskey) ?>" />
+<input type="hidden" name=coursemodule  value="<?php  p($form->coursemodule) ?>" />
+<input type="hidden" name=section       value="<?php  p($form->section) ?>" />
+<input type="hidden" name=module        value="<?php  p($form->module) ?>" />
+<input type="hidden" name=modulename    value="<?php  p($form->modulename) ?>" />
+<input type="hidden" name=instance      value="<?php  p($form->instance) ?>" />
+<input type="hidden" name=mode          value="<?php  p($form->mode) ?>" />
+<input type="hidden" name=userid        value="<?php  p($form->userid) ?>" />
+<?php if ($form->resource == "id") { ?>
+<input type="submit" value="<?php  print_string("next") ?>" />
+<?php } else { ?>
+<input type="submit" value="<?php  print_string("savechanges") ?>" />
+<?php } ?>
+</center>
+
+</form>
