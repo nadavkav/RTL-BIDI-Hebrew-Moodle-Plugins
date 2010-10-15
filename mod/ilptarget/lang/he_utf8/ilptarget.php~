@@ -1,0 +1,151 @@
+<?php // $Id: target.php,v 1.1 2008/04/07 23:20:44 arborrow Exp $
+
+      // progress.php - created with Moodle 1.2 + (2004032100)
+
+
+
+$string['add'] = 'הוספת מטרה חדשה';
+
+$string['addcomment'] = 'הוספת הערה';
+
+$string['added'] = 'מטרה חדשה נוספה';
+
+$string['achieved'] = 'הושג';
+
+$string['cancel'] = 'בוטל';
+
+$string['comment'] = 'הערה';
+
+$string['commentfor'] = '$a הערה עבור';
+
+$string['comments'] = 'הערות';
+
+$string['complete'] = 'הושג';
+
+$string['completed'] = 'כן';
+
+$string['configcoursespecific'] = 'אם בתוך הקורס, רק מטרות עבור קורס זה יוצגו. ברירת המחדל היא להציג מטרות לכל משתמש ולא לכל קורס.';
+
+$string['configtargetmessage'] = 'אם נבחר, מודל ישלח למשתמשים הודעת הבזק על כך שמטרה חדשה נוספה או שמטרה קיימת עודכנה.';
+
+$string['configcommentmessage'] = 'אם נבחר, מודל ישלח למשתמשים הודעת הבזק על כך שהערה חדשה נוספה למטרה או שהערה קיימת עודכנה.';
+
+$string['configusetemplate'] = 'עבור הזנת מטרה השתמש בתבנית כללית כברירת מחדל.';
+
+$string['course'] = 'קורס';
+
+$string['courserelated'] = 'קורס קשור';
+
+$string['deadline'] = 'תאריך יעד';
+
+$string['description'] = 'תיאור';
+
+$string['deleted'] = 'נמחק';
+
+$string['helpreport'] = '<p>דוחות התקדמות מאפשרים למורים לקבוע מספר של מטרות לתלמידים מסויימים'.
+
+                        'עם תאריך יעד להשלמתן.</p>';
+
+$string['lastmodified'] = 'השתנה';
+
+$string['modulename'] = 'יעד התקדמות אישית';
+
+$string['modulenameplural'] = 'יעדי התקדמות אישית';
+
+$string['mycomment'] = 'ההערה שלי';
+
+$string['mytarget'] = 'המטרה שלי';
+
+$string['mytargets'] = 'המטרות שלי';
+
+$string['mystudents'] = 'התלמידים שלי';
+
+$string['name'] = 'מטרה';
+
+$string['newcomment'] = 'הערה חדשה נוספה למטרה:';
+
+$string['newtarget'] = 'מטרה חדשה נקבעה עבורך';
+
+$string['norecords'] = 'אף מטרה לא הוסכמה';
+
+$string['nostudents'] = 'You are not assigned to any students';
+
+$string['notachieved'] = 'Not achieved';
+
+$string['outstanding'] = 'To be achieved';
+
+$string['pagesize'] = 'Students per page';
+
+$string['remotemytargets'] = 'My Remote Targets';
+
+$string['remoteplural'] = 'Remote Targets';
+
+$string['report'] = 'Progress Reports';
+
+$string['reports'] = 'Reports';
+
+$string['set'] = 'Date Set';
+
+$string['settarget'] = 'Update Targets';
+
+$string['setby'] = 'Set by';
+
+$string['statusupdate'] = 'A target status has been updated to $a';
+
+$string['ilptarget:view'] = 'View targets';
+
+$string['ilptarget:addcomment'] = 'Add comment to target';
+
+$string['ilptarget:addowncomment'] = 'Add comments to own targets';
+
+$string['ilptarget:addowntarget'] = 'Add own targets';
+
+$string['ilptarget:addtarget'] = 'Add a target';
+
+$string['ilptarget:edittarget'] = 'Edit target';
+
+$string['ilptarget:editowntarget'] = 'Edit own target';
+
+$string['ilptarget:updatetargetstatus'] = 'Update target status';
+
+$string['ilptarget:viewclass'] = 'View targets for class';
+
+$string['targetagreed'] = 'Actions';
+
+$string['targetcomments'] = 'Comments:';
+
+$string['targetcomplete'] = 'Complete';
+
+$string['targetevaluation'] = 'Comments and Evaluation';
+
+$string['targetfor'] = 'Target for $a';
+
+$string['targetname'] = 'Name';
+
+$string['targetreports'] = 'Target(s) agreed for $a';
+
+$string['targetsset'] = 'Targets Overview ($a)';
+
+$string['targettype'] = 'Type';
+
+$string['targetviewlink'] = 'Click here to view...';
+
+$string['updated'] = 'Updated';
+
+$string['updatedcomment'] = 'A target comment has been updated:';
+
+$string['updatedtarget'] = 'A target has been updated:';
+
+$string['updatestatus'] = 'Update';
+
+$string['viewtargets'] = 'View $a target(s)';
+
+$string['withdrawn'] = 'Withdrawn';
+
+
+
+
+
+
+
+?>

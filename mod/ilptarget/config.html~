@@ -1,0 +1,99 @@
+<?php 
+
+	$usehtmleditor = can_use_html_editor(); 
+
+	$module = 'project/ilp';
+	$config = get_config($module);
+		
+	if ( !isset($CFG->ilptarget_send_target_message))
+		{ $CFG->ilptarget_send_target_message = 0; }
+	if ( !isset($CFG->ilptarget_send_comment_message))
+		{ $CFG->ilptarget_send_comment_message = 0; }	
+	if ( !isset($CFG->ilptarget_course_specific))
+		{ $CFG->ilptarget_course_specific = 0; }
+	if ( !isset($CFG->ilptarget_use_template))
+		{ $CFG->ilptarget_use_template = 0; }
+    if ( !isset($CFG->ilptarget_template))
+		{ $CFG->ilptarget_template = ''; }
+
+?>
+
+<form method="post" action="module.php" id="form">
+<div>
+<input type="hidden" name="sesskey" value="<?php echo $USER->sesskey ?>" />
+
+<table cellpadding="9" cellspacing="0" >
+<tr valign="top">
+    <td align="right">ilptarget_send_target_message:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilptarget_send_target_message", $CFG->ilptarget_send_target_message, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configtargetmessage", "ilptarget") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">ilptarget_send_comment_message:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilptarget_send_comment_message", $CFG->ilptarget_send_comment_message, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configcommentmessage", "ilptarget") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">ilptarget_course_specific:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilptarget_course_specific", $CFG->ilptarget_course_specific, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configcoursespecific", "ilptarget") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">use_template:</td>
+    <td>
+    <?php
+       choose_from_menu_yesno ("ilptarget_use_template", $CFG->ilptarget_use_template, "", "", "");
+    ?>
+    </td>
+    <td>
+    <?php print_string("configusetemplate", "ilptarget") ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">template:</td>
+    <td colspan="2">
+    <?php
+       print_textarea(true, 20, 50, 0, 0,'ilptarget_template',stripslashes($CFG->ilptarget_template));
+    ?>
+    </td>
+</tr>
+<tr>
+
+    <td colspan="3" align="center">
+
+    <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+
+</tr>
+
+</table>
+
+</div>
+
+</form>
+
+<?php if ($usehtmleditor) {
+
+          use_html_editor(); 
+
+      }
+
+?>
+

@@ -1,0 +1,502 @@
+2009-10-25 Sunday 21:44  ulcc
+
+	* target_comments.php, target_view.php, target_comments.php,
+	target_view.php: 
+	
+	CONTRIB-1499 - no longer saves cancelled data, tweak to code
+
+2009-10-25 Sunday 02:39  ulcc
+
+	* target_comments.php, target_view.php, target_comments.php,
+	target_view.php: 
+	
+	CONTRIB-1499 - no longer saves cancelled data
+
+2009-10-11 Sunday 22:39  ulcc
+
+	* index.php, lib.php, rpclib.php, target_comments.php,
+	target_view.php, view_students.php, lib.php, index.php, rpclib.php,
+	target_comments.php, target_view.php, view_students.php: 
+	
+	CONTRIB-1159 - tidy up breadcrumb and use build_navigation for
+	creating  trail
+
+2009-10-11 Sunday 20:27  ulcc
+
+	* target_view.php, target_view.php: 
+	
+	CONTRIB-1157 - fixed bug with target updates when sending messages
+	to users
+
+2009-10-11 Sunday 20:15  ulcc
+
+	* .project: 
+	
+	file .project was added on branch MOODLE_19_STABLE on 2009-10-11
+	12:15:50 +0000
+
+2009-10-11 Sunday 20:15  ulcc
+
+	* .project, lib.php, version.php, lang/en_utf8/ilptarget.php,
+	db/access.php, lib.php, version.php, .project, db/access.php,
+	lang/en_utf8/ilptarget.php: 
+	
+	CONTRIB-1565 - added capabilities to edit targets and reviews
+
+2009-10-11 Sunday 18:08  ulcc
+
+	* rpclib.php: 
+	
+	file rpclib.php was added on branch MOODLE_19_STABLE on 2009-10-11
+	10:08:19 +0000
+
+2009-10-11 Sunday 18:08  ulcc
+
+	* rpclib.php, lang/en_utf8/ilptarget.php,
+	lang/en_utf8/ilptarget.php, rpclib.php: 
+	
+	CONTRIB-1163 - allows targets to be published across networked
+	peers
+
+2009-08-31 Monday 23:25  ulcc
+
+	* lib.php, lib.php: 
+	
+	Fixed minor bug with links in calendar:
+	http://moodle.org/mod/forum/discuss.php?d=131388
+
+2009-05-26 Tuesday 05:45  ulcc
+
+	* lib.php, target_comments.php, lib.php, target_comments.php,
+	lib.php, target_comments.php: 
+	
+	CONTRIB-1157 - removed all redirect code and superfluous pages from
+	ilpconcern to use formlib and moduel lib effectively and reduce
+	pages.
+
+2009-05-26 Tuesday 01:06  ulcc
+
+	* lang/en_utf8/: ilptarget.php, ilptarget.php, ilptarget.php: 
+	
+	CONTRIB-1157 - language fixes
+
+2009-05-26 Tuesday 00:53  ulcc
+
+	* form_handler.php, icon.gif, lib.php, target_view.php,
+	update_comment.php, update_target.php, README.txt,
+	target_comments.php, README.txt, form_handler.php,
+	target_comments.php, target_view.php, update_comment.php, icon.gif,
+	lib.php, update_target.php, README.txt, icon.gif, lib.php,
+	target_comments.php, target_view.php, update_comment.php,
+	form_handler.php, update_target.php: 
+	
+	CONTRIB-1157 - removed all redirect code and superfluous pages to
+	use formlib and moduel lib effectively and reduce pages.
+
+2009-05-26 Tuesday 00:06  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-865 - group changes broke in 1.8
+
+2009-05-25 Monday 21:48  ulcc
+
+	* lib.php, target_comments.php, target_view.php, update_target.php,
+	lang/en_utf8/ilptarget.php, pix/achieved.gif, lib.php,
+	target_comments.php, target_view.php, update_target.php,
+	lang/en_utf8/ilptarget.php, pix/achieved.gif: 
+	
+	CONTRIB-1159 - remove table layouts in favour of YUI based grid
+	layouts
+
+2009-05-25 Monday 21:48  ulcc
+
+	* pix/achieved.gif: 
+	
+	file achieved.gif was added on branch MOODLE_19_STABLE on
+	2009-05-25 13:49:25 +0000
+
+2009-05-25 Monday 00:03  ulcc
+
+	* target_comments.php, target_view.php, version.php, db/access.php,
+	lang/en_utf8/ilptarget.php, target_comments.php, target_view.php,
+	version.php, db/access.php, lang/en_utf8/ilptarget.php: 
+	
+	CONTRIB-669 - added new system capabilities for adding entries to
+	own ILP
+
+2009-05-24 Sunday 23:25  ulcc
+
+	* target_view.php, target_view.php: 
+	
+	CONTRIB-669 - fixed an issue where the user context was being
+	assigned to users looking at their own ILP and so they didn't have
+	capabilities. Changed to system.
+
+2009-05-24 Sunday 22:48  ulcc
+
+	* update_target.php, version.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/ilptarget.php, update_target.php, version.php,
+	db/install.xml, db/upgrade.php, lang/en_utf8/ilptarget.php: 
+	
+	CONTRIB-1158 - added new name/target field that can more sensibly
+	feed the calendar. There is now a name and a description which
+	could correspond to target and actions
+
+2009-04-17 Friday 06:04  ulcc
+
+	* README.txt, config.html, mod.html, template.html,
+	update_target.php, version.php, target_view.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/ilptarget.php: 
+	
+	CONTRIB-1157 - merge changes from HEAD
+
+2009-04-17 Friday 02:32  ulcc
+
+	* update_target.php: 
+	
+	CONTRIB-1158
+
+2009-04-17 Friday 00:57  ulcc
+
+	* update_target.php: 
+	
+	CONTRIB-1158
+
+2009-03-14 Saturday 02:46  ulcc
+
+	* README.txt, config.html, form_handler.php, icon.gif, index.php,
+	lib.php, mod.html, target_comments.php, target_view.php,
+	update_comment.php, update_target.php, version.php, view.php,
+	view_students.php, db/access.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/ilptarget.php, lang/es_utf8/ilptarget.php,
+	pix/complete.gif, pix/icon.gif: 
+	
+	no message
+
+2009-03-14 Saturday 02:39  ulcc
+
+	* README.txt, config.html, mod.html, target_view.php,
+	template.html, update_target.php, version.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/ilptarget.php: 
+	
+	no message
+
+2009-03-09 Monday 04:30  arborrow
+
+	* CHANGES: 
+	
+	file CHANGES was initially added on branch MOODLE_19_STABLE.
+
+2009-03-09 Monday 04:30  arborrow
+
+	* pix/complete.gif, config.html, target_view.php,
+	update_target.php, lang/en_utf8/ilptarget.php, pix/icon.gif,
+	CHANGES, README.txt, index.php, lib.php, template.html,
+	update_comment.php, view.php, form_handler.php, icon.gif, mod.html,
+	target_comments.php, version.php, view_students.php, db/access.php,
+	db/install.xml, db/upgrade.php, lang/es_utf8/ilptarget.php: 
+	
+	CONTRIB-1088 - creating ilp_package MOODLE_19_STABLE branch
+
+2009-01-06 Tuesday 21:38  arborrow
+
+	* view_students.php: 
+	
+	file view_students.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:50 +0000
+
+2009-01-06 Tuesday 21:38  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-865
+
+2008-11-26 Wednesday 21:30  arborrow
+
+	* target_view.php: 
+	
+	file target_view.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:48 +0000
+
+2008-11-26 Wednesday 21:30  arborrow
+
+	* lib.php: 
+	
+	file lib.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:49 +0000
+
+2008-11-26 Wednesday 21:30  ulcc
+
+	* lib.php, target_view.php: 
+	
+	CONTRIB-867
+
+2008-11-03 Monday 23:03  ulcc
+
+	* view_students.php: 
+	
+	no message
+
+2008-11-03 Monday 21:25  arborrow
+
+	* index.php: 
+	
+	file index.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:49 +0000
+
+2008-11-03 Monday 21:25  ulcc
+
+	* index.php: 
+	
+	no message
+
+2008-10-16 Thursday 20:44  arborrow
+
+	* lang/en_utf8/ilptarget.php: 
+	
+	file ilptarget.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:48 +0000
+
+2008-10-16 Thursday 20:44  ulcc
+
+	* lang/en_utf8/ilptarget.php: 
+	
+	CONTRIB-771
+
+2008-10-13 Monday 20:46  ulcc
+
+	* target_view.php, view_students.php: 
+	
+	CONTRIB-771
+
+2008-08-19 Tuesday 19:24  arborrow
+
+	* lang/es_utf8/ilptarget.php: 
+	
+	file ilptarget.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:57 +0000
+
+2008-08-19 Tuesday 19:24  ulcc
+
+	* lang/es_utf8/ilptarget.php: 
+	
+	CONTRIB-666
+
+2008-08-11 Monday 20:17  arborrow
+
+	* config.html: 
+	
+	file config.html was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:48 +0000
+
+2008-08-11 Monday 20:17  ulcc
+
+	* config.html: 
+	
+	no message
+
+2008-07-29 Tuesday 20:24  ulcc
+
+	* config.html: 
+	
+	no message
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* update_target.php: 
+	
+	file update_target.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:48 +0000
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* form_handler.php: 
+	
+	file form_handler.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:50 +0000
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* template.html: 
+	
+	file template.html was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:49 +0000
+
+2008-07-23 Wednesday 23:11  arborrow
+
+	* pix/icon.gif: 
+	
+	file icon.gif was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:48 +0000
+
+2008-07-23 Wednesday 23:11  ulcc
+
+	* config.html, form_handler.php, lib.php, target_view.php,
+	template.html, update_target.php, view_students.php,
+	lang/en_utf8/ilptarget.php, pix/icon.gif: 
+	
+	no message
+
+2008-06-04 Wednesday 17:11  arborrow
+
+	* update_comment.php: 
+	
+	file update_comment.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:49 +0000
+
+2008-06-04 Wednesday 17:11  ulcc
+
+	* update_comment.php, update_target.php: 
+	
+	CONTRIB-473
+
+2008-06-04 Wednesday 00:19  ulcc
+
+	* config.html: 
+	
+	no message
+
+2008-05-29 Thursday 18:48  arborrow
+
+	* version.php: 
+	
+	file version.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:50 +0000
+
+2008-05-29 Thursday 18:48  arborrow
+
+	* db/upgrade.php: 
+	
+	file upgrade.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:56 +0000
+
+2008-05-29 Thursday 18:48  arborrow
+
+	* db/install.xml: 
+	
+	file install.xml was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:56 +0000
+
+2008-05-29 Thursday 18:48  ulcc
+
+	* form_handler.php, target_view.php, version.php, db/install.xml,
+	db/upgrade.php, lang/en_utf8/ilptarget.php: 
+	
+	no message
+
+2008-05-22 Thursday 20:27  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-451
+
+2008-05-21 Wednesday 19:41  arborrow
+
+	* db/access.php: 
+	
+	file access.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:56 +0000
+
+2008-05-21 Wednesday 19:41  arborrow
+
+	* target_comments.php: 
+	
+	file target_comments.php was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:50 +0000
+
+2008-05-21 Wednesday 19:41  arborrow
+
+	* view.php: 
+	
+	file view.php was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:49 +0000
+
+2008-05-21 Wednesday 19:41  ulcc
+
+	* lib.php, target_comments.php, target_view.php,
+	update_comment.php, update_target.php, view.php, view_students.php,
+	db/access.php, db/install.xml: 
+	
+	CONTRIB-447
+
+2008-05-08 Thursday 23:59  ulcc
+
+	* target_comments.php: 
+	
+	CONTRIB-398
+
+2008-05-08 Thursday 23:56  ulcc
+
+	* lib.php, target_comments.php, target_view.php,
+	update_comment.php, update_target.php, view.php, view_students.php:
+	
+	
+	CONTRIB-405
+
+2008-05-08 Thursday 23:19  ulcc
+
+	* form_handler.php, index.php, lib.php, target_comments.php,
+	target_view.php, update_comment.php, update_target.php,
+	view_students.php, db/access.php, db/install.xml,
+	lang/en_utf8/ilptarget.php, lang/en_utf8/target.php: 
+	
+	CONTRIB-405
+
+2008-05-08 Thursday 22:16  ulcc
+
+	* lib.php: 
+	
+	CONTRIB-405
+
+2008-04-30 Wednesday 18:24  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-399
+
+2008-04-30 Wednesday 18:06  ulcc
+
+	* view_students.php: 
+	
+	CONTRIB-396
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* pix/complete.gif: 
+	
+	file complete.gif was added on branch MOODLE_19_STABLE on
+	2009-03-08 19:30:47 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* icon.gif: 
+	
+	file icon.gif was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:50 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* mod.html: 
+	
+	file mod.html was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:50 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* README.txt: 
+	
+	file README.txt was added on branch MOODLE_19_STABLE on 2009-03-08
+	19:30:49 +0000
+
+2008-04-08 Tuesday 07:20  arborrow
+
+	* view_students.php, README.txt, form_handler.php, icon.gif,
+	index.php, lib.php, mod.html, target_comments.php, target_view.php,
+	update_comment.php, update_target.php, version.php, view.php,
+	db/access.php, db/install.xml, db/upgrade.php,
+	lang/en_utf8/target.php, pix/complete.gif, pix/icon.gif: 
+	
+	CONTRIB-262 - adding ILP blocks and modules submitted by James
+	Ballard
+
