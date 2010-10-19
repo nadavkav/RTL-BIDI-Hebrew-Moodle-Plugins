@@ -17,9 +17,9 @@ if($_FILES['image']['error'] != UPLOAD_ERR_OK) {
 //$file = $_FILES['image']['tmp_name'];
 $type = $_POST['type'];
 $state = $_POST['state'];
-$filename = $_POST['title'];
+$filename = $_POST['title'].".".$_POST['type'];
 
-if ($_POST['title'] != $USER->sesskey.".".$type ) error('Wrong sesskey :-(');
+if ($_POST['title'] != $USER->sesskey ) error('Wrong sesskey :-(');
 
 //Optional: set a unique filename if the file is saved to a public service and inserted into a database
 //$filename = uniqid();
@@ -31,9 +31,11 @@ if ($_POST['title'] != $USER->sesskey.".".$type ) error('Wrong sesskey :-(');
 //
 //$result = @move_uploaded_file($_FILES['image']['tmp_name'], $save_path);
 $created = mkdir("{$CFG->dataroot}/{$_GET['courseid']}/users/{$USER->id}", 0777, true);
-    if (!@move_uploaded_file($_FILES['image']['tmp_name'], "{$CFG->dataroot}/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}")) {
-    echo "Error moving the uploaded file";
-    exit;
+// delete previous file, just in case we are re-editing
+//unlink("{$CFG->dataroot}/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}");
+if (!@move_uploaded_file($_FILES['image']['tmp_name'], "{$CFG->dataroot}/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}")) {
+  echo "Error moving the uploaded file";
+  exit;
 }
 //echo "saved as file: {$CFG->dataroot}/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_{$filename}<br/>";
 //echo "Done :-)<br/>";
@@ -51,5 +53,6 @@ header("Location:thepagewhisthecoolstuff.php");
         parent.document.getElementById('editme').src = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
         parent.document.getElementById('imgurl').value = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
         parent.pixlr.overlay.hide();
+        //parent.document.getElementById('responseform').submit(); // save the image
     }
 </script>
