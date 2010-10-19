@@ -54,6 +54,5 @@ text-align:right;
 }
 
 .subsubcategory {
-background-color:#CFCECE;
-margin-right:21px;
+background-color:gray;
 }

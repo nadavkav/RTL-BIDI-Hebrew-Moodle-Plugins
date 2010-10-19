@@ -218,7 +218,8 @@ $string['config_version_3'] = 'New E-Portfolio layout: inkluding views, etc.';
 $string['config_version_2'] = 'Old E-Portfolio layout';
 $string['version_5.2.0_needed'] = 'Exabis E-Portfolio requires at least PHP-Version 5.2.0';
 
-$string['or'] = ' או ';
+$string['filterbycategory'] = ' סינון תצוגה לפי ';
+$string['or'] = ' או תצוגת ';
 $string['allcategories'] = 'כל הסיווגים';
 
 ?>

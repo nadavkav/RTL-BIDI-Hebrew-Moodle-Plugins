@@ -89,6 +89,7 @@ $string['summary'] = 'סיכום';
 $string['url'] = 'כתובת אינטרנט';
 $string['maincategory'] = 'סיווג ראשי';
 $string['subcategory'] = 'תת סיווג';
+$string['subsubcategory'] = 'תתי סיווגים';
 $string['accessoptions'] = 'אפשרויות כניסה';
 $string['shareallexceptthose'] = 'כניסה ל <span class=\'block_eportfolio_bold\'>כל המשתמשים</span> (גם כאלה שלא רשומים כאן) חוץ מהמשתמשים הבאים';
 $string['sharenoneexceptthose'] = 'כניסה אינה מותרת <span class=\'block_eportfolio_bold\'>לאף אחד</span> (גם כאלה שלא רשומים כאן) חוץ מהמשתמשים הבאים';

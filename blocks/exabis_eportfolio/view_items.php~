@@ -58,9 +58,9 @@ echo "<div class='block_eportfolio_center'>";
 print_simple_box( text_to_html(get_string("explaining".$type,"block_exabis_eportfolio")) , "center");
 echo "</div>";
 
-$availablecategories = get_categories();
+$availablecategories = exabis_get_categories();
 echo '<table><tr>';
-echo '<td width="180px">'.get_string('filterbycategory','block_exabis_eportfolio').' <form id="frmfiltercategory" action="view_items.php" method="get">';
+echo '<td>'.get_string('filterbycategory','block_exabis_eportfolio').'</td><td><form id="frmfiltercategory" action="view_items.php" method="get">';
 choose_from_menu($availablecategories,'filtercategory','',get_string('choose'),'document.getElementById(\'frmfiltercategory\').submit();');
 echo '<input type="hidden" name="courseid" value="'.$courseid.'">';
 //echo '<input type="submit" value="סינון">';
@@ -103,7 +103,7 @@ if ($type == 'all') {
 	$sql_type_where = " AND i.type='".$type."'";
 }
 
-if ($_GET['filtercategory']) {
+if (!empty($_GET['filtercategory'])) {
   $sql_type_where .= ' AND i.categoryid = '.$_GET['filtercategory'].' ';
 }
 
@@ -277,7 +277,7 @@ echo "</div>";
 
 print_footer($course);
 
-function get_categories() {
+function exabis_get_categories() {
   global $USER;
 
   $arrow = right_to_left() ? " &lArr; " : " &rArr; "; // nadavkav patch rtl
@@ -285,19 +285,25 @@ function get_categories() {
   $outercategories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid=0", "name asc");
   $categories = array();
   if ( $outercategories ) {
-      foreach ( $outercategories as $curcategory ) {
-        $categories[$curcategory->id] = format_string($curcategory->name);
-
-    $inner_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$curcategory->id'", "name asc");
-    if($inner_categories) {
-          foreach ( $inner_categories as $inner_curcategory ) {
-
+    foreach ( $outercategories as $curcategory ) {
+      $categories[$curcategory->id] = format_string($curcategory->name);
+      $inner_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$curcategory->id'", "name asc");
+      if($inner_categories) {
+        foreach ( $inner_categories as $inner_curcategory ) {
+          $categories[$inner_curcategory->id] = format_string($inner_curcategory->name);
+          $inner_sub_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$inner_curcategory->id'", "name asc");
+          if($inner_sub_categories) {
+            foreach ( $inner_sub_categories as $inner_sub_curcategory ) {
+              $categories[$inner_sub_curcategory->id] = format_string($curcategory->name) . $arrow . format_string($inner_curcategory->name) . $arrow . format_string($inner_sub_curcategory->name);
+            }
+          } else {
             $categories[$inner_curcategory->id] = format_string($curcategory->name) . $arrow . format_string($inner_curcategory->name);
           }
-    }
+        }
       }
+    }
   } else {
-      $categories[0] = get_string("nocategories","block_exabis_eportfolio");
+    $categories[0] = get_string("nocategories","block_exabis_eportfolio");
   }
   return $categories;
 }
