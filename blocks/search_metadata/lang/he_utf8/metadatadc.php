@@ -1,0 +1,102 @@
+<?PHP // $Id$ 
+      // metadatadc.php - created with Moodle 1.5 UNSTABLE DEVELOPMENT (2005032600)
+
+
+$string['modulename'] = 'DCMES Metadata';
+$string['modulenameplural'] = 'DCMESs Metadata';
+
+$string['metadatagenok'] = 'Metadata generated and saved - OK!';
+$string['viewmetadataxml'] = 'View XML Metadata';
+$string['genmetadataxml'] = 'Generate XML Metadata';
+$string['viewmetadatardf'] = 'View RDF Metadata';
+$string['genmetadatardf'] = 'Generate RDF Metadata';
+$string['name'] = 'כותרת קצרה';
+$string['names'] = 'כותרות קצרות';
+$string['resource'] = 'רכיב-למידה';
+$string['resources'] = 'רכיביי-למידה';
+$string['refresh'] = 'רענון אוטומטי של מאפייני רכיביי-הלמידה';
+
+$string['title'] = 'כותרת';
+$string['alternative'] = 'חלופי';
+$string['creator'] = 'יוצר';
+$string['subject'] = 'נושא';
+$string['description'] = 'תאור (PT)';
+$string['descriptionout'] = 'תאור (UK)';
+$string['abstract'] = 'מופשט';
+$string['tableOfContents'] = 'תוכן';
+$string['publisher'] = 'מפרסם';
+$string['contributor'] = 'תורם';
+$string['date'] = 'תאריך';
+$string['created'] = 'נוצר';
+$string['valid'] = 'תקין';
+$string['available'] = 'זמין';
+$string['issued'] = 'הונפק';
+$string['modified'] = 'עודכן';
+$string['dateAccepted'] = 'תאריך הזנה';
+$string['dateCopyrighted'] = 'תאריך זכויות יוצרים';
+$string['dateSubmitted'] = 'תאריך הגשה';
+$string['type'] = 'סוג';
+$string['format'] = 'תצורה';
+$string['extent'] = 'extent';
+$string['medium'] = 'מדיום';
+$string['identifier'] = 'מזהה יחודי (URL or ISBN)';
+$string['bibliographicCitation'] = 'ציטוט בבליאוגרפיה';
+$string['source'] = 'מקור';
+$string['language'] = 'שפה';
+$string['relation'] = 'קשר';
+$string['isVersionOf'] = 'גירסה של';
+$string['hasVersion'] = 'בעל גירסה';
+$string['isReplacedBy'] = 'הוחלף על ידי';
+$string['replaces'] = 'מחליף';
+$string['isRequiredBy'] = 'נדרש על ידי';
+$string['requires'] = 'דורש';
+$string['isPartOf'] = 'חלק מ';
+$string['hasPart'] = 'חלק של';
+$string['isReferencedBy'] = 'isReferencedBy';
+$string['reference'] = 'references';
+$string['isFormatOf'] = 'isFormatOf';
+$string['hasFormat'] = 'hasFormat';
+$string['conformsTo'] = 'conformsTo';
+$string['coverage'] = 'Coverage';
+$string['espatial'] = 'spatial';
+$string['temporal'] = 'temporal';
+$string['rights'] = 'זכויות יוצרים';
+$string['accessRights'] = 'accessRights';
+$string['license'] = 'license';
+$string['audience'] = 'Audience';
+$string['mediator'] = 'mediator';
+$string['educationLevel'] = 'education Level';
+$string['provenance'] = 'Provenance';
+$string['rightsHolder'] = 'Rights Holder';
+$string['instructionalMethod'] = 'Instructional Method';
+$string['accrualMethod'] = 'AccrualMethod';
+$string['accrualPeriodicity'] = 'Accrual Periodicity';
+$string['accrualPolicy'] = 'Accrual Policy';
+$string['interactivityType'] = 'LOM Interactivity Type'; 
+$string['interactivityLevel'] = 'LOM Interactivity Level';
+$string['typicalLearningTime'] = 'LOM Typical Learning Time';
+$string['Comment_student'] = 'Note: Only Teachers can edit/generate metadata...';
+$string['Comment_version'] = 'The teacher can hide this metadata in the home page of the course...';
+$string['Auto_Name'] = 'Name or Short Title for presentation';
+
+$string['msgredirect0'] = 'Select Learning Object (Resource/Activity), please! <br>You will be redirect to update the metadata...';
+$string['msgredirect1'] = 'Metadata generated automatically! <br>Confirm values or update the auto-metadata...';
+$string['msgredirect2'] = 'Fields unlocked to add new values! <br>Insert new values or confirm the auto-metadata...';
+$string['exists'] = 'Opsss!... This LO already has metadata!<br>You will be redirect to update the metadata...';
+
+$string['emptynew'] = '';
+$string['newvalue'] = 'Insert new value';
+
+$string['collection'] = 'collection';
+$string['dataset'] = 'dataset';
+$string['event'] = 'event';
+$string['image'] = 'image';
+$string['interactiveresource'] = 'interactive resource';
+$string['movingimage'] = 'moving image';
+$string['physicalobject'] = 'physical object';
+$string['service'] = 'service';
+$string['software'] = 'software';
+$string['sound'] = 'sound';
+$string['stillimage'] = 'still image';
+$string['text'] = 'text';
+?>

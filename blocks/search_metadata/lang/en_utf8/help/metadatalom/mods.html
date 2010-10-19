@@ -1,0 +1,48 @@
+<!--
+// Translated by 	  	: Vitor Gonçalves
+// Date of translation		: 2006/10/01
+-->
+<img alt="LOM" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/metadatalom/icon.gif">&nbsp;<strong>LOM Metadata </strong>
+<div class="indent">
+  <p>Metadata is &ldquo;data about data&rdquo;. Metadata is structured data set that  describes, explains and facilitates the localization and recovery of  information.<br />
+  <strong>LOM (Learning Object Metadata)</strong> specifies a conceptual data
+  schema that defines the structure of a metadata instance for a learning object. 
+  <?php helpbutton('resource', 'LOs', 'metadatalom'); ?>
+  For this Standard, a learning object is<br />
+  defined as any entity -digital or non-digital- that may be used for learning, education or training. (LOs - Learning Objects).
+  It is desirable that the metadata creation  occurs when the LO (resource/activity) creation and that the LO&rsquo;s author is  also the author of the LO metadata.</p>
+  <p>The elements  that describe an LO can be grouped in nine categories [IEEE-FTSC 2002]:</p>
+  <p><?php helpbutton('general', get_string('General','metadatalom'), 'metadatalom'); ?><strong> </strong><em>General</em>  - This category groups the general information
+  that describes this learning object as a whole. (Elements: <em>Identifier, Title, Catalog Entry,  Catalog, Entry, Language, Description, Keywords, Coverage, Structure, e  Aggregation level</em>);</p>
+  <p><?php helpbutton('lifecycle', get_string('LifeCycle','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Lifecycle</em>  - This category describes the history and
+    current state of this learning object and those
+    entities that have affected this learning object
+  during its evolution. (Elements: <em>Version, Status, Contribute, Role, Entity,  Date</em>);</p>
+  <p><?php helpbutton('metametadata', get_string('MetaMetadata','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Metametadata</em>  - This category describes this metadata record 
+    itself (rather than the learning object that this
+  record describes). Describes how the metadata
+  instance can be identified, who created this
+  metadata instance, how, when, and with what
+  references (Elements: <em>Identifier, Catalog, Entry, Contribute, Role, EntitytDate, Metadata Squema, Language</em>);</p>
+  <p><?php helpbutton('technical', get_string('Technical','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Technical</em>  - This category describes the technical
+    requirements and characteristics of this
+  learning object. (Elements: <em>Format, Size, Location, Requirements, Type,  Name, Minimum Version, Maximum version, Instalattion Remarks, Other Plataform  requirements, Duration</em>);</p>
+  <p><?php helpbutton('educational', get_string('Educational','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Educational</em> - This category describes the key educational
+    or pedagogic characteristics of this learning
+  object. (Elements: <em>Interactivity Type, Learning Resource Type, Interactivity level,  Semantic density, Intended End User Role, Context, Typical Age Range,  Difficulty, Typical Learning Time, Description, Language</em>);</p>
+  <p><?php helpbutton('rights', get_string('Rights','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Rights</em>  - This category describes the intellectual
+    property rights and conditions of use for this
+  learning object.(Elements: <em>Cost, Description,  Copyright and others restrictions</em>);</p>
+  <p><?php helpbutton('relation', get_string('Relation','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Relation</em>&ndash; This category defines the relationship
+    between this learning object and other
+  learning objects, if any. (Elements: <em>Kind,  Resource, Identifier, Description, Catalog Entry</em>);</p>
+  <p><?php helpbutton('annotation', get_string('Annotation','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Annotation</em>  - This category provides comments on the
+    educational use of this learning object, and
+    information on when and by whom the
+  comments were created. (Elementos: <em>Person/Entity, Description, Date</em>);</p>
+  <p><?php helpbutton('classification', get_string('Classification','metadatalom'), 'metadatalom'); ?><strong> </strong><em>Classification</em> - This category describes where this learning
+    object falls within a particular classification
+  system, like UDC (<em>Universal Decimal Classification</em>) or ARIADNE, etc. (Elements: <em>Purpose, Taxon Path, Source, Taxon, Id,  Entry, Description, Keywords</em>). </p>
+  <p>For more information see: <a href="http://ieeeltsc.org/wg12LOM/" target="_blank">http://ieeeltsc.org/wg12LOM/</a> </p>
+</div>
+

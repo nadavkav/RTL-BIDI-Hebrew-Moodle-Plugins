@@ -1,0 +1,832 @@
+<?php
+    
+	require_once('../../config.php');
+    //require_once('../../mod/metadatadc/lib.php');	
+    require_once($CFG->dirroot.'/course/lib.php');
+    require_once('meta_searchlib.php');	
+
+    $id = required_param('id', PARAM_INT);                  // course id
+    $search = trim(optional_param('search', '', PARAM_NOTAGS));  // search string
+    $page = optional_param('page', 0, PARAM_INT);   // which page to show
+    $perpage = optional_param('perpage', 5, PARAM_INT);   // how many per page
+    $showform = optional_param('showform', 0, PARAM_INT);   // Just show the form
+
+    $metamodname = trim(optional_param('metamodname', '', PARAM_NOTAGS));      // Metadata Module Name to search for	
+	$searchcourseid = trim(optional_param('searchcourseid', 0, PARAM_INT));      // CourseID to search for
+//    $modnameid = trim(optional_param('modnameid', 0, PARAM_INT));      // Module ID to search for		
+    $modname = trim(optional_param('modname','', PARAM_NOTAGS));      // Module Name to search for	
+
+    $user    = trim(optional_param('user', '', PARAM_NOTAGS));    // User Names to search for
+    $userid  = trim(optional_param('userid', 0, PARAM_INT));      // UserID to search for	
+    $subject = trim(optional_param('subject', '', PARAM_NOTAGS)); // Subject
+    $phrase  = trim(optional_param('phrase', '', PARAM_NOTAGS));  // Phrase
+    $words   = trim(optional_param('words', '', PARAM_NOTAGS));   // Words
+    $fullwords = trim(optional_param('fullwords', '', PARAM_NOTAGS)); // Whole words
+    $notwords = trim(optional_param('notwords', '', PARAM_NOTAGS));   // Words we don't want
+
+    $timefromrestrict = optional_param('timefromrestrict', 0, PARAM_INT); // Use starting date
+    $fromday = optional_param('fromday', 0, PARAM_INT);      // Starting date
+    $frommonth = optional_param('frommonth', 0, PARAM_INT);      // Starting date
+    $fromyear = optional_param('fromyear', 0, PARAM_INT);      // Starting date
+    $fromhour = optional_param('fromhour', 0, PARAM_INT);      // Starting date
+    $fromminute = optional_param('fromminute', 0, PARAM_INT);      // Starting date
+    if ($timefromrestrict) {
+        $datefrom = make_timestamp($fromyear, $frommonth, $fromday, $fromhour, $fromminute);
+    } else {
+        $datefrom = optional_param('datefrom', 0, PARAM_INT);      // Starting date
+    }
+
+    $timetorestrict = optional_param('timetorestrict', 0, PARAM_INT); // Use ending date
+    $today = optional_param('today', 0, PARAM_INT);      // Ending date
+    $tomonth = optional_param('tomonth', 0, PARAM_INT);      // Ending date
+    $toyear = optional_param('toyear', 0, PARAM_INT);      // Ending date
+    $tohour = optional_param('tohour', 0, PARAM_INT);      // Ending date
+    $tominute = optional_param('tominute', 0, PARAM_INT);      // Ending date
+    if ($timetorestrict) {
+        $dateto = make_timestamp($toyear, $tomonth, $today, $tohour, $tominute);
+    } else {
+        $dateto = optional_param('dateto', 0, PARAM_INT);      // Ending date
+    }
+
+
+
+    if (empty($search)) {   // Check the other parameters instead
+        if (!empty($words)) {
+            $search .= ' '.$words;
+        }
+//        if (!empty($modnameid)) {
+//            $search .= ' modnameid:'.$modnameid; Adicionar course_module nos metadados
+//        }
+        if (!empty($modname)) {
+            $search .= ' '.get_string('modulename', $modname);		
+//            $search .= ' modname:'.$modname;
+        }			
+        if (!empty($user)) {
+            $search .= ' '.allmetadata_clean_search_terms($user, 'user:');
+        }
+        if (!empty($userid)) {
+            $search .= ' userid:'.$userid;
+        }		
+        if (!empty($subject)) {
+            $search .= ' '.allmetadata_clean_search_terms($subject, 'subject:');
+        }
+        if (!empty($fullwords)) {
+            $search .= ' '.allmetadata_clean_search_terms($fullwords, '+');
+        }
+        if (!empty($notwords)) {
+            $search .= ' '.allmetadata_clean_search_terms($notwords, '-');
+        }
+        if (!empty($phrase)) {
+            $search .= ' "'.$phrase.'"';
+        }
+        if (!empty($datefrom)) {
+            $search .= ' datefrom:'.$datefrom;
+        }
+        if (!empty($dateto)) {
+            $search .= ' dateto:'.$dateto;
+        }
+        $individualparams = true;
+    } else {
+        $individualparams = false;
+    }
+
+	
+    if ($search) {
+        $search = allmetadata_clean_search_terms($search);
+    }
+
+    if (! $course = get_record("course", "id", $id)) {
+        error("Course id is incorrect.");
+    }
+
+    require_course_login($course);
+
+    add_to_log($course->id, "allmetadata", "search", "search_allmetadata.php?id=$course->id&amp;search=".urlencode($search), $search);
+
+    $strallmetadata = get_string("modulenameplural", "allmetadata");
+    $strsearch = get_string("search", "allmetadata");
+    $strsearchresults = get_string("searchresults", "allmetadata");	
+    $strpage = get_string("page");
+
+/// Print the header
+
+    if ($course->category) {
+        $navigation = "<a href=\"../../course/view.php?id=$course->id\">$course->shortname</a> ->";
+    }
+
+    print_header("$course->shortname: $strallmetadata", "$course->fullname", "$navigation $strallmetadata", "", "", true, "", navmenu($course));
+
+    if (!$search || $showform) {
+        print_header_simple("$strsearch", "",
+                 "<a href=\"index.php?id=$course->id\">$strallmetadata</a> -> $strsearch", 'search.words',
+                  "", "", "&nbsp;", navmenu($course));
+        allmetadata_print_big_search_form($course);
+        print_footer($course);		
+        exit;
+    }
+	
+
+
+
+/// We need to do a search now and print results
+
+    $searchterms = str_replace('searchcourseid:', 'instance:', $search);
+    
+	$searchterms = explode(' ', $searchterms);
+
+    $searchform = allmetadata_search_form($course, $search);
+	
+	
+    //if ((!isteacheredit($course->id)) and forum_get_separate_modules($course->id)) {
+    //    $sepgroups = user_group($course->id, $USER->id);
+    //} else {
+    //    $sepgroups = false;
+    //}
+
+//    if (!$posts = forum_search_posts($searchterms, $course->id, $page*$perpage, $perpage, $totalcount, $sepgroups)) {
+    if ((!$metadataloms = lommetadata_search_metadata($searchterms, $course->id, $searchcourseid, $page*$perpage, $perpage, $totalcountlom)) &
+		(!$metadatadcs = dcmetadata_search_metadata($searchterms, $course->id, $searchcourseid, $page*$perpage, $perpage, $totalcountdc))) {	
+
+        print_header_simple("$strsearchresults", "",
+                "<a href=\"index.php?id=$course->id\">$strallmetadata</a> ->
+                <a href=\"search_allmetadata.php?id=$course->id\">$strsearch</a> -> ".s($search), 'search.words',
+                "", "", "&nbsp;", navmenu($course));
+        print_heading(get_string("nometacontaining", "allmetadata", $search));
+
+        if (!$individualparams) {
+            $words = $search;
+        }
+
+        allmetadata_print_big_search_form($course);
+		/// Finish the page
+        print_footer($course);
+        exit;
+    }
+	
+
+///Print results
+
+    print_header_simple("$strsearchresults", "",
+            "<a href=\"index.php?id=$course->id\">$strallmetadata</a> ->
+            <a href=\"search_allmetadata.php?id=$course->id\">$strsearch</a> -> ".s($search), '',
+            "", "",  $searchform, navmenu($course));
+
+    echo '<div class="reportlink">';
+    echo '<a href="search_allmetadata.php?id='.$course->id.
+                             '&amp;user='.urlencode($user).
+                             '&amp;userid='.$userid.					 
+							 '&amp;searchcourseid='.$searchcourseid.
+							 '&amp;modname='.$modname.							 			 
+                             '&amp;subject='.urlencode($subject).
+                             '&amp;phrase='.urlencode($phrase).
+                             '&amp;words='.urlencode($words).
+                             '&amp;fullwords='.urlencode($fullwords).
+                             '&amp;notwords='.urlencode($notwords).
+                             '&amp;dateto='.$dateto.
+                             '&amp;datefrom='.$datefrom.
+                             '&amp;showform=1'.
+                             '">'.get_string('advancedsearch','allmetadata').'...</a>';
+    echo '</div>';
+
+	$totalcount = $totalcountlom + $totalcountdc;
+    print_heading("$strsearchresults (LOM + DCMES): $totalcountlom + $totalcountdc = $totalcount");	
+    print_paging_bar($totalcount, $page, $perpage, "search_allmetadata.php?search=".urlencode(stripslashes($search))."&amp;id=$course->id&amp;perpage=$perpage&amp;");
+
+
+    //added to implement highlighting of search terms found only in HTML markup
+    //fiedorow - 9/2/2005
+    $strippedsearch = str_replace('user:','',$search);
+    $strippedsearch = str_replace('subject:','',$strippedsearch);
+    $strippedsearch = str_replace('&quot;','',$strippedsearch);
+    $searchterms = explode(' ', $strippedsearch);    // Search for words independently
+    foreach ($searchterms as $key => $searchterm) {
+        if (preg_match('/^\-/',$searchterm)) {
+            unset($searchterms[$key]);
+        } else {
+            $searchterms[$key] = preg_replace('/^\+/','',$searchterm);
+        }
+    }
+    $strippedsearch = implode(' ', $searchterms);    // Rebuild the string
+
+	if ($metamodname == 'metadatalom') {
+		if (!$totalcountlom == 0) {
+		print_metadataloms($metadataloms);
+		}
+	} elseif ($metamodname == 'metadatadc') {
+		if (!$totalcountdc == 0) {
+		print_metadatadcs($metadatadcs);
+		}
+	} else {
+		if (!$totalcountlom == 0) {
+		print_metadataloms($metadataloms);
+		}	
+		if (!$totalcountdc == 0) {
+		print_metadatadcs($metadatadcs);
+		}	
+	}	
+	
+///Print Metadata LOM
+function print_metadataloms($metadataloms) {
+	global $CFG;
+   $timenow = time();
+   $strcourse  = get_string("course");
+   $strname  = get_string("names","metadatalom");  
+   $strresource  = get_string("resources","metadatalom");
+   $strdescription = get_string("description");
+   $table->head  = array ($strcourse, $strname, $strresource, $strdescription);
+   $table->align = array ("left","left", "left", "left");
+
+
+    foreach ($metadataloms as $metadatalom) {
+	
+ 		//$lines = get_array_of_activities($course->id); 
+ 		$lines = get_array_of_activities($metadatalom->course); 		
+		foreach ($lines as $key => $line) {
+			$cmlo[$key] = $line->cm; //LO course module id
+			$modlo[$key] = $line->mod; //LO module name	
+			$namelo[$key] = trim(strip_tags(urldecode($line->name))); //LO name	(instance name)
+		}	
+	
+		$cmdc = get_coursemodule_from_instance('metadatalom', $metadatalom->id, $metadatalom->course);
+
+	// not working - fix it !	
+/*        if (!$metadatalom->visible) {
+            //Show dimmed if the mod is hidden
+			//get_field($table, $return, $field1, $value1, $field2='', $value2='', $field3='', $value3='')
+			$link = get_field('course', 'fullname', 'id', $metadatalom->course);
+			$link0 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/course/view.php?id=$metadatalom->course\">$link</a>";
+            $link1 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/mod/metadatalom/view.php?id=$cmdc->id\">$metadatalom->name</a>";		
+            $link2 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/mod/".$modlo[$metadatalom->resource]."/view.php?id=".$metadatalom->resource."\">".$namelo[$metadatalom->resource]."  (".$modlo[$metadatalom->resource].")</a>";					
+            $link3 = $metadatalom->General_Description;
+	
+        } else {*/
+            //Show normal if the mod is visible
+			$link = get_field('course', 'fullname', 'id', $metadatalom->course);
+			$link0 = "<a href=\"$CFG->wwwroot/course/view.php?id=$metadatalom->course\">$link</a>";
+            $link1 = "<a href=\"$CFG->wwwroot/mod/metadatalom/view.php?id=$cmdc->id\">$metadatalom->name</a>";
+            $link2 = "<a href=\"$CFG->wwwroot/mod/".$modlo[$metadatalom->resource]."/view.php?id=".$metadatalom->resource."\">".$namelo[$metadatalom->resource]."  (".$modlo[$metadatalom->resource].")</a>";	
+            $link3 = $metadatalom->General_Description;					
+//         }
+ 
+             $table->data[] = array ($link0, $link1, $link2, $link3);	
+ }
+    echo "<br />";
+	print_heading(get_string("modulenameplural", "metadatalom"));
+    print_table($table);
+}
+
+///Print Metadata DC
+function print_metadatadcs($metadatadcs) {
+	global $CFG;
+   $timenow = time();
+   $strcourse  = get_string("course");   
+   $strname  = get_string("names","metadatadc");
+   $strresource  = get_string("resources","metadatadc");
+   $strdescription = get_string("description");
+   $table->head  = array ($strcourse, $strname, $strresource, $strdescription);
+   $table->align = array ("left", "left", "left", "left");
+
+
+    foreach ($metadatadcs as $metadatadc) {
+	
+ 		//$lines = get_array_of_activities($course->id); 
+ 		$lines = get_array_of_activities($metadatadc->course); 		
+		foreach ($lines as $key => $line) {
+			$cmlo[$key] = $line->cm; //LO course module id
+			$modlo[$key] = $line->mod; //LO module name	
+			$namelo[$key] = trim(strip_tags(urldecode($line->name))); //LO name	(instance name)
+		}	
+	
+		$cmdc = get_coursemodule_from_instance('metadatadc', $metadatadc->id, $metadatadc->course);
+
+// not working - fix it		
+/*        if (!$metadatadc->visible) {
+            //Show dimmed if the mod is hidden
+			$link = get_field('course', 'fullname', 'id', $metadatadc->course);
+			$link0 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/course/view.php?id=$metadatadc->course\">$link</a>";			
+            $link1 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/mod/metadatadc/view.php?id=$cmdc->id\">$metadatadc->name</a>";		
+            $link2 = "<a class=\"dimmed\" href=\"$CFG->wwwroot/mod/".$modlo[$metadatadc->resource]."/view.php?id=".$metadatadc->resource."\">".$namelo[$metadatadc->resource]."  (".$modlo[$metadatadc->resource].")</a>";					
+            $link3 = $metadatadc->description;
+	
+        } else {*/
+            //Show normal if the mod is visible
+			$link = get_field('course', 'fullname', 'id', $metadatadc->course);
+			$link0 = "<a href=\"$CFG->wwwroot/course/view.php?id=$metadatadc->course\">$link</a>";				
+            $link1 = "<a href=\"$CFG->wwwroot/mod/metadatadc/view.php?id=$cmdc->id\">$metadatadc->name</a>";
+            $link2 = "<a href=\"$CFG->wwwroot/mod/".$modlo[$metadatadc->resource]."/view.php?id=".$metadatadc->resource."\">".$namelo[$metadatadc->resource]."  (".$modlo[$metadatadc->resource].")</a>";	
+            $link3 = $metadatadc->description;						
+//         }
+ 
+             $table->data[] = array ($link0, $link1, $link2, $link3);	
+ }
+    echo "<br />";
+	
+	print_heading(get_string("modulenameplural", "metadatadc"));
+    print_table($table);
+}
+//////////
+	$totalcount = $totalcountlom + $totalcountdc;
+	echo "<hr><div align='center'>"; 
+    echo("$strsearchresults (LOM + DCMES): $totalcountlom + $totalcountdc = $totalcount");
+	echo "</div><hr>";	
+    print_paging_bar($totalcount, $page, $perpage, "search_allmetadata.php?search=".urlencode(stripslashes($search))."&amp;id=$course->id&amp;perpage=$perpage&amp;");
+
+    print_footer($course);
+
+///////////////FUNCTIONS
+
+function allmetadata_clean_search_terms($words, $prefix='') {
+    $searchterms = explode(' ', $words);
+    foreach ($searchterms as $key => $searchterm) {
+        if (strlen($searchterm) < 2) {
+            unset($searchterms[$key]);
+        } else if ($prefix) {
+            $searchterms[$key] = $prefix.$searchterm;
+        }
+    }
+    return trim(implode(' ', $searchterms));
+}
+
+function allmetadata_print_big_search_form($course) {
+	global $CFG;
+    global $words, $subject, $searchcourseid, $phrase, $user, $userid, $modname, $fullwords, $notwords, $datefrom, $dateto;
+
+    print_simple_box(get_string('searchallmetadataintro', 'allmetadata'), 'center', '', '', 'searchbox', 'intro');
+
+    print_simple_box_start("center");
+	
+    echo "<script type=\"text/javascript\" language=\"javascript\">\n";
+    echo "var timefromitems = ['fromday','frommonth','fromyear','fromhour', 'fromminute'];\n";
+    echo "var timetoitems = ['today','tomonth','toyear','tohour','tominute'];\n";
+    echo "</script>\n";
+
+    echo '<form name="search" action="search_allmetadata.php" method="get">';
+    echo '<input type="hidden" value="'.$course->id.'" name="id" alt="">';
+    echo '<table cellpadding="10" class="searchbox" id="form">';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchwords', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="words" value="'.s($words).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchphrase', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="phrase" value="'.s($phrase).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchnotwords', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="notwords" value="'.s($notwords).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchfullwords', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="fullwords" value="'.s($fullwords).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchdatefrom', 'allmetadata').':</td>';
+    echo '<td class="c1">';
+    echo '<input name="timefromrestrict" type="checkbox" value="1" alt="'.get_string('searchdatefrom', 'allmetadata').'" onclick="return lockoptions(\'search\', \'timefromrestrict\', timefromitems)" /> ';
+    if (empty($dateto)) {
+        $datefrom = make_timestamp(2000, 1, 1, 0, 0, 0);
+    }
+    print_date_selector('fromday', 'frommonth', 'fromyear', $datefrom);
+    print_time_selector('fromhour', 'fromminute', $datefrom);
+
+    echo '<input type="hidden" name="hfromday" value="0" />';
+    echo '<input type="hidden" name="hfrommonth" value="0" />';
+    echo '<input type="hidden" name="hfromyear" value="0" />';
+    echo '<input type="hidden" name="hfromhour" value="0" />';
+    echo '<input type="hidden" name="hfromminute" value="0" />';
+
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchdateto', 'allmetadata').':</td>';
+    echo '<td class="c1">';
+    echo '<input name="timetorestrict" type="checkbox" value="1" alt="'.get_string('searchdateto', 'allmetadata').'" onclick="return lockoptions(\'search\', \'timetorestrict\', timetoitems)" /> ';
+    if (empty($dateto)) {
+        $dateto = time()+3600;
+    }
+    print_date_selector('today', 'tomonth', 'toyear', $dateto);
+    print_time_selector('tohour', 'tominute', $dateto);
+
+    echo '<input type="hidden" name="htoday" value="0" />';
+    echo '<input type="hidden" name="htomonth" value="0" />';
+    echo '<input type="hidden" name="htoyear" value="0" />';
+    echo '<input type="hidden" name="htohour" value="0" />';
+    echo '<input type="hidden" name="htominute" value="0" />';
+
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchsubject', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="subject" value="'.s($subject).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchuser', 'allmetadata').':</td>';
+    echo '<td class="c1"><input type="text" size="35" name="user" value="'.s($user).'" alt=""></td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchwhichmetadatas', 'allmetadata').':</td>';
+    echo '<td class="c1">';
+	//Metadata Modules available
+	//function get_all_mods($courseid, &$mods, &$modnames, &$modnamesplural, &$modnamesused)
+	$allmods = get_all_mods($course->id, &$mods, &$modnames, &$modnamesplural, &$modnamesused);
+
+	$metamods = array ();
+	if (array_key_exists("metadatadc", $modnamesplural)) {
+	$metamods=array_merge(array("metadatadc"=>get_string('modulenameplural', 'metadatadc')),$metamods); 
+	//array_unshift($metamods, get_string('modulenameplural', 'metadatadc'));
+	}
+	if (array_key_exists("metadatalom", $modnamesplural)) {	
+	$metamods=array_merge(array("metadatalom"=>get_string('modulenameplural', 'metadatalom')),$metamods); 
+	//array_unshift($metamods, get_string('modulenameplural', 'metadatalom'));	
+	}
+	
+	if (count($metamods) == 1) {
+	//choose_from_menu($options, $name, $selected='', $nothing='choose', $script='', $nothingvalue='0', $return=false, $disabled=false, $tabindex=0)   
+	choose_from_menu($metamods, 'metamodname', '', 'choose', '');
+	} elseif (count($metamods) > 1) {
+	array_unshift($metamods, get_string('allmetadata', 'allmetadata'));	
+	choose_from_menu($metamods, 'metamodname', '', 'choose', '');	
+	} else {
+	echo '<strong>'.get_string('nometadata', 'allmetadata').'</strong>';
+	}
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchwhichcourse', 'allmetadata').':</td>';
+    echo '<td class="c1">';
+	//Courses available
+	//get_courses($categoryid="all", $sort="c.sortorder ASC", $fields="c.*") 
+	$allcourses = array();
+	if ($allcs = get_courses("all", "c.id ASC", "c.id,c.fullname")) {
+		foreach ($allcs as $allc) {	
+		$namec = $allc->fullname;
+		$idc = $allc->id;
+		$onecourse = array($idc => $namec);
+		array_push_associative($allcourses, $onecourse);
+		}	
+	}
+	if (count($allcourses) == 1) {
+	//choose_from_menu($options, $name, $selected='', $nothing='choose', $script='', $nothingvalue='0', $return=false, $disabled=false, $tabindex=0)   
+	choose_from_menu($allcourses, 'searchcourseid', '', get_string('allcourses', 'allmetadata'), '');
+	} elseif (count($allcourses) > 1) {
+	//array_unshift($allcourses, get_string('allcourses', 'allmetadata'));
+	//array_push($allcourses, get_string('mycourses', 'allmetadata'));
+	$mycourse = array("9999"=>get_string('mycourses', 'allmetadata')); 
+	array_push_associative($allcourses, $mycourse);	
+	choose_from_menu($allcourses, 'searchcourseid', '', get_string('allcourses', 'allmetadata'), '');	
+	} else {
+	echo '<strong>'.get_string('nocourses', 'allmetadata').'</strong>';
+	}
+
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="c0">'.get_string('searchwhichmods', 'allmetadata').':</td>';
+    echo '<td class="c1">';
+	//Resources-Activities Modules available
+	$modsmetadata = array ("metadatadc"=>get_string('modulenameplural', 'metadatadc'), "metadatalom"=>get_string('modulenameplural', 'metadatalom'));
+	$modsra = array();
+	//Don't show the metadatalom/metadatadc mods
+	$modsra = array_diff($modnamesplural, $modsmetadata);
+	
+	if (count($modsra) == 1) {
+	//choose_from_menu($options, $name, $selected='', $nothing='choose', $script='', $nothingvalue='0', $return=false, $disabled=false, $tabindex=0)   
+	choose_from_menu($modsra, 'modname', '', 'choose', '');
+	} elseif (count($modsra) > 1) {
+	array_unshift($modsra, get_string('allmods', 'allmetadata'));	
+	choose_from_menu($modsra, 'modname', '', 'choose', '');	
+	} else {
+	echo '<strong>'.get_string('nomodules', 'allmetadata').'</strong>';
+	}
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td class="submit" colspan="2" align="center">';
+    echo '<input type="submit" value="'.get_string('searchallmetadatas', 'allmetadata').'" alt=""></td>';
+    echo '</tr>';
+
+    echo '</table>';
+    echo '</form>';
+
+    echo "<script type=\"text/javascript\">";
+    echo "lockoptions('search','timefromrestrict', timefromitems);";
+    echo "lockoptions('search','timetorestrict', timetoitems);";
+    echo "</script>\n";
+
+    print_simple_box_end();
+
+}
+
+function allmetadata_search_form($course, $search='') {
+    global $CFG;
+
+    $output  = '<div class="forumsearchform">';
+    $output .= '<form name="metasearch" action="'.$CFG->wwwroot.'search_allmetadata.php" style="display:inline">';
+    $output .= '<input name="search" type="text" size="18" value="'.$search.'" alt="search" />';
+    $output .= '<input value="'.get_string('searchallmetadatas', 'allmetadata').'" type="submit" />';
+    $output .= '<input name="id" type="hidden" value="'.$course->id.'" />';
+    $output .= '</form>';
+    $output .= helpbutton('search', get_string('search'), 'moodle', true, false, '', true);
+    $output .= '</div>';
+
+    return $output;
+}
+
+//function forum_search_posts($searchterms, $courseid, $page=0, $recordsperpage=50, &$totalcount, $sepgroups=0, $extrasql='') {
+function lommetadata_search_metadata($searchterms, $courseid, $searchcourseid, $page=0, $recordsperpage=50, &$totalcountlom, $extrasql='') {
+/// Returns a list of los metadatalom found using an array of search terms
+/// eg   word  +word -word
+///
+
+    global $CFG, $USER;
+//    require_once('meta_searchlib.php');
+/*
+    if (!isteacher($courseid)) {
+        $notteacherforum = "AND f.type <> 'teacher'";
+        $forummodule = get_record("modules", "name", "forum");
+        $onlyvisible = "AND d.forum = f.id AND f.id = cm.instance AND cm.visible = 1 AND cm.module = $forummodule->id";
+        $onlyvisibletable = ", {$CFG->prefix}course_modules cm, {$CFG->prefix}forum f";
+        if (!empty($sepgroups)) {
+            $separategroups = SEPARATEGROUPS;
+            $selectgroup = " AND ( NOT (cm.groupmode='$separategroups'".
+                                      " OR (c.groupmode='$separategroups' AND c.groupmodeforce='1') )";//.
+            $selectgroup .= " OR d.groupid = '-1'"; //search inside discussions for all groups too
+            foreach ($sepgroups as $sepgroup){
+                $selectgroup .= " OR d.groupid = '$sepgroup->id'";
+            }
+            $selectgroup .= ")";
+
+                               //  " OR d.groupid = '$groupid')";
+            $selectcourse = " AND d.course = '$courseid' AND c.id='$courseid'";
+            $coursetable = ", {$CFG->prefix}course c";
+        } else {
+            $selectgroup = '';
+            $selectcourse = " AND d.course = '$courseid'";
+            $coursetable = '';
+        }
+    } else { */
+        //$notteacherforum = "";
+        //$selectgroup = '';
+        //$onlyvisible = "";
+        //$onlyvisibletable = "";
+        //$coursetable = '';
+        //if ($courseid == SITEID && isadmin()) {
+
+        if ($searchcourseid == '9999') {
+			$mycourses = get_my_courses($USER->id);
+			foreach ($mycourses as $mycourse) {	
+			$mcstring = $mcstring ." l.course = '$mycourse->id' OR";
+				}
+			$mcstringfinal = meta_cut_final($mcstring);
+			$selectcourse = " AND".$mcstringfinal;
+		} elseif (($searchcourseid == '0')) {
+            $selectcourse = '';				
+		} elseif ((!$searchcourseid == '9999') | (!$searchcourseid == '0') | (!empty($searchcourseid))) {
+            $selectcourse = " AND l.course = '$searchcourseid'";
+        } else {	
+        if ($courseid == SITEID) {		
+            $selectcourse = '';
+        } else {
+            $selectcourse = " AND l.course = '$courseid'";
+        }
+		}
+
+
+    $timelimit = '';
+    //if ((!((isadmin() and !empty($CFG->admineditalways)) || isteacher($courseid)))) {
+        $now = time();
+        $timelimit = " AND (l.userid = $USER->id OR ((l.timemodified = 0 OR l.timemodified <= $now) AND (l.timemodified = 0 OR l.timemodified > $now)))";		
+
+//		$timelimit = " AND ((l.timemodified <= $now) OR (l.timemodified > $now)))";
+    //}
+
+    $limit = sql_paging_limit($page, $recordsperpage);
+
+    /// Some differences in syntax for PostgreSQL
+    if ($CFG->dbtype == "postgres7") {
+        $LIKE = "ILIKE";   // case-insensitive
+        $NOTLIKE = "NOT ILIKE";   // case-insensitive
+        $REGEXP = "~*";
+        $NOTREGEXP = "!~*";
+    } else {
+        $LIKE = "LIKE";
+        $NOTLIKE = "NOT LIKE";
+        $REGEXP = "REGEXP";
+        $NOTREGEXP = "NOT REGEXP";
+    }
+
+    $metasearch = "";
+    $searchstring = "";
+    // Need to concat these back together for parser to work.
+    foreach($searchterms as $searchterm){
+        if ($searchstring != "") {
+            $searchstring .= " ";
+        }
+        $searchstring .= $searchterm;
+    }
+
+    // We need to allow quoted strings for the search. The quotes *should* be stripped
+    // by the parser, but this should be examined carefully for security implications.
+    $searchstring = str_replace("\\\"","\"",$searchstring);
+    $parser = new search_parser();
+    $lexer = new search_lexer($parser);
+
+    if ($lexer->parse($searchstring)) {
+        $parsearray = $parser->get_parsed_array();
+		//search_generate_sql($parsetree, $datafield, $metafield, $mainidfield, $useridfield,$userfirstnamefield, $userlastnamefield, $timefield, $instancefield)
+		//$messagesearch = search_generate_SQL($parsearray,'p.message','p.subject','p.userid','u.id','u.firstname','u.lastname','p.modified', 'd.forum');  
+
+		$metasearch = metasearch_generate_SQL($parsearray,'l.General_Title','l.Technical_Format','l.Educational_InteractivityType',
+		'l.Educational_LearningResourceType','l.Educational_Context','l.Educational_Difficulty',
+		'l.General_Keyword','l.General_Description','l.General_Coverage',
+		'l.Educational_Description','l.Relation_Resource_Description','l.Annotation_Description',
+		'l.LifeCycle_Contribute_Entity','l.MetaMetadata_Contribute_Entity','l.Annotation_Entity','l.userid','l.timemodified','');
+    }
+//'cm.modnameid','l.timemodified','l.course');
+/*
+    $selectsql = "{$CFG->prefix}forum_posts p,
+                  {$CFG->prefix}forum_discussions d,
+                  {$CFG->prefix}user u $onlyvisibletable $coursetable
+             WHERE ($messagesearch)
+               AND p.userid = u.id
+               AND p.discussion = d.id $selectcourse $notteacherforum $onlyvisible $selectgroup $timelimit $extrasql";
+
+    $totalcount = count_records_sql("SELECT COUNT(*) FROM $selectsql");
+
+    return get_records_sql("SELECT p.*,d.forum, u.firstname,u.lastname,u.email,u.picture FROM
+                            $selectsql ORDER BY p.modified DESC $limit");
+*/
+
+
+    $selectsql = "{$CFG->prefix}metadatalom l
+
+             WHERE ($metasearch)
+	 
+               		$selectcourse $extrasql";
+//AND cm.course = l.course AND l.resource = cm.modnameid $selectcourse $extrasql";				  {$CFG->prefix}course_module cm
+    $totalcountlom = count_records_sql("SELECT COUNT(*) FROM $selectsql");
+
+
+						
+    return get_records_sql("SELECT l.* FROM
+                            $selectsql ORDER BY l.course, l.timemodified DESC $limit");
+					
+
+}
+
+
+
+function dcmetadata_search_metadata($searchterms, $courseid, $searchcourseid, $page=0, $recordsperpage=50, &$totalcountdc, $extrasql='') {
+/// Returns a list of los metadatadc found using an array of search terms
+/// eg   word  +word -word
+///
+
+    global $CFG, $USER;
+//	require_once('meta_searchlib.php');
+/*
+    if (!isteacher($courseid)) {
+        $notteacherforum = "AND f.type <> 'teacher'";
+        $forummodule = get_record("modules", "name", "forum");
+        $onlyvisible = "AND d.forum = f.id AND f.id = cm.instance AND cm.visible = 1 AND cm.module = $forummodule->id";
+        $onlyvisibletable = ", {$CFG->prefix}course_modules cm, {$CFG->prefix}forum f";
+        if (!empty($sepgroups)) {
+            $separategroups = SEPARATEGROUPS;
+            $selectgroup = " AND ( NOT (cm.groupmode='$separategroups'".
+                                      " OR (c.groupmode='$separategroups' AND c.groupmodeforce='1') )";//.
+            $selectgroup .= " OR d.groupid = '-1'"; //search inside discussions for all groups too
+            foreach ($sepgroups as $sepgroup){
+                $selectgroup .= " OR d.groupid = '$sepgroup->id'";
+            }
+            $selectgroup .= ")";
+
+                               //  " OR d.groupid = '$groupid')";
+            $selectcourse = " AND d.course = '$courseid' AND c.id='$courseid'";
+            $coursetable = ", {$CFG->prefix}course c";
+        } else {
+            $selectgroup = '';
+            $selectcourse = " AND d.course = '$courseid'";
+            $coursetable = '';
+        }
+    } else { */
+        //$notteacherforum = "";
+        //$selectgroup = '';
+        //$onlyvisible = "";
+        //$onlyvisibletable = "";
+        //$coursetable = '';
+        //if ($courseid == SITEID && isadmin()) {
+
+        if ($searchcourseid == '9999') {
+			$mycourses = get_my_courses($USER->id);
+			foreach ($mycourses as $mycourse) {	
+			$mcstring = $mcstring ." d.course = '$mycourse->id' OR";
+				}
+			$mcstringfinal = meta_cut_final($mcstring);
+			$selectcourse = " AND".$mcstringfinal;
+		} elseif (($searchcourseid == '0')) {
+            $selectcourse = '';				
+		} elseif ((!$searchcourseid == '9999') | (!$searchcourseid == '0') | (!empty($searchcourseid))) {
+            $selectcourse = " AND d.course = '$searchcourseid'";
+        } else {	
+        if ($courseid == SITEID) {		
+            $selectcourse = '';
+        } else {
+            $selectcourse = " AND d.course = '$courseid'";
+        }
+		}
+
+    $timelimit = '';
+//    if (!empty($CFG->forum_enabletimedposts) && (!((isadmin() and !empty($CFG->admineditalways)) || isteacher($courseid)))) {
+    //if ((!((isadmin() and !empty($CFG->admineditalways)) || isteacher($courseid)))) {
+     $now = time();
+//        $timelimit = " AND (d.userid = $USER->id OR ((d.timestart = 0 OR d.timestart <= $now) AND (d.timeend = 0 OR d.timeend > $now)))";
+        $timelimit = " AND (d.userid = $USER->id OR ((d.timemodified = 0 OR d.timemodified <= $now) AND (d.timemodified = 0 OR d.timemodified > $now)))";
+//     $timelimit = " AND ((d.timemodified <= $now) OR (d.timemodified > $now)))";
+//    }
+
+    $limit = sql_paging_limit($page, $recordsperpage);
+
+    /// Some differences in syntax for PostgreSQL
+    if ($CFG->dbtype == "postgres7") {
+        $LIKE = "ILIKE";   // case-insensitive
+        $NOTLIKE = "NOT ILIKE";   // case-insensitive
+        $REGEXP = "~*";
+        $NOTREGEXP = "!~*";
+    } else {
+        $LIKE = "LIKE";
+        $NOTLIKE = "NOT LIKE";
+        $REGEXP = "REGEXP";
+        $NOTREGEXP = "NOT REGEXP";
+    }
+
+    $metasearch = "";
+    $searchstring = "";
+    // Need to concat these back together for parser to work.
+    foreach($searchterms as $searchterm){
+        if ($searchstring != "") {
+            $searchstring .= " ";
+        }
+        $searchstring .= $searchterm;
+    }
+
+    // We need to allow quoted strings for the search. The quotes *should* be stripped
+    // by the parser, but this should be examined carefully for security implications.
+    $searchstring = str_replace("\\\"","\"",$searchstring);
+    $parser = new search_parser();
+    $lexer = new search_lexer($parser);
+
+    if ($lexer->parse($searchstring)) {
+        $parsearray = $parser->get_parsed_array();
+		//search_generate_sql($parsetree, $datafield, $metafield, $mainidfield, $useridfield,$userfirstnamefield, $userlastnamefield, $timefield, $instancefield)
+		//$messagesearch = search_generate_SQL($parsearray,'p.message','p.subject','p.userid','u.id','u.firstname','u.lastname','p.modified', 'd.forum');  
+
+		$metasearch = metasearch_generate_SQL($parsearray,'d.title','d.alternative','d.type','d.format','d.audience','d.instructionalMethod',
+														'd.subject','d.description','d.abstract','d.tableOfContents','d.bibliographicCitation','d.coverage',
+														'd.creator','d.publisher','d.contributor','d.userid','d.timemodified','');
+    }
+//'cm.modnameid','d.timemodified','d.course');
+/*
+    $selectsql = "{$CFG->prefix}forum_posts p,
+                  {$CFG->prefix}forum_discussions d,
+                  {$CFG->prefix}user u $onlyvisibletable $coursetable
+             WHERE ($messagesearch)
+               AND p.userid = u.id
+               AND p.discussion = d.id $selectcourse $notteacherforum $onlyvisible $selectgroup $timelimit $extrasql";
+
+    $totalcount = count_records_sql("SELECT COUNT(*) FROM $selectsql");
+
+    return get_records_sql("SELECT p.*,d.forum, u.firstname,u.lastname,u.email,u.picture FROM
+                            $selectsql ORDER BY p.modified DESC $limit");
+*/
+
+
+    $selectsql = "{$CFG->prefix}metadatadc d
+             WHERE ($metasearch)
+               		$selectcourse $extrasql";
+
+//AND cm.course = d.course AND d.resource = cm.modnameid $selectcourse $extrasql";				  {$CFG->prefix}course_module cm
+
+    $totalcountdc = count_records_sql("SELECT COUNT(*) FROM $selectsql");
+
+
+
+							
+    return get_records_sql("SELECT d.* FROM
+                            $selectsql ORDER BY d.course, d.timemodified DESC $limit");
+					
+
+}
+
+
+?>
