@@ -288,5 +288,5 @@ float:right !important;
 float:left;
 }
 #course-view #middle-column {
-width:100%;
+width:64%;
 }
