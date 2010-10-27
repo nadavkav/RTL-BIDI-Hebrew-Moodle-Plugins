@@ -1,4 +1,7 @@
 <?php
+global $CFG;
+require_once($CFG->dirroot . '/mod/lightboxgallery/lib.php');
+
 /// http://github.com/ginger/slideGallery
     global $galleryinstancecount;
 
