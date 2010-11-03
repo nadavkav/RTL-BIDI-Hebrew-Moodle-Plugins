@@ -75,9 +75,9 @@ $image = $imgurl;
       </div>
     <?php } ?>
     <?php $this->print_question_submit_buttons($question, $state, $cmoptions, $options); ?>
-<input type="submit" onclick="form.action = form.action + '#q<?php echo $question->id; ?>'; return true;" class="submitfile btn" value="שמירת תמונה" name="resp<?php echo $question->id; ?>_submit" style="">
+<input type="submit" onclick="form.action = form.action + '#q<?php echo $question->id; ?>'; return true;" class="submitfile btn" value="<?php echo get_string("saveimage","qtype_imagedit"); ?>" name="resp<?php echo $question->id; ?>_submit" style="">
 &nbsp;&nbsp;&nbsp;
-(לאחר שמירת התמונה, הקישו על המקש F5 במקלדת שלכם כדי לוודא שהתמונה אכן נשמרה במערכת, לפני שאתם ממשיכים)
+<?php echo get_string("savebeforecontinue","qtype_imagedit"); ?>
 <style>
 /* #mod-quiz-attempt .que .submit {display:block !important;} */
 </style>

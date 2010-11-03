@@ -18,5 +18,7 @@ $string['uploadnew'] = 'Replace the uploaded file with a new file';
 $string['addessay'] = 'Add essay field';
 $string['openinnewwindow'] = 'Open File Manager';
 $string['clicktoedit'] = 'Click the Image to open "Image Editor" as overlay';
+$string['saveimage'] = 'Save Image';
+$string['savebeforecontinue'] = 'Before you continue to the next question,<br/> Please save this Image and press F5 (Reload the page) to make sure it was saved';
 
 ?>
