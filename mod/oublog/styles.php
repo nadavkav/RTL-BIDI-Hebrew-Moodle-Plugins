@@ -39,7 +39,7 @@
 
 #mod-oublog-view #middle-column .singlebutton {
     margin-bottom:1em;
-} 
+}
 
 
 .oublog-post, .oublog-comment {
@@ -123,7 +123,7 @@
     border-bottom-width: 1px;
     border-bottom-style: dotted;
     border-bottom-color: #aaaaaa;
-    
+
 }
 
 .oublog-comment h3, .oublog-comment h4 {
@@ -160,7 +160,7 @@
     padding-bottom:1em;
 }
 
-#mod-oublog-view #left-column, 
+#mod-oublog-view #left-column,
 #mod-oublog-allposts #left-column {
   width:12em;
 	float:left;
@@ -276,17 +276,3 @@ background-color:#8FFCA0;
 text-decoration:none;
 }
 
-.dir-rtl #left-column,
-.dir-rtl #left-column {
-float:right !important;
-}
-
-#mod-oublog-view #right-column,
-#mod-oublog-viewpost #right-column,
-#mod-oublog-viewedit #right-column,
-#mod-oublog-allposts #right-column {
-float:left;
-}
-#course-view #middle-column {
-width:64%;
-}
