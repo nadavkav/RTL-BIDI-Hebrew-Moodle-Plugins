@@ -70,23 +70,23 @@ if ($modules = get_records('modules')) {
 echo '<div class="modulefilter" style="margins:1px auto;border-top: 2px solid; width: 880px; padding: 10px;text-align:center;float:right;">';
 echo '<table>';
   echo '<tr><td colspan=3><form id="filterbymodule" action="index.php" method="get">';
-    echo "תצוגת כל העדכונים בכל מרחבי הלימוד השייכים לפעילות: ";
-    choose_from_menu ($modlist, "filtermodule", "","סינון תצוגת על־פי...", "self.location='index.php?filtermodule='+document.getElementById('modname').options[document.getElementById('modname').selectedIndex].value;", "0", false,false,"0","modname");
+    echo get_string('filterbyactivity','myview','',$CFG->dirroot.'/myview/lang/');
+    choose_from_menu ($modlist, "filtermodule", "",get_string('filterby','myview','',$CFG->dirroot.'/myview/lang/')."...", "self.location='index.php?filtermodule='+document.getElementById('modname').options[document.getElementById('modname').selectedIndex].value;", "0", false,false,"0","modname");
   echo '</form></td></tr>';
-echo '<tr><td width="345px">אנא הזינו שם מלא או חלקי של</td>';
+echo '<tr><td width="345px">'.get_string('coursename','myview','',$CFG->dirroot.'/myview/lang/').'</td>';
   echo '<td width="345px"><form id="filterbycatname" action="index.php" method="get">';
-    echo 'קורס<input type=text name="coursenamefiler" id="coursenamefiler" size="15" value="'.$_GET['coursenamefiler'].'">';
-    echo '<input type=submit value="סינון"> או ';
+    echo get_string('course').'<input type=text name="coursenamefiler" id="coursenamefiler" size="15" value="'.$_GET['coursenamefiler'].'">';
+    echo '<input type=submit value="'.get_string('filter','myview','',$CFG->dirroot.'/myview/lang/').'"> '.get_string('or','myview','',$CFG->dirroot.'/myview/lang/').' ';
     //echo '<input type=submit value="כל המרחבים">';
   //echo '</form></td>';
   echo '</td>';
 
   echo '<td width="580px"><form action="index.php" method="get">';
-    echo 'קטגוריה<input type=text name="categorynamefiler" id="categorynamefiler" size="15" value="'.$_GET['categorynamefiler'].'" >';
-    echo '<input type=submit value="סינון"> או ';
-    echo '<input type=submit onclick="document.getElementById(\'categorynamefiler\').value=\'\';document.getElementById(\'coursenamefiler\').value=\'\';" value="כל המרחבים">';
+    echo get_string('category').'<input type=text name="categorynamefiler" id="categorynamefiler" size="15" value="'.$_GET['categorynamefiler'].'" >';
+    echo '<input type=submit value="'.get_string('filter','myview','',$CFG->dirroot.'/myview/lang/').'"> '.get_string('or','myview','',$CFG->dirroot.'/myview/lang/').' ';
+    echo '<input type=submit onclick="document.getElementById(\'categorynamefiler\').value=\'\';document.getElementById(\'coursenamefiler\').value=\'\';" value="'.get_string('allcourses','myview','',$CFG->dirroot.'/myview/lang/').'">';
   echo '</form></td>';
-echo '<td>לתצוגה</td></tr>';
+echo '<td>'.get_string('toview','myview','',$CFG->dirroot.'/myview/lang/').'</td></tr>';
 echo '</table>';
 echo '</div>';
 
