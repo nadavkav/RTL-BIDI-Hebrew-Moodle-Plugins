@@ -1,6 +1,0 @@
-[02-Feb-2010 22:16:02] PHP Notice:  Undefined index:  shortname in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 465
-[02-Feb-2010 22:16:02] PHP Notice:  Undefined index:  enrolenddate in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 479
-[02-Feb-2010 22:16:02] PHP Notice:  Undefined index:  enrolstartdate in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 479
-[02-Feb-2010 22:18:53] PHP Notice:  Undefined index:  shortname in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 465
-[02-Feb-2010 22:18:53] PHP Notice:  Undefined index:  enrolenddate in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 479
-[02-Feb-2010 22:18:53] PHP Notice:  Undefined index:  enrolstartdate in /home/tikshuvp/public_html/moodle/course/edit_form.php on line 479
