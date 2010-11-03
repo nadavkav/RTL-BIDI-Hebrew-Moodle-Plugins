@@ -17,9 +17,9 @@ require_once($CFG->dirroot . '/mod/wiki/lib/wiki_manager.php');
 class block_wiki_ranking extends block_base {
 
     function init() {
-        global $CFG;
+        //global $CFG;
 
-        $this->title = get_string('block_ranking', 'wiki').helpbutton('ranking', $this->title, 'wiki', true, false, '', true);
+        $this->title = get_string('block_ranking', 'wiki');//.helpbutton('ranking', $this->title, 'wiki', true, false, '', true);
         $this->version = 2004081200;
     }
 
