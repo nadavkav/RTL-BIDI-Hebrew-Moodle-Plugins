@@ -1,0 +1,40 @@
+<table cellpadding="9" cellspacing="0">
+ <tr valign="top">
+     <td align="right">
+         
+     </td>
+     <td>
+		<?php print_checkbox('chkDontCollapse', true, $this->config->chkDontCollapse, "Do not condense assignment list") ?>
+     </td>
+ </tr>
+ <tr valign="top">
+     <td align="right">
+         
+     </td>
+     <td>
+		<?php print_checkbox('chkShowUnenrolled', true, $this->config->chkShowUnenrolled, "Show assignments from users no longer enrolled in the course") ?>
+     </td>
+ </tr>
+  <tr valign="top">
+     <td align="right">
+         
+     </td>
+     <td>
+		<?php print_checkbox('chkHideQuizzes', true, $this->config->chkHideQuizzes, "Do not show quizzes in the list of ungraded work. This can improve performance on large sites.") ?>
+     </td>
+ </tr>
+ <tr valign="top">
+     <td align="right">
+         
+     </td>
+     <td>
+		Directory name for block <em>/moodleroot/blocks</em><?php print_textfield('txtBlockDirectory', ($this->config->txtBlockDirectory == '') ? "/ungraded_assignments" : $this->config->txtBlockDirectory ); ?>
+     </td>
+ </tr>
+ <tr>
+     <td colspan="2" align="center">
+         <input type="submit" value="<?php print_string('savechanges') ?>" />
+     </td>
+ </tr>
+ </table>
+ <?php use_html_editor(); ?>
