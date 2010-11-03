@@ -1,0 +1,13 @@
+/*******************************************************************
+ rtl.css
+
+ This CSS file contains all layout definitions that are required for
+ right-to-left languages. It overrides definitions in other fils to
+ move right-floating blocks to the left, align text to the right, 
+ swap left and right margins, etc.
+ 
+ *******************************************************************/
+
+td#course {
+  align: left;
+}
