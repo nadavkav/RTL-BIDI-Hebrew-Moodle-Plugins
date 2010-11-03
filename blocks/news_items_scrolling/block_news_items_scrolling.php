@@ -47,8 +47,7 @@ class block_news_items_scrolling extends block_base {
 
             if (! $discussions = forum_get_discussions($cm, 'p.modified DESC', false,
                                                        $currentgroup, $COURSE->newsitems) ) {
-                $text .= '('.get_string('nonews', 'forum').')';
-                $this->content->text = $text;
+                $this->content->text = '('.get_string('nonews', 'forum').')';
                 // add a link to add "a new news item" (nadavkav)
                 if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
                     $this->content->footer  = '<div class="newlink"><a href="'.$CFG->wwwroot.'/mod/forum/post.php?forum='.$forum->id.'">'.
