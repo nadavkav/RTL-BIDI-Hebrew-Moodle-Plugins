@@ -1,4 +1,4 @@
-<?PHP // $Id: block_file_manager.php,v 1.1.1.1 2008/07/16 10:11:38 cvswriter Exp $ 
+<?PHP // $Id: block_file_manager.php,v 1.1.1.1 2008/07/16 10:11:38 cvswriter Exp $
 // Titles and Misc
 
 $string['actionsname'] = "פעולות";
@@ -140,7 +140,7 @@ $string['msgcatcreate'] = "מלאו את הפרטים השונים בדף זה �
 $string['msgcatmodify'] = "כאן, ניתן לשנות את שם הסיווג.";
 $string['msgneedinputname'] = "עליכם להזין את השדות המסומנים.";
 $string['msgduplicate'] = "שם זה קיים במערכת, אנא הזינו שם חדש.";
-$string['msgconfdelete'] = "האם אתם בטוחים שאתם מעוניינים למחוק את הקבצים $a ?<br><br>";
+$string['msgconfdelete'] = "האם אתם בטוחים שאתם מעוניינים למחוק את הקבצים \$a ?<br><br>";
 $string['msgaddlink'] = "אנא הזינו את הפרטים הבאים אודות הקובץ או הקישור אותו אתם מעוניינים לצרף למאגר";
 $string['msgmodlink'] = "שנו כל אחד מהנתונים הבאים ולחצו על הכפתור (שינוי) לעדכון הפרטים או (ביטול) לביטול.";
 $string['msgnonedefined'] = "לא הוגדרו סיווגים";
