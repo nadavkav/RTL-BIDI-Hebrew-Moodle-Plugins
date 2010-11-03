@@ -15,5 +15,6 @@ $string['uploaderror'] = 'הקובץ לא הועלה לשרת בהצלחה, כי
 $string['uploadedfile'] = 'הקובץ בתהליך העלאה לשרת';
 $string['uploadnew'] = 'החלפת הקובץ הקיים בשרת עם הקובץ החדש';
 $string['addessay'] = 'הוספת פסקאת תאור לקובץ';
+$string['savefile'] = 'שמירת קובץ';
 
 ?>
