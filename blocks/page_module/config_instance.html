@@ -1,0 +1,26 @@
+<?php // $Id: config_instance.html,v 1.1 2009/12/21 00:52:56 michaelpenne Exp $
+/**
+ * Instance configuration HTML template for this block.
+ *
+ * @author Mark Nielsen
+ * @version $Id: config_instance.html,v 1.1 2009/12/21 00:52:56 michaelpenne Exp $
+ * @package block_page_module
+ * @todo Perhaps include a hook so the module can add config info?
+ **/
+
+    global $CFG, $COURSE;
+
+    require_once($CFG->dirroot.'/course/format/page/lib.php');
+
+    $options = page_get_modules($COURSE, 'name')
+?>
+
+<div class="centerpara">
+    <table cellpadding="5px" align="center">
+        <tr>
+            <td align="right" style="font-weight: bold;"><?php print_string('displaymodule', 'block_page_module') ?>:&nbsp;</td>
+            <td align="left"><?php choose_from_menu_nested($options, 'cmid', $this->config->cmid); ?></td>
+        </tr>
+    </table>
+  <p><span class="button"><input type="submit" value="<?php print_string('savechanges'); ?>" /></span></p>
+</div>
