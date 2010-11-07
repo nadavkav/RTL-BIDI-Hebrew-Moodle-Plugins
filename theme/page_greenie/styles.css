@@ -1,0 +1,352 @@
+/* @override http://localhost/moodle19/theme/greenie/styles.php */
+
+/********************************************************
+**
+** Theme name: Greenie
+** Description: A custom theme for Moodle.
+** Creation Date: 11/14/09
+** Author: Patrick Malley
+** Author URI: http://newschoollearning.com
+**
+**
+*********************************************************/
+
+body {
+  background: #6e8c45;
+  margin: 0;
+  padding: 0;
+}
+
+body, td, th, li, p {
+  line-height: 1.4;
+  font-size: 0.95em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#wrapper {
+  background: #5b7439;
+  padding: 5px;
+  margin: 3%;
+}
+
+#page {
+  background: #fff;
+  padding: 5px;
+}
+
+a:link,a:visited,
+.tabrow1 a:link span {
+  color: #5b7439;
+}
+
+a:hover,a:active,
+.tabrow1 a:visited span {
+  color: #3b4c25;
+}
+
+a img {
+  border:none;
+}
+
+a:active {
+  outline: none;
+}
+
+/* Header */
+
+#header-home,
+#header {
+  background: #3b4c25;
+  padding: 10px;
+  color: #fff;
+}
+
+#headerblock {
+  padding: 3.5% 0 3% 1.5%;
+  float: left;
+}
+
+#header-home h1.headertitle {
+  font-size: 2.25em;
+  font-weight: normal;
+  margin: 0;
+}
+
+#header h1.headermain {
+  font-weight: normal;
+}
+
+.headertag {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  color: #b3c79d;
+  line-height: 0.8;
+}
+
+.headermenu a {
+  color: #b3c79d;
+}
+
+/* Navbar */
+
+.navbar {
+  border: none;
+}
+
+/* Sideblocks */
+
+.sideblock {
+
+}
+
+.sideblock .header {
+  border-color:ccd0c8;
+  background: #69804e;
+}
+
+.sideblock .title {
+
+}
+
+.sideblock .title h2 {
+  color: #fff;
+  font-size: 1.15em;
+  padding: 4px 4px 0;
+}
+
+.sideblock .content {
+  background:#f3f8ed;
+  border-color:ccd0c8;
+}
+
+.sideblock .minicalendar th,
+.sideblock .minicalendar td {
+  font-size:0.9em;
+}
+
+#left-column .hidden .header,
+#right-column .hidden .header {
+  border:none;
+}
+
+.hide-show-image {
+  padding-top: 6px;
+}
+
+/* Courses */
+
+h2.headingblock {
+  border-width:0 0 1px 0;
+  padding-bottom:0;
+  color: #3b4c25;
+  border-color: #e4e9de;
+}
+
+.coursebox {
+  border-width:0 0 1px 0;
+  padding-bottom:10px;
+  border-color: #e4e9de;
+}
+
+.categorybox {
+  border:none;
+}
+
+#course-view #section-0 .side,
+#course-view #section-0 .content {
+  border:none;
+}
+
+#course-view .weekscss .current,
+#course-view .current td.side {
+  background: #3b4c25;
+  color: #fff;
+}
+
+.coursebox .info {
+  width:44%;
+}
+
+.sitetopic {
+  border:none;
+}
+
+/* Forum */
+
+.forumpost {
+    border-color: #e4e9de;
+}
+
+.forumpost .topic {
+  background: #c9dfb2;
+}
+
+.forumpost .left {
+  background: #f3f8ed;
+}
+
+/* Tables */
+
+.generaltable {
+  border-color:#ddd;
+}
+
+#tag-management-list th,
+#participants th,
+.quizattemptsummary th,
+.course-report-outline th,
+#admin-report-security-index th,
+#admin-roles-override th,
+#admin-roles-assign th,
+#admin-blocks th,
+#admin-modules th,
+#grade-edit-scale-index th,
+#enrol th,
+#course-category th,
+.editcourse th,
+#admin-roles-allowoverride th,
+#admin-roles-manage th,
+#admin-roles-allowassign th,
+#mod-wiki-index th,
+#mod-survey-index th,
+#mod-scorm-index th,
+#mod-resource-index th,
+#mod-glossary-index th,
+#mod-data-index th,
+#mod-chat-index th,
+#mod-choice-index th,
+#mod-assignment-index th,
+#mod-lesson-index th,
+#mod-quiz-index th,
+#admin-user th,
+.user-grade th,
+.logtable th,
+.mod-forum .generaltable th,
+.forumheaderlist th,
+.results th {
+  border-bottom:2px solid #999;
+  padding:2px 4px;
+  background:#abb79c;
+}
+
+
+#participants td,
+.quizattemptsummary td,
+.course-report-participation td,
+.course-report-outline td,
+#admin-report-security-index td,
+#admin-roles-override td,
+#admin-roles-assign td,
+#admin-blocks td,
+#admin-modules td,
+#grade-edit-scale-index td,
+#enrol td,
+#course-category td,
+.editcourse td,
+#admin-roles-allowoverride td,
+#admin-roles-allowassign td,
+#admin-roles-manage td,
+#admin-user td,
+#tag-management-list td,
+#mod-wiki-index td,
+#mod-survey-index td,
+#mod-scorm-index td,
+#mod-resource-index td,
+#mod-quiz-index td,
+#mod-lesson-index td,
+#mod-glossary-index td,
+#mod-data-index td,
+#mod-chat-index td,
+#mod-choice-index td,
+#mod-assignment-index td,
+.mod-forum .generaltable td,
+.forumheaderlist td {
+  border-width:0 1px 0;
+  border-color:#ddd !important;
+  border-style: solid;
+}
+
+.forumheaderlist .discussion .starter {
+  background:none;
+}
+
+.quizattemptsummary .r1 .cell,
+.course-report-participation .r1 .cell,
+#admin-report-security-index .r1 .cell,
+#admin-roles-override .r1 .cell,
+#admin-blocks .r1 .cell,
+#admin-modules .r1 .cell,
+#grade-edit-scale-index .r1 .cell,
+#enrol .r1 .cell,
+#admin-roles-allowoverride .r1 .cell,
+#admin-roles-allowassign .r1 .cell,
+#admin-roles-manage .r1 .cell,
+#admin-roles-assign .r1 .cell,
+#admin-user .r1 .cell,
+#tag-management-list .r1 .cell,
+#mod-wiki-index .r1 .cell,
+#mod-survey-index .r1 .cell,
+#mod-scorm-index .r1 .cell,
+#mod-quiz-index .r1 .cell,
+#mod-lesson-index .r1 .cell,
+#mod-glossary-index .r1 .cell,
+#mod-data-index .r1 .cell,
+#mod-chat-index .r1 .cell,
+#mod-choice-index .r1 .cell,
+#mod-assignment-index .r1 .cell,
+.mod-forum .generaltable .r1 .cell,
+.forumheaderlist .r1 {
+  background:#e7f3db;
+}
+
+/* User */
+
+.userinfobox {
+  border:none;
+}
+
+body#course-user .section {
+  border-color:#6e8c45;
+}
+.userinfobox .content {
+  border:2px solid #eee;
+  background:#e7f3db;
+}
+
+.userinfobox .userpicture {
+  background:url(images/user.jpg) no-repeat 0 0;
+  padding:7px 15px 15px 7px;
+}
+
+#user-grade th {
+  padding:3px 10px;
+}
+
+.blogpost.blogdraft .content {
+  background-color:#fff;
+}
+
+
+/* Chat */
+
+.mod-chat-gui_header_js #wrapper,
+.mod-chat-gui_header_js {
+  background: none !important;
+}
+
+/* Padding Hack */
+
+.mod-forum #content,
+.mod-choice #content,
+.mod-assignment #content,
+.mod-survey #content {
+  padding: 10px;}
+
+/* RTL fix */
+.dir-rtl .format-page .prevpage {
+float:right;
+}
+.dir-rtl .format-page .nextpage {
+float:left;
+}
