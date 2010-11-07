@@ -1,0 +1,933 @@
+body{
+margin-top:0px;
+}
+hr {
+	color: #333333;
+}
+
+
+body, table, td, th, li {
+	direction:ltr;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	text-align:left;
+	color: #333333;
+}
+
+.sideblock .header, .sideblock h2 {
+	font-size:12px;
+	font-weight:bold;
+}
+
+a:link, a:visited, a {
+	color:#3B5998;
+	cursor:pointer;
+	outline-style:none;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+.sideblock .content {
+	background-color:#EEEEEE;
+}
+
+.block_admin_tree .admintree {
+	background:#EEEEEE none repeat scroll 0 0;
+}
+.block_admin_tree.sideblock .link.current {/*item selected in admin menu*/
+	background-color:#C3CDDF;
+	color:#FFFFFF;
+	
+}
+
+
+.block_admin_tree .admintree  a{
+	display: block;
+	padding:5px 8px;
+	direction:ltr;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	text-align:left;
+}
+
+
+.block_admin_tree .admintree  a:hover{
+	background-color: #899BC1;
+	color: white;
+	text-decoration: none;
+}
+
+.sideblock .header {
+	background-color:white;
+	color:#666666;
+	min-height:16px;
+	padding:5px 8px 3px 5px;
+	text-align:left;
+}
+
+th.header, td.header, h1.header, h2.header, h3.header, div.header {
+	background: none;
+}
+
+.name {
+	direction:ltr;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	text-align:left;
+	font-weight: bold;
+}
+
+input[type="button"],
+input[type="submit"] {
+	background:#EEEEEE none repeat-x scroll left center;
+	border:1px solid #77859F;
+	font-family:Verdana,sans-serif;
+	font-size:100%;
+	letter-spacing:0.03em;
+	color: #3B5998;
+	padding:1px 5px;
+	margin-left:2px; 
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover{
+	background:#899BC1 none repeat-x scroll left center;
+	color: #ffffff;
+}
+
+
+
+button,
+input[type="password"],
+input[type="text"] {
+	border:1px solid #333333;
+	font-family:Verdana,sans-serif;
+	font-size:100%;
+	letter-spacing:0.03em;
+	color: #3B5998;
+	padding:1px 5px;
+	margin-right: 5px;
+}
+
+.adminsearchform {
+	background:#D1D6DF none repeat-x scroll left center;
+	margin-left:-1px;
+	padding-bottom:1px;
+	padding-left:25px;
+	margin-top:10px;
+}
+
+form#adminsettings div.settingsform div.generalbox {
+	background-color:#eceff5;
+    border-color:#eceff5 #eceff5  #d8dffa   #eceff5;
+}
+
+#admin-index .adminerror, #admin-index .adminwarning {
+	border-style:solid;
+	border:1px solid #d8dffa;
+	margin:20px;
+	text-align:center;
+	background:#eceff5;
+}
+#coursesearch, #coursesearch2 {
+	color:#666666;
+	font-weight:bold;
+	text-align:center;
+}
+
+.sideblock .content .list li {
+	display: block;
+	padding:5px 8px;
+	direction:ltr;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	text-align:left;
+}
+
+.sideblock .content .list li:hover{
+	background-color: #none;
+	color: white;
+	text-decoration: none;
+}
+
+#course-view .weekscss .current, #course-view .current td.side {
+	background-color:#C3CDDF;
+}
+
+
+.homelink a:link, .homelink a:visited {
+	border:1px solid #333333;
+	background:#EEEEEE none repeat-x scroll left center;
+	padding:1px 5px;
+}
+
+.homelink a:hover{
+	background:#899BC1 none repeat-x scroll left center;
+	color:#FFFFFF;
+}
+
+.sideblock .header .commands {
+	display: block;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.block_site_main_menu .footer select {
+	margin-right: 0px;
+	font-size:9px;
+}
+
+body#course-index .singlebutton, body#course-index .addcategory {
+	margin-bottom:3px;
+}
+
+
+
+#course-view .section {
+	background-color:#EDEFF4;
+}
+
+#course-view .separator {
+	background-color:#ffffff;
+}
+/*******************************************************************/
+
+#header, #header-home{
+	background-color:#3B5998;
+	margin-top:0px;
+	height:35px;	
+	border:1px solid #526ea6;
+	border-bottom:#fff 1px solid;
+}
+
+div.headermenu div.logininfo {
+	color:#fff;
+	padding-right:10px;
+    padding-top:10px;
+	float:left;
+}
+
+div.headermenu div.logininfo a:link{
+	color:#fff;
+	cursor:pointer;
+	outline-style:none;
+	text-decoration:none;
+}
+div.headermenu div.logininfo a:visited{
+	color:#fff;
+	text-decoration:underline;
+}
+h1.headermain, .headermain {
+	border-bottom-width:0;
+	margin-top:15px;
+	color:#FFFFFF;
+	font-size:1.5em;
+	margin-left:5px;
+	margin-top:5px;
+}
+div#page hr{
+	border:1px solid #fff;
+	color:#FFFFFF;
+}
+.addcoursebutton {
+    text-align:right;
+}
+h2.headingblock{
+	font-size:12px;
+	font-weight:bold;
+	color:#333;
+}
+
+#header-home .headermain {
+	color:#FFFFFF;
+	font-size:1.5em;
+	margin-left:5px;
+	margin-top:5px;
+	
+}
+
+	
+.headingblock {
+	-moz-border-radius-bottomleft:0px;
+	-moz-border-radius-bottomright:0px;
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-topright:0px;
+}
+
+.sideblock .content {
+	-moz-border-radius-bottomleft:0px;
+	-moz-border-radius-bottomright:0px;
+}
+
+table.minicalendar {
+	-moz-border-radius-bottomleft:0px;
+	-moz-border-radius-bottomright:0px;
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-topright:0px;
+}
+table.minicalendar {
+	background:#FFFFFF none repeat scroll 0 0;
+	border-collapse:separate;
+	border-spacing:1px !important;
+	border-style:solid;
+	border-width:1px;
+	margin:10px auto;
+	padding:2px;
+	width:100%;
+}
+#calendar .weekend, .minicalendar .weekend {/*font days of the week calendar*/
+	color:#808080;
+}
+
+#calendar .today, .minicalendar .today {/*day selected*/
+	background:#899BC1 none repeat scroll 0 0;
+	border-color:#63779F;
+}
+
+#calendar .eventnone a, .block_calendar_month .eventnone a {/*font day selected*/
+	color:#fff;
+	cursor:text;
+	text-decoration:none;
+}
+.cal_popup_bg {/*pop up on day selected*/
+	background-color:#FFFFFF;
+	border-color:#333;
+}
+
+.navbar {
+	background-color: #e5e5e5;
+	height:25px;
+	border:1px solid #b5b5b5b;
+}
+
+.breadcrumb li a,
+.breadcrumb li {
+	color: #526ea6;
+}
+
+.breadcrumb .sep, #admin-report-unittest-index .sep {
+	color:#526ea6;
+}
+
+.block_news_items .content {
+	padding: 4px;
+}
+
+.block_calendar_upcoming .post {
+	padding: 4px;
+}
+
+.block_recent_activity .message ,
+.block_recent_activity .activitydate {
+	padding: 4px;
+}
+
+.block_search_forums .searchform {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/*h1.headermain{
+    border-bottom-width:0;
+	/*margin-bottom:15px;
+	margin-top:15px;}*/
+	
+.sideblock .content div.info{
+	margin:5px;
+	text-align:left;
+}
+/*messege boxes*/
+
+.notifysuccess {/*box success*/
+	-moz-border-radius-bottomleft:0;
+	-moz-border-radius-bottomright:0;
+	-moz-border-radius-topleft:0;
+	-moz-border-radius-topright:0;
+	border:1px solid #4EBF3B;
+	margin-top:10px;
+	padding-left:40px;
+	text-align:left !important;
+	background:#D1FFAF url(pix/f/good.gif) no-repeat scroll 10px center;
+	margin-bottom:10px;
+}	
+
+
+
+.errorboxcontent {
+	background-color:#FFCFCF;
+	border:1px solid #FF3333;
+	font-weight:bold;
+	color:#CF4D4D;
+}
+.noticebox h2{
+	color:#CF4D4D;
+}
+
+.informationbox {
+	background:#C6DDE3;
+	border:solid 1px #609AC0;
+	padding:10px;
+	color:#234A81;
+}
+
+form.mform .required label {
+	color:#DF6353;
+}
+
+.mform div.error, .mform fieldset.error {
+	border:1px solid #DF6353;
+	color:inherit;
+	padding:5px;
+}
+.mform span.error, .mform span.required {
+	color:#DF6353;
+}
+form.mform .fdescription.required {
+	color:#DF6353;
+}
+.notifyproblem {
+	border:1px solid #E0A32E;
+	color: #BF810B;
+	text-align:left !important;
+	text-indent: 25px;
+	background:#FAF2C3 url(pix/i/warning.gif) no-repeat scroll 10px center;
+	margin-bottom:10px;
+}
+
+.admin .generalbox {
+	background-color:#ECEFF5;
+    border-color:#D8DFFA;
+}
+/*messege boxes*/
+
+
+#adminsettings fieldset {
+	background-color:#ECEFF5;
+	border-color:#ECEFF5 #ECEFF5 #E5EAF1;
+	border-style:none none solid;
+	border-width:medium medium 1px;
+	color:#333333;
+	padding-left:20px;
+	padding-right:20px;
+}
+
+button, input[type="password"], input[type="text"] {/*imput box*/
+	border:1px solid #BDC7D8;
+	color:#3B5998;
+	font-family:Verdana,sans-serif;
+	font-size:100%;
+	letter-spacing:0.03em;
+	margin-right:5px;
+	padding:1px 5px;
+	margin-bottom:5px;
+}
+
+#adminsettings .form-label {/*font forms*/
+	color:#526EA6;
+	display:block;
+	float:left;
+	text-align:right;
+	width:12.5em;
+}
+#adminsettings .form-shortname {/*small font in forms*/
+	font-size:0.9em;
+}
+
+td#middle-column div h2.main {/*form title*/
+	color:#999;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	text-align:left;
+	border-bottom:1px solid #D8DFFA;
+}
+.sideblock .content .footer {/*bookmark*/
+	clear:both;
+	margin-bottom:4px;
+	padding:5px;
+	text-align:left;
+	font-size:1em;
+	text-align:justify;
+	background:url(pix/i/bookmark.gif) no-repeat left;
+}
+.sideblock .footer a {/*bookmark*/
+	padding-left:16px;
+}
+
+/*blocks*/
+.block_blog_tags .official {/*tags block*/
+color:#526ea6;
+}
+.block_blog_tags .s20 {/*tags block*/
+font-size:1.3em;
+font-weight:bold;
+}
+/*blocks*/
+
+#intro.generalbox {
+	background:#ECEFF5 none repeat scroll 0 0;
+	border-color:#ECEFF5 #ECEFF5 #E5EAF1;
+	border-style:solid;
+	border-width:1px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	padding-bottom:15px;
+	width:79%;
+}
+
+.blockconfigtable td.label {
+	color:#666666;
+	font-weight:bold;
+	text-align:right;
+	width:50%;
+}
+
+/*tab*/
+.tabrow0 .empty {
+	margin-top:-1px;
+	height:1px;
+	overflow:hidden;
+	padding:0;
+	border-top:1px solid #d8dfea;
+}
+ul.tabrow1 li.here.selected a {
+color:#FFFFFF;
+}
+.tabrow0 li {
+	display:inline;
+	margin:0 0px 0 0;
+	padding:0;
+}
+
+ul.tabrow0 li.onerow here selected a {
+	font-weight:bold;
+	color: #526ea6;
+	border-top:1px solid #d8dfea;
+	border-right:1px solid #d8dfea;
+	border-left:1px solid #d8dfea;
+	padding-top:5px;
+	background:#d8dfea;
+	margin-right:2px;	
+}
+ul.tabrow0 li.first a {
+	font-weight:bold;
+	color: #526ea6;
+	border-top:1px solid #d8dfea;
+	border-right:1px solid #d8dfea;
+	border-left:1px solid #d8dfea;
+	padding-top:5px;
+	background:#d8dfea;
+	margin-right:2px;	
+}
+.tabrow0 .here a {
+color:#526ea6;
+}
+ul.tabrow0 li.first a:hover{
+	text-decoration:none;
+	font-weight:bold;
+	color: #fff;
+	background:#526ea6;	
+}
+
+ul.tabrow0 li.last a:hover{
+	text-decoration:none;
+	font-weight:bold;
+	color: #fff;
+	background:#526ea6;
+	margin-left:5px;
+	top:3px;
+	padding-bottom:5px;
+}
+
+ul.tabrow0 li.last a {
+	font-weight:bold;
+	color: #526ea6;
+	border-top:1px solid #d8dfea;
+	border-right:1px solid #d8dfea;
+	border-left:1px solid #d8dfea;
+	padding-top:5px;
+	background:#d8dfea;
+	margin-left:5px;
+	/*top:3px;*/
+	padding-bottom:5px;
+}
+
+
+/*********tabs admin user*******/
+.clearer{/*block under the tabs to make some some air*/
+
+	clear:both;
+	display:block;
+	height:20px;
+	margin:0 0 0;
+	padding:0;
+}
+.tabrow0 a {
+	font-weight:bold;
+	color: #526ea6;
+	border-top:1px solid #d8dfea;
+	border-right:1px solid #d8dfea;
+	border-left:1px solid #d8dfea;
+	padding-top:5px;
+	background:#d8dfea;
+	margin-left:2px;
+}
+.tabrow0 a:hover {
+	text-decoration:none;
+	font-weight:bold;
+	color: #fff;
+	background:#526ea6;
+}
+
+.tabrow0 div, .tabrow0 ul {
+	border-top:1px solid #D8DFFA;
+	font-size:90%;
+	left:0;
+	line-height:normal;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+	padding:0.25em 0;
+	position:absolute;
+	top:25px;
+	width:100%;
+	padding-top:5px;
+	margin-rop:5px;}
+	
+.tabrow0 a span{
+background-image:none;
+}
+.tabrow0 a:hover span {
+background-image:none;
+}
+.tabrow0 a:hover{
+background-image:none;
+}
+/*tab*/
+
+h2.main{
+	color:#333333;
+	direction:ltr;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	text-align:left;
+}
+
+.generalbox {
+	border-color:#FFFFFF #FFFFFF #d8dffa;
+}
+
+form.popupform label {
+	color:#666666;
+	font-weight:bold;
+	margin-right:0.5em;
+}
+
+img.iconhelp {
+	border:0 none;
+	height:17px;
+	margin-bottom:4px;
+	margin-right:4px;
+	vertical-align:middle;
+	width:17px;
+}
+
+.navbar .navbutton, .navbar .menu {
+	margin-bottom:0;
+	margin-top:0;
+}
+
+.sideblock .content .list li:hover {
+	color:#333;
+	text-decoration:none;
+}
+
+.mform .fitemtitle {
+	font-weight:bold;
+}
+
+div.felement textarea#id_interests{
+	border:solid 1px #bdc7d8;
+}
+
+.mform fieldset {
+	border-color:#D8DFFA #FFFFFF #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+}
+
+#login-index #content {/*font loging*/
+	font-size:1em;
+}
+.forumnodiscuss {
+	color:#999999;
+	font-weight:bold;
+	margin-top:5px;
+}
+
+#admin-roles-override .cell.c1, #admin-roles-assign .cell.c3, #admin-roles-assign .cell.c1 {
+	font-size:0.9em;
+}
+
+.generaltable .cell {/*table admin*/
+	background-color:#ECEFF5;
+	border-color:#D8DFFA;
+}
+
+.generaltable {
+	border-color:#D8DFFA;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+table.generalbox editcourse boxaligncenter{
+	background-color:#ECEFF5;
+	border-color:#D8DFFA;
+}
+#footer .logininfo {
+	color:#3B5998;
+	margin-right:8px;
+	margin-top:10px;
+}
+
+#admin-lang .generalbox {
+	background:#ECEFF5 none repeat scroll 0 0;
+	border:1px solid #D8DFFA;
+	margin:25px auto auto;
+	padding-top:10px;
+	text-align:center;
+	margin-bottom:10px;
+}
+
+#adminsettings .form-label {
+	color:#526EA6;
+	display:block;
+	float:left;
+	margin-right:30px;
+	text-align:right;
+	width:12.5em;
+	padding-top:10px;
+}
+
+/****box loging****/
+.loginbox .loginform .form-label {
+color:#526ea6;
+margin:0 0 5px;
+padding:0;
+font-weight:bold;
+}
+.loginbox, .loginbox.twocolumns .loginpanel, .loginbox .subcontent {
+border-color:#D8DFFA;
+}
+/*******************/
+
+form {
+margin-bottom:8px;
+padding-bottom:10px;
+}
+
+/***box group style****/
+.invisiblefieldset {
+	border:0 none;
+	display:inline;
+	margin:0;
+	padding:5px;
+}
+
+select {
+	border:1px solid #77859F;
+	font-family:Verdana,sans-serif;
+	font-size:100%;
+	height:auto;
+	letter-spacing:0.03em;
+	margin-bottom:5px;
+	margin-top:5px;
+	width:120px;
+	margin-right:5px;
+}
+
+.environmenttable .ok {
+	background-color:#ABEFA4;
+	padding:2px;
+}
+
+ul.tabrow1 li a, ul.tabrow1 li a:link, ul.tabrow1 li a:visited {
+	font-size:100%;}
+
+select#id_s__grade_aggregation{
+	width:auto;
+}
+select#uninstalllang{
+	width:218px;
+	height:275px;}
+
+select#pack{
+	width:218px;
+	}
+	
+select#id_s__data_enablerssfeeds{
+	width:auto;
+	}
+
+select#id_s__forum_displaymode{
+	width:auto;
+	}
+		
+select#id_s__forum_enablerssfeeds{
+	width:auto;
+	}
+	
+select#id_s__glossary_enablerssfeeds{
+	width:auto;
+	}
+	
+select#menuattempts{
+	width:auto;
+	}
+	
+select#id_s__block_rss_client_submitters{
+	width:auto;
+	}	
+	
+select#id_s__block_course_list_adminview{
+	width:auto;
+	}	
+		
+select#id_s__hideactivitytypenavlink{
+	width:auto;
+	}	
+		
+select#id_s__calendar_site_timeformat	{
+	width:auto;
+	}	
+	
+div.htmlarea select{
+	width:auto;
+	}
+
+select#catmenu_jump{
+	width:auto;
+	}		
+
+select#addquestion_jump{
+	width:auto;
+	}	
+
+select#menuaction{
+	width:auto;
+	}	
+
+select#id_s__gdversion{
+	width:auto;
+	}	
+
+select#id_s__debug{
+	width:auto;
+	}	
+
+select#id_s__getremoteaddrconf{
+	width:auto;
+	}
+	
+select#id_s__loglifetime{
+	width:auto;
+	}
+	
+select#id_s__gradehistorylifetime{
+	width:auto;
+	}		
+			
+select#id_s__gradehistorylifetime{
+	width:auto;
+	}	
+
+select#selectversion_jump{
+	width:auto;
+	}	
+
+select#menuhost_course{
+	width:auto;
+	}	
+select#menudate{
+	width:auto;
+	}	
+
+select#menulogformat{
+	width:auto;
+	}	
+.grade-edit-scale .scale_options {
+	font-size:0.9em;
+	color:#999;
+}
+
+.initialbar {
+padding-bottom:5px;
+text-align:center;
+}
+.entrybox {
+border-color:#FFFFFF;
+}
+select#switchrole_jump{
+	width:auto;
+	}
+	
+select#wikilinks_jump{
+	width:auto;
+	}
+	
+select#wikiadministration_jump{
+	width:auto;
+	}
+	
+.mod-resource .modified {
+font-size:0.9em;
+}
+
+select#add_block_jump{
+	width:auto;
+	}
+	
+select#menuid{
+	width:auto;
+	}
+select#menumodid{
+	width:auto;
+	}
+select#choosepluginreport_jump{
+	width:auto;
+	}	
+#admin-report .plugin, #course-report .plugin, #course-import .plugin {
+background-color:#FDFDFD;
+border:1px solid #D8DFFA;
+margin-bottom:20px;
+margin-left:10%;
+margin-right:10%;
+}
+
+.activity .commands{ display:none;}
+.activity:hover .commands{ display:inline;} 
+
+div.sitelink a img{
+height:auto !important; 
+width:auto !important;
+}
+
+div.logo{
+	margin-top:0px;
+	background:url(logo.png) no-repeat ;
+	height:111px;
+	width:117px;}
+
+div.foodlelogo{
+	background:url(foodle.png) no-repeat;
+	width:141px;
+	height:121px;
+	}
+	div .bluebar{
+ background:url(blue_bar.png) repeat-x;}
