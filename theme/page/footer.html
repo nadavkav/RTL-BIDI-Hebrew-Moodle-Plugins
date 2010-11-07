@@ -1,0 +1,51 @@
+<?php
+
+    print_container_end(); // content container
+
+    print_container_start(false, '', 'footer');
+
+    echo '<p class="helplink">';
+    echo page_doc_link(get_string('moodledocslink'));
+    echo '</p>';
+
+
+    if ($navigation and false) { ?>
+    <div class="navbar clearfix">
+        <div class="breadcrumb"><?php print_navigation($navigation); ?></div>
+        <div class="menu"><?php echo $menu; ?></div>
+    </div>
+<?php }
+
+    echo $loggedinas;
+
+    require_once($CFG->themedir.'/page/lib.php');
+    echo '<p class="formatpage_backtobutton">';
+    page_theme_print_backto_button();
+    echo '</p>';
+
+    // Perhaps move this into a patch.  Right now, keep it from failing
+    if (file_exists($CFG->dirroot.'/mod/content/locallib.php')) {
+        require_once($CFG->dirroot.'/mod/content/locallib.php');
+        content_print_translate_button();
+    }
+
+    echo $homelink;
+
+    if (!empty($performanceinfo)) {
+        echo $performanceinfo;
+    }
+
+    if (debugging()) { ?>
+        <div class="validators"><ul>
+          <li><a href="http://validator.w3.org/check?verbose=1&amp;ss=1&amp;uri=<?php echo urlencode(qualified_me()) ?>">Validate HTML</a></li>
+          <li><a href="http://www.contentquality.com/mynewtester/cynthia.exe?rptmode=-1&amp;url1=<?php echo urlencode(qualified_me()) ?>">Section 508 Check</a></li>
+          <li><a href="http://www.contentquality.com/mynewtester/cynthia.exe?rptmode=0&amp;warnp2n3e=1&amp;url1=<?php echo urlencode(qualified_me()) ?>">WCAG 1 (2,3) Check</a></li>
+        </ul></div>
+<?php }
+
+    print_container_end();
+?>
+
+</div>
+</body>
+</html>

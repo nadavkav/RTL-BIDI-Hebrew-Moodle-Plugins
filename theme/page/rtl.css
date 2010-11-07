@@ -1,0 +1,7 @@
+.navbar .navbutton, .navbar .menu {
+float:left;
+}
+
+.navbar .breadcrumb  {
+float:right;
+}

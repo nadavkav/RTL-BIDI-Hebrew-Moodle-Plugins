@@ -1,0 +1,48 @@
+/***
+ *** Menu CSS for the header menu
+ ***/
+
+/* This fixes sub-menu placement for Safari */
+body {
+  margin: 0pt;
+  padding: 0pt;
+}
+
+ /* YUI will show the menu and move it to an appropiate location */
+.menutreeroot {
+ visibility: hidden;
+ position: absolute;
+}
+
+div.yuimenu {
+  background-color: #FFFFFF;
+}
+
+div.yuimenu .yuimenubaritem-selected,
+div.yuimenu .yuimenuitem-selected {
+  background-color: #FFFFFF;
+}
+
+div.yuimenu .yuimenuitem-hassubmenu {
+    background: transparent url(<?php echo $CFG->modpixpath ?>/pagemenu/pix/inactive.gif) no-repeat scroll right center;
+}
+
+div.yuimenu .yuimenuitem-hassubmenu-selected {
+    background: transparent url(<?php echo $CFG->modpixpath ?>/pagemenu/pix/active.gif) no-repeat scroll right center;
+}
+
+div.yuimenu .yuimenuitem a {
+  color: #0000FF;
+}
+
+div.yuimenu li.selected a.selected {
+  color: #FF0000;
+  text-decoration: underline;
+}
+
+div.yuimenu .yuimenuitem a.yuicurrent,
+div.yuimenu .yuimenuitem a.yuicurrent:hover,
+div.yuimenu li.yuicurrent.selected a.yuicurrent.selected {
+  text-decoration: none;
+  color: #000000;
+}

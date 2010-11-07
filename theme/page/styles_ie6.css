@@ -1,0 +1,27 @@
+/***
+ *** Submit Button IE6 Fixes
+ ***/
+
+span.button {
+  padding-top: 8px;
+}
+
+span.button a {
+  padding-top: 6px;
+  padding-bottom: 7px;
+}
+
+.mod-pagemenu li.current,
+.mod-pagemenu .menutree a.current,
+.mod-pagemenu .menutree a.current:hover {
+  background: none;
+}
+
+/* Button breaks when the window is at specific widths */
+#admin-report-log-index .logselectform span.button {
+  display: block; /* Bring it down to its own line */
+}
+
+#admin-report-log-index .logselectform .button {
+  text-align: left; /* Move the button to the left on the new line */
+}

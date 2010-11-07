@@ -1,0 +1,12 @@
+/***
+ *** Submit Button IE7 Fixes
+ ***/
+
+span.button {
+  padding-top: 8px;
+}
+
+span.button a {
+  padding-top: 6px;
+  padding-bottom: 7px;
+}
