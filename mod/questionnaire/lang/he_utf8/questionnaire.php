@@ -210,6 +210,7 @@ $string['selecttheme'] = 'Select a theme (css) to use with this survey.';
 $string['sendemail'] = 'Sends a copy of each submission to address (or leave blank for no email backup).';
 $string['settings'] = 'מאפיינים';
 $string['settingssaved'] = 'המאפיינים נשמרו';
+$string['stdrank'] = 'סטיית תקן';
 $string['strfdate'] = '%%d/%%m/%%Y';
 $string['strfdateformatcsv'] = 'd/m/Y H:i:s';
 $string['submitoptions'] = 'הגדרות מענה תשובות';
