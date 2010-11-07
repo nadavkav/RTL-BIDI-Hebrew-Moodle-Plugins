@@ -172,8 +172,8 @@ function oublog_can_post($oublog, $bloguserid=0, $cm=null) {
 }
 
 /**
- * Determines whether the user can comment on the given blog post, presuming 
- * that they are allowed to see 
+ * Determines whether the user can comment on the given blog post, presuming
+ * that they are allowed to see
  * @param $cm Course-module (null if personal blog)
  * @param $oublog Blog object
  * @param $post Post object
@@ -194,8 +194,8 @@ function oublog_can_comment($cm, $oublog, $post) {
                     get_context_instance(CONTEXT_MODULE,$cm->id)) &&
                 oublog_is_writable_group($cm));
     }
-    return $blogok && $post->allowcomments && 
-            ($post->allowcomments >= OUBLOG_COMMENTS_ALLOWPUBLIC || 
+    return $blogok && $post->allowcomments &&
+            ($post->allowcomments >= OUBLOG_COMMENTS_ALLOWPUBLIC ||
                 (isloggedin() && !isguestuser()));
 }
 
@@ -253,7 +253,7 @@ function oublog_is_writable_group($cm) {
     $groupid = oublog_get_activity_group($cm);
     if (isset($cm->writablegroups)) {
         $cm->writablegroups = array();
-    } 
+    }
     if (isset($cm->writablegroups[$groupid])) {
         return $cm->writablegroups[$groupid];
     }
@@ -261,7 +261,7 @@ function oublog_is_writable_group($cm) {
         has_capability('moodle/site:accessallgroups',
             get_context_instance(CONTEXT_MODULE, $cm->id));
     return $cm->writablegroups[$groupid];
-} 
+}
 
 /**
  * Determine if a user can view a post. Note that you must also call
@@ -433,7 +433,7 @@ function oublog_edit_post($post,$cm) {
 function oublog_get_posts($oublog, $context, $offset=0, $cm, $groupid, $individualid=-1, $userid=null, $tag='', $canaudit=false) {
     global $CFG, $USER;
 
-    $sqlwhere = "bi.oublogid = $oublog->id";
+    $sqlwhere = " bi.oublogid = $oublog->id ";
     $sqljoin = '';
 
     if (isset($userid)) {
@@ -482,7 +482,7 @@ function oublog_get_posts($oublog, $context, $offset=0, $cm, $groupid, $individu
                 $sqljoin";
                 $sql = "SELECT $fieldlist
                 $from
-            WHERE  $sqlwhere 
+            WHERE  $sqlwhere
             ORDER BY p.timeposted DESC
             ";
     $countsql = "SELECT count(p.id) $from WHERE $sqlwhere";
@@ -594,7 +594,7 @@ function oublog_get_post($postid, $canaudit=false) {
                 INNER JOIN {$CFG->prefix}oublog_instances bi ON p.oubloginstancesid = bi.id
                 INNER JOIN {$CFG->prefix}user u ON bi.userid = u.id
                 LEFT JOIN {$CFG->prefix}user ud ON p.deletedby = ud.id
-                LEFT JOIN {$CFG->prefix}user ue ON p.lasteditedby = ue.id                
+                LEFT JOIN {$CFG->prefix}user ue ON p.lasteditedby = ue.id
             WHERE p.id = $postid
             ORDER BY p.timeposted DESC
             ";
@@ -1165,11 +1165,11 @@ function oublog_update_views($oublog, $oubloginstance) {
  * @return bool True if you have permission
  */
 function oublog_has_userblog_permission($capability,$oublog,$oubloginstance,$context) {
-    // For personal blogs you can do these things EITHER if you have the capability 
-    // (ie for admins) OR if you are that user and you are allowed to post 
+    // For personal blogs you can do these things EITHER if you have the capability
+    // (ie for admins) OR if you are that user and you are allowed to post
     // to blog (not banned)
     global $USER;
-    if($oublog->global && $oubloginstance && $USER->id == $oubloginstance->userid && 
+    if($oublog->global && $oubloginstance && $USER->id == $oubloginstance->userid &&
         has_capability('mod/oublog:contributepersonal', $context)) {
         return true;
     }
@@ -1449,8 +1449,8 @@ function oublog_get_feed_comments($blogid, $bloginstancesid, $postid, $user, $al
             $item->authorname = $item->author;
 
             // Keep posted time just in case
-            $item->timeposted = $item->pubdate; 
-            
+            $item->timeposted = $item->pubdate;
+
             // Publication date = approval time (should be consistent with
             // expected feed behaviour)
             $item->pubdate = $item->timeapproved;
@@ -1841,7 +1841,7 @@ function oublog_date($time,$insentence=false) {
  * @param object $oubloginstance Row object from 'oubloginstance' table
  * @param object $oubloguser Moodle user object
  * @param array $extranav Optional additional navigation entry; may be an array
- *   of nav entries, a single nav entry (array with 
+ *   of nav entries, a single nav entry (array with
  *   'name', optional 'link', and 'type' fields), or null for none
  * @return object Navigation item object
  */
@@ -1900,8 +1900,8 @@ function oublog_print_summary_block($oublog, $oubloginstance, $canmanageposts) {
         $name = $oublog->name;
     }
 
-    print_side_block(format_string($name), 
-        format_text($summary, FORMAT_HTML) . $links, NULL, NULL, NULL, 
+    print_side_block(format_string($name),
+        format_text($summary, FORMAT_HTML) . $links, NULL, NULL, NULL,
         array('id' => 'oublog-summary'), get_string('bloginfo','oublog'));
 }
 
@@ -2114,9 +2114,9 @@ function oublog_individual_has_permissions($cm, $oublog, $groupid, $individualid
     if ($individualmode == OUBLOG_NO_INDIVIDUAL_BLOGS) {
         return true;
     }
-    
+
     $groupmode = oublog_get_activity_groupmode($cm);
-    
+
     //separate individual
     if ($individualmode == OUBLOG_SEPARATE_INDIVIDUAL_BLOGS) {
         if (!has_capability('mod/oublog:viewindividual', $context, $userid)) {
@@ -2249,7 +2249,7 @@ function oublog_get_last_modified($cm, $course, $userid=0) {
     $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
     // Restrict to separate groups
-    if ($groupmode == SEPARATEGROUPS && 
+    if ($groupmode == SEPARATEGROUPS &&
         !has_capability('moodle/site:accessallgroups', $context, $userid)) {
 
         if ($oublog->individual) {
@@ -2288,7 +2288,7 @@ AND bi.userid = $userid";
 
 // Query for newest version that follows these restrictions
     $result = get_field_sql($sql="
-SELECT 
+SELECT
     MAX(p.timeposted)
 FROM
     {$CFG->prefix}oublog_posts p
@@ -2308,7 +2308,7 @@ WHERE
  */
 function ou_print_mobile_navigation($id = null , $blogdets = null, $post = null, $user=null){
 	global $CFG;
-	
+
 	if($id){
 		$qs   = 'id='.$id.'&direct=1';
 		$file = 'view';
@@ -2321,16 +2321,16 @@ function ou_print_mobile_navigation($id = null , $blogdets = null, $post = null,
 		$qs   = 'post=' . $post;
 		$file = 'viewpost';
 	}
-	
+
     if($blogdets != 'show'){
         $qs           .= '&blogdets=show';
         $desc        = get_string('viewblogdetails','oublog');
-        $class_extras = '';  
+        $class_extras = '';
     }
     else {
         $qs           .= '';
         $desc         = get_string('viewblogposts','oublog');
-        $class_extras = ' oublog-mobile-space';                  
+        $class_extras = ' oublog-mobile-space';
     }
     print '<div class="oublog-mobile-main-link'.$class_extras.'">';
     print '<a href="'.$CFG->wwwroot.'/mod/oublog/'.$file.'.php?'.$qs.'">';
@@ -2346,7 +2346,7 @@ function oublog_too_many_comments_from_ip() {
     global $CFG;
     $ip = addslashes(getremoteaddr());
     $hourago = time() - 3600;
-    $count = count_records_sql("SELECT COUNT(1) FROM " . 
+    $count = count_records_sql("SELECT COUNT(1) FROM " .
         "{$CFG->prefix}oublog_comments_moderated WHERE authorip='$ip' " .
         "AND timeposted > $hourago");
     // Max comments per hour = 10 at present
@@ -2415,7 +2415,7 @@ ORDER BY (bc.timeapproved - bc.timeposted)");
  */
 function oublog_apply_high_security(DOMElement $element) {
     // Note that Moodle security should probably already prevent this (and
-    // should include a whitelist approach), but just to increase the paranoia 
+    // should include a whitelist approach), but just to increase the paranoia
     // level a bit with these comments.
     static $allowtags = array(
         'html' => 1, 'body' => 1,
@@ -2448,7 +2448,7 @@ function oublog_apply_high_security(DOMElement $element) {
         $keep = false;
         if ($name === 'href' && preg_match('~^https?://~', $value->nodeValue)) {
             $keep = true;
-        } else if ($name === 'src' && 
+        } else if ($name === 'src' &&
                 preg_match('~^https?://.*\.(jpg|jpeg|png|gif|svg)$~', $value->nodeValue)) {
             $keep = true;
         } else if($name === 'alt') {
@@ -2537,7 +2537,7 @@ function oublog_add_comment_moderated($oublog, $oubloginstance, $post, $comment)
     $subject = get_string('moderated_emailsubject', 'oublog', $a);
 
     // Main text
-    $approvebase = $CFG->wwwroot . '/mod/oublog/approve.php?mcomment=' . 
+    $approvebase = $CFG->wwwroot . '/mod/oublog/approve.php?mcomment=' .
         $comment->id . '&amp;key=' . $comment->secretkey;
     $a = (object)array(
         'postlink' => '<a href="' . $CFG->wwwroot .
@@ -2546,7 +2546,7 @@ function oublog_add_comment_moderated($oublog, $oubloginstance, $post, $comment)
             '</a>',
         'commenter' => $commenterhtml,
         'commenttitle' => $comment->title ? stripslashes($comment->title) : '',
-        'comment' => 
+        'comment' =>
             format_text(stripslashes($comment->message), FORMAT_MOODLE,
             null, $oublog->course),
         'approvelink' => $approvebase . '&amp;approve=1',
@@ -2564,7 +2564,7 @@ function oublog_add_comment_moderated($oublog, $oubloginstance, $post, $comment)
     $messagehtml = get_string('moderated_emailhtml', 'oublog', $a);
     // hack to remove empty tags when there is no title
     $messagehtml = str_replace('<h3></h3>', '', $messagehtml);
-    $result = $result && email_to_user($user, $SITE->fullname, 
+    $result = $result && email_to_user($user, $SITE->fullname,
         $subject, $messagetext, $messagehtml);
 
     // Put language back
@@ -2618,7 +2618,7 @@ function oublog_approve_comment($mcomment, $approve) {
     // Update the moderated comment record
     $update = (object)array(
         'id' => $mcomment->id,
-        'approval' => $approve ? OUBLOG_MODERATED_APPROVED : 
+        'approval' => $approve ? OUBLOG_MODERATED_APPROVED :
             OUBLOG_MODERATED_REJECTED,
         'timeset' => $now
     );
