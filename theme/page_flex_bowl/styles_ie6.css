@@ -1,0 +1,182 @@
+/*
+ * These styles are ONLY included for IE 6 (via meta.php)
+ */
+
+.tabtree {
+  height: 100%;
+}
+
+.tabrow0 {
+  padding-top: 10px;
+}
+
+.tabrow0 li {
+  margin-left: 0;
+}
+
+.tabrow0 li.first {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+.tabrow0 li.last a {
+  margin-right: 0;
+}
+
+.tabrow0 li.onerow {
+  margin-right: 0;
+}
+
+.tabrow0 a {
+  padding: 0 0 0 13px;
+  border:none;
+  display:inline;
+  position:relative;
+  bottom:5px;
+}
+
+ul.tabrow0 li.first a {
+	font-weight:bold;
+	color: #197f7f;
+	border:none;
+	background:url(img/fondos_modulos_trans.png) transparent repeat scroll 0 0;
+	height:15px;
+	
+}
+
+ul.tabrow0 li.last a {
+	font-weight:bold;
+	border:none;	
+	padding-top:5px;
+	background:url(img/fondos_modulos_trans.png) transparent repeat scroll 0 0;
+	position:relative;
+	bottom:5px;
+	height:15px;
+}
+
+.tabrow0 .here a:link, .tabrow0 .here a:visited, .tabrow0 .here a.nolink {
+	position:relative;
+	bottom:5px;
+}
+
+
+.tabrow0 a span {
+  padding: 12px 1em 4px 0;
+}
+
+.tabrow0 div,
+.tabrow0 ul {
+  top: 3.5em;
+  padding: 0.2em 0;
+}
+
+form.mform input {
+  margin-left: expression((this.type=="text"||this.type=="file"||this.type=="password")?'-10px':'0');
+}
+
+#admin-user-user_bulk form.mform input,
+#admin-user form.mform input {
+  margin-left: 0;
+}
+
+form.mform textarea {
+ margin-left: -10px;
+}
+
+.que .info {
+  margin-left: 0.6em;
+}
+
+#adminsettings .form-setting,
+#adminsettings .form-description {
+  display:inline-block; padding-left:2px;
+}
+
+
+.navbar {
+	background:transparent url(img/navbar.png) no-repeat scroll 0 0;
+	border-style:none;
+	border-top:1px none #FFFFFF;
+	height:30px!important;
+	width:1024px;
+}
+
+.sideblock .header {
+	background:transparent url(img/tab_chico_diagonal_line.png) repeat-x scroll 0 0;
+	border:medium none;
+	color:#306F53;
+	height:41px;
+	min-height:16px;
+	padding:5px 8px 3px 5px;
+	text-align:left;
+	width:auto;
+}
+
+div#page hr{
+	border:1xp solid #FFF;
+}
+
+.mform fieldset .advancedbutton {
+	text-align:right;
+	width:90%;
+}
+
+form.mform .fdescription.required {
+	padding-right:35px;
+}
+
+#adminsettings fieldset {/*ancho de la columna centr al de admin settings, para que no se corte el editor de txt*/
+	background-color:#ECEFF5;
+	border:1px solid #60E8AD;
+	color:#333333;
+	width:850px;
+}
+
+#footer {
+	background: url(img/footer.gif) transparent repeat-x scroll 0 0;
+	height:108px;
+	/*margin-top:-45px;*/
+	padding-top:1px;
+	text-align:center;
+	position:relative;
+	bottom:0px;
+}
+
+body{
+	margin:0;
+	padding:0;
+}
+
+div#page {
+	border:medium none;
+	margin:10px auto;
+	width:1024px;
+}
+
+a img {
+	margin-top:5px;
+	width:13px;
+	height:13px;
+}
+
+.headermenu{/*jump to*/
+	position:relative;
+	bottom:0px;
+}
+
+.headermenu .icon{/*jump to icon*/
+	position:relative;
+	bottom:0px;
+}
+
+.navbar .navbutton, .navbar .menu {
+	margin-bottom:0;
+	margin-top:0px;
+	margin-right:10px;
+}
+
+#login-index select#chooselang_jump {
+	margin-top:5px;
+}
+
+.activity .commands{display:inline;} 

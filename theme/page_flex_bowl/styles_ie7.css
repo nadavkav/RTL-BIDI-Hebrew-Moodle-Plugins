@@ -1,0 +1,127 @@
+/*
+ * These styles are ONLY included for IE 7 (via meta.php)
+ */
+
+.tabrow0 li {
+  margin-left: 0;
+}
+
+.tabrow0 li.first {
+  margin-right: -4px;
+}
+
+.tabrow0 li.onerow {
+  margin-right: 0;
+}
+
+.tabrow0 a {
+  display: inline-block;
+  padding: 8px 0 0.35em 13px;
+  line-height: 1.5em;
+  border:none;
+  position:relative;
+  bottom:5px;
+}
+
+ul.tabrow0 li.first a {
+	font-weight:bold;
+	color: #197f7f;
+	border:none;
+	background:url(img/fondos_modulos_trans.png) transparent repeat scroll 0 0;
+	height:21px;
+	
+}
+
+ul.tabrow0 li.last a {
+	font-weight:bold;
+	border:none;	
+	padding-top:5px;
+	background:url(img/fondos_modulos_trans.png) transparent repeat scroll 0 0;
+	position:relative;
+	bottom:5px;
+	height:21px;
+}
+
+.tabrow0 .here a:link, .tabrow0 .here a:visited, .tabrow0 .here a.nolink {
+	position:relative;
+	bottom:5px;
+}
+
+
+.tabrow0 a span {
+  padding: 10px 1em 10px 0;
+}
+
+.tabrow0 div,
+.tabrow0 ul {
+  top: 2.6em;
+  padding: 0.2em 0;
+}
+
+.tabrow0 div.empty {
+  margin-right: 0;
+}
+
+.sideblock {
+  overflow: hidden;
+}
+
+.sideblock .content {
+  word-wrap: break-word;
+}
+
+/*fix for misalignment of text fields in ie */
+form.mform input[type=text],
+form.mform input[type=file],
+form.mform input[type=password] {
+ margin-left: -10px;
+}
+
+form.mform textarea {
+ margin-left: -10px;
+}
+
+form.mform .fcheckbox input {
+  margin-left: -3px;
+}
+
+#adminsettings fieldset {/*ancho de la columna centr al de admin settings, para que no se corte el editor de txt*/
+	background-color:#ECEFF5;
+	border:1px solid #60E8AD;
+	color:#333333;
+	width:850px;
+}
+
+.sideblock .header {
+	background:url(img/tab_chico_diagonal_line.jpg) transparent repeat-x scroll 0 0;
+	color:#306F53;
+	min-height:16px;
+	padding:5px 8px 3px 5px;
+	text-align:left;
+	border:none;
+	height:41px;
+}
+
+div#cabecera {
+	height:114px;
+	margin-bottom:0;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0;	
+	width:1024px;
+	border:none;
+}
+
+div#page {
+	border:medium none;
+	bottom:5px;
+	margin:15px auto;
+	position:relative;
+	width:1024px;
+}
+
+a img {
+	margin-top:5px;
+	width:13px;
+	height:13px;
+}
