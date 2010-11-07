@@ -1,0 +1,71 @@
+a, a:link, a:visited,
+a:hover, a:active {
+  outline: none;
+}
+
+.helplink a, a:link, .helplink a:visited,
+.helplink a:hover, .helplink a:active {
+  text-decoration: none;
+}
+
+#newschool,
+#newschool a:link,
+#newschool a:visited
+{
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+#newschool {
+  display: none;
+}
+
+#site-index #newschool,
+#login-index #newschool {
+  display: block !important;
+  padding-bottom: 10px;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.sideblock a:link,
+.sideblock a:visited,
+.headermenu a:link,
+.headermenu a:visited,
+#footer a:link,
+#footer a:visited,
+.navbar a:link,
+.navbar a:visited,
+.commands span a:link,
+.commands span a:visited {
+  text-decoration: none;
+}
+
+.sideblock a:hover,
+.headermenu a:hover,
+#footer a:hover,
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.homelink a:link,
+.homelink a:visited,
+.homelink a:hover {
+  color: #000;
+  text-decoration: none;
+}
+.homelink a:link,
+.homelink a:visited {
+  border-top: 1px solid #cecece;
+  border-bottom: 2px solid #4a4a4a;
+  border-left: 1px solid #cecece;
+  border-right: 2px solid #4a4a4a;
+}
+.homelink a:hover {
+  border-bottom: 1px solid #cecece;
+  border-top: 2px solid #4a4a4a;
+  border-right: 1px solid #cecece;
+  border-left: 2px solid #4a4a4a;
+}
+
