@@ -1,0 +1,51 @@
+/*******************************************************************
+ iehacks.css
+
+ This CSS file contains all IE hacks needed for
+ the MoOdalis Tango theme
+
+*******************************************************************/
+
+
+* html ul.tabrow0 { /* IE <= 6 */
+  padding: .9em 0 1.75em 0;
+}
+
+* + html ul.tabrow0 { /* IE 7 */
+  padding: .8em 0 1.75em 0;
+}
+
+
+* html ul.tabrow0 a,
+* html ul.tabrow0 .here a { /* IE <= 6 */
+  padding: 0em .3em 0em .2em;
+  top: -.2em;
+}
+
+* html ul.tabrow0 li.here { /* IE <= 6 */
+  padding-right: .3em;
+}
+
+* + html ul.tabrow0 li.here { /* IE 7 */
+  padding-right: .3em;
+}
+
+* + html ul.tabrow0 a,
+* + html ul.tabrow0 .here a { /* IE 7 */
+  padding: 0em .3em 0em .2em;
+  top: -.15em;
+}
+
+.tabrow0 li.first {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.tabrow0 a {
+  display: inline !important;
+}
+
+/* give activities a bit more top space */
+* html .editing .section ul li.activity { /* IE <= 6 */
+  width: 99%;
+}

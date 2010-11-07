@@ -1,0 +1,197 @@
+[23-Jan-2010 20:54:38] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 09:27:45] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 18:51:45] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 22:52:28] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:00:39] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:02:52] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:03:26] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:04:13] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:04:32] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:04:59] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:05:27] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:05:57] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:06:31] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:07:01] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:07:03] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:10:30] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:11:19] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:11:48] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:12:51] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:14:58] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:16:21] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[26-Jan-2010 23:51:37] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[03-Feb-2010 21:54:16] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 14:55:48] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 14:55:48] PHP Stack trace:
+[05-Feb-2010 14:55:48] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 14:55:48] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 14:55:48] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 14:55:48] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 14:59:14] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 14:59:14] PHP Stack trace:
+[05-Feb-2010 14:59:14] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 14:59:14] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 14:59:14] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 14:59:14] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 14:59:45] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 14:59:45] PHP Stack trace:
+[05-Feb-2010 14:59:45] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 14:59:45] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 14:59:45] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 14:59:45] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 16:54:12] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 16:54:12] PHP Stack trace:
+[05-Feb-2010 16:54:12] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 16:54:12] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 16:54:12] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 16:54:12] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 16:55:17] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 16:55:17] PHP Stack trace:
+[05-Feb-2010 16:55:17] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 16:55:17] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 16:55:17] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 16:55:17] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 16:55:49] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 16:55:49] PHP Stack trace:
+[05-Feb-2010 16:55:49] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 16:55:49] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 16:55:49] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 16:55:49] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 16:55:52] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 16:55:52] PHP Stack trace:
+[05-Feb-2010 16:55:52] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 16:55:52] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 16:55:52] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 16:55:52] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Feb-2010 17:23:13] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Feb-2010 17:23:13] PHP Stack trace:
+[05-Feb-2010 17:23:13] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[05-Feb-2010 17:23:13] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[05-Feb-2010 17:23:13] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[05-Feb-2010 17:23:13] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[07-Feb-2010 02:05:39] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[07-Feb-2010 02:05:39] PHP Stack trace:
+[07-Feb-2010 02:05:39] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[07-Feb-2010 02:05:39] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[07-Feb-2010 02:05:39] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[07-Feb-2010 02:05:39] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[12-Feb-2010 13:36:12] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[12-Feb-2010 13:36:12] PHP Stack trace:
+[12-Feb-2010 13:36:12] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[12-Feb-2010 13:36:12] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[12-Feb-2010 13:36:12] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[12-Feb-2010 13:36:12] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[13-Feb-2010 16:23:33] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[13-Feb-2010 16:23:33] PHP Stack trace:
+[13-Feb-2010 16:23:33] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[13-Feb-2010 16:23:33] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[13-Feb-2010 16:23:33] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[13-Feb-2010 16:23:33] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[25-Feb-2010 00:01:53] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[25-Feb-2010 00:01:53] PHP Stack trace:
+[25-Feb-2010 00:01:53] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[25-Feb-2010 00:01:53] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[25-Feb-2010 00:01:53] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[25-Feb-2010 00:01:53] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[28-Feb-2010 02:27:19] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[28-Feb-2010 02:27:19] PHP Stack trace:
+[28-Feb-2010 02:27:19] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[28-Feb-2010 02:27:19] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[28-Feb-2010 02:27:19] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[28-Feb-2010 02:27:19] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[16-Mar-2010 12:07:21] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[16-Mar-2010 12:07:21] PHP Stack trace:
+[16-Mar-2010 12:07:21] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[16-Mar-2010 12:07:21] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[16-Mar-2010 12:07:21] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[16-Mar-2010 12:07:21] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[16-Mar-2010 12:10:28] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[16-Mar-2010 12:10:28] PHP Stack trace:
+[16-Mar-2010 12:10:28] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[16-Mar-2010 12:10:28] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[16-Mar-2010 12:10:28] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[16-Mar-2010 12:10:28] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[16-Mar-2010 12:11:45] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[16-Mar-2010 12:11:45] PHP Stack trace:
+[16-Mar-2010 12:11:45] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[16-Mar-2010 12:11:45] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[16-Mar-2010 12:11:45] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[16-Mar-2010 12:11:45] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[16-Mar-2010 12:58:49] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[16-Mar-2010 12:58:49] PHP Stack trace:
+[16-Mar-2010 12:58:49] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[16-Mar-2010 12:58:49] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[16-Mar-2010 12:58:49] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[16-Mar-2010 12:58:49] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[16-Mar-2010 13:05:15] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[16-Mar-2010 13:05:15] PHP Stack trace:
+[16-Mar-2010 13:05:15] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[16-Mar-2010 13:05:15] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[16-Mar-2010 13:05:15] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[16-Mar-2010 13:05:15] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 15:21:01] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 15:21:01] PHP Stack trace:
+[19-Mar-2010 15:21:01] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 15:21:01] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 15:21:01] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 15:21:01] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 15:29:36] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 15:29:36] PHP Stack trace:
+[19-Mar-2010 15:29:36] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 15:29:36] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 15:29:36] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 15:29:36] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 16:00:18] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 16:00:18] PHP Stack trace:
+[19-Mar-2010 16:00:18] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 16:00:18] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 16:00:18] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 16:00:18] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 16:35:50] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 16:35:50] PHP Stack trace:
+[19-Mar-2010 16:35:50] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 16:35:50] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 16:35:50] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 16:35:50] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 16:38:22] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 16:38:22] PHP Stack trace:
+[19-Mar-2010 16:38:22] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 16:38:22] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 16:38:22] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 16:38:22] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 16:41:05] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 16:41:05] PHP Stack trace:
+[19-Mar-2010 16:41:05] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 16:41:05] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 16:41:05] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 16:41:05] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 16:51:36] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 16:51:36] PHP Stack trace:
+[19-Mar-2010 16:51:36] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 16:51:36] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 16:51:36] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 16:51:36] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 17:20:18] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 17:20:18] PHP Stack trace:
+[19-Mar-2010 17:20:18] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 17:20:18] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 17:20:18] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 17:20:18] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 17:21:01] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 17:21:01] PHP Stack trace:
+[19-Mar-2010 17:21:01] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 17:21:01] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 17:21:01] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 17:21:01] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[19-Mar-2010 21:33:22] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[19-Mar-2010 21:33:22] PHP Stack trace:
+[19-Mar-2010 21:33:22] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[19-Mar-2010 21:33:22] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[19-Mar-2010 21:33:22] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[19-Mar-2010 21:33:22] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[20-Mar-2010 12:47:08] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[20-Mar-2010 12:47:08] PHP Stack trace:
+[20-Mar-2010 12:47:08] PHP   1. {main}() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:0
+[20-Mar-2010 12:47:08] PHP   2. require_once() /var/www/moodle-weekly/theme/tango_your_logo/styles.php:12
+[20-Mar-2010 12:47:08] PHP   3. include_once() /var/www/moodle-weekly/config.php:62
+[20-Mar-2010 12:47:08] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
