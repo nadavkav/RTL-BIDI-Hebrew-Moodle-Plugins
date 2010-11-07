@@ -1,0 +1,23 @@
+<h2>
+<img align="middle" src="<?php echo $CFG->wwwroot?>/mod/wiki/images/logonormal.gif" alt="" />
+new page block help</h2>
+
+<p>New page isn't a necessary block. It's useful for
+wikis that doesn't need an structurated index (
+	<?php 
+		echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=index.html">index block</a>';
+	?>
+) because is better to use a glossary (
+	<?php 
+		echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=list_pages.html">list pages block</a>';
+	?>
+.</p>
+
+<p>The effect of create a new page is the same as click on an
+internal link in the page content. If the page already exists
+dfwiki will display the view tab for this page, but if there
+aren't any page with this name, dfwiki will display the edit tab.</p>
+
+<p>New page can be considered as a direct acces link. You write a
+pagename in the form and dfwiki redirects to this page as if you
+click on that page link.</p>

@@ -1,0 +1,416 @@
+/* this is the default style sheet for the nwiki*/
+
+div.toc {
+	color: black;
+	background-color: #F4F4FF;
+	padding: 15px;
+	font-size: small;
+	border-style:solid;
+	border-color: #000080;
+	border-width:2px;
+	-moz-border-radius: 8px;
+}
+
+table.nwikitable {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+	border-collapse: separate;
+}
+
+table.nwikitable th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: solid;
+	border-color: gray;
+}
+
+table.nwikitable td {
+	border-width: 1px;
+	padding: 2px;
+	border-style: solid;
+	border-color: #808080;
+}
+
+pre.quote {
+	padding: 1em;
+	border: 1px dashed #2f6fab;
+	color: black;
+	background-color: #f9f9f9;
+	line-height: 1.1em;
+}
+
+h1.nwiki, h2.nwiki, h3.nwiki, h4.nwiki, h5.nwiki, h6.nwiki {
+	color: #000000;
+	background: none;
+	font-weight: normal;
+	margin: 0;
+	padding-top: .5em;
+	padding-bottom: .17em;
+	border-bottom: 1px solid #aaa;
+}
+
+h1.nwiki {
+	font-size: 188%;
+}
+
+h2.nwiki {
+	font-size: 150%;
+}
+
+h3.nwiki, h4.nwiki, h5.nwiki, h6.nwiki {
+	border-bottom: none;
+	font-weight: bold;
+}
+
+h3.nwiki {
+	font-size: 132%;
+}
+
+h4.nwiki {
+	font-size: 116%;
+}
+
+h5.nwiki {
+	font-size: 100%;
+}
+
+h6.nwiki {
+	font-size: 80%;
+}
+
+.nwikieditsection {
+    float: right;
+    margin-left: 5px;
+    font-size: medium;
+    font-weight: normal; 
+}
+
+.nwikihighlight {
+  background-color: #AAFFAA;
+}
+
+.nwikibargroundgris {
+  background-color: #F9F4F4;
+}
+
+.nwikibargroundblanco {
+  background-color: #FFFFFF;
+}
+
+td.nwikicenternow {
+  white-space: nowrap;
+  text-align: center;
+}
+
+td.nwikirightnow {
+  white-space: nowrap;
+  text-align: right;
+}
+
+td.nwikileftnow {
+  white-space: nowrap;
+  text-align: left;
+}
+
+td.nwikiuptam {
+  white-space:nowrap;
+  width: 50%;
+}
+
+td.nwikitambuttons {
+  width:230px;
+}
+
+td.blockcourse {
+  white-space:nowrap;
+  width:100px;
+}
+
+tr.usercomplete {
+  background-color: #CCCCFF;
+  font-weight: bold;
+}
+
+.bordarkgrey {
+  border-color: #2F4F4F;
+}
+
+.except {
+  color: red;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+.textleft {
+  text-align: left;
+}
+
+.textright {
+  text-align: right;
+}
+
+div.nwikisintaxtoc {
+	color: #AAAAAA;
+	background-color: #EEEEEE;
+	padding: 15px;
+	font-size: small;
+	border-style:solid;
+	border-color: #000080;
+	border-width:2px;
+	-moz-border-radius: 8px;
+}
+
+.nwikiunderline {
+    text-decoration: underline;
+}
+.nwikiwanted a:link {
+	color: red;
+}
+
+.nwikiwanted a:visited {
+	color: red;
+	}
+
+
+/***************************
+ *  IMAGES AND THUMBNAILS  *
+ ***************************/
+
+div.imgthumbright div.imgthumbnailright {
+	float: right;
+	margin:0 0 15px 20px;
+	padding-top:15px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:30px;
+	border:2px solid navy;
+	background-color: #F0F0FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgthumbleft div.imgthumbnailleft {
+	float: left;
+	margin:0 0 15px 20px;
+	padding-top:15px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:30px;
+	border:2px solid navy;
+	background-color: #F0F0FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgthumbcenter div.imgthumbnailcenter {
+	float: center;
+	margin:0 0 15px 20px;
+	padding-top:15px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:30px;
+	border:2px solid navy;
+	background-color: #F0F0FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.img {
+	margin: 1%;
+	padding:1%;
+	border:1px solid #888888;
+	background-color: #F3F3FF;
+	display: block;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgright {
+	float: right;
+	margin-top:4px;
+	margin-left:4px;
+	margin-right:4px;
+	margin-bottom:4px;
+	padding-top:4px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-bottom:4px;
+	border:1px solid #888888;
+	background-color: #F3F3FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgleft {
+	float: left;
+	margin-top:4px;
+	margin-left:4px;
+	margin-right:4px;
+	margin-bottom:4px;
+	padding-top:4px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-bottom:4px;
+	border:1px solid #888888;
+	background-color: #F3F3FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgcenter {
+	margin-top:4px;
+	margin-left:4px;
+	margin-right:4px;
+	margin-bottom:4px;
+	padding-top:4px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-bottom:15px;
+	border:1px solid #888888;
+	background-color: #F3F3FF;
+	font-size: small;
+	font-color: navy;
+	text-align:center;
+}
+
+div.imgcaption {
+	border: none;
+	text-align: center;
+	line-height: 10px;
+	padding: 10px 2px 5px 2px;
+	font-size: 10pt;
+
+}
+
+
+/****************
+ *  REFERENCES  *
+ ****************/
+
+div.references {
+	font-size: 12pt;
+	border-top: 1px solid #888888;
+	border-bottom: 1px solid #888888;
+}
+
+
+/***************
+ *  WIKI TREE  *
+ ***************/
+
+.wiki_listme {
+	list-style-type:none;
+	padding:0px;
+	margin:0px;
+}
+
+/**********
+ * GRADES *
+ **********/
+
+.wikigradesuserinfobox {
+  margin-bottom:5px;
+}
+
+.wikigradesuserinfobox .left,
+.wikigradesuserinfobox .side {
+  padding: 10px;
+  width: 100px;
+  vertical-align: top;
+}
+
+.wikigradesuserinfobox .userpicture {
+  width: 100px;
+  height: 100px;
+}
+
+.wikigradesuserinfobox .userpicture {
+  width: 100px;
+  height: 100px;
+}
+.wikigradesuserinfobox .links {
+  padding: 1px;
+  vertical-align: bottom;
+  font-size:small;
+}
+
+.wikigradesuserinfobox .list td {
+  padding: 3px;
+}
+
+.wikigradesuserinfobox .username {
+  padding-bottom: 20px;
+  font-weight: bold;
+}
+
+.wikigradesuserinfobox td.label {
+  text-align:right;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+table.wikigradesuserinfobox {
+  width: 100%;
+}
+
+img.bordergreen {
+	margin: 2px;
+    padding: 2px;
+	border: 1px solid #666666;
+	background-color: #00DD00;
+	font-size: small;
+}
+
+img.borderred {
+	margin: 2px;
+    padding: 2px;
+	border: 1px solid #666666;
+	background-color: #DD0000;
+	font-size: small;
+}
+
+td.bordergreen {
+  padding: 3px;
+  font-size: small;
+  border-width: 2px; 
+  border-style: solid;
+  border-color: #00DD00;
+}
+
+td.borderred {
+  padding: 3px;
+  font-size: small;
+  border-width: 2px; 
+  border-style: solid;
+  border-color: #DD0000;
+}
+
+div.spacer {
+  clear: both;
+}
+
+div.container {
+  overflow: auto;
+  width: 100%
+}
+
+.userlist li {
+  display: inline;
+  list-style: none;
+  width: 130px;
+  min-height: 150px;
+  float: left;
+  margin: 0 10px 10px 0;
+  text-align: center;
+  font-size: small;
+}

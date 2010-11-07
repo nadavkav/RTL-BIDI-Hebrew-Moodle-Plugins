@@ -1,0 +1,48 @@
+[05-Jun-2010 16:29:03] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 16:29:03] PHP Stack trace:
+[05-Jun-2010 16:29:03] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 16:29:03] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 16:29:03] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 16:29:03] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 16:29:28] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 16:29:28] PHP Stack trace:
+[05-Jun-2010 16:29:28] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 16:29:28] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 16:29:28] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 16:29:28] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 16:29:37] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 16:29:37] PHP Stack trace:
+[05-Jun-2010 16:29:37] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 16:29:37] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 16:29:37] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 16:29:37] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 16:29:39] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 16:29:39] PHP Stack trace:
+[05-Jun-2010 16:29:39] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 16:29:39] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 16:29:39] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 16:29:39] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 17:19:49] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 17:19:49] PHP Stack trace:
+[05-Jun-2010 17:19:49] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 17:19:49] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 17:19:49] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 17:19:49] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 17:20:19] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 17:20:19] PHP Stack trace:
+[05-Jun-2010 17:20:19] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 17:20:19] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 17:20:19] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 17:20:19] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[05-Jun-2010 17:21:55] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[05-Jun-2010 17:21:55] PHP Stack trace:
+[05-Jun-2010 17:21:55] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[05-Jun-2010 17:21:55] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[05-Jun-2010 17:21:55] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[05-Jun-2010 17:21:55] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[10-Jun-2010 13:51:05] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[10-Jun-2010 13:51:05] PHP Stack trace:
+[10-Jun-2010 13:51:05] PHP   1. {main}() /var/www/moodle-weekly/mod/wiki/view.php:0
+[10-Jun-2010 13:51:05] PHP   2. require_once() /var/www/moodle-weekly/mod/wiki/view.php:10
+[10-Jun-2010 13:51:05] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[10-Jun-2010 13:51:05] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212

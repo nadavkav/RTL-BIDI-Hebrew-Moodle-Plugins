@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/wiki/db" VERSION="2007010901" COMMENT="XMLDB file for Moodle mod/wiki"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="wiki" COMMENT="Wikis contain" NEXT="wiki_pages">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="wiki" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="true" DEFAULT="" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="intro" NEXT="pagename"/>
+        <FIELD NAME="pagename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="introformat" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="pagename" NEXT="editable"/>
+        <FIELD NAME="editable" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="timemodified" NEXT="attach"/>
+        <FIELD NAME="attach" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editable" NEXT="restore"/>
+        <FIELD NAME="restore" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="attach" NEXT="editor"/>
+        <FIELD NAME="editor" TYPE="char" LENGTH="40" NOTNULL="true" DEFAULT="dfwiki" SEQUENCE="false" ENUM="false" PREVIOUS="restore" NEXT="studentmode"/>
+        <FIELD NAME="studentmode" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editor" NEXT="teacherdiscussion"/>
+        <FIELD NAME="teacherdiscussion" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="studentmode" NEXT="studentdiscussion"/>
+        <FIELD NAME="studentdiscussion" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="teacherdiscussion" NEXT="editanothergroup"/>
+        <FIELD NAME="editanothergroup" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="studentdiscussion" NEXT="editanotherstudent"/>
+        <FIELD NAME="editanotherstudent" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editanothergroup" NEXT="votemode"/>
+        <FIELD NAME="votemode" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editanotherstudent" NEXT="listofteachers"/>
+        <FIELD NAME="listofteachers" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="votemode" NEXT="editorrows"/>
+        <FIELD NAME="editorrows" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="30" SEQUENCE="false" ENUM="false" PREVIOUS="listofteachers" NEXT="editorcols" />
+		<FIELD NAME="editorcols" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="120" SEQUENCE="false" ENUM="false" PREVIOUS="editorrows" NEXT="evaluation" />
+		<FIELD NAME="evaluation" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editorcols" NEXT="notetype" />
+		<FIELD NAME="notetype" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="evaluation" NEXT="wikicourse" />
+		<FIELD NAME="wikicourse" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="notetype" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for wiki"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="wiki_pages" COMMENT="Holds the wiki pages" PREVIOUS="wiki" NEXT="wiki_synonymous">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="pagename"/>
+        <FIELD NAME="pagename" TYPE="char" LENGTH="160" NOTNULL="true" DEFAULT="page" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="version"/>
+        <FIELD NAME="version" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="pagename" NEXT="content"/>
+        <FIELD NAME="content" TYPE="text" LENGTH="big" NOTNULL="true" DEFAULT="" SEQUENCE="false" ENUM="false" PREVIOUS="version" NEXT="author"/>
+        <FIELD NAME="author" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="wiki" SEQUENCE="false" ENUM="false" PREVIOUS="content" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="author" NEXT="created"/>
+        <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="lastmodified"/>
+        <FIELD NAME="lastmodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="created" NEXT="refs"/>
+        <FIELD NAME="refs" TYPE="text" LENGTH="big" NOTNULL="true" DEFAULT="" SEQUENCE="false" ENUM="false" PREVIOUS="lastmodified" NEXT="hits"/>
+        <FIELD NAME="hits" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="refs" NEXT="editable"/>
+        <FIELD NAME="editable" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" PREVIOUS="hits" NEXT="highlight"/>
+        <FIELD NAME="highlight" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editable" NEXT="dfwiki"/>
+        <FIELD NAME="dfwiki" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="highlight" NEXT="editor"/>
+        <FIELD NAME="editor" TYPE="char" LENGTH="40" NOTNULL="true" DEFAULT="dfwiki" SEQUENCE="false" ENUM="false" PREVIOUS="dfwiki" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="editor" NEXT="ownerid"/>
+        <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="groupid" />
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for wiki_pages" NEXT="userid"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="dfwiki"/>
+        <KEY NAME="dfwiki" TYPE="foreign" FIELDS="dfwiki" REFTABLE="wiki" REFFIELDS="id" PREVIOUS="userid" NEXT="ownerid"/>
+        <KEY NAME="ownerid" TYPE="foreign" FIELDS="ownerid" REFTABLE="user" REFFIELDS="id" PREVIOUS="dfwiki"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="pagename-version-dfwiki-groupid-userid-ownerid" UNIQUE="true" FIELDS="pagename, version, dfwiki, groupid, userid, ownerid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="wiki_synonymous" COMMENT="Holds the synonymous of wiki pages" PREVIOUS="wiki_pages" NEXT="wiki_votes">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="syn"/>
+        <FIELD NAME="syn" TYPE="char" LENGTH="160" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="original"/>
+        <FIELD NAME="original" TYPE="char" LENGTH="160" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="syn" NEXT="dfwiki"/>
+        <FIELD NAME="dfwiki" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="original" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dfwiki" NEXT="ownerid"/>
+        <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="groupid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for wiki_synonymous" NEXT="dfwiki"/>
+        <KEY NAME="dfwiki" TYPE="foreign" FIELDS="dfwiki" REFTABLE="wiki" REFFIELDS="id" PREVIOUS="primary" NEXT="ownerid"/>
+        <KEY NAME="ownerid" TYPE="foreign" FIELDS="ownerid" REFTABLE="user" REFFIELDS="id" PREVIOUS="dfwiki"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="syn-dfwiki-groupid-ownerid" UNIQUE="true" FIELDS="syn, dfwiki, groupid, ownerid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="wiki_votes" COMMENT="Holds the votes of wiki pages" PREVIOUS="wiki_synonymous" NEXT="wiki_locks">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="pagename"/>
+        <FIELD NAME="pagename" TYPE="char" LENGTH="160" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="version"/>
+        <FIELD NAME="version" TYPE="char" LENGTH="160" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="pagename" NEXT="dfwiki"/>
+        <FIELD NAME="dfwiki" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="version" NEXT="username"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="dfwiki"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for wiki_votes" NEXT="dfwiki"/>
+        <KEY NAME="dfwiki" TYPE="foreign" FIELDS="dfwiki" REFTABLE="wiki" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="wiki_locks" COMMENT="Stores editing locks on Wiki pages" PREVIOUS="wiki_votes" NEXT="wiki_evaluation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="wikiid"/>
+        <FIELD NAME="wikiid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="pagename"/>
+        <FIELD NAME="pagename" TYPE="char" LENGTH="160" NOTNULL="true" SEQUENCE="false" ENUM="false" PREVIOUS="wikiid" NEXT="lockedby"/>
+        <FIELD NAME="lockedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="If the page is or was locked, this field holds the userid of the locker" PREVIOUS="pagename" NEXT="lockedsince"/>
+        <FIELD NAME="lockedsince" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Time (seconds since epoch) at which lock began" PREVIOUS="lockedby" NEXT="lockedseen"/>
+        <FIELD NAME="lockedseen" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Time (seconds since epoch) at which lock was last reconfirmed (we ignore lock if this is &amp;gt;2 mins ago)" PREVIOUS="lockedsince" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="lockedseen" NEXT="ownerid"/>
+        <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="groupid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for wiki_locks" NEXT="wikiid"/>
+        <KEY NAME="wikiid" TYPE="foreign" FIELDS="wikiid" REFTABLE="wiki" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="wikiid-pagename" UNIQUE="true" FIELDS="wikiid, pagename" COMMENT="Main index used for retrieving locks" NEXT="lockedseen"/>
+        <INDEX NAME="lockedseen" UNIQUE="false" FIELDS="lockedseen" COMMENT="Secondary index used only during cron for deleting expired locks" PREVIOUS="wikiid-pagename"/>
+      </INDEXES>
+    </TABLE>
+
+<TABLE NAME="wiki_evaluation" COMMENT="Evaluation of the wiki pages." PREVIOUS="wiki_locks" NEXT="wiki_evaluation_edition">
+<FIELDS>
+<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="pagename"/>
+<FIELD NAME="pagename" TYPE="char" LENGTH="160" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Name of the wiki page" PREVIOUS="id" NEXT="wikiid"/>
+<FIELD NAME="wikiid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="The same that dfwiki" PREVIOUS="pagename" NEXT="groupid"/>
+<FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="wikiid" NEXT="ownerid"/>
+<FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Owner of the wiki page" PREVIOUS="groupid" NEXT="userid"/>
+<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="ownerid" NEXT="wikigrade"/>
+<FIELD NAME="wikigrade" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="userid" NEXT="wikigrade_initial"/>
+<FIELD NAME="wikigrade_initial" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="wikigrade" NEXT="comment"/>
+<FIELD NAME="comment" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="wikigrade_initial"/>
+</FIELDS>
+<KEYS>
+<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="key_unique"/>
+<KEY NAME="key_unique" TYPE="unique" FIELDS="pagename, wikiid, groupid, ownerid, userid" PREVIOUS="primary" NEXT="foreign_key_user"/>
+<KEY NAME="foreign_key_user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="key_unique" />
+</KEYS>
+</TABLE>
+
+<TABLE NAME="wiki_evaluation_edition" COMMENT="To value editions" PREVIOUS="wiki_evaluation">
+<FIELDS>
+<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="wiki_pageid"/>
+<FIELD NAME="wiki_pageid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="userid"/>
+<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="wiki_pageid" NEXT="valoration"/>
+<FIELD NAME="valoration" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Only +, - or = for to value the editions" PREVIOUS="userid" NEXT="feedback"/>
+<FIELD NAME="feedback" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="valoration"/>
+</FIELDS>
+<KEYS>
+<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="key_unique_edition"/>
+<KEY NAME="key_unique_edition" TYPE="unique" FIELDS="wiki_pageid, userid" PREVIOUS="primary" NEXT="foreign_key_user"/>
+<KEY NAME="foreign_key_user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="key_unique_edition" NEXT="foreign_key_wikipage"/>
+<KEY NAME="foreign_key_wikipage" TYPE="foreign" FIELDS="wiki_pageid" REFTABLE="wiki_pages" REFFIELDS="id" PREVIOUS="foreign_key_user"/>
+</KEYS>
+</TABLE>
+
+  </TABLES>
+  <STATEMENTS>
+    <STATEMENT NAME="insert log_display" TYPE="insert" TABLE="log_display" COMMENT="Initial insert of records on table log_display">
+      <SENTENCES>
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'add', 'wiki', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'update', 'wiki', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'view', 'wiki', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'view all', 'wiki', 'name')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'view page', 'wiki_pages', 'pagename')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'edt page', 'wiki_pages', 'pagename')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'save page', 'wiki_pages', 'pagename')" />
+        <SENTENCE TEXT="(module, action, mtable, field) VALUES ('wiki', 'info page', 'wiki_pages', 'pagename')" />
+      </SENTENCES>
+    </STATEMENT>
+  </STATEMENTS>
+</XMLDB>

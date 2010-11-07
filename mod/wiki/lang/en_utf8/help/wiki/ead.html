@@ -1,0 +1,68 @@
+<h2>
+<img align="middle" src="<?php echo $CFG->wwwroot?>/mod/wiki/images/logonormal.gif" alt="" />
+Administration tools block help</h2>
+
+<p>This block called EAD contains two type of useful tools
+for your dfwiki separated by a line:</p>
+
+<ul>
+	<li>Estadistical Tools: contains useful information
+	of your dfwiki. By clicking in the tool name, the wanted
+	information will be dysplayed in the main space.</li>
+	<li>Administration tools: this tools are only available
+	for teachers and administrator and contains the functions to
+	delete, rename or make editable the current page.</li>
+</ul>
+
+<h2>Estadistical Tools</h2>
+
+<p>In the current version of dfwiki this point contains
+six tools:</p>
+
+<ul>
+	<li>Most viewed pages: displays a list with all pages
+	ordered by the times they're visited.</li>
+	<li>More updated pages: displays all pages oredered by
+	it's last modified time.</li>
+	<li>Newest pages: displays all pages list ordered by
+	it's creation date.</li>
+	<li>Wanted pages: displays the list of wanted pages like 
+	<?php 
+		echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=wanted.html">wanted pages block</a>';
+	?>
+	.</li>
+	<li>Orphaned pages: displays the list of orphaned pages like
+	<?php 
+		echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=orphaned.html">orphaned pages block</a>';
+	?>	
+	.</li>
+	<li>Activest Users: Return the list of all users that edit
+	some page ordered by the number of his contributions.</li>
+</ul>
+
+<h2>Administration tools</h2>
+
+<p>This point contains some tools only available for teachers
+ans administrators:</p>
+
+<ul>
+	<li>Delete page: this option will ask you for delete a whole
+	page content, including it's old version. Deleting a page will
+	be irreversible.</li>
+	<li>Update page: this tool si for renaming pages. Renaming a
+	page name will automatically redirect it's synonymous and, if
+	it's the first page of the dfwiki, will rename the first page too.
+	Althrough, renaming a page will NOT redirect all internal links,
+	this means that if you rename a page, all old links will be erroneous.
+	To detect if there's some link a renamed page, you only have to find the
+	old name into the 
+	<?php 
+		echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=wanted.html">wanted pages</a>';
+	?>	
+	.</li>
+	<li>Disable/Enable Edition: this tool change the actual
+	'editable' propierty of the current page. Modifing the editable
+	propierty of a page, you make it editable/undeditable for the students.
+	Use this tool when you want to put an static text (for the students)
+	into the dfwiki.</li>
+</ul>

@@ -1,0 +1,165 @@
+<?php
+
+$prop = null;
+$prop->action = 'exportxml.php?pageaction=exportxml';
+$prop->method = 'post';
+$prop->id = 'pageform';
+wiki_form_start($prop);
+
+	$prop = null;
+	$prop->name = 'sesskey';
+	if (!isset($sesskey)) $sesskey = sesskey();
+	$prop->value = $sesskey;
+	$inputs = wiki_input_hidden($prop, true);
+	
+	$prop = null;
+	$prop->name = 'id';
+	$prop->value = $WS->cm->id;
+	$inputs .= wiki_input_hidden($prop, true);
+	
+	$sizecontents = count($contents);
+	$prop = null;
+	$prop->name = 'sizecontents';
+	$prop->value = $sizecontents;
+	$inputs .= wiki_input_hidden($prop, true);
+	
+	for($i = 0; $i < $sizecontents; $i++){
+		$prop = null;
+		$prop->name = 'contents['.$i.']';
+		$prop->value = $contents[$i];
+		$inputs .= wiki_input_hidden($prop, true);
+	}
+	
+	$sizenocontents = count($WS->nocontents);
+	$prop = null;
+	$prop->name = 'sizenocontents';
+	$prop->value = $sizenocontents;
+	$inputs .= wiki_input_hidden($prop, true);
+	
+	for($j = 0; $j < $sizenocontents; $j++){
+		$prop = null;
+		$prop->name = 'nocontents['.$j.']';
+		$prop->value = $WS->nocontents[$j];
+		$inputs .= wiki_input_hidden($prop, true);
+	}
+		
+	wiki_div($inputs,'');
+	
+	$prop = null;
+	$prop->padding = '5';
+	$prop->class = 'boxaligncenter';
+	$prop->valigntd = 'top';
+	wiki_table_start($prop);
+		
+		print_string('pagesnoexport', 'wiki');
+
+	wiki_change_column();
+	
+	$prop = null;
+	$prop->valign = 'top';
+	wiki_change_column($prop);
+	
+		print_string('pagesexport', 'wiki');
+	
+	$prop = null;
+	$prop->valign = 'top';
+	wiki_change_row($prop);
+	
+		$options = "";
+		$noselec = 0;
+		if (!empty($contents)){
+			foreach ($contents as $cont) {		    
+			    $prop = null;
+			    $prop->value = $cont;
+			    $options .= wiki_option($cont, $prop, true);
+			    $noselec++;
+			}
+		}
+		if ($noselec == 0) {	
+			$prop = null;
+		    $prop->value = "";			
+		    $options .= wiki_option(get_string('nonoselectwiki', 'wiki'), $prop, true);
+		}
+		
+		$prop = null;
+		$prop->name = 'removeselect[]';		
+		$prop->size = '10';	
+		$prop->id = 'removeselect';	
+		$prop->multiple = 'multiple';
+		$prop->events = 'onfocus="document.forms[\'pageform\'].add.disabled=true;
+                           		  document.forms[\'pageform\'].remove.disabled=false;
+                           		  document.forms[\'pageform\'].addselect.selectedIndex=-1;"';
+		wiki_select($options, $prop);
+	
+	$prop = null;
+	$prop->valign = 'top';
+	wiki_change_column($prop);
+		
+		wiki_br();
+		
+		$prop = null;
+		$prop->name = 'addall';
+		$prop->id = 'addall';
+		$prop->value = '&lt;&lt;';		
+		wiki_input_submit($prop);
+	
+	    wiki_br(2);
+	    
+	    $prop = null;
+		$prop->name = 'add';
+		$prop->id = 'add';
+		$prop->value = '&larr;';		
+		wiki_input_submit($prop);
+		
+		wiki_br();
+		
+		$prop = null;
+		$prop->name = 'remove';
+		$prop->id = 'remove';
+		$prop->value = '&rarr;';		
+		wiki_input_submit($prop);
+	
+	    wiki_br(2);
+	    
+	    $prop = null;
+		$prop->name = 'removeall';
+		$prop->id = 'removeall';
+		$prop->value = '>>';		
+		wiki_input_submit($prop);
+		
+		wiki_br();
+
+	$prop = null;
+	$prop->valign = 'top';
+	wiki_change_column($prop);
+			
+		$options = "";
+		$selec = 0;
+		if (isset($WS->nocontents) && is_array($WS->nocontents)) {
+			foreach ($WS->nocontents as $nocont) {		    
+			    $prop = null;
+			    $prop->value = $nocont;
+			    $options .= wiki_option($nocont, $prop, true);
+			    $selec++;
+			}
+		}
+		if ($selec == 0) {	
+			$prop = null;
+		    $prop->value = "";	
+		    $options .= wiki_option(get_string('noselectwiki', 'wiki'), $prop, true);
+		}
+		
+		$prop = null;
+		$prop->name = 'addselect[]';		
+		$prop->size = '10';	
+		$prop->id = 'addselect';	
+		$prop->multiple = 'multiple';
+		$prop->events = 'onfocus="document.forms[\'pageform\'].add.disabled=false;
+                           document.forms[\'pageform\'].remove.disabled=true;
+                           document.forms[\'pageform\'].removeselect.selectedIndex=-1;"';
+		wiki_select($options, $prop);
+					
+wiki_table_end();
+wiki_form_end();
+
+?>

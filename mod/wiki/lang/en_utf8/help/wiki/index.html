@@ -1,0 +1,24 @@
+<h2>
+<img align="middle" src="<?php echo $CFG->wwwroot?>/mod/wiki/images/logonormal.gif" alt="" />
+Index block help</h2>
+
+<p>This block displays a page index from the first wiki page.
+The list can be drilled down and rolled up by clicking on the
+plus and minus icons. Index shows all pages that are accessible
+by only click on the links in the page content and starting by
+the first page of the current dfwiki.</p>
+
+<p>Page name can appear in three different ways deppending on
+it's stat:</p>
+
+<ul>
+	<li>Normal link page: This type of page name means
+	that this page is normal page in the tree index structure.</li>
+	<li>Italic page link: This type is for links that refered
+	to an already existent page in the index. A loop in the tree.
+	To avoit content repetition and infinite loops this pages
+	doesn't display it's sons again.</li>
+	<li>page name with an interrogaiton mark link: This format is
+	used in dfwiki to symbolize that the destiny page haven't got
+	content.</li>
+</ul>

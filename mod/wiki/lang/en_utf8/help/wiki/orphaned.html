@@ -1,0 +1,26 @@
+<h2>
+<img align="middle" src="<?php echo $CFG->wwwroot?>/mod/wiki/images/logonormal.gif" alt="" />
+Orphaned pages block help</h2>
+
+<p>This block display a list of all pages
+that are'nt accessible from the 
+<?php 
+	echo '<a href="'.$CFG->wwwroot.'/help.php?module=wiki&amp;file=index.html">index block</a>';
+?>
+. Normally this pages exists because in some version of a page exist
+a link which is deleted in the current version.For example:</p>
+
+<p>If one day you have a page called 'one' that have a link to
+'two' and to, at it's time, have a link to 'three' and three
+has content:</p>
+
+<p>one -&gt; two -&gt; three</p>
+
+<p>If one day you reedit 'one' and delete the link to 'two',
+'two' and 'three' won't be accessible any more from the index.
+Those pages will be orphaned:</p>
+
+<p>one *broken link* two -&gt; three</p>
+
+<p>In this case, orphaned pages will display 'two' and 'three'.</p>
+

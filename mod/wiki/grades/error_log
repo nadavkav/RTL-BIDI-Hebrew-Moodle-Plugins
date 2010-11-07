@@ -1,0 +1,77 @@
+[30-אוג-2008 20:08:41] PHP Fatal error:  Call to undefined function get_user() in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1031
+[01-ספט-2008 19:16:48] PHP Fatal error:  Call to undefined function get_user() in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1031
+[01-ספט-2008 19:35:02] PHP Notice:  Undefined variable: USER in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1032
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 991
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1009
+[01-ספט-2008 19:35:02] PHP Notice:  Undefined variable: USER in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1032
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 991
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1009
+[01-ספט-2008 19:35:02] PHP Notice:  Undefined variable: USER in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1032
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 991
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1009
+[01-ספט-2008 19:35:02] PHP Notice:  Undefined variable: USER in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1032
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 991
+[01-ספט-2008 19:35:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1009
+[01-ספט-2008 19:35:26] PHP Notice:  Undefined variable: USER in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1032
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1235
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 4379
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/lib/weblib.php on line 4406
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1250
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1250
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1252
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1252
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1254
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1254
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1269
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1279
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1283
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1288
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1291
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1293
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1294
+[01-ספט-2008 19:35:26] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1297
+[01-ספט-2008 19:40:37] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1039
+[01-ספט-2008 19:40:37] PHP Warning:  array_values() [<a href='function.array-values'>function.array-values</a>]: The argument should be an array in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1046
+[01-ספט-2008 19:43:54] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1039
+[01-ספט-2008 19:43:54] PHP Warning:  array_values() [<a href='function.array-values'>function.array-values</a>]: The argument should be an array in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1047
+[01-ספט-2008 19:46:41] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1039
+[01-ספט-2008 19:46:41] PHP Warning:  array_values() [<a href='function.array-values'>function.array-values</a>]: The argument should be an array in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1047
+[01-ספט-2008 20:14:02] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1039
+[01-ספט-2008 20:14:02] PHP Warning:  array_values() [<a href='function.array-values'>function.array-values</a>]: The argument should be an array in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1047
+[01-ספט-2008 20:20:01] PHP Notice:  Undefined offset:  0 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:20:01] PHP Notice:  Undefined offset:  1 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:20:01] PHP Notice:  Undefined offset:  3 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:01] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:20:13] PHP Notice:  Undefined offset:  0 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:20:13] PHP Notice:  Undefined offset:  1 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:20:13] PHP Notice:  Undefined offset:  3 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:20:13] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:21:15] PHP Notice:  Undefined offset:  0 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:21:15] PHP Notice:  Undefined offset:  1 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:21:15] PHP Notice:  Undefined offset:  3 in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1086
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1089
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1091
+[01-ספט-2008 20:21:15] PHP Notice:  Trying to get property of non-object in /home/tikshuvp/public_html/moodle/mod/wiki/grades/grades.lib.php on line 1092
+[01-ספט-2008 20:28:05] PHP Parse error:  syntax error, unexpected ')' in /home/tikshuvp/public_html/moodle/mod/wiki/db/moodle/wiki_persistor.php on line 1033

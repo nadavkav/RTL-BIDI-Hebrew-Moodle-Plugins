@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
+<package version="1.0" packagerversion="1.4.6">
+ <name>Text_Diff</name>
+ <summary>Engine for performing and rendering text diffs</summary>
+ <description>This package provides a text-based diff engine and renderers for multiple diff output formats.
+ </description>
+ <maintainers>
+  <maintainer>
+   <user>chagenbu</user>
+   <name>Chuck Hagenbuch</name>
+   <email>chuck@horde.org</email>
+   <role>lead</role>
+  </maintainer>
+  <maintainer>
+   <user>jon</user>
+   <name>Jon Parise</name>
+   <email>jon@horde.org</email>
+   <role>lead</role>
+  </maintainer>
+  <maintainer>
+   <user>pmjones</user>
+   <name>Paul M Jones</name>
+   <email>pmjones@memphis.edu</email>
+   <role>lead</role>
+  </maintainer>
+  <maintainer>
+   <user>yunosh</user>
+   <name>Jan Schneider</name>
+   <email>jan@horde.org</email>
+   <role>lead</role>
+  </maintainer>
+  </maintainers>
+ <release>
+  <version>0.2.1</version>
+  <date>2006-02-06</date>
+  <license>LGPL</license>
+  <state>beta</state>
+  <notes>* Fix Text_Diff::reverse() method with PHP 5 (PEAR Bug #6699).
+  </notes>
+  <deps>
+   <dep type="php" rel="ge" version="4.2.0"/>
+   <dep type="ext" rel="has" optional="yes">xdiff</dep>
+  </deps>
+  <provides type="class" name="Text_Diff" />
+  <provides type="class" name="Text_Diff3" />
+  <provides type="class" name="Text_MappedDiff" />
+  <provides type="class" name="Text_Diff_Renderer" />
+  <provides type="class" name="Text_Diff_Renderer_inline" />
+  <provides type="class" name="Text_Diff_Renderer_unified" />
+  <provides type="class" name="Text_Diff_Engine_native" />
+  <provides type="class" name="Text_Diff_Engine_string" />
+  <provides type="class" name="Text_Diff_Engine_xdiff" />
+  <provides type="class" name="Text_Diff_Op" />
+  <provides type="class" name="Text_Diff_Op_copy" extends="Text_Diff_Op" />
+  <provides type="class" name="Text_Diff_Op_delete" extends="Text_Diff_Op" />
+  <provides type="class" name="Text_Diff_Op_add" extends="Text_Diff_Op" />
+  <provides type="class" name="Text_Diff_Op_change" extends="Text_Diff_Op" />
+  <provides type="function" name="Text_Diff::getDiff" />
+  <provides type="function" name="Text_Diff::reverse" />
+  <provides type="function" name="Text_Diff::isEmpty" />
+  <provides type="function" name="Text_Diff::lcs" />
+  <provides type="function" name="Text_Diff::getOriginal" />
+  <provides type="function" name="Text_Diff::getFinal" />
+  <provides type="function" name="Text_Diff::trimNewlines" />
+  <provides type="function" name="Text_Diff_Op::reverse" />
+  <provides type="function" name="Text_Diff_Op::norig" />
+  <provides type="function" name="Text_Diff_Op::nfinal" />
+  <provides type="function" name="Text_Diff_Op_copy::reverse" />
+  <provides type="function" name="Text_Diff_Op_delete::reverse" />
+  <provides type="function" name="Text_Diff_Op_add::reverse" />
+  <provides type="function" name="Text_Diff_Op_change::reverse" />
+  <provides type="class" name="Text_Diff3_Op" />
+  <provides type="class" name="Text_Diff3_Op_copy" extends="Text_Diff3_Op" />
+  <provides type="class" name="Text_Diff3_BlockBuilder" />
+  <provides type="function" name="Text_Diff3::mergedOutput" />
+  <provides type="function" name="Text_Diff3_Op::merged" />
+  <provides type="function" name="Text_Diff3_Op::isConflict" />
+  <provides type="function" name="Text_Diff3_Op_copy::merged" />
+  <provides type="function" name="Text_Diff3_Op_copy::isConflict" />
+  <provides type="function" name="Text_Diff3_BlockBuilder::input" />
+  <provides type="function" name="Text_Diff3_BlockBuilder::out1" />
+  <provides type="function" name="Text_Diff3_BlockBuilder::out2" />
+  <provides type="function" name="Text_Diff3_BlockBuilder::isEmpty" />
+  <provides type="function" name="Text_Diff3_BlockBuilder::finish" />
+  <provides type="function" name="Text_Diff_Renderer::getParams" />
+  <provides type="function" name="Text_Diff_Renderer::render" />
+  <provides type="function" name="Text_Diff_Engine_native::diff" />
+  <provides type="function" name="Text_Diff_Engine_xdiff::diff" />
+  <provides type="function" name="Text_Diff_Engine_string::diff" />
+  <provides type="function" name="Text_Diff_Engine_string::parseUnifiedDiff" />
+  <provides type="function" name="Text_Diff_Engine_string::parseContextDiff" />
+  <filelist>
+   <file role="php" baseinstalldir="/Text" md5sum="ab9a244c43cdfcb4ae1b41c9018b6bc3" name="Diff.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="1622905f35c9f9626e3467d4169fe619" name="Diff3.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="b8f07bc8f7150fe1e72cb843a86e1051" name="Diff/Renderer.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="a76e3188b541c3d564d0aac7a1a6c8d9" name="Diff/Renderer/inline.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="89e63980c8193b56e5117ecfee785d3c" name="Diff/Renderer/unified.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="127d9ac830f25c4de5775d38ca73ab39" name="Diff/Engine/native.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="ce68efb89f8588028cb4130c3acb1be4" name="Diff/Engine/xdiff.php"/>
+   <file role="php" baseinstalldir="/Text" md5sum="363e30cd4a6841533a79d00d942dedeb" name="Diff/Engine/string.php"/>
+   <file role="doc" baseinstalldir="/Text" md5sum="d0e483e9f20738417d7a2a4fa56e074f" name="docs/examples/diff.php"/>
+   <file role="doc" baseinstalldir="/Text" md5sum="5fbdf5388905ed07026b876126aeee5a" name="docs/examples/1.txt"/>
+   <file role="doc" baseinstalldir="/Text" md5sum="011c4dad4506a4843ded1f12cab69909" name="docs/examples/2.txt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="5fbdf5388905ed07026b876126aeee5a" name="tests/1.txt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="011c4dad4506a4843ded1f12cab69909" name="tests/2.txt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="aa40a9c049e89eb8c6f5b0f47e1aabd9" name="tests/context.patch"/>
+   <file role="test" baseinstalldir="/Text" md5sum="43e8b69ff75bc0e7ecab5b4e87827d19" name="tests/diff.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="2c2f13e357f691f3922d07f6e70fa43d" name="tests/inline.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="05e94365c047905009b1913a3600036f" name="tests/inline2.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="7949426acc1e64d6c10338bf6382257d" name="tests/pear_bug4879.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="7fb3cda23ca78409f72ac233784ff1a1" name="tests/pear_bug6251.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="c4d40a654a584d3f939dca33fff0a5c4" name="tests/pear_bug6428.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="d9e891f7cdd488668f1671fa6f5a00a7" name="tests/string.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="359096964862ff26e28cc44609ca237f" name="tests/unified.patch"/>
+   <file role="test" baseinstalldir="/Text" md5sum="77977a033a539c5ccadaf728b95a1a2c" name="tests/unified.phpt"/>
+   <file role="test" baseinstalldir="/Text" md5sum="5d31bcaed07bed0c1571625068408a3f" name="tests/unified2.phpt"/>
+  </filelist>
+ </release>
+ <changelog>
+   <release>
+    <version>0.2.0</version>
+    <date>2006-01-06</date>
+    <state>beta</state>
+    <notes>* Fix reference warnings with PHP 4.4 and PHP 5.1.
+* Fix too many trailing context lines for the last diff chunk. (PEAR Bug #6251).
+* Add diff engine for existing diffs/patches (Örjan Persson, PEAR Request #5373).
+* Fix problems with numbers, whitespace-only changes and the inline renderer (PEAR Bug #6428.
+    </notes>
+   </release>
+   <release>
+    <version>0.1.1</version>
+    <date>2005-08-19</date>
+    <state>beta</state>
+    <notes>* Restore compatibility with PHP 4.2.0 (PEAR Bug #5152).
+    </notes>
+   </release>
+   <release>
+    <version>0.1.0</version>
+    <date>2005-08-16</date>
+    <state>beta</state>
+    <notes>* Fix Renderer::getParams() (PEAR Bug #4549)
+* Encode HTML entities in the inline renderer (Horde Bug #2181)
+* Fix endless loop in inline renderer with certain whitespaces (PEAR Bug #4879)
+    </notes>
+   </release>
+   <release>
+    <version>0.0.5</version>
+    <date>2005-05-04</date>
+    <state>beta</state>
+    <notes>* Fixed variable name in Text_MappedDiff.
+* Removed output buffering code.
+* Fixed additional empty lines being added with the inline renderer (Bug 3730).
+* Fixed multiple calls to _endBlock per block (Bug 4065).
+    </notes>
+   </release>
+   <release>
+    <version>0.0.4</version>
+    <date>2004-10-13</date>
+    <state>beta</state>
+    <notes>* Generalized Diff Renderer parameter handling.
+* Added an inline renderer contributed by Ciprian Popovici (ciprian@zuavra.net).
+* Fixed PHPDoc.
+* Fixed a PHP 5 incompatibility.
+    </notes>
+   </release>
+   <release>
+    <version>0.0.3</version>
+    <date>2004-05-13</date>
+    <state>alpha</state>
+    <notes>Renamed final() and orig() methods to avoid conflict with final keyword in PHP5
+    </notes>
+   </release>
+   <release>
+    <version>0.0.2</version>
+    <date>2004-03-16</date>
+    <state>alpha</state>
+    <notes>Added optional xdiff support
+    </notes>
+   </release>
+   <release>
+    <version>0.0.1</version>
+    <date>2004-01-09</date>
+    <state>alpha</state>
+    <notes>Initial package release
+    </notes>
+   </release>
+ </changelog>
+</package>
