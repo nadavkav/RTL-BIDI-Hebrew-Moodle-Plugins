@@ -269,7 +269,7 @@ $string['pagenametoolong'] = 'שם הדף ארוך מידי. יש לבחור ש�
 $string['pagenameisstartpage'] = 'שם הדף זהה לשם הדף הראשי. אנא בחרו שם שונה.';
 $string['nocommentsystem'] = 'מנגנון ההערות לא פעיל';
 $string['annotationsystem'] = 'מנגנון הערות־למילים';
-$string['persectionsystem'] = 'מנגנון הערות עבור כל פסקאה';
+$string['persectionsystem'] = 'מנגנון הערות עבור כל פסקה';
 $string['bothcommentsystems'] = 'שני מנגנוניי הטיוט';
 $string['commenting'] = 'מנגנון כתיבת הערות';
 $string['commentsystemdesc'] = 'Choose the default comment system to be used thoughout this site. Each wiki is able
@@ -292,8 +292,8 @@ $string['computingguide'] = 'Guide to OU wiki';
 $string['computingguideurl'] = 'Computing guide URL';
 $string['computingguideurlexplained'] = 'Enter the URL for the OU wiki omputing guide';
 $string['search'] = 'חיפוש';
-$string['sizewarning'] = 'This wiki page is very large and may operate slowly. 
-If possible, please split the content into logical chunks and 
+$string['sizewarning'] = 'This wiki page is very large and may operate slowly.
+If possible, please split the content into logical chunks and
 place it on separate linked pages.';
 $string['displayversion'] = 'גירסת OUWiki: <strong>$a</strong>';
 $string['externaldashboardadd'] = 'הוספת הויקי ללוח־הבקרה';
