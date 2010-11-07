@@ -1,0 +1,105 @@
+<?php require_once($CFG->themedir.'/page/lib.php'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html<?php echo $direction ?>>
+<head>
+    <?php page_theme_include_js(); ?>
+    <?php page_theme_print_meta_without_rtl($meta) ?>
+    <?php echo $meta ?>
+
+    <meta name="keywords" content="moodle, <?php echo $title ?> " />
+    <title><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.png" />
+    <?php include("$CFG->javascript"); ?>
+	<?php page_theme_print_onload(); ?>
+        <!--[if lt IE 7.]>
+        <script defer type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/pngfix.js"></script>
+        <![endif]-->
+<?php
+/**
+* Theme Header
+*
+* @author Mark Nielsen
+* @version $Id$
+* @package theme_cisco
+**/
+?>
+</head>
+
+<body<?php
+    echo " $bodytags";
+    if ($focus) {
+        echo " onload=\"setfocus()\"";
+    }
+    ?>>
+
+<div id="page">
+
+<?php if ($heading) {  // This is what gets printed on any other page with a heading ?>
+
+<div id="shrinkwrapper">
+
+    <div id="header" class="clearfix">
+
+        <div id="headermenuwrap">
+          <div id="headermenu-wrap-left">
+            <div id="headermenu-wrap-right">
+              <div class="headermenu">
+                <div class="breadcrumb">
+                 <?php echo $menu ?>
+                </div>
+             </div>
+            </div> <!-- end div wrap right  -->
+          </div> <!-- end div wrap left -->
+        </div> <!-- end div headermenuwrap -->
+    </div>
+    <!-- END OF HEADER -->
+
+<?php } else { ?>
+
+<div id="shrinkwrapper-b">
+
+<?php } ?>
+
+
+
+<div id="contentwrapper">
+
+  <div id="contentwrapper-left">
+    <div id="contentwrapper-right">
+
+<?php if ($heading) {  // This is what gets printed on any other page with a heading ?>
+
+  <div class="headerimg">
+  </div>
+
+  <div id="bignavwrap">
+    <div id="breadcrumb-wrap-left">
+      <div id="breadcrumb-wrap-right">
+        <div class="navbar clearfix">
+          <div class="breadcrumb">
+          <?php if ($home) { ?>
+            <h2 class="accesshide">You are here</h2>
+              <ul>
+                <li class="first">
+                  <a href="./" onclick="this.target='_top'"><?php echo $title ?></a>
+                </li>
+              </ul>
+          <?php } else if ($heading) {  // This is what gets printed on any other page with a heading
+          ?>
+          <?php print_navigation($navigation); ?>
+          <?php } ?>
+	  </div>
+          <div class="navbutton"><?php echo $button; ?></div>
+        </div> <!-- end div clearfix -->
+      </div> <!-- end div wrap right  -->
+    </div> <!-- end div wrap left -->
+  </div> <!-- end div bignavwrap -->
+
+<?php page_theme_print_tabs(); ?>
+  <div class="description small">
+
+  </div>
+
+<?php } ?>
+
+  <div id="content">

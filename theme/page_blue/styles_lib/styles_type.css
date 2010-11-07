@@ -1,0 +1,155 @@
+body {
+  font-family: Verdana, Arial, Helvetica, "Sun Sans-Regular", sans-serif;
+  line-height: 1.5;
+  font-size: 80%; /*for IE */
+}
+
+html > body {
+  font-size: 13px; /* for all other browsers */
+}
+
+input[type=text], input[type="password"], select {
+  font-size: 75%;
+  font-weight: bold;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+input[type=submit], input[type="button"], button[type="submit"], button[type="file"] {
+  font-size: 75%;
+  font-weight: bold;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+/* Headings */
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 1.4em;
+}
+
+h2 {
+  font-size: 1.2em;
+  line-height: 2;
+}
+
+h3 {
+  font-size: 1.1em;
+  line-height: 1.25;
+}
+
+h3.main {
+  padding: 1em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h4.main {
+  padding: 0.8em}
+
+h5 {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Text Elements */
+
+p {
+  margin: 0 0 1em 0;
+}
+
+ul, ol {
+  margin: 0 0 1em 1.5em;
+}
+
+ol {
+  list-style: decimal;
+}
+
+dl {
+  margin: 1em 0;
+}
+
+dl dt {
+  font-weight: bold;
+}
+
+blockquote {
+  margin:1em 1.5em 1em;
+  border-left: .3em solid #ddd;
+  padding: 0 .75em;
+}
+
+em {
+  font-style: italic;
+}
+
+pre {
+  margin: .5em 1.5em 1em;
+  background: #eee;
+  border: 0.1em solid #ddd;
+  padding: 1em;
+}
+
+code {
+  font:0.9em Monaco, monospace;
+}
+
+/* Typographical Extras */
+
+.modified,
+.small {
+  font-size: 0.75em;
+  line-height: .85;
+}
+
+.dimmed {
+  color: #bbb !important;
+}
+
+.required {
+  color: #fc0012;
+}
+
+.advanced {
+  color: #00c000;
+}
+
+/* Glossary */
+
+.glossarypost .commands {
+  font-size: 0.8em;
+}
+.glossarypost .author {
+  font-size: 0.8em;
+}
+.glossarypost .time {
+  font-size: 0.8em;
+}
+.concept {
+  font-weight: bold;
+}
+.glossarycomment .author {
+  font-size: 0.8em;
+}
+.entrylowersection .aliases {
+  font-size: 0.8em;
+}
+.entrylowersection .icons,
+.entrylowersection .ratings {
+  font-size: 0.8em;
+}
+
+#mod-glossary-index .cell {
+  font-size:0.8em;
+}

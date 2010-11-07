@@ -1,0 +1,703 @@
+/* Core */
+
+#shrinkwrapper {
+  width: 994px;
+  margin: 0 auto;
+}
+
+input[type=text], input[type="password"], select {
+  padding: 0.25em;
+}
+
+select {
+  padding: 0em;
+}
+
+input[type=submit], input[type="button"], button[type="submit"], button[type="file"] {
+  padding: 0.25em;
+  margin-left:0.50em;
+  margin-right:0.50em;
+}
+
+.singlebutton {
+  margin: 10px;
+}
+
+.generalbox.sitetopic {
+  background: none;
+  border: none;
+}
+
+legend.ftoggler,
+#notice.generalbox p,
+table.translator,
+#course-index .categorylist,
+.loginbox,
+#login-forgot_password .generalbox {
+  border: 0.1em solid #ddd;
+  background: #f5f5f5;
+  padding:0 2px;
+}
+
+.loginbox.twocolumns .loginpanel {
+  border-right-color: #ddd;
+  border-right-style: dashed;
+}
+
+.htmlarea table td {
+  padding: 0 !important;
+}
+
+#scormnav {
+  clear: both;
+  margin: 5px;
+}
+
+#content {
+  padding:25px 17px 20px;
+}
+
+/* Header */
+
+#header-home, #header {
+  height:30px;
+}
+
+#header-home .headermain {
+  position: absolute;
+  left: -9999px;
+}
+
+#header-home .headermain, #header .headermain {
+  color:#003ebc;
+  padding:35px 10px 0pt;
+}
+
+#header-home .headermain {
+  font-size:1.75em;
+}
+
+.headerimg {
+  padding:11px 17px 5px;
+}
+
+.description {
+  padding:5px 17px 5px 11px;
+  float:right;
+  clear:both;
+}
+
+#header-home .description {
+  padding-left: 200px;
+}
+
+#header-home .headermenu .logininfo {
+  float: left;
+  margin-right: 1em;
+  line-height: 2em;
+}
+
+#headermenuwrap {
+  float:right;
+  text-align:right;
+}
+
+.headermenu {
+  float:none;
+}
+
+
+/* Footer*/
+
+.helplink {
+  text-align: center;
+}
+
+#footer {
+  padding-top: 10px;
+  margin-top: 0px;
+}
+
+/* Breadcrumb */
+
+#bignavwrap { 
+  padding-top:0px;
+}
+
+#breadcrumb-wrap-left, #headermenu-wrap-left {
+  margin:0pt 17px;
+}
+
+#breadcrumb-wrap-right, #headermenu-wrap-right {
+  height:35px;
+}
+
+.navbar {
+  border:medium none;
+  color:#CCCCCC;
+  height:60px; 
+  margin:0pt 5px;
+  padding:0pt;
+}
+
+.navbar {
+  border-style:none;
+  border-width:1px;
+  width:auto;
+}
+
+.clearfix {
+  display:block;
+}
+
+.clearfix {
+  min-width:0pt;
+}
+
+
+.navbar .breadcrumb {
+  float:left;
+  margin:0.2em 0pt;
+}
+
+.breadcrumb {
+  font-weight:normal;
+  padding:7px;
+}
+
+.breadcrumb ul li {
+  margin:0pt;
+}
+
+.breadcrumb li {
+  display:inline;
+}
+
+.navbar .navbutton {
+  margin-top: 0pt;
+  padding: 8px 4px;
+}
+
+.navbar .navbutton, .navbar .menu {
+  float:right;
+}
+
+.navbutton table {
+  margin-bottom: 0;
+}
+
+
+/* Admin */ 
+
+body#admin-index .copyright {
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.environmenttable {
+  font-size: 0.8em;
+}
+
+.backup #form1 table {
+  background: #f9f9f9;
+}
+
+.backup #form1 table td {
+  padding: 3px;
+}
+
+.backup table {
+  margin: auto;
+}
+
+.settingsform fieldset {
+  border-width: 1px;
+}
+
+.admin .boxwidthnormal {
+  border: 0.1em dashed #ddd;
+  background: #eee;
+}
+
+#admin-calendar_weekend table {
+  width: 77% !important;
+}
+
+.logselectform {
+  text-align: center;
+}
+/* Sideblocks */
+
+.sideblock .title h2 {
+  font-size: 0.9em;
+}
+
+.sideblock ul li {
+  padding:7px 0;
+  border-bottom: 1px dotted #e0e4e7;
+}
+
+.sideblock .content {
+  padding-top: 0;
+}
+
+.block_online_users ul li,
+.block_blog_tags ul li,
+.block_rss_client ul li .link {
+  border: 0;
+}
+
+.block_messages .content .listentry,
+.block_online_users .content .listentry {
+  font-size:0.85em;
+}
+
+.sideblock .date {
+  font-size: 0.85em;
+}
+
+.sideblock h3 {
+  padding:1em 0 0;
+}
+
+#left-column .hidden .header,
+#right-column .hidden .header
+{
+  border-bottom:none;
+}
+
+.sideblock .footer {
+  font-size: 0.9em;
+}
+/* Course */
+
+.section .content {
+  border-color: #ddd;
+}
+
+.section .side {
+  border-color: #ddd;
+  background: #f5f5f5;
+}
+
+#course-view .current .side {
+  background: #e2ff80;
+}
+
+.coursebox {
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 10px;
+}
+
+#course-index table.categorylist td.category{
+  padding-top: 25px;
+}
+
+#course-index .categorylist,
+#course-category .courseboxes {
+  width: 75%;
+  margin: auto;
+}
+
+#course-index .categorylist {
+  margin-bottom: 20px;
+}
+
+.categorybox td.category {
+  font-weight: bold;
+}
+
+.categorybox td.course {
+  padding-left: 15px;
+  width: 70%;
+}
+
+#coursesearch {
+  margin-top: 20px;
+}
+
+#course-view .section .activity {
+  background-color:#f9f9f9;
+  border-bottom:1px solid #fff;
+  padding:0.2em 0;
+}
+
+#course-view .section .label {
+  background:none !important;
+}
+
+#course-recent .generalbox {
+  padding:5px 10px 0;
+}
+
+.groupmanagementtable td {
+  padding: 25px;
+  background: #f9f9f9;
+}
+
+/* Calendar */
+
+#calendar .maincalendar .controls .current {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#eventform table td p {
+  padding:10px;
+  text-align: center;
+}
+
+#calendar .sidecalendar,
+#calendar .maincalendar {
+  border: none;
+}
+
+#calendar-export .header {
+  text-align: center;
+  font-weight: bold;
+}
+
+#calendar-export fieldset {
+  border: 1px solid #ddd;
+  width: 50%;
+  margin: auto;
+  padding: 10px 20px;
+}
+
+#calendar-export legend {
+  border: 1px solid #ddd;
+  padding: 1px;
+  background: #eee;
+}
+
+/* Forums */
+
+.forumpost .topic {
+  border-bottom: 1px solid #e0e4e7;
+  background: #f9f9f9;
+}
+
+.forumpost .content {
+  border-bottom: 3px solid #e0e4e7;
+}
+.forumpost .subject {
+  font-size: 1.1em;
+  color: #2b4135;
+}
+
+.forumpost .author {
+  font-size: 0.9em;
+  line-height: 0.9;
+}
+
+.subscription {
+  margin: 0 0 15px;
+}
+
+.forumheaderlist .discussion .picture {
+  vertical-align: middle;
+}
+
+.forumheaderlist .discussion .lastpost {
+  font-size: 0.8em;
+}
+
+#searchform .searchbox {
+  border: 1px dashed #ddd;
+  background: #eee;
+}
+
+#searchform .searchbox td {
+  padding: 5px;
+}
+#searchform .searchbox .submit {
+  text-align: center;
+  padding: 10px;
+}
+/* Blog */
+
+#blog-preferences .generalbox {
+  width: 55%;
+}
+
+#blog-preferences .generalbox td {
+  text-align: center;
+  padding: 5px;
+}
+
+#blog-tags table {
+  margin: 25px;
+}
+/* Users */
+
+.userinfobox {
+  margin-bottom: 20px;
+}
+
+.userinfobox .content {
+  border:3px solid #ddd;
+  background: #f5f5f5;
+}
+
+/* Tables */
+
+table {
+  margin-bottom: 1em;
+}
+
+th,td {
+  height: 1em;
+  padding: 0.2em;
+}
+
+th {
+  font-weight: bold;
+}
+
+.forumheaderlist,
+.generaltable,
+.tabledivider,
+.generaltable.generalbox,
+.logtable,
+#categoryquestions,
+.grades,
+.quizquestions table,
+table.editcourse,
+#movecourses table {
+  border:0.1em solid #ddd;
+}
+
+#theme-index table th,
+#movecourses table th,
+.editcourse th,
+#rolesform table th,
+.generaltable th,
+.forumheaderlist th,
+.files th,
+.logtable th,
+#theform table th,
+#categoryquestions th,
+td.generaltableheader,
+.quizquestions table th {
+  border-bottom: 0.3em solid #ccc;
+  background: #ddd;
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 0;
+}
+
+#movecourses table td,
+.editcourse td,
+#rolesform td,
+.forumheaderlist td,
+.generaltable .cell,
+.logtable td,
+#categoryquestions td,
+.grades td {
+  border: none !important;
+  padding: 3px;
+}
+
+.editcourse td {
+  font-size: 0.9em;
+}
+
+#theme-index table td,
+#movecourses table td,
+.logtable td,
+#theform table td,
+.files td,
+.grades td,
+#grade-index .generalbox td,
+body#mod-quiz-report table#attempts .header,
+body#mod-quiz-report table#attempts .cell {
+  padding-left: 10px;
+  padding-right:10px;
+}
+
+.forumheaderlist .r1,
+.generaltable .r1,
+.logtable .r1,
+.grades .r0 {
+  background: #f5f5f5;
+}
+
+/* Quiz */
+
+.que {
+  border: 0.1em solid #ddd;
+  background: #f7f7f7;
+}
+
+.questionbank table {
+  margin: 10px auto;
+}
+
+.questionbank p {
+  text-align: center;
+  font-weight: bold;
+  padding:5px;
+}
+
+#question-import .generalbox,
+#question-export .generalbox{
+  width:50%;
+  margin:20px auto;
+  border:0.1em dashed #ddd;
+  background: #eee;
+}
+
+#question-import .generalbox table td,
+#question-export .generalbox table td {
+  padding:4px;
+}
+
+#mod-quiz-attempt #page .generalbox {
+  text-align: left;
+}
+
+#mod-quiz-attempt #page .generalbox .boxaligncenter,
+.quizquestions #showbreaks,
+#attemptsform table#commands td,
+#options #overview-options td {
+  text-align: center;
+}
+/* Gradebook */
+
+.grades {
+  width: 100%;
+}
+
+.grade table th.header {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+#grade-index #new_category,
+#grade-index #delete_category {
+  text-align: center;
+}
+
+/* Gradebook full of bugs as a result of inadequate hooks in Moodle (ex: buttons align right) */
+
+/* Glossary */
+
+.glossarysearchbox {
+  text-align: center;
+}
+
+.mod-glossary table.generalbox {
+  margin: auto;
+}
+
+/* Message */
+
+#message-index table .tabtree{
+  margin-top: 20px;
+}
+
+#message-history .generalbox table td {
+  text-align: center;
+  padding: 5px 25px;
+}
+
+#message-user .name {
+  text-align: center;
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+
+#message-user .commands span {
+  margin-left:0;
+  margin-right:5px;
+  font-size: 0.8em;
+}
+
+.message .time {
+  font-style: italic;
+}
+
+.message-discussion-noframes {
+  padding: 10px 25px;
+}
+
+.message-discussion-noframes ul li {
+  list-style: none;
+}
+
+.message.other {
+  color: #222;
+}
+
+#message_contacts .heading {
+  text-transform: uppercase;
+  font-size: 1.1em;
+  padding: 7px;
+}
+
+#user-messageselect .generalbox table input {
+  margin: 35px 0px;
+}
+
+/* Help */
+
+#help h1 {
+  text-align: center;
+}
+
+/* Popups */
+
+#blog-tags #shrinkwrapper,
+#message-index #shrinkwrapper,
+#message-history #shrinkwrapper,
+#message-user #shrinkwrapper,
+#message-messages #shrinkwrapper,
+#message-send #shrinkwrapper,
+#message-discussion #shrinkwrapper,
+#help #shrinkwrapper {
+  width: auto;
+}
+
+
+/* Misc. Hacks*/
+
+#user-action_redir .boxaligncenter table td input {
+  margin:20px 0 0 325px;
+}
+
+.gradeprefs input {
+  margin-left: 100px;
+}
+
+.singlebutton,
+table.generalbox td div,
+.branchbuttoncontainer,
+#answerform {
+  text-align: center;
+}
+
+#dates table {
+  margin:auto;
+}
+
+.debugwarn {
+  text-align: center;
+  background: #FDD;
+}
+
+.my .courseboxcontent .overview .info {
+  font-size:0.7em;
+}
+
+.sitelink {
+  display: none
+}
+
+#logo_sm {
+  display: none;
+}
+
+#site-index #logo_sm {
+  display:block !important;
+  margin:15px;
+}

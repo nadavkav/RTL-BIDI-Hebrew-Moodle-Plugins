@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html<?php echo $direction ?>>
+<head>
+    <?php echo $meta ?>
+    <meta name="keywords" content="moodle, <?php echo $title ?> " />
+    <title><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.png" />
+    <?php include("$CFG->javascript"); ?>
+
+        <!--[if lt IE 7.]>
+        <script defer type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/pngfix.js"></script>
+        <![endif]-->
+
+</head>
+
+<body<?php
+    echo " $bodytags";
+    if ($focus) {
+        echo " onload=\"setfocus()\"";
+    }
+    ?>>
+
+<div id="page">
+
+
+
+
+<?php if ($heading) {  // This is what gets printed on any other page with a heading ?>
+
+<div id="shrinkwrapper">
+
+    <div id="header" class="clearfix">
+
+        <div id="headermenuwrap">  
+          <div id="headermenu-wrap-left">
+            <div id="headermenu-wrap-right">
+              <div class="headermenu">
+                <div class="breadcrumb">  
+                 <?php echo $menu ?>
+                </div>
+             </div>
+            </div> <!-- end div wrap right  -->
+          </div> <!-- end div wrap left -->
+        </div> <!-- end div headermenuwrap -->
+    </div>
+    <!-- END OF HEADER -->
+
+<?php } else { ?>
+
+<div id="shrinkwrapper-b">
+
+<?php } ?>
+
+
+
+<div id="contentwrapper">
+
+  <div id="contentwrapper-left">
+    <div id="contentwrapper-right">
+
+<?php if ($heading) {  // This is what gets printed on any other page with a heading ?>
+        
+  <div class="headerimg">
+    <object type="application/x-shockwave-flash" data="<?php echo $CFG->themewww .'/'. current_theme() ?>/styles_lib/pix/exp_banner2.swf?317338960" width="960" height="95">
+      <param name="movie" value="<?php echo $CFG->themewww .'/'. current_theme() ?>/styles_lib/pix/exp_banner2.swf?317338960" />
+      <param name="bgcolor" value="#000000" />
+    </object>
+  </div>
+
+  <div id="bignavwrap">  
+    <div id="breadcrumb-wrap-left">
+      <div id="breadcrumb-wrap-right">
+        <div class="navbar clearfix">
+          <div class="breadcrumb">
+          <?php if ($home) { ?>
+            <h2 class="accesshide">You are here</h2>
+              <ul>
+                <li class="first">
+                  <a href="./" onclick="this.target='_top'"><?php echo $title ?></a>
+                </li>
+              </ul>
+          <?php } else if ($heading) {  // This is what gets printed on any other page with a heading 
+          ?>
+          <?php print_navigation($navigation); ?>
+          <?php } ?>
+	  </div>
+          <div class="navbutton"><?php echo $button; ?></div>
+        </div> <!-- end div clearfix -->
+      </div> <!-- end div wrap right  -->
+    </div> <!-- end div wrap left -->
+  </div> <!-- end div bignavwrap -->
+  
+  
+  <div class="description small">
+  
+  <?php
+    function selfURL() { $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : ""; $protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; } 
+    function strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2)); }
+ 
+    function soc_bookmark($link, $title, $icon = 'Y') {
+      $icon_folder = $CFG->wwwroot.'/moodle/theme/'.current_theme().'/icons/';
+      $feed = 'feed';
+      $link = rawurlencode($link);
+      $title = rawurlencode($title);
+      $bookmark = array(
+        'digg'=>
+          'http://digg.com/submit?phase=2&amp;url='.$link,
+        'BlinkBits'=>
+          'http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;source_url='.$link.'&amp;title='.$title,
+        'Del.icio.us'=>
+          'http://del.icio.us/post?v=2&amp;url='.$link.'&amp;title='.$title,
+        'Furl'=>
+          'http://www.furl.net/storeIt.jsp?t='.$title.'&amp;u='.$link,
+        'Ma.gnolia'=>
+          'http://ma.gnolia.com/bookmarklet/add?url='.$link.'&amp;title='.$title,
+        'Newsvine'=>
+          'http://www.newsvine.com/_tools/seed&amp;save?u='.$link.'&amp;h='.$title,
+        'Reddit'=>
+          'http://reddit.com/submit?url='.$link.'&amp;title='.$title,
+        'Technorati'=>
+          'http://technorati.com/faves?add='.$link.'&amp;title='.$title,
+      );
+      foreach($bookmark as $key=>$value) {
+        $link_text = $icon == 'Y' ? '
+         <img src="'.$icon_folder.str_replace(".", '', strtolower($key)).'.png"
+           alt="Post to '.$key.'" />' : $key;
+        echo '<a href="'.$value.'"
+          title="Post to '.$key.'" >'.$link_text.'</a> ';
+      }
+    }
+ 
+ 
+    $_SERVER['REQUEST_URI'] = (isset($_SERVER['REQUEST_URI']) ?
+    $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME']);
+
+    // Append the query string if it exists and isn't null
+    if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+      $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+    }
+
+    soc_bookmark(selfURL(), $definePageTitle);
+
+  ?>
+  </div>
+
+<?php } ?>
+
+  <div id="content">

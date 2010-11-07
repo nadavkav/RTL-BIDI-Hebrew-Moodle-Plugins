@@ -1,0 +1,28 @@
+caption, th, td {
+text-align:right;
+}
+
+.sideblock .content .list {
+background-color:#D2EDFF;
+}
+.tabrow0 li {
+-moz-background-clip:border;
+-moz-background-origin:padding;
+-moz-background-size:auto auto;
+background-attachment:scroll;
+background-color:transparent;
+background-image:url("pix/tab/rtlbg.gif");
+background-position:right top;
+background-repeat:no-repeat;
+float:right;
+margin-bottom:0;
+margin-left:0;
+margin-right:0;
+margin-top:0;
+overflow-x:hidden;
+overflow-y:hidden;
+width:130px;
+}
+.tabrow0 .here span, .tabrow0 .here a:hover span {
+background-image:url("../pix/tab/right_selected.png");
+}

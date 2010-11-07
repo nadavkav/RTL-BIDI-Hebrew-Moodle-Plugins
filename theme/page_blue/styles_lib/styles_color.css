@@ -1,0 +1,490 @@
+/********************************************************
+  
+styles_color.css
+
+  * Sets non-default colors in one place.
+  * Sets images.
+    
+********************************************************/
+
+/* Core */
+
+body {
+ background:#F0F9FF;
+  color:#003ebc; 
+ 
+}
+
+#shrinkwrapper {
+  background:transparent;
+}
+
+#contentwrapper {
+  background:#F0F9FF;
+}
+
+#contentwrapper-left {
+  background:transparent url(pix/page_left.png) repeat-y scroll left top;
+}
+
+#contentwrapper-right {
+  background:transparent url(pix/page_right.png) repeat-y scroll right top;
+}
+
+input[type=text], input[type="password"], select {
+  border: 3px double #999999;
+  border-bottom-color: #CCCCCC; 
+  border-right-color: #CCCCCC;
+  background-color: #FFFFFF;
+  background-image: url(pix/background_form_element2.gif);
+  background-repeat: repeat-x;
+  color: #333333;
+}
+
+input[type=submit], input[type="button"], button[type="submit"], button[type="file"] {
+  border: 3px double #999999;
+  border-top-color: #CCCCCC; 
+  border-left-color: #CCCCCC;
+  background-color: #FFFFFF;
+  background-image: url(pix/background_form_element.gif);
+  background-repeat: repeat-x;
+  color: #333333;
+}
+
+h1, h2, h3, h4, h5, h6,
+a:link, a:visited, a:active,
+.tabtree ul li ul li a span {
+  color:#003ebc;
+
+}
+
+a:hover,
+.tabtree ul li ul li a span:hover,
+.navbar a:link, .navbar a:visited, .navbar,
+.forumheaderlist .lastpost a:link,
+.forumheaderlist .lastpost a:visited /* Moodle Bug */ {
+  color:#b39200;
+}
+
+.sideblock .date,
+.sideblock .date a:link,
+.sideblock .date a:visited,
+.forupost .author {
+  color: #a7a8aa;
+}
+
+.generalbox {
+  border-color: #fff;
+
+}
+#intro.generalbox,
+#course-user .section,
+#course-reset .generalbox .generalbox,
+#blog-preferences .generalbox,
+#course-recent .generalbox,
+.errorbox,
+.settingsform fieldset {
+  background:#F0F9FF;
+  border-color: #ddd;
+  border-style: dashed;
+}
+
+#course-user .section {
+  margin: 10px auto;
+}
+
+/* Breadcrumb */
+
+.breadcrumb .logininfo a:link{
+  color: ffffff;
+
+}
+ .breadcrumb .logininfo a:visited, .breadcrumb .logininfo a:active 
+{
+  color: #003ebc;
+
+}
+
+.navbar  {
+  background:#003ebc url(pix/searchform-bg1.png) no-repeat scroll center bottom;
+}
+
+.navbar {
+  border-color:#DDDDDD;
+  color:#CCCCCC; 
+}
+
+.navbar a:hover, .navbar a:active {
+  color:#EEEEEE;
+}
+
+.navbar a:link, .navbar a:visited {
+  color:#FFFFFF;
+  font-weight:bold;
+}
+
+#breadcrumb-wrap-right, #headermenu-wrap-right {
+  
+}
+
+#breadcrumb-wrap-left, #headermenu-wrap-left {
+
+}
+
+/* User Pictures */
+
+img.userpicture,
+img.grouppicture,
+#message-index img.userpicture {
+  background:url(pix/shadow_35.png) no-repeat bottom right !important;
+  padding:0 4px 4px 0;
+}
+
+.sideblock img.userpicture {
+  background:url(pix/shadow_16.png) no-repeat bottom right !important;
+  padding:0 2px 2px 0;
+}
+
+.userinfobox img.userpicture,
+#message-history img.userpicture,
+#message-user img.userpicture {
+  background:url(pix/shadow_100.png) no-repeat bottom right !important;
+  padding:0 7px 7px 0;
+}
+
+/* Sideblocks */
+
+.sideblock.hidden .header .hide-show img.hide-show-image {
+  background:transparent url(../pix/t/switch_plus.gif) no-repeat scroll center bottom;
+}
+
+.sideblock .header .hide-show img.hide-show-image {
+  background:transparent url(../pix/t/switch_minus.gif) no-repeat scroll center bottom;
+}
+
+.sideblock .title h2 {
+  background: url(bg/star.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+  color: #58656A;
+}
+
+.star,
+h2.headingblock,
+.block_site_main_menu .title h2 {
+  background: url(bg/star.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+
+}
+
+.block_blog_menu .title h2 {
+  background: url(bg/tag_edit.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_blog_tags .title h2 {
+  background: url(bg/tag.gif) no-repeat bottom left;
+  padding:0 0 6px 33px;
+}
+
+.block_news_items .title h2 {
+  background: url(bg/news.gif) no-repeat left;
+  padding: 0 0 12px 33px;
+}
+.block_recent_activity .title h2,
+.block_glossary_random .title h2 {
+  background: url(bg/titel.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_online_users .title h2,
+.block_participants .title h2 {
+  background: url(bg/users.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_calendar_month .title h2,
+.block_calendar_upcoming .title h2 {
+  background: url(bg/calendar.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_login .title h2 {
+  background: url(bg/keys.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_course_list .title h2 {
+  background: url(bg/pencil.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_activity_modules .title h2 {
+  background: url(bg/activities.gif) no-repeat bottom left;
+  padding: 0 0 6px 33px;
+}
+
+.block_messages .title h2 {
+  background: url(bg/message.gif) no-repeat left;
+  padding: 0 0 12px 33px;
+}
+
+.block_admin_tree .title h2 {
+  background: url(bg/blank.gif) no-repeat bottom left;
+  padding: 0 0 6px 3px;
+}
+
+.block_search_forums .title h2,
+.block_search .title h2 {
+  background: url(bg/search.gif) no-repeat left;
+  padding: 0 0 12px 33px;
+}
+
+.block_rss_client .title h2 {
+  background: url(bg/rss.gif) no-repeat left;
+  padding: 0 0 12px 33px;
+}
+
+/* Calendar */
+
+#calendar .maincalendar,
+#calendar .sidecalendar,
+#calendar .today,
+.minicalendar .today {
+  border-color: #DDDDDD;
+}
+
+table.minicalendar,
+#calendar .maincalendar table.calendarmonth th {
+  border-color: #DDDDDD;
+}
+
+#calendar .maincalendar .eventlist .event {
+  border-color:#DDDDDD;
+}
+
+#calendar .maincalendar .eventlist .event .topic,
+#calendar .maincalendar .eventlist .event .picture,
+#calendar .maincalendar .eventlist .event .side {
+  background-color:#EEEEEE;
+}
+
+#calendar .maincalendar table.calendarmonth ul.events-underway {
+  color:#999999;
+}
+
+#calendar .sidecalendar .minicalendarblock div,
+#calendar .maincalendar .controls {
+  border: 1px dashed #ddd;
+  background: #eee;
+}
+
+/*Accessibility: increase contrast, darker link/weekend colors, lighter event backgrounds. */
+.minicalendar a,
+.calendarmonth a {
+  color:#000077;
+}
+
+#calendar .event_global,
+.minicalendar .event_global,
+.block_calendar_month .event_global {
+  border-color:#D6F8CD !important; /* #C5E7BC */
+  background-color:#cacaff;
+}
+
+#calendar .event_course,
+.minicalendar .event_course,
+.block_calendar_month .event_course {
+  border-color:#FFD3BD !important; /* #EEC2AC */
+  background-color:#FFD3BD;
+}
+
+#calendar .event_group,
+.minicalendar .event_group,
+.block_calendar_month .event_group {
+  border-color:#FEE7AE !important; /* #EDD69D */
+  background-color:#FEE7AE;
+}
+
+#calendar .event_user,
+.minicalendar .event_user,
+.block_calendar_month .event_user {
+  border-color:#DCE7EC !important; /* #CBD6DB */
+  background-color:#DCE7EC;
+}
+
+#calendar .duration_global,
+.minicalendar .duration_global {
+  border-top-color:#66D14D !important;
+  border-bottom-color:#66D14D !important;
+}
+
+#calendar .duration_course,
+.minicalendar .duration_course {
+  border-top-color:#FF9966 !important;
+  border-bottom-color:#FF9966 !important;
+}
+
+#calendar .duration_group,
+.minicalendar .duration_group {
+  border-top-color:#FBBB23 !important;
+  border-bottom-color:#FBBB23 !important;
+}
+
+#calendar .duration_user,
+.minicalendar .duration_user {
+  border-top-color:#A1BECB !important;
+  border-bottom-color:#A1BECB !important;
+}
+
+#calendar .weekend,
+.minicalendar .weekend {
+  color:#990000;
+}
+
+.cal_popup_fg {
+  background-color:#FFFFFF;
+}
+
+.cal_popup_bg {
+  border-color:#000000;
+  background-color:#FFFFFF;
+}
+
+#calendar .maincalendar .filters table,
+#calendar .sidecalendar .filters table,
+.block_calendar_month .filters table {
+  background-color: #EEEEEE;
+}
+
+/* Glossary */
+
+.entryboxheader {
+  border-color: #BBBBBB;
+}
+
+.entrybox {
+  border-color: #BBBBBB;
+}
+
+.glossarypost {
+  border-color: #DDDDDD;
+}
+
+.glossarypost .entryheader,
+.glossarypost .entryapproval,
+.glossarypost .picture,
+.glossarypost .entryattachment,
+.glossarypost .left {
+  background-color: #F0F0F0;
+}
+
+.glossarycomment {
+  border-color: #DDDDDD;
+}
+
+.glossarycomment .entryheader,
+.glossarycomment .picture,
+.glossarycomment .left {
+  background-color: #F0F0F0;
+
+}
+
+#mod-glossary-report .generalbox .teacher {
+  background: #F0F0F0;
+}
+
+.glossarycategoryheader {
+  background-color: #dddddd;
+}
+tabrow0 a span {
+-moz-background-clip:border;
+-moz-background-origin:padding;
+-moz-background-size:auto auto;
+background-attachment:scroll;
+background-color:transparent;
+background-image:none;
+background-position:0 0;
+background-repeat:repeat;
+padding-bottom:0.35em;
+padding-left:0;
+padding-right:0;
+padding-top:10px;
+  }
+.glossaryformatheader {
+  background-color: #dddddd;
+}
+
+/* Tabs */
+
+
+/***
+ *** Tabs
+ ***/
+
+
+/*globalnav*/
+.tabtree {
+  position:relative;
+}
+
+.tablink a:link,
+.tablink a:visited {
+    color:#000066;
+}
+
+.selected .tablink a:link,
+.selected .tablink a:visited {
+    color:#000000;
+}
+.tabs .side,
+.tabrow td {
+    border-color: #006600;
+ 
+}
+
+.tabrow0 a span {
+  background: transparent url(../pix/tab/right.png) no-repeat right top;
+}
+
+.tabrow0 a span {
+  background: transparent url(../pix/tab/right.png) no-repeat right top;
+}
+
+.tabrow0 a {
+  margin:0pt 0pt 0pt 0pt;
+  background: transparent url(../pix/tab/left.png) no-repeat left top;
+}
+
+.tabrow0 a:hover {
+  background-image: url(../pix/tab/left_hover.png);
+}
+
+.tabrow0 a:hover span {
+  background-image: url(../pix/tab/right_hover.png);
+}
+
+
+.tabrow0 .here a, .tabrow0 .here a:hover {
+  background-image: url(../pix/tab/left_selected.png);
+}
+
+.tabrow0 .here span, .tabrow0 .here a:hover span {
+  background-image: url(../pix/tab/right_selected.png);
+}
+
+.tabrow0  LI {
+    float: right;
+    MARGIN: 0px;
+    width: 130px;
+    BACKGROUND: url(..pix/tab/rtlbg.gif) no-repeat right top;
+    overflow: hidden; /* for IE7. to prevent long titles from 'falling' 3cm down */
+}
+
+
+
+/*subnav*/
+
+.tabrow0 ul {
+  background: transparent url(../pix/tab/tabrow1.gif) repeat-x center left;
+}
+

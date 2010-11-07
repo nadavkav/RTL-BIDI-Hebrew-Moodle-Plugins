@@ -1,0 +1,64 @@
+/************************************
+*
+* Theme Name: Experience24/7v4 based on Liip
+* Description: A 960px fixed-width theme for Moodle
+* Theme URL:  http://www.experience247.com based on http://newschoollearning.com/themes/modern
+* Version: 1.0
+* Author: Dimitri Roman based on Liip template created by Patrick Malley
+* Author URI: http://www.experience247.com
+*
+* These themes are licensed under a Creative Commons Attribution-Share Alike 3.0 License.
+* In other words, you are free to copy, distribute, and display these themes - and
+* derivative works based upon them - but only if you continue to give credit to NewSchool
+* Learning & experience24/7 by linking back to these sites in some way. Also, you are free to distribute
+* derivative works of these themes as long as such derivatives remain under a license identical to this one.
+*
+*************************************/
+
+@import "styles_lib/styles_reset.css";
+@import "styles_lib/styles_type.css";
+@import "styles_lib/styles_base.css";
+@import "styles_lib/styles_color.css";
+@import "styles_lib/styles_links.css";
+
+.sideblock {
+background-color:HoneyDew;
+}
+
+.tabtree ul.tabrow0 li.selected {
+background-color:#C1E5FF;font-weight:bold;
+}
+
+
+
+.tabtree ul.tabrow0 li.selected {
+font-weight:bold;
+background-color:#C1E5FF;
+
+}
+.tabtree {
+margin-bottom:auto;
+margin-left:auto;
+margin-right:auto;
+margin-top:25px;
+width:850px;
+}
+
+/* RTL fix */
+.dir-rtl .format-page .prevpage {
+float:right;
+}
+.dir-rtl .format-page .nextpage {
+float:left;
+}
+.visible .yuimenuitem,.visible .yuimenuitemlabel 
+ { font-size:2; background-color:#C1E5FF;font-weight:bold;
+}
+.yuimenu ul { border-color:darkblue;background-color:#C1E5FF; margin:auto;font-weight:bold;
+}
+.sideblock .title h2 { border-color:darkblue;background-color:#E6F4FF; margin:auto;font-weight:bold;
+}
+.sideblock .content  { border-color:darkblue;background-color:#E6F4FF; margin:auto;font-weight:bold;
+}
+.sideblock .header  { border-color:darkblue;background-color:#E6F4FF; margin:auto;font-weight:bold;
+}
