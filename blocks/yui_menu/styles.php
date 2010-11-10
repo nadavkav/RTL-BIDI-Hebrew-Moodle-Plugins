@@ -63,7 +63,7 @@ IE 6 and earlier, but the browser will degrade nicely */
     background: no-repeat;
 }
 /* based of YUI library version 2.6
- * 
+ *
  * Warning: unneccesarily messy and ugly code ahead. This could
  * have been done in about half the size, but it looks like someone
  * at Yahoo hasn't heard of space separated classes (or :hover)
@@ -124,7 +124,4 @@ vertical-align:middle;
 .icon a:hover {
 background-color:GreenYellow;
 text-decoration:none;
-}
-td#left-column,td#right-column  {
-width:220px !important;
 }
