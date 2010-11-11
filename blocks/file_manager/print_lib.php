@@ -4,7 +4,7 @@
   Created:  Michael Avelar
   Created:  6/8/05
  Modified:  6/8/05
-  Purpose:  This file contains all the print function mess used within the file_manager 
+  Purpose:  This file contains all the print function mess used within the file_manager
 *****************************************************************************/
 /**************************** Organization **********************************/
 // Print Functions				// (See print_lib.php) Functions to print tables/forms to screen etc.
@@ -538,7 +538,7 @@
                         JOIN {$CFG->prefix}role r ON ra.roleid = r.id
                         JOIN {$CFG->prefix}context con ON ra.contextid = con.id
                         JOIN {$CFG->prefix}course c ON c.id = con.instanceid AND con.contextlevel = 50
-                        WHERE r.shortname = 'student' AND c.id = {$id}";
+                        WHERE (r.shortname = 'student' OR r.shortname = 'teacher' OR r.shortname = 'editingteacher') AND c.id = {$id}";
 
       //echo $sqltoexecute;
       // If there is nobody in this course, then print the message "no users in this course"
