@@ -1,7 +1,7 @@
 <?php
 
-$string['blockname'] = 'בדיקת יכולות הדפדפן';
-$string['support'] = 'נראה, שהדפדפן שלכם תומך בתוספים הבאים';
+$string['browser_cap'] = 'בדיקת יכולות הדפדפן';
+$string['browser_support'] = 'נראה, שהדפדפן שלכם תומך בתוספים הבאים';
 $string['javascript'] = 'ג\'אווה סקריפט';
 $string['java'] = 'ג\'אווה';
 $string['pdf'] = 'תצוגת מסמכי pdf';

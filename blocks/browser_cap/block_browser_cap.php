@@ -12,7 +12,7 @@
 class block_browser_cap extends block_base {
 
 function init() {
-    $this->title = get_string('blockname','block_browser_cap'); //'Browser Capability';
+    $this->title = get_string('browser_cap', 'block_browser_cap'); 
     $this->version = 2008060600;
 }
 
@@ -23,8 +23,8 @@ function get_content() {
     }
     $this->content = new stdClass;
     $imgPath = $CFG->wwwroot . '/blocks/browser_cap/';
-    $this->content->text .= '<span style="font-size: 0.9em;">'.get_string('support','block_browser_cap').':</span>' . "\n" .
-        '<noscript><p style="font-size: 0.9em;">you dont have Javascript enabled which is required to detect plugin support</p></noscript>' .
+    $this->content->text .= '<span style="font-size: 0.9em;">'.get_string('browser_support', 'block_browser_cap').'</span>' . "\n" . 
+        '<noscript><p style="font-size: 0.9em;">'.get_string('browser_noscript', 'block_browser_cap').'</p></noscript>' .
         '<div style="line-height: 0.8em; font-size: 0.8em;">';
     $this->content->text .= '<script language="JavaScript" type="text/javascript">
         <!--
