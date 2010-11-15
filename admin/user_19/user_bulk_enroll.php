@@ -7,6 +7,7 @@ require_once('user_courselist_form.php');
 //$msg     = optional_param('msg', '', PARAM_CLEAN);
 $confirm = optional_param('confirm', 0, PARAM_BOOL);
 $courses = optional_param('courses', '', PARAM_CLEAN);
+$roleid = optional_param('roleid', '', PARAM_CLEAN);
 
 admin_externalpage_setup('userbulk');
 require_capability('moodle/site:readallmessages', get_context_instance(CONTEXT_SYSTEM));
@@ -17,6 +18,14 @@ if (empty($SESSION->bulk_users)) {
     redirect($return);
 }
 
+    $allroles = array();
+    if ($roles = get_all_roles()) {
+      foreach ($roles as $role) {
+        $rolename = strip_tags(format_string($role->name, true));
+        $allroles[$role->id] = $rolename;
+      }
+    }
+
 //TODO: add support for large number of users
 
 if ( $confirm and confirm_sesskey() and !empty($courses) ) {
@@ -24,12 +33,14 @@ if ( $confirm and confirm_sesskey() and !empty($courses) ) {
     if ($rs = get_recordset_select('user', "id IN ($in)")) {
         while ($user = rs_fetch_next_record($rs)) {
             //message_post_message($USER, $user, $msg, FORMAT_HTML, 'direct');
-            $roleid = 5; // student
+            //$roleid = $roleid;
             $courselist = explode(',',$courses);
-            echo 'רושם את המשתמש '.$user->firstname.' כתלמיד בקורסים הנבחרים<br/>';
+            echo get_string('enrolluser','user_bulk_actions','',$CFG->dirroot.'/admin/user/lang/').' '.$user->firstname.' => ';
+            echo get_string('role').": ".$allroles[$roleid]."<br/>";
+            echo ' >> '.get_string('courses').'<br/>';
             foreach ($courselist as $courseid) {
               $coursecontext = get_context_instance(CONTEXT_COURSE,$courseid);
-              echo $course->shortname;
+              echo "Course ID = ".$courseid." <br/>";
               if (! role_assign($roleid, $user->id, 0, $coursecontext->id)) {
                 $errors[] = "Could not add user {$user->firstname} {$user->lastname} with id {$user->id} to this role!";
               }
@@ -37,7 +48,7 @@ if ( $confirm and confirm_sesskey() and !empty($courses) ) {
 
         }
     }
-    redirect($return);
+    redirect($return,' Finished successfully :-) ',5);
 }
 
 $msgform = new user_courselist_form('user_bulk_enroll.php');
@@ -61,9 +72,10 @@ if ($msgform->is_cancelled()) {
     $optionsyes['sesskey'] = sesskey();
     //$optionsyes['msg']     = $msg;
     $optionsyes['courses']     = implode(',',$formdata->courses);
+    $optionsyes['roleid']     = $formdata->role;
     admin_externalpage_print_header();
     print_heading(get_string('confirmation', 'admin'));
-    print_box('רישום המשתמשים:<br/>'.implode(',',$userlist).'<br/><br/>בתפקיד "תלמיד"<br/><br/> לקורסים הבאים:<br/>'.implode(',',$courselist), 'boxwidthnarrow boxaligncenter generalbox', 'preview');
+    print_box('רישום המשתמשים:<br/>'.implode(',',$userlist).'<br/><br/>בתפקיד "'.$allroles[$formdata->role].'"<br/><br/> לקורסים הבאים:<br/>'.implode(',',$courselist), 'boxwidthnarrow boxaligncenter generalbox', 'preview');
     notice_yesno('האם אתם מאשרים?', 'user_bulk_enroll.php', 'user_bulk.php', $optionsyes, NULL, 'post', 'get');
     admin_externalpage_print_footer();
     die;

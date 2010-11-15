@@ -28,6 +28,17 @@ class user_courselist_form extends moodleform {
 
         //$mform->addElement('group', 'coursesgrp', get_string('courses'), $select , ' ', false);
 
+        $allroles = array();
+        if ($roles = get_all_roles()) {
+          foreach ($roles as $role) {
+            $rolename = strip_tags(format_string($role->name, true));
+            $allroles[$role->id] = $rolename;
+          }
+        }
+
+        $mform->addElement('select', 'role', get_string('roles'), $allroles);
+        $mform->setDefault('role', 'Student');
+
         $this->add_action_buttons();
     }
 }

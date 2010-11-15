@@ -28,15 +28,15 @@ class user_bulk_action_form extends moodleform {
             $actions[6] = get_string('forcepasswordchange');
         }
         if (has_capability('moodle/user:update', $syscontext)) { // nadavkav
-            $actions[7] = get_string('enrollintocourses');
+            $actions[7] = get_string('enrollintocourses','user_bulk_actions','',$CFG->dirroot.'/admin/user/lang/');
         }
         if (has_capability('moodle/site:readallmessages', $syscontext) && !empty($CFG->messaging)) { // nadavkav
-            $actions[8] = get_string('sendemail');
+            $actions[8] = get_string('sendemail','user_bulk_actions','',$CFG->dirroot.'/admin/user/lang/');
         }
 
         $objs = array();
         $objs[] =& $mform->createElement('select', 'action', null, $actions);
-        $objs[] =& $mform->createElement('submit', 'doaction', get_string('go'));
+        $objs[] =& $mform->createElement('submit', 'doaction', get_string('choose'));
         $mform->addElement('group', 'actionsgrp', get_string('withselectedusers'), $objs, ' ', false);
     }
 }
