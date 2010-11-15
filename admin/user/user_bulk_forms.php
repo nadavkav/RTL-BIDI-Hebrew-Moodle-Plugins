@@ -1,4 +1,4 @@
-<?php //$Id: user_bulk_forms.php,v 1.1 2009/03/10 10:01:55 argentum Exp $
+<?php //$Id: user_bulk_forms.php,v 1.1.2.4 2009/11/16 17:11:31 arborrow Exp $
 
 require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/datalib.php');
@@ -11,16 +11,32 @@ class user_bulk_action_form extends moodleform {
 
         $syscontext = get_context_instance(CONTEXT_SYSTEM);
         $actions = array(0=>get_string('choose').'...');
-        $plugins = get_list_of_plugins($CFG->admin.'/user/actions', 'CVS');
-        foreach ($plugins as $dir) {
-            if (check_action_capabilities($dir)) {
-                $actions[$dir] = get_string('pluginname', 'bulkuseractions_'.$dir, NULL, $CFG->dirroot.'/admin/user/actions/'.$dir.'/lang/');
-            }
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions[1] = get_string('confirm');
+        }
+        if (has_capability('moodle/site:readallmessages', $syscontext) && !empty($CFG->messaging)) {
+            $actions[2] = get_string('messageselectadd');
+        }
+        if (has_capability('moodle/user:delete', $syscontext)) {
+            $actions[3] = get_string('delete');
+        }
+        $actions[4] = get_string('displayonpage');
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions[5] = get_string('download', 'admin');
+        }
+        if (has_capability('moodle/user:update', $syscontext)) {
+            $actions[6] = get_string('forcepasswordchange');
+        }
+        if (has_capability('moodle/user:update', $syscontext)) { // nadavkav
+            $actions[7] = get_string('enrollintocourses','user_bulk_actions','',$CFG->dirroot.'/admin/user/lang/');
+        }
+        if (has_capability('moodle/site:readallmessages', $syscontext) && !empty($CFG->messaging)) { // nadavkav
+            $actions[8] = get_string('sendemail','user_bulk_actions','',$CFG->dirroot.'/admin/user/lang/');
         }
 
         $objs = array();
         $objs[] =& $mform->createElement('select', 'action', null, $actions);
-        $objs[] =& $mform->createElement('submit', 'doaction', get_string('go'));
+        $objs[] =& $mform->createElement('submit', 'doaction', get_string('choose'));
         $mform->addElement('group', 'actionsgrp', get_string('withselectedusers'), $objs, ' ', false);
     }
 }

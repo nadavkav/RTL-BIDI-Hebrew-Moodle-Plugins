@@ -1,4 +1,4 @@
-<?php  //$Id: lib.php,v 1.1.2.3 2008/02/05 15:22:07 poltawski Exp $
+<?php  //$Id: lib.php,v 1.1 2009/03/10 10:01:55 argentum Exp $
 
 require_once($CFG->dirroot.'/user/filters/lib.php');
 
@@ -34,7 +34,6 @@ function get_selection_data($ufiltering) {
     $scount = count($SESSION->bulk_users);
 
     $userlist = array('acount'=>$acount, 'scount'=>$scount, 'ausers'=>false, 'susers'=>false, 'total'=>$total);
-    $userlist['ausers'] = get_records_select_menu('user', $sqlwhere, 'fullname', 'id,'.sql_fullname().' AS fullname', 0, MAX_BULK_USERS);
 
     if ($scount) {
         if ($scount < MAX_BULK_USERS) {
@@ -44,10 +43,50 @@ function get_selection_data($ufiltering) {
             $in = implode(',', $bulkusers);
         }
         $userlist['susers'] = get_records_select_menu('user', "id IN ($in)", 'fullname', 'id,'.sql_fullname().' AS fullname');
+        $sqlwhere .= " AND id NOT IN ($in)";
     }
 
+    $userlist['ausers'] = get_records_select_menu('user', $sqlwhere, 'fullname', 'id,'.sql_fullname().' AS fullname', 0, MAX_BULK_USERS);
+    
     return $userlist;
 }
 
+function check_action_capabilities($action, $require = false) {
+    global $CFG;
+    $requirecapability = NULL;
+    if (file_exists($CFG->dirroot.'/'.$CFG->admin.'/user/actions/'.$action.'/settings.php')) {
+        include($CFG->dirroot.'/'.$CFG->admin.'/user/actions/'.$action.'/settings.php');
+    }
+
+    if (is_null($requirecapability)) {
+        if ($require) {
+            print_error('action_nocaps');
+        }
+        return false;
+    } else if (is_string($requirecapability)) {
+        $caps = array( $requirecapability );
+    } else if (is_array($requirecapability)) {
+        $caps = $requirecapability;
+    } else {
+        if ($require) {
+            print_error('action_nocaps');
+        }
+        return false;
+    }
+    
+    $syscontext = get_context_instance(CONTEXT_SYSTEM);
+
+    foreach ($caps as $cap) {
+        if ($require) {
+            require_capability($cap, $syscontext);
+        } else {
+            if (!has_capability($cap, $syscontext)) {
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
 
 ?>

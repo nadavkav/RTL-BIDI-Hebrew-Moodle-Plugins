@@ -1,4 +1,4 @@
-<?php  //$Id: user_bulk.php,v 1.4.2.5 2009/11/16 17:11:31 arborrow Exp $
+<?php  //$Id: user_bulk.php,v 1.1 2009/03/10 10:01:55 argentum Exp $
 
 require_once('../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
@@ -17,16 +17,9 @@ $ufiltering = new user_filtering();
 // create the bulk operations form
 $action_form = new user_bulk_action_form();
 if ($data = $action_form->get_data(false)) {
-    // check if an action should be performed and do so
-    switch ($data->action) {
-        case 1: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_confirm.php');
-        case 2: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_message.php');
-        case 3: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_delete.php');
-        case 4: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_display.php');
-        case 5: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_download.php');
-        case 6: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_forcepasswordchange.php');
-        case 7: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_enroll.php'); // nadavkav
-        case 8: redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/user_bulk_email.php'); // nadavkav
+    // check if an action should be performed and do so using plugin list
+    if ($data->action != '0') {
+        redirect($CFG->wwwroot.'/'.$CFG->admin.'/user/actions/'.$data->action.'/index.php');
     }
 }
 
