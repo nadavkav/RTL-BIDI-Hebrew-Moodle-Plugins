@@ -1,0 +1,44 @@
+WebSnapr - Preview Bubble Javascript by Juan Xavier Larrea
+http://www.websnapr.com
+
+-----
+About
+-----
+
+The WebSnapr Preview Bubble is a simple, unobtrusive script used to display an overlay bubble showing a hyperlink target thumbnail using WebSnapr. It's a snap to setup and works on all modern browsers. 
+
+This script has been proved to work properly in Internet Explorer, Firefox, Opera and Safari.
+
+Check the demo at: http://www.websnapr.com/previewbubble/
+
+-----------
+How To Use
+-----------
+
+1.- Get your free developer key from http://www.websnapr.com/
+
+2.- Copy the contents of the previewbubble.zip file somewhere in your server. Edit previewbubble.js and point the bubbleImagePath variable to the correct location of the bg.png file. For example:
+
+     var bubbleImagePath = '/images/bg.png';
+
+Also insert your developer key here:
+ 
+     var developerKey = 'your developer key';
+
+3.- Include previewbubble.js in your header.
+
+     <script type="text/javascript" src="previewbubble.js"></script>
+
+
+4.- Add class="previewlink" attribute to the links you wish to bind the preview event to. For example:
+
+     <a class="previewlink" href="http://www.cnn.com">CNN</a>
+
+------------
+Terms of Use
+------------
+
+WebSnapr is a free service. Please help me to keep it that way. All i ask as retribution is to link back to the WebSnapr website (http://www.websnapr.com) from anywhere on your site.
+
+
+Enjoy!
