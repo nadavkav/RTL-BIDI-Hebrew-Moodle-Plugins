@@ -1,0 +1,55 @@
+<P ALIGN=CENTER><B>Item Editor</B></P>
+
+<p>
+With the item editor you can create or change items. Items (rooms/equipment) can be scheduled
+if they have a property with the name <b>scheduled</b> and a value for this prop of
+either weekly or yearly (at least so far).
+Note: You must click save changes after each change in the item editor.
+</p>
+
+<P><B>Templates </B>
+Each type of item can have an associated template item. Any fields defined in this
+template will be available as default for all items of this type.
+There are a few ready made templates:
+<ul>
+<li>room - weekly timetable schedule, default open for teachers.
+<li>equipment - same schedule as for rooms, teachers only.
+<li>student-equipment - as for equipment, but open for students.
+<li>examroom - weekly schedule with multiple bookings.
+<li>film - yearly schedule with bookings of one week each, only teachers can book.
+<li>magazine - yearly schedule with bookings of one week each, students can book.
+</ul>
+
+<P><B>Item Types</B> 
+You can create a new type by changing the text in childtype for any item.
+There are a few predefined items with the childtype field already set.
+Choose one of them and change childtype to the name of your new type.
+Click on the link <b>Create child</b> (after saving changes) and you get a new child that you
+can edit. Change the name of this item to xxxx_template where xxxx is the
+new type. You can now reset the childtype to it's original value.
+(click on the parent link to get back to the original item).
+
+A note about yearly schedule:
+If the item you choose yearly schedule for has any child items, then all these items will be
+shown in the booking view. The parent will not be shown. Items with no children are scheduled 
+directly as themselves.
+
+<P><B>Properties with special meaning</B> 
+Certain properties are used by the scripts to select different actions and behaviours.
+<ul>
+    <li><b>childtype</b> cliking on add child will create a new item of this type</li>
+    <li><b>scheduled</b> this item can be scheduled, values are weekly,yearly</li>
+    <li><b>multiple</b> the value is the limit for users who can book into same slot</li>
+    <li><b>edit_group</b> value can be teachers or students, these can then add bookings</li>
+    <li><b>edit_list</b> named users who can add bookings</li>
+    <li><b>days</b> list of days for use in timetable view: Monday,Tuesday,,,Friday,,</li>
+    <li><b>slots</b> list of slots for use in timetable: 8,9,10,11,12,13,14,15</li>
+    <li><b>startsched</b> startdate for schedule: 2005,1,3   yyyy,mm,dd</li>
+    <li><b>seats</b> used by timetable editor, a room must have sufficient seats for the number of students in a course.
+    <li><b>lookahead</b> weeks from present day you can move forward.
+    <li><b>blocked</b> a list of calendars (comma separated) that will block bookings (typical freedays)
+    <li><b>connected</b> as blocked, but will be shown as info only - bookings not blocked (typical special events)
+</ul>
+
+The calendars mentioned under blocked and connected can be given properties (color) in styles.php.
+Divs are set up with class == name of calendar.

@@ -1,0 +1,11 @@
+<form name="form" method="post" action="<?php p($action) ?>">
+
+<?php
+   $form->sesskey = sesskey();
+
+   // Pass variables through
+   foreach ($form as $assname => $assvalue) {
+       echo '<input type="hidden" name="'.$assname.'" value="'.s($assvalue).'" />'."\n";
+   }
+
+?>

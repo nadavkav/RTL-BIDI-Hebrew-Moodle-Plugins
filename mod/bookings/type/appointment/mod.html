@@ -1,0 +1,62 @@
+<center>
+<?php print_string("fillincolandrows","bookings");
+        $bookings = get_record('bookings', 'id', $form->instance);
+        $proplist = (object)bookings_item_properties($bookings->itemid); 
+        helpbutton('appointment', get_string('typeappointment', 'bookings'), 'bookings');
+?>
+<table cellpadding="5">
+<tr valign="top">
+    <td align="right"><b><?php print_string("colnames", "bookings") ?>:</b></td>
+    <td>
+        <input type="text" name="colnames" size=60 value="<?php p($proplist->days) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><b><?php print_string("rownames", "bookings") ?>:</b></td>
+    <td>
+        <input type="text" name="rownames" size=60 value="<?php p($proplist->slots) ?>">
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><strong><?php print_string('canedit', 'bookings') ?>:</strong></td>
+    <td>
+    <?php
+        $options = array();
+        $options['teachers'] = get_string('teachers');
+        $options['students'] = get_string('students');
+        choose_from_menu($options, 'editgroup', $proplist->edit_group);
+     ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><strong><?php print_string('exclusive', 'bookings') ?>:</strong></td>
+    <td>
+    <?php
+        $options = array();
+        $options['row'] = get_string('row','bookings');
+        $options['col'] = get_string('col','bookings');
+        $options['rowcol'] = get_string('rowcol','bookings');
+        $options['all'] = get_string('all','bookings');
+        $options['non'] = get_string('non','bookings');
+        choose_from_menu($options, 'exclusive', $proplist->exclusive);
+     ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right"><strong><?php print_string('multiple', 'bookings') ?>:</strong></td>
+    <td>
+    <?php
+    	if (empty($CFG->bookings_max_multiple)) {
+	    $CFG->bookings_max_multiple= '100';
+	}
+	
+        for ($i=1;$i<=$CFG->bookings_max_multiple;$i++) {
+             $values[$i] = "$i";
+        }
+        choose_from_menu($values, 'multiple', $proplist->multiple);
+    ?>
+    </td>
+</tr>
+</table>
+<input type="submit" value="<?php print_string("continue") ?>">
+</center>

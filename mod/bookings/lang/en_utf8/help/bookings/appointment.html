@@ -1,0 +1,33 @@
+<P ALIGN=CENTER><B>Appointment</B></P>
+
+<P>This type is used for signing up for an event.
+You can set up a table of options (rows and columns) for the
+student/teacher to choose from. There are several options that
+govern how the table responds to a booking:
+</p>
+
+<P><B>Column names </B>
+This field sets up how many columns the table will show.
+You can use arbitary names, each name separated from the next by a comma.
+You can optionally set a limit for the number of bookings for a given column
+<br>Example:<br>
+Option A:10,Option B,Option C:20
+<br>will set up three columns, the first will have a limit of 10, the last a limit of 20.
+There will be no limit for the second column.
+
+<P><B>Row names </B>
+The same as for column names.
+
+<P><B>Who can edit</B>
+Choose between Teachers and Students. Students means anyone in the course can make a booking.
+
+<P><B>Exclusive</B>
+Setting this to Rows will allow a student to make only one booking in each row.
+Columns will limit to on booking pr user in each col.
+Rows and Columns will do the same for both at once.
+Single entry will only allow one booking pr user.
+None will disable the exclusive tests, (you can still only have one booking pr user pr slot)
+
+<P><B>Multiple</B>
+If not set, then only one user can make a booking in each slot. If set then this is the
+maximum number of users who can book into the same slot.

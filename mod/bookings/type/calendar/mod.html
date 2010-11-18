@@ -1,0 +1,30 @@
+<center>
+<?php print_string("itemtosched","bookings") ?>
+<?php
+            $bookings = get_record('bookings', 'id', $form->instance);
+            $sql = 'SELECT r.id, r.name
+                    FROM '.$CFG->prefix.'bookings_item r,
+                        '.$CFG->prefix.'bookings_item_property p
+                    WHERE p.itemid = r.id
+                        AND p.name="scheduled"
+                        AND p.value="calendar"
+                    ORDER BY r.name';
+            if ($roomlist = get_records_sql($sql)) {
+                $kombo = "<select name=\"itemid\" >";
+                $kombo .= "<option value=\" \"> -- Select -- </option>\n ";
+                foreach ($roomlist as $room) {
+                        $selected = "";
+                        if ($room->id == $bookings->itemid) { 
+                            $selected = "selected";
+                            // $rname = $room->name;
+                        }
+                        $kombo .= '<option value="'.$room->id.'" '.$selected.'>'.$room->name.'</option>'."\n ";
+                }
+                $kombo .= '</select>'."\n";
+            }
+            print " $kombo";
+            /// print_r($form);
+            $itemid = $bookings->itemid;
+?>            
+<input type="submit" value="<?php print_string("continue") ?>">
+</center>
