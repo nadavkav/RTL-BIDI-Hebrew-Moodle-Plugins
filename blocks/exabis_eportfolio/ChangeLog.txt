@@ -1,5 +1,10 @@
 Exabis E-Portfolio ChangeLog
 
+2010-11-20 3.2.3 (nadavkav)
+* styles.php updates (support for rtl)
+* UI changes (make it more easy to use)
+* Choose a Theme to each view
+
 2009-03-19 3.2.1
 * minor bug-fixes: corrected user-id-problem
 
@@ -138,7 +143,7 @@ Version 2.2
 * changed most of the forms to formslib
 * Block should not be shown on the start page of moodle - the paths were incorrect there. You should see the Block only when a course is selected.
 * Added import for SCORM-files. At the moment this import can only import previously exported files.
-* Updated export. Please use only new exported files for import. Now markers are used in the comment-file to import the content again. 
+* Updated export. Please use only new exported files for import. Now markers are used in the comment-file to import the content again.
 * Added export of comments
 * Added functionality to import files from moodle assignments.
 * Added many more minor improvements.

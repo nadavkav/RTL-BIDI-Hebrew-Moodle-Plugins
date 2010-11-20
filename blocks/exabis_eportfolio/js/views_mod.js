@@ -6,7 +6,7 @@ $(function(){
 		$(this).parents('.view-group').toggleClass('view-group-open');
 	});
 
-	
+
 
 	function viewNameChange()
 	{
@@ -37,7 +37,7 @@ $(function(){
 	}
 
 
-	
+
 	function updateBlockData()
 	{
 		var blocks = [];
@@ -109,8 +109,8 @@ $(function(){
 			);
 		} else if (data.type == 'personal_information') {
 			$item.html(
-				'<div class="header">Personal Information</div>' +
-				'<div class="body">Displays your personal information</body>'
+				'<div class="header">'+$E.translate('explain_personal')+'</div>' +
+				'<div class="body">'+$E.translate('explain_personal_body')+'</body>'
 			);
 			$item.find(':text').val(data.text);
 		} else if (data.type == 'headline') {
@@ -151,7 +151,7 @@ $(function(){
 	}
 
 
-	
+
 	// load stored blocks
 	var blocks = $('form :input[name=blocks]').val();
 	if (blocks) {
@@ -175,8 +175,8 @@ $(function(){
 	updateBlockData();
 
 
-	
-	$(".portfolioDesignBlocks").sortable({ 
+
+	$(".portfolioDesignBlocks").sortable({
 		receive: function(e, ui){
 			generateItem('update', ui.item);
 			updateBlockData();
@@ -189,7 +189,7 @@ $(function(){
 		forcePlaceholderSize: true,
 		connectWith: ['.portfolioDesignBlocks']
 	});
-	$(".portfolioOptions").sortable({ 
+	$(".portfolioOptions").sortable({
 		connectWith: ['.portfolioDesignBlocks'],
 		placeholder: "block-placeholder",
 		forcePlaceholderSize: true,
@@ -230,7 +230,7 @@ $(function(){
 				share_text += ' '+$E.translate('viewand')+' ';
 			}
 			share_text += $E.translate('internalaccess')+': ';
-			
+
 			if ($form.find(':input[name=shareall]:checked').val() > 0) {
 				share_text += $E.translate('internalaccessall');
 				$('#internaccess-users').hide();

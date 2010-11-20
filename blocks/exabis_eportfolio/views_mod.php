@@ -34,7 +34,7 @@ $id = optional_param('id', 0, PARAM_INT);
 $shareusers = optional_param('shareusers', '', PARAM_RAW); // array of integer
 
 if (!confirm_sesskey()) {
-	print_error("badsessionkey","block_exabis_eportfolio");    	
+	print_error("badsessionkey","block_exabis_eportfolio");
 }
 
 
@@ -66,12 +66,12 @@ $returnurl = $CFG->wwwroot.'/blocks/exabis_eportfolio/views_list.php?courseid='.
 // delete item
 if ($action == 'delete') {
 	if (!$view) {
-		print_error("bookmarknotfound", "block_exabis_eportfolio");        
+		print_error("bookmarknotfound", "block_exabis_eportfolio");
 	}
 	if (data_submitted() && $confirm && confirm_sesskey()) {
 		delete_records('block_exabeporviewblock', 'viewid', $view->id);
 		$status = delete_records('block_exabeporview', 'id', $view->id);
-		
+
 		add_to_log(SITEID, 'blog', 'delete', 'views_mod.php?courseid='.$courseid.'&id='.$view->id.'&action=delete&confirm=1', $view->name);
 
 		if (!$status) {
@@ -136,7 +136,7 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
 		$mform =& $this->_form;
 
 		$mform->updateAttributes(array('class'=>''));
-		
+
 		$mform->addElement('hidden', 'items');
         $mform->addElement('hidden', 'action');
 		$mform->addElement('hidden', 'courseid');
@@ -148,6 +148,13 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
 
 		$mform->addElement('textarea', 'description', get_string("title", "block_exabis_eportfolio"), 'maxlength="65000" size="60"');
 		$mform->setType('description', PARAM_TEXT);
+
+    if (!empty($CFG->allowuserthemes)) { // enable Themes per porfolio (nadavkav)
+        $themes=array();
+        $themes[''] = get_string('forceno');
+        $themes += get_list_of_themes();
+        $mform->addElement('select', 'theme', get_string('forcetheme'), $themes);
+    }
 
 		$mform->addElement('hidden', 'blocks');
 		$mform->setType('blocks', PARAM_RAW);
@@ -187,7 +194,7 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
 				$form['html_hidden_fields'] .= $element['html'];
 			$form['elements_by_name'][$element['name']] = $element;
 		}
-	
+
 		return $form;
     }
 }
@@ -239,9 +246,9 @@ if ($editform->is_cancelled()) {
 		break;
 
 		case 'edit':
-			
+
 			if (!$view) {
-				print_error("bookmarknotfound", "block_exabis_eportfolio");	                
+				print_error("bookmarknotfound", "block_exabis_eportfolio");
 			}
 
 			$dbView->id = $view->id;
@@ -253,7 +260,7 @@ if ($editform->is_cancelled()) {
 			}
 
 		break;
-		
+
 		default:
 			print_error("unknownaction", "block_exabis_eportfolio");
 			exit;
@@ -276,7 +283,7 @@ if ($editform->is_cancelled()) {
 	if ($dbView->internaccess && !$dbView->shareall && is_array($shareusers)) {
 		foreach ($shareusers as $shareuser) {
 			$shareuser = clean_param($shareuser, PARAM_INT);
-			
+
 			$shareItem = new stdClass();
 			$shareItem->viewid = $dbView->id;
 			$shareItem->userid = $shareuser;
@@ -307,7 +314,7 @@ switch ($action) {
 		$strAction = get_string('edit');
 		break;
 	default :
-		print_error("unknownaction", "block_exabis_eportfolio");	                	            
+		print_error("unknownaction", "block_exabis_eportfolio");
 }
 
 
@@ -342,7 +349,7 @@ $translations = array(
 	'viewitem', 'comments', 'category', 'type',
 	'delete', 'viewand',
 	'file', 'note', 'link',
-	'internalaccess', 'externalaccess', 'internalaccessall', 'internalaccessusers', 'view_sharing_noaccess', 
+	'internalaccess', 'externalaccess', 'internalaccessall', 'internalaccessusers', 'view_sharing_noaccess','explain_personal','explain_personal_body'
 );
 
 
@@ -365,17 +372,24 @@ echo $form['html_hidden_fields'];
 // view data form
 echo '<div class="view-data view-group'.(!$view?' view-group-open':'').'">';
 	echo '<div class="view-group-header"><div>';
-	echo get_string('view', 'block_exabis_eportfolio').': <span id="view-name">'.(!empty($postView->name)?$postView->name:'new').'</span> <span class="change">('.get_string('change', 'block_exabis_eportfolio').')</span>';
+	echo get_string('view', 'block_exabis_eportfolio').': <span id="view-name">'.(!empty($postView->name)?$postView->name:'new').'</span> <span class="change">'.get_string('change', 'block_exabis_eportfolio').'</span>';
 	echo '</div></div>';
 	echo '<div class="view-group-body">';
 		echo '<div class="mform">';
 		echo '<fieldset class="clearfix"><legend class="ftoggler">'.get_string('viewinformation', 'block_exabis_eportfolio').'</legend>';
 			echo '<div class="fitem required"><div class="fitemtitle"><label for="id_name">'.get_string('viewtitle', 'block_exabis_eportfolio').'<img class="req" title="Required field" alt="Required field" src="'.$CFG->wwwroot.'/pix/req.gif" /> </label></div><div class="felement ftext">'.$form['elements_by_name']['name']['html'].'</div></div>';
 			echo '<div class="fitem"><div class="fitemtitle"><label for="id_name">'.get_string('viewdescription', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['description']['html'].'</div></div>';
+      echo '<div class="fitem"><div class="fitemtitle"><label for="id_theme">'.get_string('viewtheme', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['theme']['html'].'</div></div>';
 		echo '</fieldset>';
+
+echo '<div style="padding-top: 20px; text-align: center;">';
+echo $form['elements_by_name']['submitbutton']['html'];
+echo '</div>';
+
 		echo '</div>';
 	echo '</div>';
 echo '</div>';
+
 
 echo '<div class="view-middle">';
 	echo '<div id="view-options">';
@@ -398,7 +412,7 @@ echo '<div class="view-middle">';
 			echo '<div class="view-group-header"><div>'.get_string('view_specialitems', 'block_exabis_eportfolio').'</div></div>';
 			echo '<div class="view-group-body">';
 			echo '<ul class="portfolioOptions">';
-			echo '<li block-type="personal_information">'.get_string("explainpersonal", "block_exabis_eportfolio").'</li>';
+			echo '<li block-type="personal_information">'.get_string("explain_personal", "block_exabis_eportfolio").'</li>';
 			echo '<li block-type="headline">'.get_string('view_specialitem_headline', 'block_exabis_eportfolio').'</li>';
 			echo '<li block-type="text">'.get_string('view_specialitem_text', 'block_exabis_eportfolio').'</li>';
 			echo '</ul>';
@@ -408,7 +422,7 @@ echo '<div class="view-middle">';
 
 	echo '<div id="view-preview">';
 		echo '<div class="view-group-header"><div>'.get_string('viewdesign', 'block_exabis_eportfolio').'</div></div>';
-		echo '<div>';
+		echo '<div class="view-group-layout">';
 			echo '<table cellspacing="0" cellpadding="0" width="100%"><tr><td width="50%" valign="top">';
 			echo '<ul class="portfolioDesignBlocks" design-column="1">';
 			echo '</ul>';
@@ -416,20 +430,25 @@ echo '<div class="view-middle">';
 			echo '<ul class="portfolioDesignBlocks portfolioDesignBlocks-left" design-column="2">';
 			echo '</ul>';
 			echo '</td></tr></table>';
+
+echo '<div style="padding-top: 20px; text-align: center;">';
+echo $form['elements_by_name']['submitbutton']['html'];
+echo '</div>';
+
 		echo '</div>';
 	echo '</div>';
 	echo '<div class="clear"><span>&nbsp;</span></div>';
 echo '</div>';
 
 echo '<div class="view-sharing view-group">';
-	echo '<div class="view-group-header"><div>'.get_string('view_sharing', 'block_exabis_eportfolio').': <span id="view-share-text"></span> <span class="change">('.get_string('change', 'block_exabis_eportfolio').')</span></div></div>';
+	echo '<div class="view-group-header"><div>'.get_string('view_sharing', 'block_exabis_eportfolio').': <span id="view-share-text"></span> <span class="change">'.get_string('change', 'block_exabis_eportfolio').'</span></div></div>';
 	echo '<div class="view-group-body">';
 		echo '<div style="padding: 18px 22px"><table width="100%">';
-			
+
 			echo '<tr><td style="padding-right: 10px" width="10">';
 			echo $form['elements_by_name']['externaccess']['html'];
 			echo '</td><td>'.get_string("externalaccess", "block_exabis_eportfolio").'</td></tr>';
-			
+
 			if ($view) {
 				$url = block_exabis_eportfolio_get_external_view_url($view);
 				// only when editing a view, the external link will work!
@@ -448,7 +467,7 @@ echo '<div class="view-sharing view-group">';
 					*/
 				echo '</td></tr>';
 			}
-		
+
 			echo '<tr><td height="10"></td></tr>';
 
 			echo '<tr><td style="padding-right: 10px">';
@@ -465,14 +484,15 @@ echo '<div class="view-sharing view-group">';
 					echo '<tr id="internaccess-users"><td></td><td id="sharing-userlist">userlist</td></tr>';
 				echo '</table></div>';
 			echo '</td></tr>';
-
 		echo '</table></div>';
-	echo '</div>';
-echo '</div>';
 
 echo '<div style="padding-top: 20px; text-align: center;">';
 echo $form['elements_by_name']['submitbutton']['html'];
 echo '</div>';
+
+	echo '</div>';
+echo '</div>';
+
 
 echo '</div></form>';
 

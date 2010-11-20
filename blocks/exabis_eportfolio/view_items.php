@@ -58,6 +58,7 @@ echo "<div class='block_eportfolio_center'>";
 print_simple_box( text_to_html(get_string("explaining".$type,"block_exabis_eportfolio")) , "center");
 echo "</div>";
 
+echo "<div class='block_eportfolio_left'>";
 $availablecategories = exabis_get_categories();
 echo '<table><tr>';
 echo '<td>'.get_string('filterbycategory','block_exabis_eportfolio').'</td><td><form id="frmfiltercategory" action="view_items.php" method="get">';
@@ -71,6 +72,36 @@ echo '<input type="hidden" name="courseid" value="'.$courseid.'">';
 echo '<input type="submit" value="'.get_string('allcategories','block_exabis_eportfolio').'">';
 echo '</form></td>';
 echo '</tr></table>';
+echo "</div>";
+
+echo "<div class='block_eportfolio_right new_item'>";
+
+echo "<form action=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/item.php?backtype=$type\" method=\"post\">
+    <fieldset>
+      <input type=\"hidden\" name=\"action\" value=\"add\"/>
+      <input type=\"hidden\" name=\"courseid\" value=\"$courseid\"/>
+      <input type=\"hidden\" name=\"sesskey\" value=\"" . sesskey() . "\" />";
+
+if ($type != 'all')
+{
+  echo '<input type="hidden" name="type" value="'.$type.'" />';
+  echo "<input type=\"submit\" value=\"" . get_string("new".$type, "block_exabis_eportfolio"). "\"/>";
+}
+else
+{
+  echo get_string('addnewitem','block_exabis_eportfolio');
+  echo '<select name="type">';
+  echo '<option value="link">'.get_string("link", "block_exabis_eportfolio")."</option>";
+  echo '<option value="file">'.get_string("file", "block_exabis_eportfolio")."</option>";
+  echo '<option value="note">'.get_string("note", "block_exabis_eportfolio")."</option>";
+  echo '</select>';
+  echo "<input type=\"submit\" value=\"" . get_string("new", "block_exabis_eportfolio"). "\"/>";
+}
+
+echo "</fieldset>
+    </form>";
+
+echo "</div>";
 
 $userpreferences = block_exabis_eportfolio_get_user_preferences();
 
@@ -118,7 +149,7 @@ $query = "select i.*, ic.name AS cname, ic2.name AS cname_parent, c.fullname As 
 $items = get_records_sql($query);
 
 if ($items) {
-	
+
 	$table = new stdClass();
 	$table->width = "100%";
 
@@ -152,7 +183,7 @@ if ($items) {
 	$table->head[] = '';
 	$table->size[] = "10";
 
-	// add arrow to heading if available 
+	// add arrow to heading if available
 	if (isset($table->head[$sortkey]))
 		$table->head[$sortkey] .= "<img src=\"pix/$sorticon\" alt='".get_string("updownarrow", "block_exabis_eportfolio")."' />";
 
@@ -197,7 +228,7 @@ if ($items) {
 
 		$icons = '';
 		$icons .= '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/item.php?courseid='.$courseid.'&amp;id='.$item->id.'&amp;sesskey='.sesskey().'&amp;action=edit&backtype='.$type.'"><img src="'.$CFG->wwwroot.'/pix/t/edit.gif" class="iconsmall" alt="'.get_string("edit").'" /></a> ';
-	
+
 		$icons .= '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/item.php?courseid='.$courseid.'&amp;id='.$item->id.'&amp;sesskey='.sesskey().'&amp;action=delete&amp;confirm=1&backtype='.$type.'"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" class="iconsmall" alt="" . get_string("delete"). ""/></a> ';
 
 		/*
@@ -247,33 +278,7 @@ if ($items) {
 	echo get_string("nobookmarks".$type,"block_exabis_eportfolio");
 }
 
-echo "<div class='block_eportfolio_center'>";
 
-echo "<form action=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/item.php?backtype=$type\" method=\"post\">
-		<fieldset>
-		  <input type=\"hidden\" name=\"action\" value=\"add\"/>
-		  <input type=\"hidden\" name=\"courseid\" value=\"$courseid\"/>
-		  <input type=\"hidden\" name=\"sesskey\" value=\"" . sesskey() . "\" />";
-
-if ($type != 'all')
-{
-	echo '<input type="hidden" name="type" value="'.$type.'" />';
-	echo "<input type=\"submit\" value=\"" . get_string("new".$type, "block_exabis_eportfolio"). "\"/>";
-}
-else
-{
-	echo '<select name="type">';
-	echo '<option value="link">'.get_string("link", "block_exabis_eportfolio")."</option>";
-	echo '<option value="file">'.get_string("file", "block_exabis_eportfolio")."</option>";
-	echo '<option value="note">'.get_string("note", "block_exabis_eportfolio")."</option>";
-	echo '</select>';
-	echo "<input type=\"submit\" value=\"" . get_string("new", "block_exabis_eportfolio"). "\"/>";
-}
-
-echo "</fieldset>
-	  </form>";
-
-echo "</div>";
 
 print_footer($course);
 

@@ -28,50 +28,50 @@ class block_exabis_eportfolio extends block_list {
 
 	function init() {
         $this->title = get_string('blocktitle', 'block_exabis_eportfolio');
-        $this->version = 2009010101;
+        $this->version = 2009010103;
     }
 
     function instance_allow_multiple() {
         return false;
     }
-    
+
     function instance_allow_config() {
         return false;
     }
-    
+
 	function has_config() {
 	    return true;
 	}
-    
+
     function get_content() {
     	global $CFG, $COURSE, $USER;
-    	
+
     	$context = get_context_instance(CONTEXT_SYSTEM);
         if (!has_capability('block/exabis_eportfolio:use', $context)) {
 	        $this->content = '';
         	return $this->content;
         }
-        
+
         if ($this->content !== NULL) {
             return $this->content;
         }
-        
+
         if (empty($this->instance)) {
             $this->content = '';
             return $this->content;
         }
-        
+
         $this->content = new stdClass;
         $this->content->items = array();
         $this->content->icons = array();
         $this->content->footer = '';
-        
+
 		$this->content->items[]='<a title="' . get_string('mybookmarkstitle', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/view.php?courseid=' . $COURSE->id . '">' . get_string('mybookmarks', 'block_exabis_eportfolio') . '</a>';
 		$this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/categories.png" height="16" width="16" alt="'.get_string("mybookmarks", "block_exabis_eportfolio").'" />';
-		
+
 		$this->content->items[]='<a title="' . get_string('sharedbookmarks', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/shared_people.php?courseid=' . $COURSE->id . '">' . get_string('sharedbookmarks', 'block_exabis_eportfolio') . '</a>';
 	    $this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/publishedportfolios.png" height="16" width="16" alt="'.get_string("sharedbookmarks", "block_exabis_eportfolio").'" />';
-		
+
 		$this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/export_scorm.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
 		$this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
 

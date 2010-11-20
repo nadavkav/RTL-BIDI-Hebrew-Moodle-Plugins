@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************
 *  Copyright notice
 *
@@ -94,12 +94,12 @@ if (is_array($all_shared_users)){
 	foreach($all_shared_users as $user) {
 		echo "<tr>";
 		echo "<td><a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/".$detailLink."?courseid=$courseid&access=id/$user->id\">";
-		
+
 		print_user_picture($user->id, $courseid, $user->picture, 0, false, false);
 		echo "</a>&nbsp;</td>";
 		echo "<td>&nbsp;<a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/".$detailLink."?courseid=$courseid&access=id/$user->id\">".fullname($user, $user->id)."</a></td>";
-		echo '<td style="padding-left: 30px;">'.get_string('bookmarks', 'block_exabis_eportfolio').': '.$user->detail_count."</td>";
-		
+		echo '<td style="padding-left: 30px;">&nbsp;'.get_string('bookmarks', 'block_exabis_eportfolio').': '.$user->detail_count."</td>";
+
 		echo "</tr>";
 	}
 	echo "</table>";

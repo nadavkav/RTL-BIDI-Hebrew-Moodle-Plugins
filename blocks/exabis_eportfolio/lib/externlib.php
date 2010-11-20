@@ -43,7 +43,7 @@ function block_exabis_eportfolio_print_extern_item($item, $access) {
 	if ($item->type == 'link') {
 		$link = clean_param($item->url, PARAM_URL);
 		$link_js = str_replace('http://', '', $link);
-		
+
 		if ($link) {
 			$box_content .= '<p><a href="#" onclick="window.open(\'http://' . addslashes_js($link_js) . '\',\'validate\',\'width=620,height=450,scrollbars=yes,status=yes,resizable=yes,menubar=yes,location=yes\');return true;">' . $link . '</a></p>';
 		}
@@ -51,11 +51,11 @@ function block_exabis_eportfolio_print_extern_item($item, $access) {
 	elseif ($item->type == 'file') {
         if ($item->attachment) {
             $type = mimeinfo("type", $item->attachment);
-            
+
 			$ffurl = "{$CFG->wwwroot}/blocks/exabis_eportfolio/portfoliofile.php?access=".$access."&itemid=".$item->id;
-            
+
             if (in_array($type, array('image/gif', 'image/jpeg', 'image/png'))) {    // Image attachments don't get printed as links
-                $box_content .= "<img src=\"$ffurl\" alt=\"" . format_string($item->name) . "\" />";
+                $box_content .= "<img width=\"100%\" src=\"$ffurl\" alt=\"" . format_string($item->name) . "\" /><br/>";
             } else {
             	$box_content .= "<p>" . link_to_popup_window("$ffurl", 'popup', "$ffurl", $height=400, $width=500, format_string($item->name), 'none', true) . "</p>";
             }
@@ -75,7 +75,7 @@ function block_exabis_eportfolio_print_extcomments($itemid) {
 	$comments = get_records("block_exabeporitemcomm", "itemid", $itemid, 'timemodified DESC');
 	if(!$comments)
 		return;
-	
+
 	foreach ($comments as $comment) {
 		$user = get_record('user','id',$comment->userid);
 

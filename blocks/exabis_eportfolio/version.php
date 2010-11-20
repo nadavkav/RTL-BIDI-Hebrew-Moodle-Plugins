@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************
 *  $Id: version.php,v 1.4 2008/09/21 13:50:49 danielpr Exp $
 *
@@ -26,6 +26,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$exabis_eportfolio_version = 2009010101;   // The current version is a date (YYYYMMDDXX)
+$exabis_eportfolio_version = 2009010103;   // The current version is a date (YYYYMMDDXX)
 
-$exabis_eportfolio_release = "3.2.2";  // User-friendly version number
+$exabis_eportfolio_release = "3.2.3";  // User-friendly version number

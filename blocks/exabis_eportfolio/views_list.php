@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************
 *  Copyright notice
 *
@@ -112,7 +112,7 @@ if (!$views) {
 	$table->head[] = '';
 	$table->size[] = "10";
 
-	// add arrow to heading if available 
+	// add arrow to heading if available
 	if (isset($table->head[$sortkey]))
 		$table->head[$sortkey] .= "<img src=\"pix/$sorticon\" alt='".get_string("updownarrow", "block_exabis_eportfolio")."' />";
 
@@ -125,7 +125,11 @@ if (!$views) {
 
 		$table->data[$view_i] = array();
 
-		$table->data[$view_i]['name'] = '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/shared_view.php?courseid='.$courseid.'&access=id/'.$USER->id.'-'.$view->id.'">' . format_string($view->name) . "</a>";
+    $icons = '';
+    $icons .= '<a href="'.dirname($_SERVER['PHP_SELF']).'/views_mod.php?courseid='.$courseid.'&id='.$view->id.'&sesskey='.sesskey().'&action=edit"><img src="'.$CFG->wwwroot.'/pix/t/edit.gif" class="iconsmall" alt="'.get_string("edit").'" /></a> ';
+    $icons .= '<a href="'.dirname($_SERVER['PHP_SELF']).'/views_mod.php?courseid='.$courseid.'&id='.$view->id.'&sesskey='.sesskey().'&action=delete&confirm=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" class="iconsmall" alt="" . get_string("delete"). ""/></a> ';
+
+		$table->data[$view_i]['name'] = '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/shared_view.php?courseid='.$courseid.'&access=id/'.$USER->id.'-'.$view->id.'">' . format_string($view->name) . "</a> (".$icons.") ";
 		if ($view->description) {
 			$table->data[$view_i]['name'] .= "<table width=\"98%\"><tr><td>".format_text($view->description, FORMAT_HTML)."</td></tr></table>";
 		}
@@ -142,7 +146,7 @@ if (!$views) {
 				" JOIN {$CFG->prefix}block_exabeporviewshar vshar WHERE u.id=vshar.userid AND vshar.viewid='".$view->id."'".
 				" ORDER BY name";
 			$users = get_records_sql($query);
-			
+
 			if ($users) {
 				foreach ($users as &$user) {
 					$user = $user->name;
@@ -162,7 +166,7 @@ if (!$views) {
 
 		$icons = '';
 		$icons .= '<a href="'.dirname($_SERVER['PHP_SELF']).'/views_mod.php?courseid='.$courseid.'&id='.$view->id.'&sesskey='.sesskey().'&action=edit"><img src="'.$CFG->wwwroot.'/pix/t/edit.gif" class="iconsmall" alt="'.get_string("edit").'" /></a> ';
-	
+
 		$icons .= '<a href="'.dirname($_SERVER['PHP_SELF']).'/views_mod.php?courseid='.$courseid.'&id='.$view->id.'&sesskey='.sesskey().'&action=delete&confirm=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" class="iconsmall" alt="" . get_string("delete"). ""/></a> ';
 
 		$table->data[$view_i]['icons'] = $icons;

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************
 *  Copyright notice
 *
@@ -46,6 +46,9 @@ if (!$user = get_record("user", "id", $item->userid)) {
 	print_error("nouserforid", "block_exabis_eportfolio");
 }
 
+// Set THEME (nadavkav)
+theme_setup($view->theme);
+
 if ($item->access->page == 'view') {
 	if ($item->access->request == 'intern') {
 		block_exabis_eportfolio_print_header("views");
@@ -71,7 +74,7 @@ block_exabis_eportfolio_print_extern_item($item, $access);
 if ($item->allowComments) {
 	if($deletecomment == 1) {
 		if (!confirm_sesskey()) {
-			print_error("badsessionkey","block_exabis_eportfolio");	                
+			print_error("badsessionkey","block_exabis_eportfolio");
 		}
 		if(count_records("block_exabeporitemcomm", "id", $commentid, "userid", $USER->id, "itemid", $itemid) == 1) {
 			delete_records("block_exabeporitemcomm", "id", $commentid, "userid", $USER->id, "itemid", $itemid);
@@ -80,7 +83,7 @@ if ($item->allowComments) {
 			redirect($_SERVER['PHP_SELF'].'?'.http_build_query(array('deletecomment'=>null, 'commentid'=>null, 'sesskey'=>null)+(array)$params));
 		}
 		else {
-			print_error("commentnotfound","block_exabis_eportfolio");	    	
+			print_error("commentnotfound","block_exabis_eportfolio");
 			redirect($_SERVER['REQUEST_URI']);
 		}
 	}
@@ -140,7 +143,7 @@ function block_exabis_eportfolio_show_comments($item) {
 	global $CFG, $USER, $COURSE;
 
 	$comments = get_records("block_exabeporitemcomm", "itemid", $item->id, 'timemodified DESC');
-	
+
 	if($comments) {
 		foreach ($comments as $comment) {
 			$stredit = get_string('edit');
@@ -170,14 +173,14 @@ function block_exabis_eportfolio_show_comments($item) {
 			echo '<tr><td class="left side">';
 
 			echo '</td><td class="content">'."\n";
-			
+
 			echo format_text($comment->entry);
-			
+
 			echo '</td></tr></table>'."\n\n";
 		}
 	}
 }
-	
+
 function block_exabis_eportfolio_do_add_comment($item, $post, $blogeditform) {
 	global $CFG, $USER, $COURSE;
 

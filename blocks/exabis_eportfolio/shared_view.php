@@ -65,8 +65,8 @@ foreach ($blocks as $block) {
 	$columns[$block->positionx][] = $block;
 }
 
-
-
+// Set THEME (nadavkav)
+theme_setup($view->theme);
 
 $CFG->stylesheets[] = dirname($_SERVER['PHP_SELF']).'/css/shared_view.css';
 

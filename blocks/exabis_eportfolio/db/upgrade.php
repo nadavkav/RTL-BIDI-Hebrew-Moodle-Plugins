@@ -4,11 +4,13 @@ function xmldb_block_exabis_eportfolio_upgrade($oldversion=0, $tmp)
 {
     global $CFG, $db;
 
-    if (empty($db)) {
-        return false;
-    }
+    $result = true;
 
-	if ($oldversion < 2008090100) {
+//     if (empty($db)) {
+//         return false;
+//     }
+
+	if ($oldversion < 2008090100 && !empty($db) ) {
 		// old tables
 		$tables = array(
 			'block_exabeporpers', 'block_exabeporexte', 'block_exabeporcate',
@@ -40,7 +42,7 @@ function xmldb_block_exabis_eportfolio_upgrade($oldversion=0, $tmp)
 		$file_id_start = 0;
 		$note_id_start = get_field_select($tableNames['block_exabepornote'], 'MAX(id)', null) + 100;
 		$link_id_start = get_field_select($tableNames['block_exabeporbooklink'], 'MAX(id)', null) + $note_id_start + 100;
-	
+
 		// combine item table
 		$db->Execute($insert_type.' INTO '.$CFG->prefix.'block_exabeporitem'.
 			' (id, userid, type, categoryid, name, url, intro, attachment, timemodified, courseid, shareall, externaccess, externcomment)'.
@@ -85,13 +87,24 @@ function xmldb_block_exabis_eportfolio_upgrade($oldversion=0, $tmp)
 			' SELECT id, bookid+'.$link_id_start.', userid, original, course'.
 			' FROM '.$CFG->prefix.$tableNames['block_exabeporsharlink']);
 
-		return true;
+		$result = true;
 
-	} else {
-		return true;
-		/*
-		echo 'wrong version to upgrade in exabis_eportfolio';
-		exit;
-		*/
 	}
+
+  if ( $result && $oldversion < 2009010103) {
+
+    // Add THEME support (nadavkav)
+    //$result = execute_sql("ALTER TABLE `{$CFG->prefix}_block_exabeporview` ADD `theme` TEXT NULL DEFAULT NULL AFTER `description`");
+    $table = new XMLDBTable('block_exabeporview');
+
+    /// Adding fields to table block_exabeporview
+    //$table->addFieldInfo('themez', XMLDB_TYPE_TEXT, 'medium', null, XMLDB_NOTNULL, null, null, null, null);
+    $field = new XMLDBField('theme');
+    $field->setAttributes(XMLDB_TYPE_CHAR, '25', null, null, null, null, null, null, 'description');
+
+    /// Launch update table for block_exabeporview
+    $result = $result && add_field($table, $field);
+  }
+
+  return $result;
 }

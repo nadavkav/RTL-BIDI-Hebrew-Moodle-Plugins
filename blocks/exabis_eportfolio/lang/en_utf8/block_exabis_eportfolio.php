@@ -135,6 +135,8 @@ $string['download'] = "Download";
 $string['endedit'] = "End editing";
 $string['change'] = "Change";
 $string['explainpersonal'] = "Personal information";
+$string['explain_personal'] = "Personal information";
+$string['explain_personal_body'] = "Displays your personal information";
 $string['personal'] = "Information";
 $string['descriptionsaved'] = "Description saved";
 $string['course'] = "Course";
@@ -242,6 +244,7 @@ $string['viewdescription'] = 'Description';
 $string['viewdesign'] = 'View Design';
 $string['viewitems'] = 'Your Items';
 $string['viewitem'] = 'Item';
+$string['viewtheme'] = 'Use Theme';
 $string['view_specialitems'] = 'Special Items';
 $string['view_specialitem_headline'] = 'Headline';
 $string['view_specialitem_text'] = 'Text';
@@ -250,6 +253,8 @@ $string['view_specialitem_text_defaulttext'] = 'Enter Text Here';
 $string['view_sharing'] = 'Sharing';
 $string['viewand'] = 'and';
 $string['view_sharing_noaccess'] = 'No Access';
+$string['addnewitem'] = 'Add a new item type:';
+
 
 // Config
 $string['config_version_3'] = 'New E-Portfolio layout: inkluding views, etc.';
