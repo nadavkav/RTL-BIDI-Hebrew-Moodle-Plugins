@@ -211,7 +211,7 @@
     }
     $table->align = array("center", "center", "center");
     $table->width = "40%";
-    $table->size = array("5%", "75%", "10%");
+    $table->size = array("20%", "60%", "10%");
     $table->wrap = array(NULL, 'no', 'no');
     $table->data = array();
 
@@ -280,7 +280,7 @@
     }
     $table->align = array("center", "left", "center", "center", "center", "center");
     $table->width = "90%";
-    $table->size = array("5%", "23%", "15%", "30%", "10%", "10%", "7%");
+    $table->size = array("5%", "20%", "15%", "25%", "10%", "10%", "12%");
     $table->wrap = array(NULL, 'no', 'no', 'no', 'no', 'no');
     $table->data = array();
 
@@ -484,7 +484,7 @@
 
     $table->align = array("center", "left", "left", "center");
     $table->width = "60%";
-    $table->size = array("10%", "35%", "35%", "20%");
+    $table->size = array("15%", "35%", "35%", "20%");
     $table->wrap = array(NULL, 'no', 'no', 'no');
     $table->data = array();
 

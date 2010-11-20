@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 /**
 * view.php
-* 
+*
 * This file allows a user to view a list of their links and
 * Gives them the ability to manage many aspects of their files,
 * Including sharing to other users, organizing, submitting to
@@ -23,31 +23,31 @@
     $action  = optional_param('what', '', PARAM_ACTION);
 
     $readonlyaccess = false; // Says if we are in read-only access
-	
+
     if (! $course = get_record('course', 'id', $id) ) {
         error('That\'s an invalid course id', "view.php?id={$id}&amp;groupid={$groupid}&amp;rootdir={$rootdir}");
     }
 
     require_login($course->id);
-    
+
     $coursecontext = get_context_instance(CONTEXT_COURSE, $id);
     $canmanagegroups = has_capability('block/file_manager:canmanagegroups', $coursecontext);
-	
+
 	$cb = fm_clean_checkbox_array();
 	if ($cb != NULL) {
 		$USER->fm_cb = $cb;
 	}
 
 /// Ensures the user is able to view the fmanager
-	fm_check_access_rights($course->id);	
-		
+	fm_check_access_rights($course->id);
+
 	if ($groupid == 0){
 		// Ensures user owns the folder
 		fm_user_owns_folder($rootdir);
 	} else {
 		// Ensures group owns the folder
 		fm_group_owns_folder($rootdir, $groupid);
-		
+
 		// Depending on the groupmode, ensures that the user is member of the group and is allowed to access
 		if (function_exists('build_navigation')){
 		    $groupmode = groups_get_course_groupmode($course);
@@ -56,25 +56,25 @@
 		    // TODO : remove that option in further releases
 		    $groupmode = groupmode($course);
 		}
-		
+
 		switch ($groupmode){
-			case NOGROUPS : 
+			case NOGROUPS :
                 // Should no to be there ...
                 error(get_string('errnogroups', 'block_file_manager'), "{$CFG->wwwroot}/course/view.php?id={$course->id}");
                 break;
-            case SEPARATEGROUPS : 
+            case SEPARATEGROUPS :
                 if (!$canmanagegroups && !groups_is_member($groupid)){ // Must check if the user is member of that group
                     error(get_string('errnotmember', 'block_file_manager'), "{$CFG->wwwroot}/course/view.php?id={$course->id}");
                 }
                 break;
-            case VISIBLEGROUPS : 
+            case VISIBLEGROUPS :
                 if (!$canmanagegroups && !groups_is_member($groupid)){ // It is ok, no check needed for read-only access
                     $readonlyaccess = true;
                 }
                 break;
         }
     }
-	
+
 	if (isset($_POST['newlink'])) {
 		redirect("link_manage.php?id={$id}&amp;groupid={$groupid}&amp;rootdir={$rootdir}");
 	} elseif (isset($_POST['newfolder'])) {
@@ -97,7 +97,7 @@
 		}
 
 		while ($folder->pathid != 0) {
-            $nav[] = array('name'=>format_text($folder->name,FORMAT_PLAIN), 'link'=>"view.php?id={$id}&amp;groupid={$groupid}&amp;rootdir={$folder->id}{$tmplink}", 'type'=>'misc'); 
+            $nav[] = array('name'=>format_text($folder->name,FORMAT_PLAIN), 'link'=>"view.php?id={$id}&amp;groupid={$groupid}&amp;rootdir={$folder->id}{$tmplink}", 'type'=>'misc');
 			$folder = get_record('fmanager_folders','id',$folder->pathid);
 		}
         $nav[] = array('name'=>format_text($folder->name,FORMAT_PLAIN), 'link'=>"view.php?id={$id}&amp;groupid={$groupid}&amp;rootdir={$folder->id}{$tmplink}", 'type'=>'misc');
@@ -108,7 +108,7 @@
     $nav = array_reverse($nav);
     $nav[] = array('name'=>get_string('myfiles', 'block_file_manager'), 'link'=>null, 'type'=>'misc');
     $navigation = build_navigation($nav);
-    print_header($strtitle, format_string($course->fullname), $navigation, "", "", false, "&nbsp;", "&nbsp;");     
+    print_header($strtitle, format_string($course->fullname), $navigation, "", "", false, "&nbsp;", "&nbsp;");
 
     if (right_to_left()) { // rtl support for table cell alignment (nadavkav patch)
       $alignmentleft = 'right';
@@ -119,7 +119,7 @@
     }
 
 // start page content
-	  
+
 	print_heading(get_string('myfiles', 'block_file_manager'));
     if ($readonlyaccess){
 		print_simple_box( text_to_html(get_string('msgreadonly', 'block_file_manager')) , 'center', '620');
@@ -129,13 +129,13 @@
 	echo "<br/>";
 	echo fm_print_js_select();
 	echo fm_print_js_amenu();
-?>	
+?>
 <div style="<?php echo $alignmentleft; ?>">
 <form name="linkform" action="view.php" method="post">
 <input type="hidden" name="id" value="<?php p($id) ?>" />
 <input type="hidden" name="groupid" value="<?php p($groupid) ?>" />
 <input type="hidden" name="rootdir" value="<?php p($rootdir) ?>" />
-<i>	
+<i>
 <?php
 	switch($action) {
 		case 'movesel':
@@ -147,44 +147,26 @@
 			}
 			echo $count.get_string('msgmovetohere','block_file_manager');
 			break;
-	}	
+	}
 ?>
 </i>
 </div>
 <?php
 
 
-if (!$readonlyaccess) {
-?>
-<table align="<?php echo $alignmentleft; ?>" width="10%">
-    <tr>
-        <td width="5%">&nbsp;
-            
-        </td>
-        <td>
-            <?php echo fm_print_actions_menu($id, 'link', $rootdir, $groupid) ?>
-        </td>
-        <td>
-            <?php helpbutton('myfilesaction', get_string('menuhelp', 'block_file_manager'), 'block_file_manager'); ?>
-	    </td>
-	</tr>
-</table>
-<br />
-<br />
-<?php
-}
+
 if ($groupid == 0){
-	// Prints user files management form	
+	// Prints user files management form
 	print_table(fm_print_user_files_form($id, $rootdir, $action,0,$readonlyaccess));
 	// Prints how much space user has left
 	$tmpdir = $CFG->dataroot."/".fm_get_user_dir_space();
 } else {
-	// Prints group files management form	
+	// Prints group files management form
 	print_table(fm_print_user_files_form($id, $rootdir, $action, $groupid,$readonlyaccess));
 	// Prints how much space group has left
 	$tmpdir = $CFG->dataroot."/".fm_get_group_dir_space($groupid);
 }
-	
+
 $dirsize = fm_get_size($tmpdir, 1);
 $usertype = fm_get_user_int_type();
 $adminsettings = get_record('fmanager_admin', 'usertype', $usertype);
@@ -200,6 +182,27 @@ echo "<center>";
 if ($action == 'movesel') {
 	echo "<input type=\"submit\" value=\"".get_string('btnmovehere','block_file_manager')."\" name=\"btnmovehere\">&nbsp;&nbsp;";
 }
+
+if (!$readonlyaccess) {
+?>
+<table align="<?php echo $alignmentleft; ?>" width="10%">
+    <tr>
+        <td width="5%">&nbsp;
+
+        </td>
+        <td>
+            <?php echo fm_print_actions_menu($id, 'link', $rootdir, $groupid) ?>
+        </td>
+        <td>
+            <?php helpbutton('myfilesaction', get_string('menuhelp', 'block_file_manager'), 'block_file_manager'); ?>
+      </td>
+  </tr>
+</table>
+<br />
+<br />
+<?php
+}
+
 if (!$readonlyaccess) {
 ?>
 <input type="submit" value="<?php print_string('btnnewfolder', 'block_file_manager') ?>" name="newfolder" />
@@ -218,25 +221,9 @@ if (!$readonlyaccess) {
 <input type="hidden" name="id" value="<?php p($id) ?>" />
 <input type="hidden" name="groupid" value="<?php p($groupid) ?>" />
 <input type="hidden" name="rootdir" value="<?php p($rootdir) ?>" />
-
-<table align="<?php echo $alignmentleft; ?>" width="20%">
-    <tr>
-		<td width="5%">&nbsp;</td>
-		<td colspan="2">
-            <?php echo "<strong>".get_string('categories', 'block_file_manager')."</strong><br />"; ?>
-        </td>
-	</tr>
-	<tr>
-		<td width="5%">&nbsp;</td>
-        <td>
-            <?php echo fm_print_actions_menu($id, 'category', $rootdir, $groupid); ?>
-        </td>
-        <td>
-            <?php helpbutton('mycataction', get_string('menuhelp', 'block_file_manager'), 'block_file_manager'); ?>
-	    </td>
-	</tr>
-</table>
+<div class="categories" style="text-align:right;">
 <br /><br />
+
 
 <?php
 /*
@@ -249,7 +236,7 @@ if (!$readonlyaccess) {
 	$table->data = array();
 
 	$actions_menu = fm_print_actions_menu($id, 'category', $rootdir)." ".helpbutton('mycataction', get_string('menuhelp', 'block_file_manager'), 'filemanager');
-	
+
 	$table->data[] = array($actions_menu);
 
 	print_table($table);
@@ -263,13 +250,33 @@ echo "<div style=\"text-align:$alignmentleft\">";
 print_table(fm_print_category_list($id, $rootdir, $groupid,$readonlyaccess));
 if (!$readonlyaccess) {
 ?>
+
+<table class="actions" align="<?php echo $alignmentleft; ?>" width="20%">
+    <tr>
+    <td width="5%">&nbsp;</td>
+    <td colspan="2">
+            <?php echo "<strong>".get_string('categories', 'block_file_manager')."</strong><br />"; ?>
+        </td>
+  </tr>
+  <tr>
+    <td width="5%">&nbsp;</td>
+        <td>
+            <?php echo fm_print_actions_menu($id, 'category', $rootdir, $groupid); ?>
+        </td>
+        <td>
+            <?php helpbutton('mycataction', get_string('menuhelp', 'block_file_manager'), 'block_file_manager'); ?>
+      </td>
+  </tr>
+</table>
+
 <input type="submit" value="<?php print_string('btncreatenewcat', 'block_file_manager') ?>" name="newcat" />
 </div>
 </form>
 <br />
 <br />
+</div>
 <?php
-}  
+}
 //print_footer($course);
 print_footer();
 ?>
