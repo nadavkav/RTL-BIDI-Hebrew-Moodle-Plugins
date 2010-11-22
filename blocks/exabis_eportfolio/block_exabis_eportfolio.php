@@ -72,9 +72,16 @@ class block_exabis_eportfolio extends block_list {
 		$this->content->items[]='<a title="' . get_string('sharedbookmarks', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/shared_people.php?courseid=' . $COURSE->id . '">' . get_string('sharedbookmarks', 'block_exabis_eportfolio') . '</a>';
 	    $this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/publishedportfolios.png" height="16" width="16" alt="'.get_string("sharedbookmarks", "block_exabis_eportfolio").'" />';
 
-		$this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/export_scorm.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
-		$this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
+		//$this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/export_scorm.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
+		//$this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
 
+if (has_capability('block/exabis_eportfolio:importfrommoodle', $context)) {
+  //echo "<p ><img src=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/pix/import.png\" height=\"16\" width=\"16\" alt='".get_string("moodleimport", "block_exabis_eportfolio")."' /> <a title=\"" . get_string("moodleimport","block_exabis_eportfolio") . "\" href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/import_moodle.php?courseid=".$courseid."\">".get_string("moodleimport","block_exabis_eportfolio")."</a></p>";
+
+    $this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/import_moodle.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
+    $this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
+
+}
         return $this->content;
     }
 }
