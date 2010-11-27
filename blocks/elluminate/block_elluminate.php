@@ -1,4 +1,4 @@
-<?php // $Id: block_elluminate.php,v 1.1 2008/02/08 18:59:11 mchurch Exp $
+<?php // $Id: block_elluminate.php,v 1.1.2.2 2009/03/18 16:45:57 mchurch Exp $
 
 /**
  * Elluminate Live! block.
@@ -7,7 +7,7 @@
  * server from Moodle and admins/teachers to add students and other users
  * to a remote Elluminate Live! server.
  *
- * @version $Id: block_elluminate.php,v 1.1 2008/02/08 18:59:11 mchurch Exp $
+ * @version $Id: block_elluminate.php,v 1.1.2.2 2009/03/18 16:45:57 mchurch Exp $
  * @author Justin Filip <jfilip@oktech.ca>
  * @author Remote Learner - http://www.remote-learner.net/
  */
@@ -17,7 +17,7 @@ class block_elluminate extends block_list {
 
 	function init() {
 		$this->title   = get_string('elluminate', 'block_elluminate');
-		$this->version = 2007112700;
+		$this->version = 2009091101;
 	}
 
 	function get_content() {
@@ -54,9 +54,10 @@ class block_elluminate extends block_list {
 			$this->content->icons[] = '';
 
 			foreach ($recordings as $recording) {
+				$elluminate = get_record('elluminate', 'meetingid', $recording->meetingid);
 				$this->content->items[] = '<a href="' . $CFG->wwwroot .
                                                   '/mod/elluminate/view.php?a=' .
-				$recording->meetingid . '" target="new">' .
+				$elluminate->id . '&amp;group=' . $elluminate->groupid . '" target="new">' .
 				$recording->name . '</a>';
 				/*
 				 $this->content->items[] = '<a href="' . $CFG->wwwroot .
