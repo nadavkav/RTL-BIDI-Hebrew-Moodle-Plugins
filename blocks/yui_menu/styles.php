@@ -44,15 +44,16 @@ $skin = "{$CFG->wwwroot}/blocks/yui_menu/skin"
 }
 .yui_menu_tree > .icon {
     /* dots behind the outine menu */
-    background: url(<?php echo "$skin/l.gif" ?>) center bottom no-repeat;
+    background: url(<?php echo "$skin/l.gif" ?>) left bottom no-repeat;
 }
 /* Note: this is a CSS 2 selector pattern, it's not supported in
 IE 6 and earlier, but the browser will degrade nicely */
 .ygtvtm + td, .ygtvtmh + td,
 .ygtvlm + td, .ygtvlmh + td {
     /* dots behind the section menus */
-    background: url(<?php echo "$skin/l.gif" ?>) 7px bottom no-repeat;
+    background: url(<?php echo "$skin/l.gif" ?>) 10% bottom no-repeat;
 }
+
 .yui_menu_tree .highlight {
     font-weight: bold;
 }
@@ -124,4 +125,33 @@ vertical-align:middle;
 .icon a:hover {
 background-color:GreenYellow;
 text-decoration:none;
+}
+td#left-column,td#right-column  {
+width:220px !important;
+}
+
+.dir-rtl .ygtvtn .ygtvspacer, .dir-rtl .ygtvln .ygtvspacer {
+    background: url(<?php echo "$skin/n.gif" ?>) no-repeat scroll left center transparent;
+}
+
+.dir-rtl .ygtvtm .ygtvspacer, .dir-rtl .ygtvlm .ygtvspacer {
+    background: url(<?php echo "$skin/m-rtl.gif" ?>) no-repeat scroll left center transparent;
+}
+
+.dir-rtl .ygtvtmh .ygtvspacer, .dir-rtl .ygtvlmh .ygtvspacer {
+    background: url(<?php echo "$skin/mh-rtl.gif" ?>) left center no-repeat;
+}
+
+.dir-rtl .ygtvtp .ygtvspacer, .dir-rtl .ygtvlp .ygtvspacer {
+    background: url(<?php echo "$skin/p-rtl.gif" ?>) left center no-repeat;
+}
+
+.dir-rtl .ygtvtph .ygtvspacer, .dir-rtl .ygtvlph .ygtvspacer {
+    background: url(<?php echo "$skin/ph-rtl.gif" ?>) left center no-repeat;
+}
+
+.dir-rtl .ygtvtm + td, .ygtvtmh + td,
+.dir-rtl .ygtvlm + td, .ygtvlmh + td {
+    /* dots behind the section menus */
+    background: url(<?php echo "$skin/l.gif" ?>) 90% bottom no-repeat;
 }

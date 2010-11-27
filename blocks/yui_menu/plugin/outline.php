@@ -115,12 +115,12 @@ class yui_menu_plugin_outline extends yui_menu_plugin {
             $iconpath = $CFG->wwwroot;
 
             if ($THEME->custompix) {
-	      $iconpath .= "/theme/".current_theme()."/pix";
-	    } else {
-	      $iconpath .= '/pix';
-	      //$iconpath .= '/';
-	    }
-	    //$iconpath = $CFG->wwwroot."/theme/".current_theme()."/pix";
+              $iconpath .= "/theme/".current_theme()."/pix";
+            } else {
+              $iconpath .= '/pix';
+              //$iconpath .= '/';
+            }
+            //$iconpath = $CFG->wwwroot."/theme/".current_theme()."/pix";
 
             // decide what URL we want to use
             // A lot of this should really be done by the course format
@@ -155,9 +155,9 @@ class yui_menu_plugin_outline extends yui_menu_plugin {
                 }
             }
             if ($url === false) {
-                $item = new yui_menu_item($this, $text, $iconpath . '/i/one.gif');
+                $item = new yui_menu_item($this, $text, '' );//$iconpath . '/i/one.gif'); // redundant icons, lets save space (nadavkav)
             } else {
-                $item = new yui_menu_item_link($this, $text, $url, $iconpath . '/i/one.gif');
+                $item = new yui_menu_item_link($this, $text, $url,'');// $iconpath . '/i/one.gif'); // redundant icons, lets save space (nadavkav)
             }
             $item->expand = $expand;
             if (isset($section->sequence)) {
