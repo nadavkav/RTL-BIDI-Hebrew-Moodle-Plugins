@@ -12,7 +12,7 @@
 
 /**
  * Configuration for course menu instances
- * 
+ *
  * @author Alan Trick
  * @copyright Copyright Trinity Western University
  * @license http://www.gnu.org/copyleft/gpl-3.0.html
@@ -27,7 +27,7 @@ $items = $itemlist;
 
 foreach ($items as $k=>$v) {
     $text = $v->html();
-    
+
     $config = '';
     $show = true;
     $item = 'item_'.$k;
@@ -70,7 +70,7 @@ for ($i = 0; $i < $n_items; $i++) {
 </table>
 <?php
 if (!isset($this->config->maxsize)) {
-   $this->config->maxsize = 19;
+   $this->config->maxsize = 25;
 }
 if (!isset($this->config->trunc)) {
    $this->config->trunc = '...';
@@ -87,6 +87,8 @@ if ($this->config->introaction == 'introhide') {
 }
 ?>
 <table align="center">
+<tr><td><?php echo get_string('title', 'block_yui_menu'); ?> </td>
+<td colspan="2"><input type="text" name="title" value="<?php p($this->config->title) ?>"></td></tr>
 <tr><td><?php echo get_string('introlength', 'block_yui_menu'); ?></td>
 <td colspan="2"><input type="text" name="maxsize" value="<?php p($this->config->maxsize) ?>"></td></tr>
 <tr><td><?php echo get_string('trunctext', 'block_yui_menu'); ?> </td>
@@ -158,12 +160,12 @@ function toggleitem() {
     field.value = (show ? 'show':'hide');
 }
 
-function changeItem(n1, n2) 
+function changeItem(n1, n2)
 {
 	var t = hidden[n1].value;
 	hidden[n1].value = hidden[n2].value;
 	hidden[n2].value = t;
-	
+
 	span_display[n1].removeChild(spans[n1]);
 	span_display[n2].removeChild(spans[n2]);
 	var t = spans[n1];

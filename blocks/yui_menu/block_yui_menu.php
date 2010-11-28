@@ -12,7 +12,7 @@
 
 /**
  * The course navigation menu block
- * 
+ *
  * This course menu is inspired by the Course Menu+ from NetSapiensis.com
  * and the one from Humbolt State University.
  *
@@ -30,12 +30,12 @@ require_once $CFG->dirroot.'/blocks/yui_menu/settingslib.php';
  * difficult to do so.
  */
 class block_yui_menu extends block_base {
-    
+
     function init() {
         $this->title = get_string('blockname','block_yui_menu');
         $this->version = '2007092000';
     }
-    
+
     function instance_allow_config() {
         return true;
     }
@@ -48,21 +48,25 @@ class block_yui_menu extends block_base {
             'my-index' => false,
          );
     }
-  
+
     function get_content() {
         // cache content
         if (isset($this->content)) return $this->content;
-        
+
         global $USER, $CFG, $COURSE, $PAGE;
-        
+
         require_once $CFG->dirroot . '/course/lib.php';
-                
+
+        if ($this->config->title) {
+          $this->title = $this->config->title;
+        }
+
         $plugins = $this->load_plugins($CFG->dirroot . '/blocks/yui_menu/plugin');
-        
+
         $itemlist = array();
         foreach ($plugins as $p) $p->add_items(&$itemlist, $this);
         $itemlist = $this->order_items($itemlist);
-        
+
         // ouput stuff
         $menu = '';
         $yui_menu_scripts = array(); // id=>script
@@ -133,7 +137,7 @@ tree.subscribe('expandComplete', addTreeIcons);";
         $this->content->footer = '';
         return $this->content;
     }
-    
+
     /**
      * @param array $children list of yui_menu_item
      * @param string $parent javascript name of parent node
@@ -168,7 +172,7 @@ tree.subscribe('expandComplete', addTreeIcons);";
         // $this->config->order_k = k-th entry in the tree
         $startorder = array_keys($list);
         $order = array();
-        
+
         for ($i=0; $i < count($startorder); $i++) {
             $item = 'order_'.$i;
             if (!isset($this->config->$item)) continue;
@@ -191,7 +195,7 @@ tree.subscribe('expandComplete', addTreeIcons);";
     /**
      * Searches through the directory and lists all of the eligable
      * files
-     * 
+     *
      * @return array string of names
      * */
     static function list_all_plugins($path) {
@@ -208,7 +212,7 @@ tree.subscribe('expandComplete', addTreeIcons);";
     /**
      * Searches through the directory and includes all of the eligable
      * files an initialises the plugin classes
-     * 
+     *
      * @return array list of plugin objects
      * */
     static function load_plugins($path) {
@@ -229,28 +233,28 @@ tree.subscribe('expandComplete', addTreeIcons);";
 
 
 abstract class yui_menu_plugin {
-    
+
     public $id;
     public $visible; // set by configuration data
-    
+
     function __construct($id, $options) {
         $this->id = $id;
         $this->visible = $options['visible'];
     }
-    
+
     /*Add items to an array*/
     abstract function add_items($list, $block);
-    
+
 }
 
 class yui_menu_item {
-    
+
     public $plugin;
     public $text;
     public $icon;
     public $style;
     public $expand = true;
-    
+
     function __construct($plugin, $text, $icon) {
         $this->plugin = $plugin;
         $this->text = $text;
@@ -261,23 +265,23 @@ class yui_menu_item {
         $ico = htmlspecialchars($this->icon_url);
         return "<img src='$ico' alt='' />";
     }
-    
+
     function html() {
         return htmlspecialchars($this->text);
     }
 }
 
 class yui_menu_item_link extends yui_menu_item {
-    
+
     public $url;
     public $title;
-    
+
     function __construct($plugin, $text, $url, $icon, $title = null) {
         $this->link_url = $url;
         if (isset($title)) $this->title = $title;
         parent::__construct($plugin, $text, $icon, $title);
     }
-    
+
     function html() {
         // required parameters
         $url = htmlspecialchars($this->link_url);

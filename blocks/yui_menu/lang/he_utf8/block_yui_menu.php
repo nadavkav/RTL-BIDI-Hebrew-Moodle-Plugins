@@ -1,8 +1,9 @@
 <?php
-$string['outline'] = 'תצוגת כל יחידות הוראה';
-$string['blockname'] = 'תפריט יחידות הוראה ופעילויות';
+$string['outline'] = 'תפריט יחידות הוראה';
+$string['blockname'] = 'תפריט נושאים, משאבים ופעילויות';
 
 // Config screen options
+$string['title'] = 'כותרת חלופית:';
 $string['introlength'] = 'מספר התווים שיש להציג מתוך כותרת יחידת ההוראה:';
 $string['trunctext'] = 'תווים שיש להוסיף לאחר תצוגת הכותרת היחידה:';
 $string['introaction'] = 'הפעולה בעת בחירת יחידת הוראה:';

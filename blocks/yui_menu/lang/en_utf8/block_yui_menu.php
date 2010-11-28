@@ -3,6 +3,7 @@ $string['blockname'] = 'Course Menu';
 $string['outline'] = 'Outline';
 
 // Instance config options
+$string['title'] = 'Alternative block Title:';
 $string['introlength'] = 'Length of section intros:';
 $string['trunctext'] = 'Section intro truncation text:';
 $string['introaction'] = 'Section intro links action:';

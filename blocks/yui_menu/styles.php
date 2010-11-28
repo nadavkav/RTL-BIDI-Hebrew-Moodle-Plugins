@@ -155,3 +155,7 @@ width:220px !important;
     /* dots behind the section menus */
     background: url(<?php echo "$skin/l.gif" ?>) 90% bottom no-repeat;
 }
+
+.dir-rtl .block_yui_menu div.column.c0 {
+    float: right;
+}
