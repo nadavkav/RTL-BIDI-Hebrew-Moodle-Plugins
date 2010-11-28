@@ -30,9 +30,10 @@ $image = $imgurl;
   // a fresh question. no editing was done, yet.
   //echo $image;
 }
+
 ?>
 
-<a href="javascript:pixlr.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'he',method:'POST'});">
+<a href="javascript:pixlr.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'<?php echo substr(current_language(),0,2); ?>',method:'POST'});">
 <img id="editme" src="<?php if (isset($imgurl)) { echo $imgurl; } else { echo $image; } ?>" width="250" height="150" title="<?php echo str_replace('file.php','sendfile.php',$image); ?>" /></a><br /><br />
 <br /><br />
 <?php } ?>
