@@ -14,6 +14,7 @@ require_once($CFG->libdir . '/pear/HTML/QuickForm/text.php');
 require_js(array('yui_dom-event', 'yui_datasource', 'yui_connection', 'yui_autocomplete'));
 require_js($CFG->wwwroot . '/admin/report/userroles/username.js');
 require_css($CFG->wwwroot . '/lib/yui/autocomplete/assets/skins/sam/autocomplete.css');
+require_css($CFG->wwwroot . '/admin/report/userroles/styles.php');
 
 /**
  * HTML class for a drop down element to select a question category.

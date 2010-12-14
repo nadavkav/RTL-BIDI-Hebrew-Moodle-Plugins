@@ -18,11 +18,12 @@ if (!confirm_sesskey() && has_capability('moodle/user:viewdetails', get_context_
     die;
 }
 $prefix = required_param('prefix', PARAM_RAW);
-$prefix = addslashes(preg_replace('/[^-\'a-zA-Z1-9]/', '', $prefix));
+//$prefix = addslashes(preg_replace('/[^-\'a-zA-Z1-9]/', '', $prefix));
+$prefix = addslashes($prefix);
 $ilike = sql_ilike();
 $users = get_records_select('user',
         "firstname $ilike '$prefix%' OR lastname $ilike '$prefix%' OR username $ilike '$prefix%' OR idnumber $ilike '$prefix%' and deleted=0",
-        'lastname', 'username, firstname, lastname', 0, 50);
+        'lastname', 'username, firstname, lastname', 0, 80);
 if (!$users) {
     $users = array();
 }

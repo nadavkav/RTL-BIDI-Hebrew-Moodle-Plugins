@@ -9,7 +9,7 @@
 
 function add_username_autocomplete(fieldid, sesskey, url) {
 
-    var dataSource = new YAHOO.util.XHRDataSource(url); 
+    var dataSource = new YAHOO.util.XHRDataSource(url);
     dataSource.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
     dataSource.responseSchema = { recordDelim : "\n", fieldDelim : "\t" };
     dataSource.scriptQueryParam = 'prefix';
@@ -17,7 +17,7 @@ function add_username_autocomplete(fieldid, sesskey, url) {
 
     var autoComplete = new YAHOO.widget.AutoComplete('id_' + fieldid, fieldid + 'container', dataSource);
     autoComplete.forceSelection = true;
-    autoComplete.maxResultsDisplayed = 20;
+    autoComplete.maxResultsDisplayed = 50;
 
     autoComplete.formatResult = function(resultitem, query, resultmatch) {
         return resultitem[0] + " (" + resultitem[1] + ")";
