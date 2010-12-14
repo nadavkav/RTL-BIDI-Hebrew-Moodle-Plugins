@@ -33,7 +33,7 @@ if(!$canrevert) {
 
 // Check if reverting to previous version has been confirmed
 $confirmed = optional_param('confirm', null, PARAM_ALPHA);
-if($confirmed) {
+if($confirmed or $_POST['confirm']) { // fix: did not revert to old versions since it was ignoring "confirm" POST value (nadavkav) 
 
     // Lock something - but maybe this should be the current version
     list($lockok, $lock) = ouwiki_obtain_lock($ouwiki, $pageversion->pageid);
