@@ -137,6 +137,12 @@ echo <<<END
     padding:5px 0;
 }
 
+.dir-rtl .commentTextBox,
+.dir-rtl .reviewDetailsRow,
+.dir-rtl .criteriaDisplayColumn {
+    text-align: right;
+}
+
 </style>
 
 END;
