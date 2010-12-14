@@ -57,7 +57,7 @@ class block_yui_menu extends block_base {
 
         require_once $CFG->dirroot . '/course/lib.php';
 
-        if ($this->config->title) {
+        if (!empty($this->config->title)) {
           $this->title = $this->config->title;
         }
 
