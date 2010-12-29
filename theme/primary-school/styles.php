@@ -16,6 +16,3 @@
     style_sheet_setup(time(), $lifetime, $themename, $forceconfig);
    
 ?>
-onfig);
-   
-?>
