@@ -1,0 +1,19 @@
+[23-Jan-2010 13:35:45] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[10-Jul-2010 12:49:42] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[10-Jul-2010 12:49:42] PHP Stack trace:
+[10-Jul-2010 12:49:42] PHP   1. {main}() /var/www/moodle-weekly/theme/power-of-science/styles.php:0
+[10-Jul-2010 12:49:42] PHP   2. require_once() /var/www/moodle-weekly/theme/power-of-science/styles.php:11
+[10-Jul-2010 12:49:42] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[10-Jul-2010 12:49:42] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[10-Jul-2010 21:07:54] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[10-Jul-2010 21:07:54] PHP Stack trace:
+[10-Jul-2010 21:07:54] PHP   1. {main}() /var/www/moodle-weekly/theme/power-of-science/styles.php:0
+[10-Jul-2010 21:07:54] PHP   2. require_once() /var/www/moodle-weekly/theme/power-of-science/styles.php:11
+[10-Jul-2010 21:07:54] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[10-Jul-2010 21:07:54] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212
+[10-Jul-2010 21:24:17] PHP Deprecated:  Call-time pass-by-reference has been deprecated in /var/www/moodle-weekly/lib/blocklib.php on line 91
+[10-Jul-2010 21:24:17] PHP Stack trace:
+[10-Jul-2010 21:24:17] PHP   1. {main}() /var/www/moodle-weekly/theme/power-of-science/styles.php:0
+[10-Jul-2010 21:24:17] PHP   2. require_once() /var/www/moodle-weekly/theme/power-of-science/styles.php:11
+[10-Jul-2010 21:24:17] PHP   3. include_once() /var/www/moodle-weekly/config.php:64
+[10-Jul-2010 21:24:17] PHP   4. require_once() /var/www/moodle-weekly/lib/setup.php:212

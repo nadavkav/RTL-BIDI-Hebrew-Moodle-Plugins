@@ -1,0 +1,50 @@
+/*******************************************************************
+ rtl.css
+
+ This CSS file contains all layout definitions that are required for
+ right-to-left languages. It overrides definitions in other fils to
+ move right-floating blocks to the left, align text to the right, 
+ swap left and right margins, etc.
+ 
+ *******************************************************************/
+
+#header .headermain {
+  float:right;
+}
+
+.sideblock .content *, .sideblock .content .message {
+text-align:right;
+}
+
+.reportlink {
+text-align:right;
+}
+
+#intro.generalbox {
+text-align:right;
+}
+
+#mod-assignment-submissions table.submissions td, #mod-assignment-submissions table.submissions th {
+text-align:right;
+}
+
+.grade-report-grader table#user-grades tr.odd th.header {
+text-align:right;
+}
+
+.grade-report-grader table#user-grades tr.even th.header {
+text-align:right;
+}
+
+.generalboxcontent {
+text-align:right;
+}
+
+.mform div.fitem {
+min-height:2em;
+}
+
+form.mform fieldset .advancedbutton {
+    text-align: right;
+
+}

@@ -1,0 +1,129 @@
+123	Acapella	misc
+34	Acid	newage
+74	Acid Jazz	newage
+73	Acid Punk	newage
+99	Acoustic	misc
+40	AlternRock	rock
+40	Alt.Rock	rock
+20	Alternative	newage
+26	Ambient	misc
+90	Avantgarde	misc
+116	Ballad	rock
+41	Bass	misc
+85	Bebob	misc
+96	Big Band	misc
+89	Bluegrass	misc
+0	Blues	blues
+107	Booty Bass	misc
+65	Cabaret	misc
+88	Celtic	folk
+104	Chamber Music	misc
+102	Chanson	misc
+97	Chorus	misc
+61	Christian Rap	misc
+1	Classic Rock	misc
+32	Classical	classical
+112	Club	newage
+57	Comedy	misc
+2	Country	country
+58	Cult	misc
+3	Dance	rock
+125	Dance Hall	misc
+50	Darkwave	misc
+254	Data	data
+22	Death Metal	rock
+4	Disco	rock
+55	Dream	misc
+122	Drum Solo	misc
+120	Duet	rock
+98	Easy Listening	rock
+52	Electronic	rock
+48	Ethnic	misc
+124	Euro-House	rock
+25	Euro-Techno	newage
+54	Eurodance	rock
+84	Fast Fusion	misc
+80	Folk	folk
+81	Folk-Rock	folk
+115	Folklore	folk
+119	Freestyle	rock
+5	Funk	rock
+30	Fusion	misc
+36	Game	misc
+59	Gangsta	rock
+38	Gospel	folk
+49	Gothic	folk
+91	Gothic Rock	folk
+6	Grunge	misc
+79	Hard Rock	rock
+7	Hip-Hop	rock
+35	House	rock
+100	Humour	misc
+19	Industrial	misc
+33	Instrumental	rock
+46	Instrumental Pop	rock
+47	Instrumental Rock	rock
+8	Jazz	jazz
+29	Jazz+Funk	jazz
+63	Jungle	misc
+86	Latin	rock
+71	Lo-Fi	misc
+45	Meditative	misc
+9	Metal	rock
+77	Musical	misc
+82	National Folk	folk
+64	Native American	country
+10	New Age	newage
+66	New Wave	newage
+39	Noise	misc
+11	Oldies	rock
+103	Opera	classical
+12	Other	misc
+75	Polka	folk
+13	Pop	rock
+53	Pop-Folk	folk
+62	Pop/Funk	rock
+109	Porn Groove	misc
+117	Power Ballad	rock
+23	Pranks	misc
+108	Primus	misc
+92	Progressive Rock	rock
+67	Psychadelic	misc
+93	Psychedelic Rock	misc
+43	Punk	newage
+121	Punk Rock	rock
+14	R&B	rock
+15	Rap	rock
+68	Rave	newage
+16	Reggae	reggae
+76	Retro	misc
+87	Revival	misc
+118	Rhythmic Soul	misc
+17	Rock	rock
+78	Rock & Roll	rock
+114	Samba	rock
+110	Satire	misc
+69	Showtunes	misc
+21	Ska	misc
+111	Slow Jam	misc
+95	Slow Rock	rock
+105	Sonata	misc
+42	Soul	rock
+37	Sound Clip	soundtrack
+24	Soundtrack	soundtrack
+56	Southern Rock	rock
+44	Space	misc
+101	Speech	misc
+83	Swing	misc
+94	Symphonic Rock	rock
+106	Symphony	misc
+113	Tango	misc
+18	Techno	rock
+51	Techno-Industrial	rock
+60	Top 40	rock
+70	Trailer	misc
+31	Trance	misc
+72	Tribal	misc
+27	Trip-Hop	misc
+255	Unknown	misc
+28	Vocal	misc
