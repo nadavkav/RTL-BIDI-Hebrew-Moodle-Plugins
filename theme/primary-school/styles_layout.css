@@ -1,0 +1,490 @@
+/*******************************************************************
+ styles_layout.css
+  
+ This CSS file contains all layout definitions like positioning,
+ floats, margins, padding, borders etc.
+
+ Styles are organised into the following sections:
+  core
+  header
+  footer
+
+  admin
+  blocks
+  calendar
+  course
+  doc
+  login
+  message
+  user
+
+  various modules
+
+*******************************************************************/
+
+
+/***
+ *** Core
+ ***/
+
+body {
+  margin:0 0.7em 0 0.7em;
+  padding:0;
+}
+#page {
+	border-left:2px solid #FFFFFF;
+	border-right:2px solid #FFFFFF;
+}
+
+h1.main,
+h2.main,
+h3.main,
+h4.main,
+h5.main,
+h6.main {
+  margin-left:1em;
+  text-align:left
+}
+#content {
+  clear:both
+}
+.generalboxcontent {
+  text-align:left
+}
+#layout-table {
+  margin-top:0
+}
+#layout-table #left-column {
+  width:22%;
+  padding:5px
+}
+#layout-table #middle-column {
+  width:auto;
+  padding:5px
+}
+#layout-table #middle-column .topics {
+  width:95%
+}
+#layout-table #right-column {
+  width:22%;
+  padding:5px
+}
+td#middle-column tr.section td.content,
+td#middle-column tr.section td.side {
+  border-style: none;
+}
+.generalbox {
+  width:90%
+}
+.generaltable th.header {
+  border-left:1px solid;
+  border-right:1px solid;
+}
+.generaltable .smallinfo p {
+  margin-top:0
+}
+.generaltable .cell {
+  border-style: none;
+}
+.sitetopiccontent {
+  border:0 none
+}
+img.resize {
+  width: 1em;
+  height: 1em;
+}
+
+/***
+ *** Header
+ ***/
+.breadcrumb {
+  height:35px;
+/*   color: #FFFFFF; */
+  color:green;
+  font-weight: bolder !important;
+  font-size:14px;
+}
+.breadcrumb .sep {
+  color: #FFFFFF;
+  font-weight:normal;
+  margin:5px;
+}
+.first a:link {
+/* 	color: #FFFFFF; */
+	color:blue;
+	font-size:13px;
+	font-weight: bolder;
+	text-decoration:underline;
+}
+.first a:visited {
+/* 	color: #FFFFFF; */
+	color:blue;
+	font-size:13px;
+	font-weight: normal;
+	text-decoration:underline;
+}
+.first a:hover {
+/* 	color: #FFFFFF; */
+	color:red;
+	font-size:14px;
+	font-weight: bolder;
+	text-decoration:none;
+}
+.first .accesshide {
+	color:#FFFFFF;
+	font-size:11px;
+	font-weight: bolder;
+}
+/***
+ *** Header
+ ***/
+
+#header,
+#header-main,
+.navbar {
+  margin:0
+}
+#header .headermain {
+  float:left;
+  margin:0px;
+  color:#000000;
+}
+.headermenu {
+  float:right;
+  text-align:right
+}
+#header {
+	margin:0px auto;
+	height:30px;
+	padding-left: 60px;
+	padding-top: 22px;
+	background:url(pix/top.png) 20px bottom no-repeat;
+}
+#header_bg {
+	margin:0px auto;
+	height:52px;
+	background:url(pix/top_bg.png) top repeat-x;
+}
+
+.heightcontainer .header {
+	background: #C0C0C0;
+}
+#header-home {
+	margin:0px auto;
+	height:52px;
+}
+.headermenu {
+	padding:3px 15px 0px 0px;
+}
+#banner {
+	height:212px;
+	background:url(pix/banner.jpg) top right no-repeat;
+	padding-left:34px;
+	padding-top:30px;
+}
+#banner_bg {
+	height:222px;
+	background:url(pix/banner_bg.png) top repeat-x;
+}
+.coursesearchbox {
+	color:#000000;
+	font-size:13px;
+	font-family:Tahoma;
+	font-weight:bold;
+}
+.headermain {
+	height:52px;
+	margin-left:34px;
+	margin-top:30px;
+	color:#000000;
+}
+
+#banner_left h1.headermain {
+	color: #000000;
+}
+.headermenu .logininfo {
+  margin:0 12px 4px 0
+}
+
+#navbar_bg {
+  height:42px;
+  background:url(pix/navbar_bg.png) top repeat-x;
+}
+.navbar {
+  height:42px;
+  background:url(pix/navbar.jpg) top right no-repeat;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:10px;
+  padding-bottom:0px;
+  border:0px;
+}
+.navbar .breadcrumb {
+  float:left;
+  margin:5px 0.2em 0 12px
+}
+.navbutton {
+  float:right;
+  margin:0.2em 1em 0.2em 0
+}
+.navbar hr {
+  height:1px
+}
+div.header {
+	background:#060606 url(pix/h2.png) top repeat-x;
+	padding:5px 5px 0px 5px;
+	margin:0px;
+	border: none;
+	color:#FFFFFF;
+}
+div.title {
+	padding:5px 5px 0px 5px;
+	color:#FFFFFF;
+}
+
+/***
+ *** Footer
+ ***/
+ 
+#footer {
+	background: #E7E7E7;
+	padding-top:4px;
+	margin:0px;
+	color:#000000;
+}
+#footer a, #footer a:hover{
+	font-size: 11px;
+	color:#72C718;
+}
+/***
+ *** Admin
+ ***/
+
+#admin-index #content,
+#admin-lang #content {
+  padding-top: 10px;
+  margin-top: 13px;
+}
+#admin-maintenance #content {
+  padding-bottom: 15px;
+}
+#adminsettings fieldset {
+  border-width: 1px;
+  border-style: solid;
+}
+form.mform div.textarea textarea {
+  width: 35em;
+}
+
+/***
+ *** Content
+ ***/
+
+#content {
+  clear:both;
+  margin:0 12px
+}
+#course-view #content,
+#site-index #content {
+  margin:0
+}
+#user-edit .userpicture,
+#user-view .userpicture {
+  margin-top:10px
+}
+
+/***
+ *** Admin
+ ***/
+ 
+.logtable th.header {
+  border-left:1px solid;
+  border-right:1px solid;
+}
+#user-edit #content .generalbox,
+#user-view .userinfobox tr {
+  border-top:0 none
+}
+
+/***
+ *** Blocks
+ ***/
+ 
+.sideblock,
+.sideblock .searchform {
+  text-align:left
+}
+.sideblock .header .hide-show-image {
+  margin-top:0.1em;
+}
+.sideblock .searchform a {
+  line-height:1.5em
+}
+#left-column .sideblock {
+  margin:0
+}
+#left-column .sideblock .header,
+#left-column .sideblock .content,
+#right-column .sideblock .header,
+#right-column .sideblock .content {
+  border:0 none
+}
+#right-column .sideblock .content {
+  padding:0.2em 0.7em
+}
+#left-column .sideblock .header {
+  border-bottom:1px solid
+}
+#left-column .sideblock .list .r0,
+#left-column .sideblock .list .r1 {
+  /* height:2em */
+  min-height:2em
+}
+#left-column .sideblock .list td {
+  vertical-align:middle;
+  border-bottom:1px solid
+}
+#right-column .sideblock {
+  margin-bottom:28px
+}
+.sideblock .head {
+  margin-top:0.5em
+}
+.sideblock .link {
+  margin:0.3em 0;
+  border-bottom:1px solid
+}
+.sideblock .post {
+  margin-top:0.5em;
+  padding-bottom:0.2em;
+  border-bottom:1px solid
+}
+.block_rss_client .link {
+  border-top:0 none
+}
+
+/***
+ *** Calendar
+ ***/
+
+#calendar .today,
+.minicalendar .today {
+  padding-top:0;
+  padding-bottom:0;
+  border:1px solid !important
+}
+#calendar .maincalendar .calendarmonth {
+  width:75%
+}
+.sideblock .calendar-controls .current {
+  text-align: center;
+}
+
+/***
+ *** Course
+ ***/
+
+#site-index .headingblock {
+  border:0 none
+}
+#course-view .headingblock {
+  margin-left:1em;
+  padding-left:0.7em;
+  border:0 none;
+  border-left:1.2em solid
+}
+#course-view .topics {
+  margin:0 0.5em 0 1em
+}
+#course-view .section .left {
+  width:0.8em
+}
+#course-view .section .right {
+  width:30px
+}
+#course-view .section .left a {
+  display:none
+}
+#course-view .section .spacer {
+  height:2em
+}
+#course-view .section .activity .spacer {
+  height:12px
+}
+#course-view .section .content .section {
+  margin-top:0;
+  margin-left:0.7em
+}
+#course-view .section .content .section .activity {
+  padding:0.3em 0.2em 0.2em;
+  border-bottom:1px solid
+}
+.course .section .content .summary {
+  margin:0 0 0 0.7em
+}
+#course-view .section .content .section .label img {
+  margin-right:1em;
+  margin-bottom:1em
+}
+#course-user #content,
+#mod-forum-user #content {
+  padding-bottom:0.2em
+}
+.coursebox{
+	border: 1px solid #E4E6E7;
+}
+/***
+ *** Login
+ ***/
+
+.loginbox {
+  margin-top:12px
+}
+  
+/***
+ *** Modules:Forum
+ ***/
+ 
+.forumheaderlist {
+  width:90%;
+  margin-left:auto;
+  margin-right:auto
+}
+.forumheaderlist .header {
+  border-left:1px solid;
+  border-right:1px solid
+}
+#mod-forum-index .generalbox {
+  width:100%
+}
+  
+/***
+ *** Modules:Glossary
+ ***/
+
+.glossarydisplay {
+  border-bottom:5px solid
+}
+.glossarypopup {
+  margin-top:0.5em
+}
+
+/***
+ *** Modules:Resource
+ ***/
+ 
+.mod-resource #content {
+  margin-top:1px
+}
+
+/***
+ *** New stuff
+ ***/
+#message-index #page,
+#message-user #page,
+#message-history #page,
+#mod-glossary-showentry #page,
+#help #page,
+#course-info #page {
+width:auto;
+}

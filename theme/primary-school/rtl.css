@@ -1,0 +1,88 @@
+/*******************************************************************
+ rtl.css
+
+ This CSS file contains all layout definitions that are required for
+ right-to-left languages. It overrides definitions in other fils to
+ move right-floating blocks to the left, align text to the right, 
+ swap left and right margins, etc.
+ 
+ *******************************************************************/
+
+#header .headermain {
+  float:right;
+}
+
+.sideblock .content *, .sideblock .content .message {
+text-align:right;
+}
+
+.reportlink {
+text-align:right;
+}
+
+#intro.generalbox {
+text-align:right;
+}
+
+#mod-assignment-submissions table.submissions td, #mod-assignment-submissions table.submissions th {
+text-align:right;
+}
+
+.grade-report-grader table#user-grades tr.odd th.header {
+text-align:right;
+}
+
+.grade-report-grader table#user-grades tr.even th.header {
+text-align:right;
+}
+
+.generalboxcontent {
+text-align:right;
+}
+
+.mform div.fitem {
+min-height:2em;
+}
+
+#course-view .section .left {
+background-color:#FFFFFF;
+color:blue;
+font-size:2em;
+}
+
+#course-view .section .spacer {
+background:#E4FFDD none repeat scroll 0 0;
+}
+
+#course-view .headingblock {
+background:#E9F9FF none repeat scroll 0 0;
+}
+
+#right-column .sideblock {
+text-align:right;
+}
+
+#right-column .sideblock .header{
+text-align:right;
+}
+
+.oublog-post h2 {
+background:#EEEEEE none repeat scroll 0 0;
+font-size:2em;
+}
+.sideblock img.userpicture {
+height:21px;
+padding-left:7px;
+width:21px;
+}
+.sideblock .content ul.list li.listentry {
+float:right;
+}
+
+.headermain, h1.headermain {
+float:left;
+}
+
+div.header {
+background-color:#DEB887;
+}
