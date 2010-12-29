@@ -1,0 +1,22 @@
+/*  rtl support  */
+#course-view .section td.left {
+    -moz-border-radius-bottomleft: 1px;
+    -moz-border-radius-topleft: 1px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-topright: 5px;
+
+}
+#course-view .section td.right {
+    -moz-border-radius-bottomright: 1px;
+    -moz-border-radius-topright: 1px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-topleft: 5px;
+
+}
+
+#course-view .section td.right {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-left-style: none;
+    border-left-width: 0;
+}

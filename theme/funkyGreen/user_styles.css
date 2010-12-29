@@ -1,0 +1,283 @@
+#wrapper {
+background-color: #dcf5d0;
+margin-left: 4%;
+margin-top: 2%;
+margin-right: 4%;
+margin-bottom:2%;
+border-style: transparent;
+border-width: 2px;
+padding: 6px;
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+#header {
+color:#000000;
+height:40px;
+background-color:#ffffff;
+padding:5px;
+border-bottom: 3px solid #4a7132;
+-webkit-border-top-right-radius: 5px;
+-webkit-border-top-left-radius: 5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+border-radius-topright: 5px;
+border-radius-topleft: 5px;
+}
+
+#header-home {
+color:#000000;
+height:40px;
+background-color:#ffffff;
+padding:5px;
+border-bottom: 3px solid #4a7132;
+-webkit-border-top-right-radius: 5px;
+-webkit-border-top-left-radius: 5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+border-radius-topright: 5px;
+border-radius-topleft: 5px;
+}
+
+body {
+background-image: url("pix/bg10.gif");
+}
+
+#course-view .weekscss .section, #course-view .section td {
+border-color:transparent;
+}
+
+body, table, td, th, li {
+font-family:Arial,Verdana,Helvetica,sans-serif;
+}
+
+.sideblock .header, .sideblock h2.header {
+border-style:solid solid none;
+text-align:center;
+color: #ffffff;
+}
+
+.block_adminblock {
+width:100%;
+}
+
+.sideblock .content {
+background-color:#FFFCD2;
+border-color:transparent;
+}
+
+.sideblock .content {
+-webkit-border-bottom-right-radius: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+border-radius-bottomright: 5px;
+-moz-border-radius-bottomleft: 5px;
+border-radius-bottomleft: 5px;
+}
+
+.block_course_summary, .block_course_summary .content {
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+.sideblock .header {
+background-color:#4d7f2a;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+-webkit-border-top-right-radius: 5px;
+-webkit-border-top-left-radius: 5px;
+border-radius-topright: 5px;
+border-radius-topleft: 5px;
+}
+
+td.content {
+background-color:#FFFFFF;
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+h2.headingblock {
+border-style:solid;
+border-width:1px;
+margin:0;
+padding:5px;
+text-align:center;
+}
+
+body#course-view .headingblock {
+background-color: #ffffff ;
+}
+
+#course-view .section td.right {
+-moz-border-radius-topright:5px;
+-moz-border-radius-bottomright:5px;
+-webkit-border-bottom-right-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+border-radius-topright: 5px;
+border-radius-bottomright: 5px;
+}
+
+#course-view .section td.side{
+background-color: #4d7f2a;
+}
+
+#course-view .section td.left {
+-moz-border-radius-topleft:5px;
+-moz-border-radius-bottomleft:5px;
+-webkit-border-bottom-left-radius: 5px;
+-webkit-border-top-left-radius: 5px;
+border-radius-topleft: 5px;
+border-radius-bottomleft: 5px;
+}
+
+.categorybox, .categoryboxcontent, .coursebox {
+-moz-border-radius:5px 5px 5px 5px;
+}
+
+.coursebox {
+background-color:#FFFFFF;
+}
+
+a:link, a:visited {
+color:#476f41;
+}
+.navbar {
+border-color:transparent;
+background-color:#afcc72;
+-moz-border-radius-bottomleft:5px;
+-webkit-border-bottom-left-radius: 5px;
+border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright:5px;
+-webkit-border-bottom-right-radius: 5px;
+border-radius-bottomright: 5px;
+}
+#footerwrapper{
+background-color: #afcc72;
+
+
+}
+
+#footer {
+border-top:3px solid  #477232;
+background-color: #ffffff;
+-moz-border-radius-bottomleft:5px;
+-webkit-border-bottom-left-radius: 5px;
+border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright:5px;
+-webkit-border-bottom-right-radius: 5px;
+border-radius-bottomright: 5px;
+}
+
+/*main course/site elements above*/
+//forum
+
+.forumheaderlist, .forumpost {
+color: black;
+}
+
+.forumheaderlist .discussion .starter {
+background-color:#ffffff;
+//border-color:#477232
+}
+
+.forumpost {
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+.forumpost .content {
+-moz-border-radius-bottomright:5px;
+-webkit-border-bottom-right-radius: 5px;
+border-radius-bottomright: 5px;
+}
+
+.forumpost .left {
+-moz-border-radius-topleft: 5px;
+-webkit-border-top-left-radius: 5px;
+border-radius-topleft: 5px;
+}
+
+//calendar
+
+#calendar .maincalendar, #calendar .sidecalendar {
+background-color: white;
+}
+
+//chat
+
+#mod-chat-gui_header_js-jsupdate .chat-message {
+background-color: #ffffff;
+}
+
+body.mod-chat-gui_header_js {
+background-image: none;
+background-color: #dcf5d0 !important;
+}
+
+.generalbox {
+background-color: white;
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+//user view
+table.userinfobox {
+border-style: none;
+}
+
+.userinfobox {
+border-style: none;
+}
+
+//glossary
+.glossarypost {
+-moz-border-radius:5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+.entrybox {
+background-color: #ffffff;
+-moz-border-radius-bottomleft:5px;
+-webkit-border-bottom-left-radius: 5px;
+border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright:5px;
+-webkit-border-bottom-right-radius: 5px;
+border-radius-bottomright: 5px;
+}
+
+.glossarycategoryheader {
+background-color:#afcc72;
+}
+
+//quiz
+//.clearfix{
+//background-color: #ffffff;
+//}
+
+//form {
+//background-color: #ffffff;
+//}
+
+#course-view .section td.content {
+  background-color: beige;
+  border: 1px dashed gray;
+}
+
+#course-view .separator {
+  height:30px;
+}
+
+body#course-view .headingblock {
+  display: none;
+}
+
+.sideblock .content {
+  border-bottom: 2px solid gray;
+  border-right: 2px solid gray;
+}
