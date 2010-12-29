@@ -3,7 +3,7 @@ width:100%;
 background:#ffffff;
 }
 
-.sideblock img.userpicture {
+.block_shoutbox .sideblock img.userpicture {
 width:30px;
 height:30px;
 }
@@ -150,7 +150,7 @@ img.userpicture {
 	font-weight: normal;
 	color: #0000FF;
 	width:100%;
-	text-align:center;	
+	text-align:center;
 }
 
 
