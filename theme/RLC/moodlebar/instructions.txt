@@ -1,0 +1,14 @@
+Moodle Bar V1.0 (Lewis Carr | www.lewiscarr.co.uk)
+
+1) Copy the folder /moodlebar into the root of your chosen theme
+
+2) Add the following code to your footer.html file just before the close body tag </body> or boefre your last </div> tag.
+   
+
+<?php include ('moodlebar/moodle_bar.html'); ?>
+
+
+3)Save the file and away you go.
+
+4)If your Moodle site is not 100% width then there is a line of CSS to change in the file (moodle_bar.html), 
+set this to your desired width in pixels.  I've put a comment in the file as to where this is.

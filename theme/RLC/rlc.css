@@ -1,0 +1,235 @@
+/*
+
+Theme Name:Ricardo Lacerda Caiado
+Theme URL: http://www.nce.ufrj.br
+Description: Free Moodle theme basead on Helios theme from web2feel.com
+Author: Ricardo Lacerda Caiado
+Author URI: www.nce.ufrj.br
+Version: 1.1.0
+Tags: white, green, black ,three-columns, fixed-width.
+
+*/
+
+
+body {
+	margin:0 auto;
+	padding:0px 0px 0px 0px;
+	background:url(images/body.png) ;
+	font-family:verdana,Arial, Tahoma,Century gothic,  sans-serif;
+	font-size:12px;
+}
+
+.rlc_clear {
+	clear: both;
+}
+
+/* The Outer cover */
+
+#rlc_wrapper {
+	width:1000px;
+	margin:0px auto;
+	position:relative;
+}
+
+/* The Header */
+
+#rlc_masthead {
+	background: url(images/mast.png) repeat-x;
+	height: 200px;
+}
+
+#rlc_top {
+	height:107px;
+	margin:auto;
+	width:1000px;
+	position:relative;
+	background:url(images/head.png);
+}
+
+.rlc_blogname {
+	width:1000px;
+	margin:15px 0 0 0px;
+	height:70px;
+	text-align:left;
+	float:left;
+}
+
+.rlc_blogname h1  {
+	color: #fff; 
+	font-size:36px;
+	padding:0 0 0px 0;
+	font-weight:bold;
+	}
+
+.rlc_blogname h1  a:link, .blogname h1  a:visited{ 
+	color: #fff; 
+	display:block;
+	margin:5px 0 0 0px;
+}
+	
+.rlc_blogname h1  a:hover { 
+	color: #fff; 
+}
+
+.rlc_blogname h2, .rlc_blogname h2  a:link, .rlc_blogname h2  a:visited {
+	margin:0px 0px 0px 0px;
+	font-size:12px;
+	font-weight:bold;
+	color: #fff; 
+	text-shadow:1px 1px 0px #172527;
+}
+
+.rlc_blogname h2  a:hover { 
+	color: #fff;
+	text-decoration: none;
+}
+
+
+/* Menu */
+	
+#rlc_catmenucontainer {
+	height:40px;
+	display:block;
+	padding:0px 0 0px 0px;
+	font: 11px Arial,Tahoma,Century gothic,verdana,  sans-serif;
+	font-weight:normal;
+	text-transform:uppercase;
+}
+		
+#rlc_catmenu {
+	margin: 0px auto;
+	padding: 0px 0px;
+	height:40px;
+	overflow:hidden;
+	width:1000px;
+}
+
+#rlc_catmenu ul {
+	float: left;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#rlc_catmenu li {
+	float: left;
+	list-style: none;
+	margin: 0px;
+	padding: 0px 50px 0px 0px;
+}
+
+#rlc_catmenu li a, #rlc_catmenu li a:link, #rlc_catmenu li a:visited
+{
+	color: #a5da7e;
+	display: inline;
+	font-weight: normal;
+	padding: 0px;
+	line-height:40px;
+	text-shadow:1px 1px 1px #203F04;
+}
+
+#rlc_catmenu li a:hover, #rlc_catmenu li a:active {
+	color: #ffffff;
+	display: inline;
+	line-height:40px;
+}
+
+/* Page menu */
+
+#rlc_foxmenucontainer {
+	height:53px;
+	display:block;
+	margin:0px auto;
+	font: 11px verdana,Arial, Tahoma,Century gothic,  sans-serif;
+	font-weight:normal;
+	text-transform:normal;
+	width:1000px;
+	background:url(images/menu.png);
+}
+
+#rlc_menu {
+	margin:0px 0px 8px 0px;
+	padding: 0px 10px;
+	height:45px;
+	overflow:hidden;
+}
+	
+#rlc_menu ul {
+	float: left;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+	
+#rlc_menu li {
+	float: left;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+	
+#rlc_menu li a, #rlc_menu li a:link, #rlc_menu li a:visited {
+	color:#ccc;
+	display: block;
+	margin: 0px;
+	padding: 0px 10px ;
+	line-height:45px;
+}
+
+#rlc_menu li a:hover, #rlc_menu li a:active {
+	color: #fff;
+	margin: 0px;
+	padding: 0px 10px ;
+	line-height:45px;
+	text-decoration: none;
+}
+	
+#rlc_menu li:hover, #rlc_menu li.sfhover { 
+	position: static;
+}
+	
+/* Footer */
+	
+#rlc_footer {
+	padding:10px 0 10px 0px;
+	color:#aaa;
+	font-size:12px;
+	margin:0px auto;
+	background:#1d3905;
+	font-family:Arial;
+}
+
+#rlc_footer a:link , #rlc_footer a:visited{
+	color:#aaa;
+}
+
+#rlc_footer a:hover {
+	color:#fff;
+}
+
+.rlc_fcred {
+	text-align:center;
+	margin:10px 0px 10px 10px;
+	line-height:16px;
+}
+	
+/* Bottom */
+
+#rlc_bottom {
+	background:url(images/foot.png) top no-repeat;
+	margin:0px auto;
+	width:1000px;
+	padding: 5px 5px 5px 5px;
+}
+.rlc_bottomcover {
+	background:#4B930D url(images/bottomco.png) top repeat-x;
+	margin:0px auto;
+
+}	
+
+th.header, td.header, h1.header, h2.header, h3.header, div.header, th.header a {
+	background-image: url("images/menu.png");
+	background-position: center top;
+	background-repeat: repeat-x;
+	color: #ffffff;
+}

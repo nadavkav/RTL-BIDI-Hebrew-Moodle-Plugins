@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html<?php echo $direction ?>>
+<head>
+    <?php echo $meta ?>
+    <meta name="keywords" content="moodle, <?php echo $title ?> " />
+    <title><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.ico" />
+    <?php include("$CFG->javascript"); ?>
+    <script src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/Y2K_Neophyte_400-Y2K_Neophyte_italic_400.font.js"></script>
+    <script type="text/javascript">
+    <?php if (!right_to_left() ) { ?>
+      Cufon.replace('.rlc_blogname');
+    <?php }?>
+    </script>
+</head>
+
+<body<?php
+    echo " $bodytags";
+    if ($focus) {
+        echo " onload=\"setfocus()\"";
+    }
+    ?>>
+
+<div id="page">
+
+<div id="rlc_masthead">
+  <div id="rlc_catmenucontainer">
+    <ul id="rlc_catmenu"><li><a href="http://he.wikipedia.org/" target="_new">He Wikipedia</a></li><li><a href="http://google.co.il/" target="_new">Google IL</a></li></ul>
+  </div>	<!-- end rlc_catmenucontainer -->
+  <div id="rlc_top">
+    <div class="rlc_blogname">
+            <h1 class="headermain"><?php echo $heading ?></h1>
+    </div> <!-- end rlc_blogname -->
+  </div> <!-- end rlc_top -->
+
+<?php //Accessibility: 'headermain' is now H1, see theme/standard/styles_layout.css: .headermain
+if ($home) {  // This is what gets printed on the home page only
+?>
+	<?php print_container_start(true, '', 'header-home'); ?>
+
+	<!-- EMPTY -->
+
+	<?php print_container_end(); ?>
+<?php } else if ($heading) {  // This is what gets printed on any other page with a heading
+?>
+	<?php print_container_start(true, '', 'header'); ?>
+
+	<!-- EMPTY -->
+
+	<?php print_container_end(); ?>
+<?php } ?>
+
+<?php //Accessibility: breadcrumb trail/navbar now a DIV, not a table.
+if ($navigation) { // This is the navigation bar with breadcrumbs  ?>
+	<div id="rlc_foxmenucontainer">
+		<div class="navbar">
+       			<div class="breadcrumb"><?php print_navigation($navigation); ?></div>
+       			<div class="navbutton"><?php echo $button; ?></div>
+		</div>
+	</div> <!-- end rlc_foxmenucontainer -->
+<?php } else if ($heading) { // If no navigation, but a heading, then print a line
+?>
+	<div id="rlc_foxmenucontainer">
+		<div class="navbar">
+			<div class="breadcrumb"><ul><li>Bem-vindo ao Ambiente Virtual de Aprendizagem Moodle</div>
+		</div>
+	</div> <!-- end rlc_foxmenucontainer -->
+<?php } ?>
+	</div> <!-- end rlc_masthead -->
+
+	<div id="rlc_wrapper">
+
+    <!-- END OF HEADER -->
+    <?php print_container_start(false, '', 'content'); ?>
