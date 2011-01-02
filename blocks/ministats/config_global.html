@@ -1,0 +1,79 @@
+<div style="text-align: center;">
+
+<table cellpadding="9" cellspacing="0" >
+
+<tr valign="top">
+  <td align="right">block_ministats_timeout:</td>
+  <td align="left"><input type="text" name="block_ministats_timeout" size="5" value="<?php 
+		if ( isset($CFG->block_ministats_timeout) )
+			p($CFG->block_ministats_timeout);
+		else
+			p(BLOCK_MINISTAT_ADMINS_ONLY_DEFAULT);
+		?>" />
+   </td>
+   <td align="left"><?php print_string('stats_timeout', 'block_ministats'); ?></td>
+<tr>
+
+<tr valign="top">
+  <td align="right">block_ministats_admins_only:</td>
+  <td align="left"><?php
+  	    if ( !isset($CFG->block_ministats_admins_only) )
+ 			$CFG->block_ministats_admins_only = BLOCK_MINISTAT_ADMINS_ONLY_DEFAULT;
+
+        unset($options);
+        $options[0] = get_string("no");
+        $options[1] = get_string("yes");
+        choose_from_menu ($options, "block_ministats_admins_only", $CFG->block_ministats_admins_only, "", "", "");
+    ?>
+  </td>
+  <td align="left"><?php print_string('visible_to_admins_only', 'block_ministats'); ?></td>
+</tr>
+
+<tr valign="top">
+  <td align="right">block_ministats_show_teachers:</td>
+  <td align="left"><?php
+  	    if ( !isset($CFG->block_ministats_show_teachers) )
+ 			$CFG->block_ministats_admins_only = BLOCK_MINISTAT_SHOW_TEACHERS_DEFAULT;
+
+        unset($options);
+        $options[0] = get_string("no");
+        $options[1] = get_string("yes");
+        choose_from_menu ($options, "block_ministats_show_teachers", $CFG->block_ministats_show_teachers, "", "", "");
+    ?>
+  </td>
+  <td align="left"><?php print_string('show_teachers', 'block_ministats'); ?></td>
+</tr>
+
+<tr valign="top">
+  <td align="right">block_ministats_show_acrive_users:</td>
+  <td align="left"><?php
+  	    if ( !isset($CFG->block_ministats_show_acrive_users) )
+ 			$CFG->block_ministats_show_acrive_users = BLOCK_MINISTAT_SHOW_ACTIVE_USERS_DEFAULT;
+
+        unset($options);
+        $options[0] = get_string("no");
+        $options[1] = get_string("yes");
+        choose_from_menu ($options, "block_ministats_show_acrive_users", $CFG->block_ministats_show_acrive_users, "", "", "");
+    ?>
+  </td>
+  <td align="left"><?php print_string('show_acrive_users', 'block_ministats'); ?></td>
+</tr>
+
+<tr valign="top">
+  <td align="right">block_ministats_active_users_days:</td>
+  <td align="left"><input type="text" name="block_ministats_active_users_days" size="5" value="<?php 
+		if ( isset($CFG->block_ministats_active_users_days) )
+			p($CFG->block_ministats_active_users_days);
+		else
+			p(BLOCK_MINISTAT_ACTIVE_USERS_DAYS_DEFAULT);
+		?>" />
+   </td>
+   <td align="left"><?php print_string('active_users_days', 'block_ministats'); ?></td>
+<tr>
+
+
+<tr valign="top">
+  <td colspan="3" align="center"><input type="submit" value="<?php print_string('savechanges'); ?>" /></td>
+</tr>
+</table>
+</div>
