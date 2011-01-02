@@ -204,7 +204,7 @@
         $count_inner_categories = (int)count_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$curcategory->id'");
         $inner_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$curcategory->id'", "name asc");
         echo '<tr>';
-        echo '<td valign="top">';
+        echo '<td id="category" valign="top">';
         echo format_string($curcategory->name);
         echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=edit&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;editid='.$curcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/i/edit.gif" width="16" height="16" alt="'.get_string("edit",'block_exabis_eportfolio').'" /></a>';
 
@@ -212,7 +212,7 @@
           echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=delete&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;delid='.$curcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" width="11" height="11" alt="'.get_string("delete").'" /></a>';
         }
         echo '</td>';
-        echo '<td align="right" valign="top">';
+        echo '<td id="subcategory" align="right" valign="top">';
         if($inner_categories) {
           foreach ($inner_categories as $innercurcategory ) {
             echo format_string($innercurcategory->name);
@@ -220,12 +220,13 @@
             echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=delete&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;delid='.$innercurcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" width="11" height="11" alt="'.get_string("delete").'" /></a>';
 
               echo '<br/><br/><table class="subsubcategory"><tr><th>'.get_string("subsubcategory","block_exabis_eportfolio").'</th><tr><td>';
-              $inner_sub_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$innercurcategory->id'", "name asc");
-              foreach ($inner_sub_categories as $innersubcurcategory ) {
-                echo format_string($innersubcurcategory->name);
-                echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=edit&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;editid='.$innersubcurcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/i/edit.gif" width="16" height="16" alt="'.get_string("edit",'block_exabis_eportfolio').'" /></a>';
-                echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=delete&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;delid='.$innersubcurcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" width="11" height="11" alt="'.get_string("delete").'" /></a>';
-                echo '<br/>';
+              if ($inner_sub_categories = get_records_select("block_exabeporcate", "userid='$USER->id' AND pid='$innercurcategory->id'", "name asc")) {
+                foreach ($inner_sub_categories as $innersubcurcategory ) {
+                  echo format_string($innersubcurcategory->name);
+                  echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=edit&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;editid='.$innersubcurcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/i/edit.gif" width="16" height="16" alt="'.get_string("edit",'block_exabis_eportfolio').'" /></a>';
+                  echo '<a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view_categories.php?cataction=delete&amp;sesskey=' . sesskey() . '&amp;catconfirm=1&amp;courseid='.$courseid.'&amp;delid='.$innersubcurcategory->id.'&amp;edit=1"><img src="'.$CFG->wwwroot.'/pix/t/delete.gif" width="11" height="11" alt="'.get_string("delete").'" /></a>';
+                  echo '<br/>';
+                }
               }
               echo '</td></tr>';
               echo '<tr><td>';

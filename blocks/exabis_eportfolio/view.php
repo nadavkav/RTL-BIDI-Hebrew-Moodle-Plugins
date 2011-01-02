@@ -36,7 +36,7 @@ require_login($courseid);
 
 $context = get_context_instance(CONTEXT_SYSTEM);
 
-require_capability('block/exabis_eportfolio:use', $context);        
+require_capability('block/exabis_eportfolio:use', $context);
 
 if (! $course = get_record("course", "id", $courseid) ) {
 	 print_error("invalidinstance","block_exabis_eportfolio");
@@ -63,23 +63,53 @@ $show_information = true;
 $userpreferences = block_exabis_eportfolio_get_user_preferences();
 $description = $userpreferences->description;
 
+// Check to see if the user wish to get email notifications (nadavkav)
+if ( $_GET['emailnotification'] == 0 OR $_GET['emailnotification'] == 1 ) {
+  if (!set_field('block_exabeporuser','emailnotification',$_GET['emailnotification'],'user_id',$USER->id)) {
+    error('Error updating : emailnotification field in table block_exabeporuser');
+  }
+}
+
+$exabisuser = get_record('block_exabeporuser','user_id',$USER->id);
+echo '<form method="get" action="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view.php?courseid='.$courseid.'">';
+
+	echo get_string('config_sendemailcomments', 'block_exabis_eportfolio');
+	echo '<select name="emailnotification">';
+		if($exabisuser->emailnotification == 0) {
+		echo '<option value=0 selected>'.get_string('no').'</option>';
+		} else {
+		echo '<option value=0>'.get_string('no').'</option>';
+		}
+		if($exabisuser->emailnotification == 1) {
+		echo '<option value=1 selected>'.get_string('yes').'</option>';
+		} else {
+		echo '<option value=1>'.get_string('yes').'</option>';
+		}
+
+	echo '</select>';
+
+	echo '<input type="hidden" name="courseid" value="'.$courseid.'" />';
+echo '<input type="submit" value="' . get_string("update") . '" />';
+echo '</form>';
+
+
 echo "<div class='block_eportfolio_center'>";
 
 print_simple_box( text_to_html(get_string("explainpersonal","block_exabis_eportfolio")) , 'center');
 
 echo "</div>";
-	
+
 if($edit) {
 	if (!confirm_sesskey()) {
 		print_error("badsessionkey","block_exabis_eportfolio");
 	}
 	$informationform = new block_exabis_eportfolio_personal_information_form();
-			
+
 	if($informationform->is_cancelled()) {
 	}
 	else if($fromform = $informationform->get_data()) {
 		trusttext_after_edit($newentry->description, $context);
-		
+
 		block_exabis_eportfolio_set_user_preferences(array('description'=>$fromform->description, 'persinfo_timemodified'=>time()));
 
 		// read new data from the database
@@ -94,19 +124,19 @@ if($edit) {
 									 'description' => $description,
 									 'cataction' => 'save',
 									 'edit' => 1 ) );
-		
+
 		$informationform->display();
 	}
 }
 
 if($show_information) {
-	
+
 	echo '<table cellspacing="0" class="forumpost blogpost blog" width="100%">';
-	
+
 	echo '<tr class="header"><td class="picture left">';
 	print_user_picture($USER->id, $courseid, $USER->picture);
 	echo '</td>';
-	
+
 	echo '<td class="topic starter"><div class="author">';
 	$by =  '<a href="'.$CFG->wwwroot.'/user/view.php?id='.
 				$USER->id.'&amp;course='.$courseid.'">'.fullname($USER, $USER->id).'</a>';
@@ -116,11 +146,11 @@ if($show_information) {
 	echo '<tr><td class="left side">';
 
 	echo '</td><td class="content">'."\n";
-	
+
 	echo format_text($description, FORMAT_HTML);
-	
+
 	echo '</td></tr></table>'."\n\n";
-	
+
 	echo '<div class="block_eportfolio_center">';
 
 	echo '<form method="post" action="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/view.php?courseid='.$courseid.'">';

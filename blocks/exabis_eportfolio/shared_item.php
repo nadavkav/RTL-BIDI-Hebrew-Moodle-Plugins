@@ -191,6 +191,12 @@ function block_exabis_eportfolio_do_add_comment($item, $post, $blogeditform) {
 	// Insert the new blog entry.
 	if (insert_record('block_exabeporitemcomm', $post)) {
 		add_to_log(SITEID, 'exabis_eportfolio', 'add', 'view_item.php?type='.$item->type, $post->entry);
+		$exabisuser = get_record('block_exabeporuser','user_id',$USER->id); // nadavkav
+		if ($CFG->block_exabis_eportfolio_sendemails == 1 AND $exabisuser->emailnotification == 1) {
+			//$adminuser = get_record('user','id',2);
+			$itemurl = '<br/><a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/shared_item.php?courseid='.$COURSE->id.'&access=portfolio/id/'.$USER->id.'&itemid='.$item->id.'&backtype=all">'.get_string('link','block_exabis_eportfolio').'</a>';
+			$ok = email_to_user($USER,$USER,get_string('youhaveanewcomment','block_exabis_eportfolio'),'',get_string('youhaveanewcommentbody','block_exabis_eportfolio').$itemurl);
+		}
 	} else {
 		error('There was an error adding this post in the database');
 	}

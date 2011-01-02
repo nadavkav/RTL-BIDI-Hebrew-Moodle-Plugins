@@ -28,7 +28,7 @@ class block_exabis_eportfolio extends block_list {
 
 	function init() {
         $this->title = get_string('blocktitle', 'block_exabis_eportfolio');
-        $this->version = 2009010103;
+        $this->version = 2009010104;
     }
 
     function instance_allow_multiple() {
@@ -75,13 +75,30 @@ class block_exabis_eportfolio extends block_list {
 		//$this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/export_scorm.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
 		//$this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
 
-if (has_capability('block/exabis_eportfolio:importfrommoodle', $context)) {
+if (has_capability('block/exabis_eportfolio:importfrommoodle', $context)) { // (nadavkav)
   //echo "<p ><img src=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/pix/import.png\" height=\"16\" width=\"16\" alt='".get_string("moodleimport", "block_exabis_eportfolio")."' /> <a title=\"" . get_string("moodleimport","block_exabis_eportfolio") . "\" href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/import_moodle.php?courseid=".$courseid."\">".get_string("moodleimport","block_exabis_eportfolio")."</a></p>";
 
-    $this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/import_moodle.php?courseid=' . $COURSE->id . '">' . get_string('export', 'block_exabis_eportfolio') . '</a>';
+    $this->content->items[]='<a title="' . get_string('export', 'block_exabis_eportfolio') . '" href="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/import_moodle.php?courseid=' . $COURSE->id . '">' . get_string('moodleimport', 'block_exabis_eportfolio') . '</a>';
     $this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
 
 }
+
+$addnewitems = "<form action=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/item.php?backtype=all\" method=\"post\">";
+$addnewitems .= "<input type=\"hidden\" name=\"action\" value=\"add\"/>";
+$addnewitems .= "<input type=\"hidden\" name=\"courseid\" value=\"$COURSE->id\"/>";
+$addnewitems .= "<input type=\"hidden\" name=\"sesskey\" value=\"" . sesskey() . "\" />";
+$addnewitems .= get_string('addnewitem','block_exabis_eportfolio');
+$addnewitems .= '<br/><select name="type">';
+$addnewitems .= '<option value="link">'.get_string("link", "block_exabis_eportfolio")."</option>";
+$addnewitems .= '<option value="file">'.get_string("file", "block_exabis_eportfolio")."</option>";
+$addnewitems .= '<option value="note">'.get_string("note", "block_exabis_eportfolio")."</option>";
+$addnewitems .= '</select>';
+$addnewitems .= "<input type=\"submit\" value=\"" . get_string("new", "block_exabis_eportfolio"). "\"/>";
+$addnewitems .= "</form>";
+
+    $this->content->items[]=$addnewitems ;
+    $this->content->icons[]='<img src="' . $CFG->wwwroot . '/blocks/exabis_eportfolio/pix/export.png" height="16" width="16" alt="'.get_string("export", "block_exabis_eportfolio").'" />';
+
         return $this->content;
     }
 }

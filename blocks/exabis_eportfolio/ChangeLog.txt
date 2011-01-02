@@ -1,5 +1,10 @@
 Exabis E-Portfolio ChangeLog
 
+2010-12-02 3.2.3 (nadavkav)
+* send email notification to user that got comments
+* remove Essay preview from items list
+* CSS updates to UI of Categories
+
 2010-11-20 3.2.3 (nadavkav)
 * styles.php updates (support for rtl)
 * UI changes (make it more easy to use)

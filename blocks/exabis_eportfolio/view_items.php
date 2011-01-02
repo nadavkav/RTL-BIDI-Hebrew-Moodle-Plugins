@@ -219,7 +219,8 @@ if ($items) {
 
 		$table->data[$item_i]['name'] = "<a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/shared_item.php?courseid=$courseid&access=portfolio/id/".$USER->id."&itemid=$item->id&backtype=".$type."\">" . format_string($item->name) . "</a>";
 		if ($item->intro) {
-			$table->data[$item_i]['name'] .= "<table width=\"98%\"><tr><td>".format_text($item->intro, FORMAT_HTML)."</td></tr></table>";
+			// disable the visual display of the preview text of a Note item (nadavkav)
+			//$table->data[$item_i]['name'] .= "<table width=\"98%\"><tr><td>".format_text($item->intro, FORMAT_HTML)."</td></tr></table>";
 		}
 
 		$table->data[$item_i]['date'] = userdate($item->timemodified);

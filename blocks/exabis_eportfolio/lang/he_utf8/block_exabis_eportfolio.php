@@ -55,7 +55,7 @@ $string['explaininglink'] = 'תצוגת פריטים מסוג: קישורים ל
 $string['explainingfile'] = 'תצוגת פריטים מסוג: קבצים.';
 $string['explainingnote'] = 'תצוגת פריטים מסוג: מאמרים';
 $string['explainingshare'] = 'To allow a participant to see the link, click on their name and then click on Save Changes. You can choose more than one participant.';
-$string['explainingshared'] = 'להלן, רשימת משתמשים אשר שיתפו אתכם את אוגדני־תוצרים שלהם המכילים: הקישורים, הקבצים ומאמרים';
+$string['explainingshared'] = 'להלן, רשימת משתמשים אשר שיתפו אתכם את אוגדני־התוצרים שלהם<br/> המכילים: הקישורים, קבצים ומאמרים';
 $string['explainingsharefile'] = 'כדי לאפשר למשתמשים לראות את הקובץ, לחץ על שמם ואז לחץ על שמירה. אתה יכול לבחור יותר ממשתמש אחד.';
 $string['explainingsharenote'] = 'כדי לאפשר למשתתפים לראות את רשימה זו, לחץ על שמם ואז לחץ על כפתור \"שמור שינויים\". אפשר לבחור יותר ממשתתף אחד.';
 $string['file'] = 'קובץ';
@@ -100,8 +100,8 @@ $string['externaccess'] = 'תיק־התוצרים הציבורי של: ';
 $string['showallusers'] = 'הציגו משתמשים בכל מרחבי־הלימוד שלי';
 $string['showcourseusers'] = 'הציגו משתמשים ממרחב־הלימוד הנוכחי';
 $string['sharedpersons'] = 'משתמשים אשר שיתפו אוגדני־תוצרים';
-$string['moodleimport'] = 'יבא ממשימות במרחב־הלימוד';
-$string['nomoodleimportyet'] = 'כרגע אין לך הגשה למשימות';
+$string['moodleimport'] = 'יבוא תוצרים שלי מתוך משימות בקורס';
+$string['nomoodleimportyet'] = 'לא נמצאו תוצרים זמינים במשימות שלך, המצויות בקורסים השונים';
 $string['deletecategroyconfirm'] = 'האם אתה בטוח שברצונך למחוק את הסיווג הזאת? כל הכניסות בסיווג ימחקו!!';
 $string['name'] = 'שם';
 $string['import'] = 'יבא';
@@ -227,5 +227,10 @@ $string['addnewitem'] = 'הוספת פריט מסוג: ';
 $string['filterbycategory'] = ' סינון תצוגה לפי ';
 $string['or'] = ' או תצוגת ';
 $string['allcategories'] = 'כל הסיווגים';
+
+$string['youhaveanewcomment'] = 'יש לכם תגובה חדשה לפריט בתיק-התוצרים שלכם';
+$string['youhaveanewcommentbody'] = 'לחצו על הקישור לצפיה בתגובה';
+$string['config_sendemailcomments'] = 'ניתן לשלוח דואר על תגובות למשתמשים';
+$string['link'] = 'קישור';
 
 ?>

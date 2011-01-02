@@ -55,7 +55,15 @@ text-align:right;
 
 .subsubcategory {
 background-color:#CFCECE;
-margin-right:21px;
+margin-right:100px;
+}
+
+td#subcategory {
+background-color:#F9FBAE;
+}
+
+td#category {
+background-color:#FFD582;
 }
 
 .dir-rtl .view-group-header div {

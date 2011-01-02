@@ -91,16 +91,31 @@ function xmldb_block_exabis_eportfolio_upgrade($oldversion=0, $tmp)
 
 	}
 
-  if ( $result && $oldversion < 2009010103) {
+  if ( $result && $oldversion < 2009010104) {
 
     // Add THEME support (nadavkav)
     //$result = execute_sql("ALTER TABLE `{$CFG->prefix}_block_exabeporview` ADD `theme` TEXT NULL DEFAULT NULL AFTER `description`");
     $table = new XMLDBTable('block_exabeporview');
 
     /// Adding fields to table block_exabeporview
-    //$table->addFieldInfo('themez', XMLDB_TYPE_TEXT, 'medium', null, XMLDB_NOTNULL, null, null, null, null);
+    //$table->addFieldInfo('theme', XMLDB_TYPE_TEXT, 'medium', null, XMLDB_NOTNULL, null, null, null, null);
     $field = new XMLDBField('theme');
     $field->setAttributes(XMLDB_TYPE_CHAR, '25', null, null, null, null, null, null, 'description');
+
+    /// Launch update table for block_exabeporview
+    $result = $result && add_field($table, $field);
+  }
+
+  if ( $result && $oldversion < 2009010105) {
+
+    // Add THEME support (nadavkav)
+    //$result = execute_sql("ALTER TABLE `{$CFG->prefix}_block_exabeporuser` ADD `emailnotification` TEXT NULL DEFAULT NULL AFTER `description`");
+    $table = new XMLDBTable('block_exabeporuser');
+
+    /// Adding fields to table block_exabeporview
+    //$table->addFieldInfo('theme', XMLDB_TYPE_TEXT, 'medium', null, XMLDB_NOTNULL, null, null, null, null);
+    $field = new XMLDBField('emailnotification');
+    $field->setAttributes(XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, null, null, 'user_hash');
 
     /// Launch update table for block_exabeporview
     $result = $result && add_field($table, $field);
