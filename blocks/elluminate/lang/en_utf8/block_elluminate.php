@@ -1,4 +1,4 @@
-<?php // $Id: block_elluminate.php,v 1.1 2008/02/08 18:59:11 mchurch Exp $
+<?php // $Id: block_elluminate.php,v 1.1.2.2 2009/03/18 16:45:58 mchurch Exp $
 
 $string['changepassword'] = 'Change your account password';
 $string['changepasswordnotice'] = 'Your password was successfully changed.';
