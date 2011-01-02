@@ -34,3 +34,7 @@
 body#course-view .headingblock {
   display: none;
 }
+
+.block_yui_menu .content .list li {
+padding-top:5px;
+}
