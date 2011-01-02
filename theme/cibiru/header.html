@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html<?php echo $direction ?>>
+<head>
+    <?php echo $meta ?>
+    <meta name="keywords" content="moodle, <?php echo $title ?> " />
+    <title><?php echo $COURSE->fullname; ?></title>
+    <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/img/favicon.png" />
+    <?php include("$CFG->javascript"); ?>
+</head>
+
+<body<?php
+    echo " $bodytags";
+    if ($focus) {
+        echo " onload=\"setfocus()\"";
+    }
+    ?>>
+
+<div id="page">
+<div class="container_16">
+<?php if ($heading) {  // This is what gets printed on the home page only
+?>
+    <?php print_container_start(true, '', 'header'); ?>
+    <div class="grid_10" id="logo">
+		<h1><a href=""><img src="<?php echo $CFG->themewww .'/'. current_theme() ?>/img/logo.png" alt=""/></a></h1>
+	</div>
+	<div class="grid_6 topnav">
+		<ul id="nav" class="dropdown dropdown-horizontal"><!--maximum three of link-->
+			<li><a href="<?php echo $CFG->wwwroot ?>/" class="home"><?php print_string('home'); ?></a></li>
+			<li><a href="<?php echo $CFG->wwwroot; ?>/course/index.php" title="Course" class="course"><?php print_string('courses'); ?></a></li>
+			<li><a href="<?php echo $CFG->wwwroot; ?>/calendar/view.php" title="Calendar" class="on-cal"><?php print_string('calendar','calendar'); ?></a></li>
+		</ul>
+	</div>
+	<div class="clear">&nbsp;</div>
+    <?php print_container_end(); ?>
+<?php } ?>
+
+<?php if ($navigation) { // This is the navigation table with breadcrumbs  ?>
+    <div class="navbar clearfix">
+		<div id="breadcrumb">
+		<div class="navbutton"><?php echo $button; ?></div>
+		<div class="padderlittle">
+		<div class="breadcrumb"><?php print_navigation($navigation); ?></div>
+		</div>
+		</div>
+	</div>
+
+<?php } ?>
+    <div class="clear">&nbsp;</div>
+    <!-- END OF HEADER -->
+    <?php print_container_start(false, '', 'content'); ?>

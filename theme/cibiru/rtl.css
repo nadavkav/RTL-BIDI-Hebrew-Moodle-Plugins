@@ -1,0 +1,57 @@
+#right-column .sideblock .header {
+  background: url("images/sideblocks/leftrib.png") no-repeat scroll left top transparent;
+  height: 56px;
+  right: -20px;
+  left:1px;
+  position: relative;
+  top: 10px;
+  width: 100%;
+}
+
+#left-column .sideblock .header {
+  background: url("images/sideblocks/rtrib.png") no-repeat scroll right top transparent;
+  height: 56px;
+  position: relative;
+  left: -12px;
+  right:1px;
+  top: 10px;
+  width: 100%;
+}
+
+#layout-table #right-column {
+  padding-right: 14px;
+  padding-left: 2px;
+}
+
+#course-view .main {
+    border: 1px solid;
+}
+
+#course-view .separator {
+  height:30px;
+}
+
+body#course-view .headingblock {
+  display: none;
+}
+
+.block_yui_menu .content .list li {
+padding-top:5px;
+}
+
+p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset {
+    margin-bottom: 1px;
+}
+
+#left-column .sideblock .header ,
+#right-column .sideblock .header {
+  right:10px;
+}
+
+td#left-column {
+    padding-left: 15px;
+}
+
+#left-column .title, #right-column .title {
+    margin-right: -5px;
+}

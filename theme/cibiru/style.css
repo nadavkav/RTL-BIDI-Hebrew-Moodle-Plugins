@@ -1,0 +1,143 @@
+@import url( css/reset.css );
+@import url( css/960.css );
+@import url( css/text.css );
+@import url( css/dropdown.css );
+
+body {
+background: #B4C9CE url('img/bg.jpg') repeat-x center top;
+	font-family: "Lucida Grande",Tahoma,"Bitstream Vera Sans",Arial,sans-serif;
+}
+body, table, td, th, li {
+  font-family: "Lucida Grande",Tahoma,"Bitstream Vera Sans",Arial,sans-serif;
+}
+h1, h2, h3, h4, h5 {font-family: arial, verdana;}
+body#help .container_16{background:#B4C9CE;max-width:500px;}
+#left-column>div, #right-column>div, #middle-column{
+	padding-top:20px;
+	background: #fff url('img/bg-main.jpg') repeat-x center top;
+	-moz-border-radius-bottomright:15px;  
+	-moz-border-radius-topleft:15px;  
+	-webkit-border-bottom-right-radius:15px; 
+	-webkit-border-top-left-radius:15px; 
+}
+#footer, .navbar {
+	background: #19282B;
+	color:#ddd;
+}
+#footer a, .navbar a{
+	color:yellow;
+}
+
+.navbar {
+	border:none;
+	margin-bottom: 10px;
+	margin-top:-1px;
+	-moz-border-radius-bottomleft:10px; -moz-border-radius-bottomright:10px;  
+	-webkit-border-bottom-left-radius:10px;  -webkit-border-bottom-right-radius:10px;
+}
+.breadcrumb ul li{margin-left:3px;}
+#footer {
+	padding:7px;
+	margin-top: 10px;margin-bottom: 0px;
+	-moz-border-radius-topleft:10px; -moz-border-radius-topright:10px;  
+	-webkit-border-top-left-radius:10px;  -webkit-border-top-right-radius:10px;
+}
+.padder {margin:15px;}
+.padderlittle {margin:0 10px 0;padding-top:7px;}
+
+#logo h1 {margin:0;padding:0;line-height:5px}
+
+
+.topnav {
+	padding: 0;font: 12px verdana, georgia,"times new roman";
+	margin: 54px 0 0px 0;float:left;
+	text-transform: uppercase;
+	display:block;width:100%;
+}
+
+
+.topnav ul#nav {
+	margin: 0px 0 0 20px; padding: 0px;  list-style-type: none; 
+		list-style-image: none; list-style-position: inside;float:right;
+}
+
+.topnav ul#nav li {
+	margin: 0px 0px 0px 5px; padding: 10px 20px; float: left;  display: block; 
+		cursor: pointer; position: relative;-moz-border-radius-topleft:10px; -moz-border-radius-topright:10px;  
+	-webkit-border-top-left-radius:10px;  -webkit-border-top-right-radius:10px;
+	background: #016C9A url('img/topnav.jpg') repeat-x bottom left;
+}
+
+.topnav ul#nav li a{
+	font-weight: bold;text-decoration: none;text-align:left;color:#ddd;
+	text-shadow:0px 1px 0px #19282B;display:block;
+}
+.topnav ul#nav li span{display:block;height:100%}
+
+.topnav ul#nav li:hover {
+	background: #005F78 url('img/topnav.jpg') repeat-x 20% 75%;
+}
+
+#top-date {color:#fff;text-align: right;}
+
+#konten {}
+.sideblock .header,.sideblock .content ,.sideblock .footer{
+	border:0px;
+}
+.sideblock{
+	font-size:1.1em;
+}
+#left-column > div {
+	margin-right:10px;
+}
+#right-column > div {
+	margin-left:10px;
+}
+#left-column .title ,#right-column .title {
+	background: url('img/pita-kiri.jpg') no-repeat top left;
+	padding-bottom:10px;
+	margin-right:5px;
+}
+#left-column .header ,#right-column .header {
+	background: url('img/pita-kanan.jpg') no-repeat top right;
+	margin:0px -5px;
+	padding:0px;
+}
+
+#left-column .title h2,#right-column .title h2{
+	margin-left:5px;
+	background:#016C9A url('img/topnav.jpg') repeat-x 25% 60%;
+	color:#fff;
+	font-weight:normal;
+	line-height:14px;
+	padding:6px 7px;
+	font-size:1.2em;
+	height:17px;
+}
+.commands{margin-left:7px;}
+.navbutton{margin:5px;}
+#middle-column li, .sideblock li{
+	margin-left:0px;
+}
+#left-column li, #right-column li, .admintree{
+	padding-left:10px;
+}
+#right-column li{
+	padding-right:10px;
+}
+#left-column .hidden .header,#right-column .hidden .header {
+	border-bottom-width: 0px;
+}
+h2.headingblock{
+	font-size:1.6em;
+	border:0px;
+}
+.weekscss-format #left-column,
+.weekscss-format #right-column {
+  width: 190px;
+}
+.weekscss-format #middle-column {
+  margin: 0 17em 0 17em;
+}
+#middle-column{font-size:110%}
+.sideblock .content{background:transparent;}
