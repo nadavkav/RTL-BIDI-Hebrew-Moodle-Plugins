@@ -1,0 +1,23 @@
+<table cellpadding="9" cellspacing="0" >
+<tr valign="top">
+    <td colspan="3">
+    <?php 
+require_once($CFG->dirroot . '/blocks/ousearch/displayversion.php');
+print_string("displayversion", "block_ousearch", $displayversion);
+?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">block_ousearch_remote:</td>
+    <td>
+    <input name="block_ousearch_remote" type="text" value="<?php if(!empty($CFG->block_ousearch_remote)) { print htmlspecialchars($CFG->block_ousearch_remote); } ?>" />
+    </td>
+    <td>
+    <?php print_string("configremote", "block_ousearch") ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>

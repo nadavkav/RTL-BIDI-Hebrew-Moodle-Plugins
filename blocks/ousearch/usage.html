@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Using ousearch</title>
+</head>
+<body>
+<h1>Adding ousearch support to a module</h1>
+<h2>High-level issues</h2>
+<h3>Documents</h3>
+<p>
+You need to decide what constitutes a 'document'. Search results return a list
+of documents. Generally a document will be equivalent to a single Web page,
+or less. For example, a document might be a wiki page, a blog post, a forum 
+post, etc.
+</p>
+<p>
+Documents can contain three sorts of searchable text data:
+</p>
+<ul>
+<li>Title. May be blank, in which case your result will display as '(Untitled)'
+in the default search results display. Search results which include search
+terms in the title are ranked higher.</li>
+<li>Content. HTML.</li>
+<li>Extra strings. Data that is searchable but not included as part of the
+document for display purposes. (Can be used for keywords, etc.)</li> 
+</ul>
+<h3>Document data</h3>
+<p>
+Each document needs to be identified. The following pieces of data can be
+used to identify your documents and restrict searches (virtually all of them 
+are optional):
+</p> 
+<ul>
+<li>Module name e.g. 'oublog'</li>
+<li>Course ID</li>
+<li>Course-module ID</li>
+<li>User ID</li>
+<li>Group ID</li>
+<li>Arbitrary string identifier</li>
+<li>Two arbitrary integer identifiers</li>
+</ul>
+<p>
+Decide which data is appropriate for your documents.
+</p>
+<h3>Optional support</h3>
+<p>
+If your module is designed to work with or without ousearch installed, add a 
+function like this one (works within a module directory):
+</p>
+<pre>
+/** @return True if OU search extension is installed */
+function modulename_search_installed() {
+    return @include_once(dirname(__FILE__).'/../../blocks/ousearch/searchlib.php');
+}
+</pre>
+<p>
+You then call this function when deciding whether or not to do search-related
+code. It returns true if search is installed, and as a side-effect, also loads
+the search library so that you can use search functions.
+</p>
+<h2>Document manipulation</h2>
+<h3>Document add/edit</h3>
+<p>
+Find the points where your module adds new searchable content, or updates
+existing searchable content. (Hopefully your module is designed to do this
+via one or two functions and not in multiple places.)
+</p>
+<p>
+If there are two functions (add/edit), you will want to put the search code 
+into a single function and call it from both places. The search code is the
+same for adding or editing a document.
+</p>
+<p>
+Adding or editing document data has two steps:
+</p>
+<ol>
+<li>Create a document object that includes the document's identifying data</li>
+<li>Use this object to update the text content (title and content)</li>
+</ol>
+<p>
+Here are two functions from oublog that do the above two steps.
+</p>
+<pre>
+/**
+ * Obtains a search document relating to a particular blog post.
+ *
+ * @param object $post Post object. Required fields: id, groupid, userid
+ * @param object $cm Course-module object. Required fields: id, course
+ * @return ousearch_doument
+ */
+function oublog_get_search_document($post,$cm) {
+    // Set up 'search document' to refer to this post
+    $doc=new ousearch_document();
+    $doc-&gt;init_module_instance('oublog',$cm);
+    if($post-&gt;groupid) {
+        $doc-&gt;set_group_id($post-&gt;groupid);
+    }
+    $doc-&gt;set_user_id($post-&gt;userid);
+    $doc-&gt;set_int_refs($post-&gt;id);
+    return $doc;
+}
+
+/**
+ * Updates the fulltext search information for a post which is being added or 
+ * updated.
+ * @param object $post Post data, including slashes for database. Must have 
+ *   fields id,userid,groupid (if applicable), title, message
+ * @param object $cm Course-module 
+ * @return True if search update was successful 
+ */
+function oublog_search_update($post,$cm) {
+    // Do nothing if OU search is not installed
+    if (!modulename_search_installed()) {
+        return true;
+    }
+    
+    // Get search document
+    $doc=modulename_get_search_document($post,$cm);
+    
+    // Update information about this post (works ok for add or edit)
+    return $doc-&gt;update(stripslashes($post-&gt;title),stripslashes($post-&gt;message));
+}
+</pre>
+<h3>Document delete</h3>
+<p>
+Find the points in your code where a single document is deleted. Again, it 
+will be helpful if you have a function to deal with this case.
+</p>
+<p><i>Note: You do not need to handle the case when a whole module instance is
+deleted. That is described later.</i></p>
+<p>
+To delete the document from search records, obtain an ousearch_document object
+as above, then call delete().
+</p>
+<p>
+If you are unsure when to delete a document from search records, the answer
+is that you should delete it whenever it should not appear in search. For
+example, if a deleted item is not visible to ordinary users but may be
+examined by administrators, you should probably delete the search document. 
+Should it later be undeleted, you should then add it back.
+</p>
+<h2>Library changes</h2>
+<p>
+You need to add several search-related functions to your module's lib.php.
+These are:
+</p>
+<ul>
+<li>modulename_ousearch_get_document - obtains the full text of an item based on
+its document details</li>
+<li>modulename_ousearch_update_all - usually called when the ousearch block is 
+installed; the module should add all its documents</li>
+</ul>
+<p>
+In addition, you need to handle module deletion in modulename_delete_instance.
+We'll cover that first because it's easy.
+</p>
+<h3>In existing _delete_instance</h3>
+<p>Handling a deleted instance is very easy. The only complication is that
+the function takes a module ID as parameter whereas ousearch will need
+the course-module data (id and course). Here's how to do it:</p>
+<pre>
+if(modulename_search_installed()) {
+    $moduleid=get_field('modules','id','name','modulename');
+    $cm=get_record('course_modules','module',$moduleid,'instance',$id);
+    if(!$cm) {
+        error('Can\'t find coursemodule');
+    }
+    ousearch_document::delete_module_instance_data($cm);
+}
+</pre>
+<h3>New function _ousearch_get_document</h3>
+<p>
+This function must return the actual content and other information about a
+search document. It's needed because ousearch doesn't actually store the content
+itself - only an indexed version of the words contained. It is used when 
+checking and displaying search results.
+</p>
+<pre>
+/**
+ * Obtains a search document given the ousearch parameters.
+ * @param object $document Object containing fields from the ousearch documents table
+ * @return mixed False if object can't be found, otherwise object containing the following
+ *   fields: -&gt;content, -&gt;title, -&gt;url, -&gt;activityname, -&gt;activityurl, 
+ *   and optionally -&gt;extrastrings array, -&gt;data, -&gt;hide
+ */
+function modulename_ousearch_get_document($document) {
+</pre>
+<p>Note: <tt>data</tt> may hold an arbitrary value which will be passed through
+to the final results (useful if you are customising results display,
+otherwise does nothing). <tt>hide</tt>, if set to true, prevents this document
+from showing up in search results; it can be used to filter results. Care 
+should be taken with this, as it is inefficient if a significant proportion of 
+results might be hidden. 
+</p>
+<p>
+Using the fields of $document - courseid, coursemoduleid, groupid, userid,
+stringref, intref1, intref2 - this function needs to retrieve the corresponding
+item from its own tables or files. It should then create an object that has
+the fields mentioned. The URL should link directly to the specific document;
+activity name and URL are intended so that a link to the 'front page' of the
+module instance can be provided.
+</p>
+<p>
+This function needs to be implemented differently depending on how your module
+stores data. For examples, see ouwiki or oublog.
+</p>
+<p>
+Try to implement this function as efficiently as possible. In certain types of
+search (such as phrase searches) this function may be called on a large number
+of documents before a user's search results can be returned.
+</p>
+<p>
+The -&gt;data optional field can be used to store arbitrary information which
+will be passed through to the search result object.
+</p>  
+<h3>New function _ousearch_update_all</h3>
+<p>
+This function is called when the ousearch block is added (to index existing 
+douments) or when a module's search data needs to be reset for some reason.
+</p>
+<pre>
+/**
+ * Update all documents for ousearch.
+ * @param bool $feedback If true, prints feedback as HTML list items
+ * @param int $courseid If specified, restricts to particular courseid
+ */
+function modulename_ousearch_update_all($feedback=false,$courseid=0) {
+</pre>
+<p>
+The function must update documents (using the same procedure as add/edit 
+above) for <i>every</i> document held by any instance of the module (within the
+specified course, or all courses if $courseid is zero).
+</p>
+<p>
+Optional feedback is used during the update process. If it's turned on, the
+function should print one or more &lt;li&gt;...&lt;/li&gt; tags, taking care
+that each tag is always corretly closed. It's useful to print dots or other
+periodic indicators of progress since this initial indexing might take a long 
+time.
+</p> 
+<p>
+This function needs to be implemented differently depending on how your module
+stores data. For examples, see ouwiki or oublog.
+</p>
+<h2>Backup/restore</h2>
+<p>
+Search indexes are not backed up.
+</p>
+<p>
+The restore process needs to include indexing. You should ensure that each 
+document is indexed after it is restored.
+</p>
+<p>
+It's difficult to do this because usually at the point where you restore a
+document, you don't yet have its course-module ID. The easiest solution is to
+add code to the modulename_decode_content_links_caller function in 
+restorelib.php; this function is called after the course-module has been added, 
+and is only called once per course restore (however many module instances there 
+were). In this function you can call the update_all function for the course:
+</p>
+<pre>
+// Now fix up search for the course
+if(modulename_search_installed()) {
+    modulename_ousearch_update_all(false,$restore-&gt;course_id);
+}
+</pre>
+<p><i>Note: If you don't have a _decode_content_links_caller function in your
+restorelib.php, your module won't be restoring properly! Make sure you've 
+implemented one.</i></p> 
+<h2>Upgrade</h2>
+<p>
+If your module has already been publicly released then you should add an
+entry to your upgrade.php which builds the search indexes. The code below will
+probably do the trick:
+</p>
+<pre> 
+if ($result &amp;&amp; $oldversion &lt; 2008mmddvv) {
+/// Add search data
+    require_once(dirname(__FILE__).'/../locallib.php');
+    require_once(dirname(__FILE__).'/../lib.php');
+    if(modulename_search_installed()) {
+        global $db;
+        $olddebug=$db-&gt;debug;
+        $db-&gt;debug=false;
+        print '&lt;ul&gt;';
+        modulename_ousearch_update_all(true);
+        print '&lt;/ul&gt;';
+        $db-&gt;debug=$olddebug;
+    }
+}
+</pre>
+<h2>Search UI</h2>
+<p>Now that everything is indexed, you probably want to provide a way for users
+to actually search. It's possible to do more complex things (e.g. search 
+everything on a course) but within your module what you probably want to provide
+is a search box that searches just the current module instance. This is quite
+easy.</p>
+<h3>Search box</h3>
+<p>A nice place to put the search box is in the header, just before the button
+which appears (if you have edit permission) allowing you to update the module
+settings.</p>
+<p>The following code assumes you only need the course-module ID to define what
+you're searching, and that the languge strings $strsearchthisactivity and
+$strmodulename have already been loaded.</p>
+<pre>
+$buttontext=!modulename_search_installed() ? '' : &lt;&lt;&lt;EOF
+&lt;form action="search.php" method="get"&gt;&lt;div&gt;
+  &lt;input type="hidden" name="id" value="{$cm-&gt;id}"/&gt;
+  &lt;input type="text" name="query" value=""/&gt;
+  &lt;input type="submit" value="{$strsearchthisactivity}"/&gt;
+&lt;/div&gt;&lt;/form&gt;
+$buttontext.=update_module_button($cm-&gt;id, $course-&gt;id, $strmodulename);
+EOF;
+</pre>
+<p>
+Then where you call print_header or print_header_simple and you previously used
+update_module_button directly, change it to $buttontext. Easy!
+</p>
+<p>
+You need to do this for every page where you want the search to appear. If you
+haven't already, I'd recommend splitting this kind of header behaviour out into 
+some kind of function.
+</p>
+<h3>search.php</h3>
+<p>
+You need to make this file. Include parameters to identify what you're searching
+e.g. the course-module ID. It then takes an extra query= parameter for the 
+user's search.
+</p>
+<p>
+Begin the file by writing your normal logic for controlling access to the thing
+users have asked to search (i.e. don't let them search things if they aren't
+allowed to see those things). Also print the header. Also, set up $searchurl
+which should be a link back to the current search page (without query), this
+is used to generate links to the 'next page' of search results etc. Then:
+</p>
+<pre>
+$query=new ousearch_search($querytext);
+$query-&gt;set_coursemodule($cm);
+// ...Set other parameters in query if you want to limit the search apart
+// from to the coursemodule, for example to a specific group:
+$query-&gt;set_group_id($currentgroup);
+
+ousearch_display_results($query,$searchurl);
+</pre>
+<p>
+If you need to restrict results beyond the standard database-based filtering
+shown above, ousearch_search also has a set_filter method which you can use to
+create a custom filter. (The custom filter will be applied result-by-result 
+after all other aspects of searching, so it's only suitable for filtering 
+existing results and not for providing a primary method of selecting results.) 
+</p>
+<p>
+ousearch_display_results is a convenience function that handles display of the
+search results automatically for you. If you need to customise the display
+you can do so by running the query yourself; this returns an array of result
+objects.
+</p>
+</body>
+</html>
