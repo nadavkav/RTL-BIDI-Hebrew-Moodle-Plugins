@@ -81,7 +81,8 @@
         echo '</a>';
         echo '<div class="caption">';
           echo '<div class="image-title">'.$image.'</div>';
-          echo '<div class="image-desc">'.$caption->description.'</div>';
+          $description = (!empty($caption->description)) ? $caption->description : '';
+          echo '<div class="image-desc">'.$description.'</div>';
           //echo '<div class="download">';
             //echo '<a href="'.$webroot.'/'.$image.'">Download Original</a>';
           //echo '</div>';
