@@ -51,7 +51,7 @@ class block_news_items_scrolling extends block_base {
                 // add a link to add "a new news item" (nadavkav)
                 if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
                     $this->content->footer  = '<div class="newlink"><a href="'.$CFG->wwwroot.'/mod/forum/post.php?forum='.$forum->id.'">'.
-                            get_string('addanewitem', 'block_news_items').'</a>...</div>';
+                            get_string('addanewitem', 'block_news_items_scrolling').'</a>...</div>';
                 }
 
                 return $this->content;
@@ -62,7 +62,7 @@ class block_news_items_scrolling extends block_base {
         /// Actually create the listing now
 
             $strftimerecent = get_string('strftimerecent');
-            $strmore = get_string('more', 'block_news_items');
+            $strmore = get_string('more', 'block_news_items_scrolling');
 
         /// Accessibility: markup as a list.
             $text .= "\n<ul class='unlist'>\n";
@@ -92,11 +92,11 @@ class block_news_items_scrolling extends block_base {
 
 
             $this->content->footer = '<a href="'.$CFG->wwwroot.'/mod/forum/view.php?f='.$forum->id.'">'.
-                                      get_string('olditems', 'block_news_items').'</a> ...';
+                                      get_string('olditems', 'block_news_items_scrolling').'</a> ...';
 
             if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
                 $this->content->footer  = '<div class="newlink"><a href="'.$CFG->wwwroot.'/mod/forum/post.php?forum='.$forum->id.'">'.
-                          get_string('addanewitem', 'block_news_items').'</a>...</div>';
+                          get_string('addanewitem', 'block_news_items_scrolling').'</a>...</div>';
             }
 
         /// If RSS is activated at site and forum level and this forum has rss defined, show link
