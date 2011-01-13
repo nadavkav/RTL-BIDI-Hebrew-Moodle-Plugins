@@ -233,4 +233,8 @@ $string['youhaveanewcommentbody'] = 'לחצו על הקישור לצפיה בת�
 $string['config_sendemailcomments'] = 'ניתן לשלוח דואר על תגובות למשתמשים';
 $string['link'] = 'קישור';
 
+$string['studentsfromthiscourse'] = 'סטודנטים הרשומים בקורס זה';
+$string['studentsfromothercourses'] = 'סטודנטים הרשומים בקורסים אחרים';
+
+
 ?>

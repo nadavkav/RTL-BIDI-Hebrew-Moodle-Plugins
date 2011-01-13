@@ -263,3 +263,11 @@ $string['version_5.2.0_needed'] = 'Exabis E-Portfolio requires at least PHP-Vers
 
 // Deprecated
 $stringNotUsed['nobookmarks'] = "(no bookmarks yet)";
+
+$string['youhaveanewcomment'] = 'You have a new comment to your portfolio item';
+$string['youhaveanewcommentbody'] = 'Click on the following link to see the comment';
+$string['config_sendemailcomments'] = 'Enable sending of email notification to users';
+$string['link'] = 'Link';
+
+
+?>

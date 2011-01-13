@@ -13,7 +13,7 @@
 
 	window.ExabisEportfolio = $E = {};
 
-	
+
 	$.extend($E, {
 		courseid: 1,
 
@@ -55,17 +55,19 @@
 
 						if (!$.empty(course.users)) {
 							html += "<table width=\"70%\">";
-							html += "<tr><th align=\"center\">&nbsp;</th><th align=\"center\">"+$E.translate('name')+"</th><th align=\"right\">"+$E.translate('role')+"</th></tr>";
+							html += "<tr><th align=\"center\"><input type=\"checkbox\" onclick=\"checkuncheckall()\" value=\"0\" name=\"shareusers[]\"></th><th align=\"center\">"+$E.translate('name')+"</th><th align=\"right\">"+$E.translate('role')+"</th></tr>";
 
 							$.each(course.users, function(tmp, user){
 								html += '<tr><td align=\"center\" width="30" style="padding-right: 20px;">';
-								html += '<input type="checkbox" name="shareusers['+user.id+']" value="'+user.id+'"' +
+								html += '<input id="shareusers" type="checkbox" name="shareusers['+user.id+']" value="'+user.id+'"' +
 									(typeof sharedUsers[user.id] != 'undefined' ? ' checked' : '') +
 									' />';
 								html += "</td><td align=\"center\">" + user.name + "</td><td align=\"right\">" + user.rolename + "</td></tr>";
 							});
 
 							html += "</table>";
+
+
 						} else {
 							html += $E.translate('nousersfound');
 						}
@@ -92,3 +94,32 @@
 	});
 
 })();
+
+//  Select / UnSelect all users (nadavkav)
+var state;
+
+function checkuncheckall() {
+
+if (state != 0) {
+  checkallusers();
+  state=0;
+} else {
+  uncheckallusers();
+  state=1;
+}
+
+}
+
+function uncheckallusers() {
+ var inputs = document.getElementsByTagName('input');
+ for(var i = 0; i < inputs.length; i++) {
+   if (inputs[i].id == 'shareusers') inputs[i].checked = false;
+ }
+}
+
+function checkallusers() {
+ var inputs = document.getElementsByTagName('input');
+ for(var i = 0; i < inputs.length; i++) {
+  if (inputs[i].id == 'shareusers') inputs[i].checked = true;
+ }
+}

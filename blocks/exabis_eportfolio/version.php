@@ -26,6 +26,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$exabis_eportfolio_version = 2009010103;   // The current version is a date (YYYYMMDDXX)
+$exabis_eportfolio_version = 2009010104;   // The current version is a date (YYYYMMDDXX)
 
 $exabis_eportfolio_release = "3.2.3";  // User-friendly version number

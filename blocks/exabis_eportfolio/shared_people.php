@@ -87,11 +87,18 @@ $all_shared_records = get_records_sql(
 " WHERE ((i.shareall=1 AND ishar.userid IS NULL) OR (i.shareall=0 AND ishar.userid IS NOT NULL))");
 */
 
+$coursestudents = get_course_students($COURSE->id);
+foreach ($coursestudents as $student) {
+	$studentlist[] = $student->id;
+}
 echo "<pre style='width: 400px; text-align: left;'>";
+
+echo "<div>".get_string('studentsfromthiscourse','block_exabis_eportfolio')."</div><br/>";
 
 if (is_array($all_shared_users)){
 	echo "<table>";
 	foreach($all_shared_users as $user) {
+		if (!in_array($user->id,$studentlist)) continue;
 		echo "<tr>";
 		echo "<td><a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/".$detailLink."?courseid=$courseid&access=id/$user->id\">";
 
@@ -101,6 +108,27 @@ if (is_array($all_shared_users)){
 		echo '<td style="padding-left: 30px;">&nbsp;'.get_string('bookmarks', 'block_exabis_eportfolio').': '.$user->detail_count."</td>";
 
 		echo "</tr>";
+	}
+	echo "</table>";
+}
+
+// Show Portfolios of users from other courses
+echo "<div>".get_string('studentsfromothercourses','block_exabis_eportfolio')."</div><br/>";
+
+if (is_array($all_shared_users)){
+	echo "<table>";
+	$newline = 0;
+	foreach($all_shared_users as $user) {
+		if (in_array($user->id,$studentlist)) continue;
+		$newline++;
+		if ($newline % 4 == 0) echo "<tr>";
+		echo "<td><a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/".$detailLink."?courseid=$courseid&access=id/$user->id\">";
+
+		print_user_picture($user->id, $courseid, $user->picture, 0, false, false);
+		echo "</a>&nbsp;</td>";
+		echo "<td>&nbsp;<a href=\"{$CFG->wwwroot}/blocks/exabis_eportfolio/".$detailLink."?courseid=$courseid&access=id/$user->id\">".fullname($user, $user->id)."</a></td>";
+		echo '<td style="padding-left: 30px;">&nbsp;'.get_string('bookmarks', 'block_exabis_eportfolio').': '.$user->detail_count."</td>";
+		if ($newline % 4 == 0) echo "</tr>";
 	}
 	echo "</table>";
 }
