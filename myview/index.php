@@ -6,7 +6,7 @@
     require_once($CFG->libdir.'/blocklib.php');
     require_once($CFG->dirroot.'/course/lib.php');
     require_once('pagelib.php');
-    
+
     require_login();
 
     $mymoodlestr = get_string('mymoodle','my');
@@ -27,9 +27,9 @@
 
     $edit        = optional_param('edit', -1, PARAM_BOOL);
     $blockaction = optional_param('blockaction', '', PARAM_ALPHA);
-    $filtermodule  = optional_param('filtermodule', '', PARAM_ALPHA);  // filter print_overview() by Module name (nadavkav patch)
-    $coursenamefiler = optional_param('coursenamefiler', '', PARAM_ALPHA);  // filter course list by course name (nadavkav patch)
-    $categorynamefiler = optional_param('categorynamefiler', '', PARAM_ALPHA);  // filter course list by course name (nadavkav patch)
+    $filtermodule  = optional_param('filtermodule', '', PARAM_RAW);  // filter print_overview() by Module name (nadavkav patch)
+    $coursenamefiler = optional_param('coursenamefiler', '', PARAM_RAW);  // filter course list by course name (nadavkav patch)
+    $categorynamefiler = optional_param('categorynamefiler', '', PARAM_RAW);  // filter course list by course name (nadavkav patch)
 
     $PAGE = page_create_instance($USER->id);
 
@@ -59,7 +59,7 @@ echo "</div>";
 
 echo '<style>.toolicon { padding:10px; } .tbaction {float:right; width:95px;} </style>';
 
-// Filter Modules by... 
+// Filter Modules by...
 // (nadavkav patch)
 $modlist['all'] = get_string('showall').get_string('activities');
 if ($modules = get_records('modules')) {
@@ -69,20 +69,20 @@ if ($modules = get_records('modules')) {
     }
 echo '<div class="modulefilter" style="margins:1px auto;border-top: 2px solid; width: 880px; padding: 10px;text-align:center;float:right;">';
 echo '<table>';
-  echo '<tr><td colspan=3><form id="filterbymodule" action="index.php" method="get">';
+  echo '<tr><td colspan=3><form id="filterbymodule" action="index.php" method="post">';
     echo get_string('filterbyactivity','myview','',$CFG->dirroot.'/myview/lang/');
     choose_from_menu ($modlist, "filtermodule", "",get_string('filterby','myview','',$CFG->dirroot.'/myview/lang/')."...", "self.location='index.php?filtermodule='+document.getElementById('modname').options[document.getElementById('modname').selectedIndex].value;", "0", false,false,"0","modname");
   echo '</form></td></tr>';
 echo '<tr><td width="345px">'.get_string('coursename','myview','',$CFG->dirroot.'/myview/lang/').'</td>';
-  echo '<td width="345px"><form id="filterbycatname" action="index.php" method="get">';
-    echo get_string('course').'<input type=text name="coursenamefiler" id="coursenamefiler" size="15" value="'.$_GET['coursenamefiler'].'">';
+  echo '<td width="345px"><form id="filterbycatname" action="index.php" method="post">';
+    echo get_string('course').'<input type=text name="coursenamefiler" id="coursenamefiler" size="15" value="'.$coursenamefiler.'">';
     echo '<input type=submit value="'.get_string('filter','myview','',$CFG->dirroot.'/myview/lang/').'"> '.get_string('or','myview','',$CFG->dirroot.'/myview/lang/').' ';
     //echo '<input type=submit value="כל המרחבים">';
   //echo '</form></td>';
   echo '</td>';
 
-  echo '<td width="580px"><form action="index.php" method="get">';
-    echo get_string('category').'<input type=text name="categorynamefiler" id="categorynamefiler" size="15" value="'.$_GET['categorynamefiler'].'" >';
+  echo '<td width="580px"><form action="index.php" method="post">';
+    echo get_string('category').'<input type=text name="categorynamefiler" id="categorynamefiler" size="15" value="'.$categorynamefiler.'" >';
     echo '<input type=submit value="'.get_string('filter','myview','',$CFG->dirroot.'/myview/lang/').'"> '.get_string('or','myview','',$CFG->dirroot.'/myview/lang/').' ';
     echo '<input type=submit onclick="document.getElementById(\'categorynamefiler\').value=\'\';document.getElementById(\'coursenamefiler\').value=\'\';" value="'.get_string('allcourses','myview','',$CFG->dirroot.'/myview/lang/').'">';
   echo '</form></td>';
@@ -132,15 +132,15 @@ JQUERY;
         print_container_end();
         echo '</td>';
     }
-    
+
             break;
             case 'middle':
-    
+
     echo '<td valign="top" id="middle-column">';
     print_container_start(TRUE);
 
 /// The main overview in the middle of the page
-    
+
     // limits the number of courses showing up
     $courses = get_my_courses($USER->id, 'visible DESC,sortorder ASC', '*', false, 21);
     $site = get_site();
@@ -153,17 +153,17 @@ JQUERY;
 //$coursenamefiler = 'מוודל';
 //echo $coursenamefiler;
     // remove courses by course name filter
-    if ( !empty($_GET['coursenamefiler']) ) {
+    if ( !empty($coursenamefiler) ) {
       foreach ($courses as $course) {
-        if ( strpos($course->fullname,$_GET['coursenamefiler']) === false ) { unset($courses[$course->id]); }
+        if ( strpos($course->fullname,$coursenamefiler) === false ) { unset($courses[$course->id]); }
       }
     }
 
     // filter courses by categoryname
-    if ( !empty($_GET['categorynamefiler']) ) {
+    if ( !empty($categorynamefiler) ) {
       foreach ($courses as $course) {
-        $course->categoryfullpath = str_replace('"','',get_category_fullpath($course));
-        if ( strpos($course->categoryfullpath,$_GET['categorynamefiler']) === false ) { unset($courses[$course->id]); }
+        $course->categoryfullpath = str_replace('"','',myview_get_category_fullpath($course));
+        if ( strpos($course->categoryfullpath,$categorynamefiler) === false ) { unset($courses[$course->id]); }
       }
     }
 
@@ -174,7 +174,7 @@ JQUERY;
             $courses[$c->id]->lastaccess = 0;
         }
     }
-    
+
     if (empty($courses)) {
         print_simple_box(get_string('nocourses','my'),'center');
     } else {
@@ -204,18 +204,18 @@ JQUERY;
           }
         }
       }
-    
+
     // if more than 20 courses
     if (count($courses) > 20) {
-        echo '<br />...';  
+        echo '<br />...';
     }
-    
+
     print_container_end();
     echo '</td>';
-    
+
             break;
             case 'right':
-            
+
     $blocks_preferred_width = bounded_number(180, blocks_preferred_width($pageblocks[BLOCK_POS_RIGHT]), 210);
 
     if (blocks_have_content($pageblocks, BLOCK_POS_RIGHT) || $PAGE->user_is_editing()) {
@@ -313,7 +313,7 @@ echo $coursecategories . "<br/>";
     echo "</ul>";
 }
 
-function get_category_fullpath(&$course) {
+function myview_get_category_fullpath(&$course) {
   global $CFG;
 
   // Course Category name, if appropriate. //(nadavkav patch)
@@ -324,7 +324,7 @@ function get_category_fullpath(&$course) {
   $categoryfullpath ='';
   if ( !empty($category->path) ) {
     $categorypath = explode('/',$category->path); // display all parent category paths (nadavkav)
-  
+
     foreach ($categorypath as $eachcategory) {
       if (!$singlecategory = get_record("course_categories", "id", $eachcategory)) {
         //error("Category not known!");
