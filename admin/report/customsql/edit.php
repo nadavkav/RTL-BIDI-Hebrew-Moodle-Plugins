@@ -34,6 +34,8 @@ echo '<style>'; // (nadavkav)
 //include('styles.php');
 //echo '.reporttitle { font-size:1.1em; } ';
 echo '#admin-report-customsql-edit #id_querysql { direction:ltr; } ';
+echo '#admin-report-customsql-edit .fitemtitle { width: 100px; }';
+
 echo '</style>';
 
 require_login();

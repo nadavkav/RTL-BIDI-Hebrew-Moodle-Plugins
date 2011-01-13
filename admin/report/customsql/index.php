@@ -47,6 +47,8 @@ $scheduledreports = get_records_list('report_customsql_queries', 'runable', "'we
 admin_externalpage_setup('reportcustomsql');
 admin_externalpage_print_header();
 
+echo '<a target="_new" href="http://docs.moodle.org/en/ad-hoc_contributed_reports">Shared and Contributed Reports</a><br/>';
+
 if (empty($manualreports) && empty($scheduledreports)) {
     print_heading(get_string('availablereports', 'report_customsql'));
     echo '<p>' . get_string('noreportsavailable', 'report_customsql') . '</p>';
