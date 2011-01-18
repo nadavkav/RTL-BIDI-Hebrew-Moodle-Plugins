@@ -110,4 +110,5 @@ ImageGallery.prototype._getCat = function ( cmid, sesskey, url, galleryid, cmd )
     }
 };
 
-iGallery = new ImageGallery(); // Initialize new object.
+/* Initialize new object. */
+iGallery = new ImageGallery();
