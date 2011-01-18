@@ -455,10 +455,10 @@ function ouwiki_print_overview($courses,&$htmlarray) {
                     $strresp = $strnumrespsince;
                 }
 
-                $str = '<br/><div class="overview wiki"><div class="name">'.
+                $str = '<div class="overview wiki"><div class="name">'.
                     $strwikis.': <a title="'.$strwikis.'" href="'.
-                    $CFG->wwwroot.'/mod/ouwiki/view.php?id='.$wiki->coursemodule.'"><h3>'.
-                    $wiki->name.'</a><h3></div>';
+                    $CFG->wwwroot.'/mod/ouwiki/view.php?id='.$wiki->coursemodule.'">'.
+                    $wiki->name.'</a></div>';
                 $str .= '<div class="info">';
                 $str .= '<a href="'.$CFG->wwwroot.'/mod/ouwiki/wikihistory.php?id='.$wiki->coursemodule.'">'.$count.' '.$strresp.'</a>'; // link to recent changes (nadavkav patch)
                 $str .= '</div></div>';
