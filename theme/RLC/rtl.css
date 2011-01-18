@@ -3,9 +3,9 @@
 
  This CSS file contains all layout definitions that are required for
  right-to-left languages. It overrides definitions in other fils to
- move right-floating blocks to the left, align text to the right, 
+ move right-floating blocks to the left, align text to the right,
  swap left and right margins, etc.
- 
+
  *******************************************************************/
 
 body, td, li, div {
@@ -446,7 +446,7 @@ UL.tabrow1  li {
 }
 
 /* ========================
-	overrides styles_ie6 
+	overrides styles_ie6
    ======================== */
 
 FORM.mform INPUT {
@@ -466,3 +466,6 @@ FORM.mform INPUT {
 	max-width: 100px;
 }
 
+#files-index img.icon {
+float:left;
+}
