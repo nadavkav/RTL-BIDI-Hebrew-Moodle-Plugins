@@ -109,11 +109,16 @@ echo <<<SCRIPT
 </script>
 SCRIPT;
 
-echo <<<JQUERY
-<script src="jquery-1.2.6.min.js" type="text/javascript"></script>
-<script src="jquery-ui-1.5.1.packed.js" type="text/javascript"></script>
-<script src="jquery.cookie.js" type="text/javascript"></script>
-JQUERY;
+// Drag and Drop sortable UL with Cookie save, thanks to : http://tool-man.org/examples/sorting.html
+echo <<<TOOLMAN
+<script language="JavaScript" type="text/javascript" src="tool-man/core.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/events.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/coordinates.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/drag.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/dragsort.js"></script>
+<script language="JavaScript" type="text/javascript" src="tool-man/cookies.js"></script>
+TOOLMAN;
 
     echo '<table id="layout-table">';
     echo '<tr valign="top">';
@@ -150,8 +155,6 @@ JQUERY;
         unset($courses[$site->id]);
     }
 
-//$coursenamefiler = 'מוודל';
-//echo $coursenamefiler;
     // remove courses by course name filter
     if ( !empty($coursenamefiler) ) {
       foreach ($courses as $course) {
@@ -193,7 +196,7 @@ JQUERY;
                 $linkcss = 'class="dimmed"';
                 }
                 if (array_key_exists($course->id,$htmlarray)) {
-                echo '<h3><a title="'. format_string($course->fullname).'" '.$linkcss.
+                echo '<br/><h3><a title="'. format_string($course->fullname).'" '.$linkcss.
                   ' href="'.$CFG->wwwroot.'/course/view.php?id='.$course->id.'">'. format_string($course->fullname).'</a></h3><br/>';
                   foreach ($htmlarray[$course->id] as $modname => $html) {
                     echo $html;
@@ -232,37 +235,45 @@ JQUERY;
     /// Finish the page
     echo '</tr></table>';
 
-echo '<script type="text/javascript">';
-include('jquery_order_list.js');
-echo '</script>';
-
-echo <<<LIST
-
-<style>
-ul#courselist {
-padding-right:1px !important;
-}
-#courselist li {
-  border:1px solid #DADADA;
-  background-color:#EFEFEF;
-  padding:3px 5px;
-  margin-bottom:3px;
-  margin-top:3px;
-//   width:100px;
-   list-style-type:none;
-  font-family:Arial, Helvetica, sans-serif;
-  color:#666666;
-  font-size:0.8em;
-}
-
-#courselist li:hover {
-  background-color:#FFF;
-  cursor:move;
-}
-</style>
-
-LIST;
     print_footer();
+
+    echo "<style>.coursebox .info {float: left;} .coursebox {overflow: auto;}</style>";
+
+echo <<<TOOLMANJS
+<script language="JavaScript" type="text/javascript"><!--
+  var dragsort = ToolMan.dragsort()
+  var junkdrawer = ToolMan.junkdrawer()
+
+  window.onload = function() {
+    junkdrawer.restoreListOrder("courselist")
+
+    dragsort.makeListSortable(document.getElementById("courselist"),
+        verticalOnly, saveOrder)
+  }
+
+  function verticalOnly(item) {
+    item.toolManDragGroup.verticalOnly()
+  }
+
+  function speak(id, what) {
+    var element = document.getElementById(id);
+    element.innerHTML = 'Clicked ' + what;
+  }
+
+  function saveOrder(item) {
+    var group = item.toolManDragGroup
+    var list = group.element.parentNode
+    var id = list.getAttribute("id")
+    if (id == null) return
+    group.register('dragend', function() {
+      ToolMan.cookies().set("list-" + id,
+          junkdrawer.serializeList(list), 365)
+    })
+  }
+
+  //-->
+</script>
+TOOLMANJS;
 
 function my_print_overview($courses) {
 
@@ -282,17 +293,17 @@ function my_print_overview($courses) {
     }
     echo "<ul id=\"courselist\">";
     foreach ($courses as $course) {
-        echo "<li id=\"item-$course->id\">";
+        echo "<li itemID=\"item-$course->id\">";
         print_simple_box_start('center', '100%', '', 5, "coursebox");
         $linkcss = '';
         if (empty($course->visible)) {
             $linkcss = 'class="dimmed"';
         }
-// Display Category name
-//$category = get_record('course_categories','id',$course->category);
-//echo ' >> <a title="'. format_string($category->name).'" '.$linkcss.' href="'.$CFG->wwwroot.'/course/category.php?id='.$category->id.'">'. format_string($category->name).'</a><br/>';
-$coursecategories = get_category_fullpath($course);
-echo $coursecategories . "<br/>";
+        // Display Category name
+        //$category = get_record('course_categories','id',$course->category);
+        //echo ' >> <a title="'. format_string($category->name).'" '.$linkcss.' href="'.$CFG->wwwroot.'/course/category.php?id='.$category->id.'">'. format_string($category->name).'</a><br/>';
+        $coursecategories = myview_get_category_fullpath($course);
+        echo $coursecategories . "<br/>";
 
         print_heading('<a title="'. format_string($course->fullname).'" '.$linkcss.' href="'.$CFG->wwwroot.'/course/view.php?id='.$course->id.'">'. format_string($course->fullname).'</a>');
         if (array_key_exists($course->id,$htmlarray)) {
@@ -302,7 +313,7 @@ echo $coursecategories . "<br/>";
         echo '<a name="modulesoverview'.$course->id.'" ></a><br/>';
             foreach ($htmlarray[$course->id] as $modname => $html) {
                 echo "<img class=\"bigicon\" height=\"32px\" width=\"32px\" src=\"$CFG->wwwroot/mod/$modname/icon.gif\">";
-                echo "<div style=\"padding-right:40px;padding-left:40px;margin-top:-20px;\">$html</div>";
+                echo "<div style=\"padding-right:40px;padding-left:40px;margin-top:-20px;margin-bottom:20px; background-color: beige;\">$html</div>";
             }
         echo '</div>';
         }
