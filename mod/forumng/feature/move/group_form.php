@@ -21,6 +21,7 @@ class mod_forumng_group_form extends moodleform {
 
         // Hidden fields
         $mform->addElement('hidden', 'd', $this->_customdata->discussionid);
+        $mform->addElement('hidden', 'clone', $this->_customdata->cloneid);
         $mform->addElement('hidden', 'target', $forum->get_course_module_id());
 
         $this->add_action_buttons(true, get_string('move'));

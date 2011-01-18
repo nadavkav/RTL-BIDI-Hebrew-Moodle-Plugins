@@ -17,11 +17,21 @@ if (class_exists('ouflags')) {
 // Require ID parameter here. Other parameters may be required in forum type.
 $id = required_param('id', PARAM_INT);
 
+// On the view page ONLY we allow a default for the clone parameter that won't
+// cause an error if it's omitted. All other pages have default 0, which will
+// show up any errors caused if the parameter is omitted somewhere.
+$cloneid = optional_param('clone', forum::CLONE_DIRECT, PARAM_INT);
+
 try {
     // Construct forum variable (will check id is valid)
-    $forum = forum::get_from_cmid($id);
+    $forum = forum::get_from_cmid($id, $cloneid);
     $course = $forum->get_course();
     $cm = $forum->get_course_module();
+
+    // If this is a clone, redirect to original
+    if ($forum->is_clone()) {
+        $forum->redirect_to_original();
+    }
 
     // Check that forum can be viewed [Handles all other permissions]
     $groupid = forum::get_activity_group($cm, true);
@@ -46,6 +56,8 @@ try {
 
     // Initialize $PAGE, compute blocks
     require_once($CFG->dirroot . '/mod/forumng/pagelib.php');
+    global $CURRENTFORUM;
+    $CURRENTFORUM = $forum;
     $PAGE = page_create_instance($forum->get_id());
     $pageblocks = blocks_setup($PAGE);
     
@@ -118,7 +130,7 @@ try {
     print '<span class="computing-guide"> '.$computingguidelink.'</span>';
 
     // Display group selector if required
-    groups_print_activity_menu($cm, $CFG->wwwroot . '/mod/forumng/view.php?id=' . $id);
+    groups_print_activity_menu($cm, $forum->get_url(forum::PARAM_HTML));
 
     print '<div class="forumng-main">';
     print $forum->get_type()->display_switch_link();
@@ -133,6 +145,9 @@ try {
     }
 
     print '</div></div>';
+
+    // Log request
+    $forum->log('view');
 
     // Update completion 'viewed' flag if in use
     if (class_exists('ouflags')) {

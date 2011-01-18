@@ -6,6 +6,7 @@ require_once(dirname(__FILE__).'/forum_post.php');
 require_once(dirname(__FILE__).'/forum_draft.php');
 require_once(dirname(__FILE__).'/forum_exception.php');
 require_once(dirname(__FILE__).'/type/forum_type.php');
+require_once(dirname(__FILE__).'/feature/forum_feature.php');
 
 /**
  * Represents a forum. This class contains:
@@ -39,12 +40,17 @@ class forum {
         unsubsribe). */
     const SUBSCRIPTION_FORCED = 3;
 
-    /** Subscription status: User could have subscribed to the whole forum or subscribed to
-        one or more discussions in the forum or not subscribed to forum yet.
-        unsubsribe). */
+    /** NOT_SUBSCRIBED, PARTIALLY_SUBSCRIBED and FULLY_SUBSCRIBED are only used in a none group mode or all group mode
+     *  FULLY_SUBSCRIBED_GROUPMODE (view a group page when fully subscribed),
+        THIS_GROUP_PARTIALLY_SUBSCRIBED(subscribed some discussions in this group), THIS_GROUP_SUBSCRIBED,
+        THIS_GROUP_NOT_SUBSCRIBED are only used in individual group mode.*/
     const NOT_SUBSCRIBED = 0;
     const PARTIALLY_SUBSCRIBED = 1;
     const FULLY_SUBSCRIBED = 2;
+    const FULLY_SUBSCRIBED_GROUPMODE = 3;
+    const THIS_GROUP_PARTIALLY_SUBSCRIBED = 4;
+    const THIS_GROUP_SUBSCRIBED = 5;
+    const THIS_GROUP_NOT_SUBSCRIBED = 6;
 
     /** Grading: No grade for this activity. */
     const GRADING_NONE = 0;
@@ -114,6 +120,28 @@ class forum {
 
     /** Constant used if there is no post quota in effect */
     const QUOTA_DOES_NOT_APPLY = -1;
+
+    /** Link constant: HTML link (&amp;) */
+    const PARAM_HTML = 1;
+    /** Link constant: standard link (&) */
+    const PARAM_PLAIN = 2;
+    /** Link constant: HTML form input fields */
+    const PARAM_FORM = 3;
+    /** Link bitfield: HTML link (&amp;) with 'guess' for clone */
+    const PARAM_UNKNOWNCLONE = 16;
+
+    /**
+     * Special parameter used when requesting a forum 'directly' from a course
+     * (so that we know it will either have no clone id, or the clone id will
+     * be the same as the cmid).
+     */
+    const CLONE_DIRECT = -1;
+    /**
+     * Special parameter used when requesting a forum in a situation where we
+     * do not know what is the appropriate clone to use. In that case the
+     * system will 'guess' based on the user's access permissions
+     */
+    const CLONE_GUESS = -2;
 
     // Static methods
     /////////////////
@@ -203,7 +231,7 @@ class forum {
     /**
      * @return array Array of grading option => description
      */
-    function get_grading_options() {
+    public static function get_grading_options() {
         return array (
             self::GRADING_NONE => get_string('grading_none', 'forumng'),
             self::GRADING_AVERAGE => get_string('grading_average', 'forumng'),
@@ -229,6 +257,14 @@ class forum {
      *     read-tracking data should be kept */
     public static function get_read_tracking_deadline() {
         return time()-self::get_read_tracking_days()*24*3600;
+    }
+
+    /**
+     * @return bool True if the current user has the option selected to
+     *   automatically mark discussions as read
+     */
+    public static function mark_read_automatically() {
+        return !get_user_preferences('forumng_manualmark', '0');
     }
 
     /**
@@ -303,7 +339,7 @@ class forum {
      * @param bool $update If true, updates group based on URL parameter
      * @return int Group ID; ALL_GROUPS if all groups; NO_GROUPS if no groups used
      */
-    static function get_activity_group($cm, $update) {
+    static function get_activity_group($cm, $update=false) {
         $result = groups_get_activity_group($cm, $update);
         if($result === false) {
             return forum::NO_GROUPS;
@@ -314,11 +350,76 @@ class forum {
         }
     }
 
+    /**
+     * Obtains the forum type based on its 'info' object in modinfo (e.g. from
+     * $modinfo->instances['forumng'][1234]). Usually this comes from a CSS
+     * class inserted in the 'extra' field.
+     * <p>
+     * (To be honest the CSS class is not needed, it is mostly there as it's
+     * the only place we could safely throw in random information so that we
+     * can get this data without making extra queries!)
+     * @param object $info Info object
+     * @return string Forum type
+     */
+    private static function get_type_from_modinfo_info($info) {#
+        if (isset($info->forumtype)) {
+            // Only set when using get_modinfo_special for shared activity
+            // modules
+            return $info->forumtype;
+        }
+        return str_replace('"', '',
+                str_replace('class="forumng-type-', '', $info->extra));
+    }
+
+    /**
+     * This special function is required only because of the OU shared
+     * activities system. On the shared activities course, modinfo is not
+     * available. We can provide a fake version, but only if specific IDs
+     * are given
+     * @param object $course Moodle course object
+     * @param array $specificids List of course-module IDs; empty array = all
+     * @return object Moodle modinfo object
+     * @throws forum_exception If this is shared activities course and you're
+     *   trying to list all forums on it
+     */
+    private static function get_modinfo_special($course, $specificids=array()) {
+        global $CFG, $FORUMNG_CACHE;
+        $modinfo = get_fast_modinfo($course);
+        if (class_exists('ouflags') && !count($modinfo->cms)) {
+            // OU shared activities system requires a hack here so that this
+            // can work on the shared activities course, which doesn't have
+            // modinfo. It can only work if specific IDs are listed.
+            if (count($specificids)) {
+                if (!empty($FORUMNG_CACHE->modinfo_special) &&
+                        $FORUMNG_CACHE->modinfo_special->specificids == $specificids) {
+                    return $FORUMNG_CACHE->modinfo_special->modinfo;
+                }
+                $inorequals = forum_utils::in_or_equals($specificids);
+                $modinfo->cms = forum_utils::get_records_sql("
+SELECT
+    cm.*, m.name AS modname, f.type AS forumtype
+FROM
+    {$CFG->prefix}course_modules cm
+    INNER JOIN {$CFG->prefix}modules m ON m.id = cm.module
+    INNER JOIN {$CFG->prefix}forumng f ON f.id = cm.instance
+WHERE
+    cm.id $inorequals AND m.name='forumng'");
+                $modinfo->instances['forumng'] = $modinfo->cms;
+                $FORUMNG_CACHE->modinfo_special->modinfo = $modinfo;
+                $FORUMNG_CACHE->modinfo_special->specificids = $specificids;
+            } else {
+                throw new forum_exception('Cannot get_course_forums on ' .
+                        'shared activities course without specific ID list');
+            }
+        }
+        return $modinfo;
+    }
+
     // Object variables and accessors
     /////////////////////////////////
 
-    private $course, $cm, $forumfields, $type;
-    private $cache;
+    private $course, $cm, $context, $clonecourse, $clonecm, $clonecontext,
+            $forumfields, $type, $cache;
 
     /** @return bool True if ratings are enabled */
     public function has_ratings() {
@@ -335,7 +436,7 @@ class forum {
             && ($created == 0 || $created > $this->forumfields->ratingfrom)
             && ($created == 0 || $this->forumfields->ratinguntil==0
                 || $created<$this->forumfields->ratinguntil)
-            && has_capability('mod/forumng:rate', $this->context);
+            && has_capability('mod/forumng:rate', $this->get_context());
     }
 
     /** @return int ID of course that contains this forum */
@@ -343,28 +444,210 @@ class forum {
         return $this->forumfields->course;
     }
 
-    /** @return object Course object */
-    public function get_course() {
+    /**
+     * Obtains course object. For non-shared forums this is
+     * straightforward. For shared forums this usually returns the course
+     * of the *clone* forum that is currently relevant, not directly of the
+     * original forum.
+     * @param bool $forcereal If set, always returns the course of the
+     *   original forum and not of any clone
+     * @return object Course object
+     */
+    public function get_course($forcereal = false) {
+        if ($this->is_shared() && !$forcereal) {
+            if (!$this->clonecourse) {
+                $cm = $this->get_course_module();
+                $this->clonecourse = get_record('course', 'id', $cm->course);
+                if (!$this->clonecourse) {
+                    throw new forum_exception('Cannot find clone course ' .
+                            $cm->course);
+                }
+            }
+            return $this->clonecourse;
+        }
         return $this->course;
     }
 
-    /** Checks that the course-module is available */
-    function check_cm() {
+    /**
+     * Obtains course-module id. For non-shared forums this is
+     * straightforward. For shared forums this usually returns the id
+     * of the *clone* forum that is currently relevant, not directly of the
+     * original forum.
+     * @param bool $forcereal If set, always returns the id of the
+     *   original forum and not of any clone
+     * @return int ID of course-module instance
+     */
+    public function get_course_module_id($forcereal = false) {
+        return $this->get_course_module($forcereal)->id;
+    }
+
+    /**
+     * Obtains course-module instance. For non-shared forums this is
+     * straightforward. For shared forums this usually returns the course-module
+     * of the *clone* forum that is currently relevant, not directly of the
+     * original forum.
+     * @param bool $forcereal If set, always returns the course-module of the
+     *   original forum and not of any clone
+     * @return object Course-module instance
+     */
+    public function get_course_module($forcereal = false) {
+        global $CFG, $SESSION;
         if(empty($this->cm)) {
             throw new forum_exception('Course-module not set for this forum');
         }
-    }
-
-    /** @return int ID of course-module instance */
-    public function get_course_module_id() {
-        $this->check_cm();
-        return $this->cm->id;
-    }
-
-    /** @return object Course-module instance */
-    public function get_course_module() {
-        $this->check_cm();
+        if ($this->is_shared() && !$forcereal) {
+            if (!$this->clonecm) {
+                throw new forum_exception('Clone reference not defined');
+            }
+            return $this->clonecm;
+        }
         return $this->cm;
+    }
+
+    /**
+     * Retrieves contexts for all the clones of this forum. (If any.)
+     * @return array Array of context objects (each one has an extra ->courseid,
+     *   ->courseshortname, and ->forumname) for clones of this forum
+     */
+    public function get_clone_contexts() {
+        global $CFG;
+        $contexts = get_records_sql("
+SELECT
+    x.*, c.id AS courseid, c.shortname AS courseshortname, f.name AS forumname
+FROM
+    {$CFG->prefix}forumng f
+    INNER JOIN {$CFG->prefix}course_modules cm ON f.id = cm.instance
+    INNER JOIN {$CFG->prefix}course c ON cm.course = c.id
+    INNER JOIN {$CFG->prefix}modules m ON cm.module = m.id
+    INNER JOIN {$CFG->prefix}context x ON x.instanceid = cm.id
+WHERE
+    f.originalcmid = {$this->cm->id}
+    AND m.name = 'forumng'
+    AND x.contextlevel = 70
+ORDER BY
+    c.shortname, f.name");
+        return $contexts ? $contexts : array();
+    }
+    
+    /**
+     * Sets up the clone reference. The clone reference is used for shared
+     * forums only. If a forum is a shared forum, you can access it from several
+     * different course-module instances. The id of these instances is known as
+     * the 'clone id'. We store the clone course-module in the forum object
+     * so that when displaying links etc., these can retain the clone
+     * information.
+     * @param int $cloneid Clone id
+     * @param object $clonecourse Optional clone course object (improves
+     *   performance in cases where it needs to get the cm entry)
+     */
+    public function set_clone_reference($cloneid, $clonecourse=null) {
+        global $SESSION, $CFG;
+        if ($cloneid == $this->cm->id || $cloneid == self::CLONE_DIRECT) {
+            $this->clonecm = $this->cm;
+            return;
+        }
+        if ($cloneid == self::CLONE_GUESS) {
+            // We had better cache guesses in session because this is
+            // time-consuming
+            if (!isset($SESSION->forumng_cache)) {
+                $SESSION->forumng_cache = new stdClass;
+            }
+            if (!isset($SESSION->forumng_cache->guesses)) {
+                $SESSION->forumng_cache->guesses = array();
+            }
+            if (isset($SESSION->forumng_cache->guesses[$this->get_id()])) {
+                return $SESSION->forumng_cache->guesses[$this->get_id()];
+            }
+            // Okay, no cached guess. First let's see if they can write to the
+            // original forum because if so let's just use that
+            if (has_capability('mod/forumng:replypost', $this->get_context(true))) {
+                $this->clonecm = $this->cm;
+                return;
+            }
+
+            // See if they can write to any context
+            $contexts = $this->get_clone_contexts();
+            foreach ($contexts as $context) {
+                if (has_capability('mod/forumng:replypost', $context)) {
+                    $this->clonecm = self::get_modinfo_cm(
+                            $context->instanceid);
+                    break;
+                }
+            }
+
+            // No? Well see if they can read to one
+            if (!$this->clonecm) {
+                if (has_capability('moodle/course:view', $context)) {
+                    $this->clonecm = self::get_modinfo_cm($context->instanceid);
+                    break;
+                }
+            }
+
+            // Default, just use original
+            if (!$this->clonecm) {
+                $this->clonecm = $this->cm;
+            }
+
+            // Cache guess
+            $SESSION->forumng_cache->guesses[$this->get_id()] = $this->clonecm;
+            return;
+        } else {
+            // Get course-module record
+            $this->clonecm = self::get_modinfo_cm($cloneid);
+            // Security check that specifed cm is indeed a clone of this forum
+            if (get_field('forumng', 'originalcmid', 'id',
+                    $this->clonecm->instance) != $this->cm->id) {
+                throw new forum_exception("Not a clone of this forum: $cloneid");
+            }
+        }
+    }
+
+    /**
+     * Gets a course-module object using get_fast_modinfo (so that it includes
+     * additional data not in the actual table).
+     * @param int $cmid ID of course-module
+     * @param object $course Optional $course object to improve performance
+     * @return Course-module object
+     * @throws forum_exception If the cm isn't found or not in that course
+     */
+    private static function get_modinfo_cm($cmid, $course=null) {
+        global $CFG;
+        if (!$course) {
+            $course = forum_utils::get_record_sql("
+SELECT
+    c.*
+FROM
+    {$CFG->prefix}course_modules cm
+    INNER JOIN {$CFG->prefix}course c ON c.id = cm.course
+WHERE
+    cm.id = $cmid");
+        }
+        $modinfo = get_fast_modinfo($course);
+        if (!array_key_exists($cmid, $modinfo->cms)) {
+            throw new forum_exception(
+                    "Course $course->id does not contain cm $cmid");
+        }
+        return $modinfo->cms[$cmid];
+    }
+
+    /**
+     * Obtains context object. For non-shared forums this is
+     * straightforward. For shared forums this usually returns the context
+     * of the *clone* forum that is currently relevant, not directly of the
+     * original forum.
+     * @param bool $forcereal If set, always returns the context of the
+     *   original forum and not of any clone
+     * @return object Context object
+     */
+    public function get_context($forcereal = false) {
+        if ($this->is_shared() && !$forcereal) {
+            if (!$this->clonecontext) {
+                $this->clonecontext = get_context_instance(CONTEXT_MODULE,
+                    $this->get_course_module_id());
+            }
+            return $this->clonecontext;
+        }
+        return $this->context;
     }
 
     /** @return int ID of this forum */
@@ -403,11 +686,6 @@ class forum {
         }
     }
 
-    /** @return Context of forum */
-    public function get_context() {
-        return $this->context;
-    }
-
     /** @return int GRADING_xx constant */
     public function get_grading() {
         return $this->forumfields->grading;
@@ -436,6 +714,34 @@ class forum {
         return $this->forumfields->ratingthreshold;
     }
 
+    /**
+     * @return bool True if this forum is shared (has the 'allow sharing' flag
+     *   set)
+     */
+    public function is_shared() {
+        return $this->forumfields->shared ? true : false;
+    }
+
+    /**
+     * @return bool True if this forum is a clone (has the 'original cmid'
+     *   value set)
+     */
+    public function is_clone() {
+        return $this->forumfields->originalcmid != null;
+    }
+
+    /**
+     * If this forum is a clone, obtains the real one; otherwise just returns
+     * this again.
+     * @return forum Forum object (same or different)
+     */
+    public function get_real_forum() {
+        if ($this->is_clone()) {
+            return forum::get_from_cmid($this->forumfields->originalcmid, $this->cm->id);
+        } else {
+            return $this;
+        }
+    }
     /**
      * @return int Number of discussions containing unread posts
      */
@@ -484,7 +790,12 @@ class forum {
      * @return int Activity group mode; may be VISIBLEGROUPS, SEPARATEGROUPS, or 0
      */
     public function get_group_mode() {
-        return groups_get_activity_groupmode($this->cm, $this->course);
+        if($this->forumfields->shared) {
+            // Performance up: shared forums never have groups
+            return 0;
+        }
+        return groups_get_activity_groupmode($this->get_course_module(),
+            $this->get_course());
     }
 
     /**
@@ -494,7 +805,7 @@ class forum {
     public function get_grouping() {
         global $CFG;
         if ($CFG->enablegroupings) {
-            return $this->cm->groupingid;
+            return $this->get_course_module()->groupingid;
         } else {
             return 0;
         }
@@ -507,6 +818,76 @@ class forum {
             (!empty($CFG->forumng_reportunacceptable) && validate_email($CFG->forumng_reportunacceptable));
     }
 
+    /**
+     * Use to obtain link parameters when linking to any page that has anything
+     * to do with forums.
+     * @return string e.g. 'id=1234'
+     */
+    public function get_link_params($type) {
+        if ($type == forum::PARAM_FORM) {
+            $id = '<input type="hidden" name="id" value="' . $this->cm->id . '" />';
+        } else {
+            $id = 'id=' . $this->cm->id;
+        }
+        return $id . $this->get_clone_param($type);
+    }
+
+    /**
+     * Use to obtain link parameters as an array instead of as a string.
+     * @return array e.g. ('id'=>123)
+     */
+    public function get_link_params_array() {
+        $result = array('id' => $this->cm->id);
+        $this->add_clone_param_array($result);
+        return $result;
+    }
+
+    /**
+     * Adds the clone parameter to an array of parameters, if it is necessary.
+     * @param array $result Array that may have key 'clone' set
+     */
+    public function add_clone_param_array($result) {
+        if ($this->is_shared()) {
+            $result['clone'] = $this->get_course_module_id();
+        }
+    }
+
+    /**
+     * @param int $type PARAMS_xx constant
+     * @return string Full URL to this forum
+     */
+    public function get_url($type) {
+        global $CFG;
+        return $CFG->wwwroot . '/mod/forumng/view.php?' .
+                $this->get_link_params($type);
+    }
+
+    /**
+     * @param int $type Parameter type (whether you want it escaped or not)
+     * @return Either empty string or some variant of '&clone=N'
+     */
+    public function get_clone_param($type) {
+        if (!$this->is_shared()) {
+            return '';
+        }
+        if ($type & forum::PARAM_UNKNOWNCLONE) {
+            $cloneid = -2; // Special 'guess' vale
+        } else {
+            $cloneid = $this->get_course_module_id();
+        }
+
+        if ($type == forum::PARAM_FORM) {
+            return '<input type="hidden" name="clone" value="' .
+                    $cloneid . '" />';
+        }
+        if (($type & 0xf) == forum::PARAM_HTML) {
+            $params = '&amp;';
+        } else {
+            $params = '&';
+        }
+        return $params . 'clone=' . $cloneid;
+    }
+
     // Factory methods
     //////////////////
 
@@ -514,12 +895,14 @@ class forum {
      * Creates a forum object and all related data from a single forum ID.
      * Note this is a forum ID and not a course-module ID.
      * @param int $id ID of forum
+     * @param int $cloneid Clone identifier (0 if not a shared forum) or
+     *   CLONE_DIRECT constant
      * @param bool $requirecm True if we require that the forum object
      *   has a valid course-module and context; false if the forum has only
      *   just been created so it doesn't have one yet
      * @return forum Forum object
      */
-    public static function get_from_id($id, $requirecm=true) {
+    public static function get_from_id($id, $cloneid, $requirecm=true) {
         global $COURSE;
 
         // Note that I experimented with code that retrieved this information
@@ -572,16 +955,30 @@ class forum {
         }
 
         // Construct forum
-        return new forum($course, $cm, $context, $forumfields);
+        $result = new forum($course, $cm, $context, $forumfields);
+        if ($result->is_shared()) {
+            if (!$cloneid) {
+                throw new forum_exception(
+                    "Shared forum {$cm->id} requires a clone id");
+            }
+            // This is not available when forum was only just created, so
+            // don't call it
+            if ($cm) {
+                $result->set_clone_reference($cloneid);
+            }
+        }
+        return $result;
     }
 
     /**
      * Creates a forum object and all related data from a single course-module
      * ID. Intended to be used from pages that refer to a particular forum.
      * @param int $cmid Course-module ID of forum
+     * @param int $cloneid Clone identifier (0 if not a shared forum) or
+     *   CLONE_DIRECT constant
      * @return forum Forum object
      */
-    public static function get_from_cmid($cmid) {
+    public static function get_from_cmid($cmid, $cloneid) {
         global $COURSE;
 
         // Get modinfo for current course, because we usually already have it
@@ -620,7 +1017,15 @@ class forum {
         $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
         // Construct forum
-        return new forum($course, $cm, $context, $forumfields);
+        $result = new forum($course, $cm, $context, $forumfields);
+        if ($result->is_shared()) {
+            if (!$cloneid) {
+                throw new forum_exception(
+                    "Shared forum $cmid requires a clone id");
+            }
+            $result->set_clone_reference($cloneid);
+        }
+        return $result;
     }
 
     // Object methods
@@ -668,6 +1073,21 @@ class forum {
         }
 
         // TODO Call forum type for additional handling
+
+        // If name changes and this is a shared forum, we need to go change
+        // all the clones
+        if ($previousfields->name !== $this->forumfields->name &&
+            $this->is_shared()) {
+            // Get clones
+            $clones = get_records(
+                    'forumng', 'originalcmid', $this->get_course_module_id());
+            $clones = $clones ? $clones : array();
+            foreach($clones as $clone) {
+                set_field('forumng', 'name', addslashes($this->forumfields->name),
+                        'id', $clone->id);
+                rebuild_course_cache($clone->course, true);
+            }
+        }
     }
 
     /**
@@ -703,6 +1123,31 @@ WHERE
     }
 
     /**
+     * Records an action in the Moodle log for current user.
+     * @param string $action Action name - see datalib.php for suggested verbs
+     *   and this code for example usage
+     * @param string $replaceinfo Optional info text to replace default (which
+     *   is just the forum id again)
+     */
+    function log($action, $replaceinfo = '') {
+        $info = $this->forumfields->id;
+        if ($replaceinfo !== '') {
+            $info = $replaceinfo;
+        }
+        add_to_log($this->get_course_id(), 'forumng',
+            $action, $this->get_log_url(), $info,
+            $this->get_course_module_id());
+    }
+
+    /**
+     * @return string URL of this discussion for log table, relative to the
+     *   module's URL
+     */
+    function get_log_url() {
+        return 'view.php?' . $this->get_link_params(forum::PARAM_PLAIN);
+    }
+
+    /**
      * Retrieves a list of discussions.
      * @param int $groupid Group ID or ALL_GROUPS
      * @param bool $viewhidden True if user can view hidden discussions
@@ -714,7 +1159,7 @@ WHERE
      */
     public function get_discussion_list(
         $groupid=self::ALL_GROUPS, $viewhidden=false, $viewdeleted=false,
-        $page=1, $sort=self::SORT_DATE, $sortreverse=false, $userid=0) {
+        $page=1, $sort=self::SORT_DATE, $sortreverse=false, $userid=0, $ignoreinvalidpage=true) {
         global $CFG;
 
         // Build list of SQL conditions
@@ -752,7 +1197,11 @@ WHERE
             $pagecount = 1;
         }
         if (($page > $pagecount || $page < 1) ) {
-            throw new forum_exception("Invalid page $page, expecting 1..$pagecount");
+            if ($ignoreinvalidpage) {
+                $page = 1;
+            } else {
+                throw new forum_exception("Invalid page $page, expecting 1..$pagecount");
+            }
         }
 
         // Special case for no results
@@ -901,7 +1350,8 @@ WHERE
         $newdiscussion->log('add discussion');
 
         if (forum::search_installed()) {
-            forum_post::get_from_id($postid)->search_update();
+            forum_post::get_from_id($postid,
+                    $this->get_course_module_id())->search_update();
         }
 
         forum_utils::finish_transaction();
@@ -962,16 +1412,31 @@ WHERE
         global $CFG;
         $forumid = $this->get_id();
         $deadline = self::get_read_tracking_deadline();
+        if ($this->get_type()->has_unread_restriction()) {
+            $typejoin = " INNER JOIN {$CFG->prefix}forumng_posts fpfirst ON fd.postid=fpfirst.id";
+            $typecondition = $this->get_type()->get_unread_restriction_sql($this, $userid);
+            if ($typecondition) {
+                $typecondition = ' AND ' . $typecondition;
+            } else {
+                $typecondition = '';
+            }
+        } else {
+            $typejoin = '';
+            $typecondition = '';
+
+        }
         $rs = forum_utils::get_recordset_sql("
 SELECT
     fd.id
 FROM
     {$CFG->prefix}forumng_discussions fd
     INNER JOIN {$CFG->prefix}forumng_posts lp ON fd.lastpostid=lp.id
+    $typejoin
 WHERE
     fd.forumid=$forumid
     AND lp.modified >= $deadline
-    $groupcondition");
+    $groupcondition
+    $typecondition");
         $discussions = array();
         while($rec = rs_fetch_next_record($rs)) {
             $discussions[] = $rec->id;
@@ -1005,75 +1470,142 @@ WHERE userid=$userid AND discussionid $inorequals");
      * Subscribes a user to this forum. (Assuming it permits manual subscribe/
      * unsubscribe.)
      * @param $userid User ID (default current)
+     * @param $groupid Group ID to unsubscribe to (default null = whole forum)
+     * @param $log True to log this
      */
-    public function subscribe($userid=0) {
+    public function subscribe($userid=0, $groupid=null, $log=true) {
         global $CFG;
         $userid = forum_utils::get_real_userid($userid);
+        // For shared forums, we subscribe to a specific clone
+        if ($this->is_shared()) {
+            $clonecmid = $this->get_course_module_id();
+            $clonevalue = '=' . $clonecmid;
+        } else {
+            $clonecmid = null;
+            $clonevalue = 'IS NULL';
+        }
         forum_utils::start_transaction();
-        //delete all the subscriptions to discussions if any
-        forum_utils::execute_sql(
-            "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
-            "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
-            " AND subscribed=1 AND discussionid IS NOT NULL");
-        $existing = get_record('forumng_subscriptions',
-            'userid', $userid, 'forumid', $this->forumfields->id);
-        if (!$existing) {
+        //delete all the subscriptions to the discussions in the entire forum or the discussions in the specified group if any
+        if (!$groupid) {
+            //delete all the subscriptions to the discussions/groups in the entire forum
+            forum_utils::execute_sql(
+                "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
+                "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
+                " AND clonecmid $clonevalue AND subscribed=1 " .
+                "AND (discussionid IS NOT NULL OR groupid IS NOT NULL)");
+            $existing = get_record('forumng_subscriptions',
+                'userid', $userid, 'forumid', $this->forumfields->id, 'clonecmid', $clonecmid);
+            if (!$existing) {
+                $subrecord = new StdClass;
+                $subrecord->userid = $userid;
+                $subrecord->forumid = $this->forumfields->id;
+                $subrecord->subscribed = 1;
+                $subrecord->clonecmid = $clonecmid;
+                forum_utils::insert_record('forumng_subscriptions', $subrecord);
+            } else if (!$existing->subscribed) {
+                // See if this is initial-subscription and we are subscribed by
+                // default, if so just remove the record
+                if ($this->is_initially_subscribed($userid, true)) {
+                    forum_utils::delete_records(
+                        'forumng_subscriptions', 'id', $existing->id);
+                } else {
+                    $subchange = new StdClass;
+                    $subchange->id = $existing->id;
+                    $subchange->subscribed = 1;
+                    forum_utils::update_record('forumng_subscriptions', $subchange);
+                }
+            }
+        } else {
+            ////delete all the subscriptions to the discussions in the the specified group if any
+            $discussionquery = "SELECT id FROM {$CFG->prefix}forumng_discussions
+                WHERE forumid = {$this->forumfields->id} AND groupid = $groupid";
+            //Share forum doesn't support group mode so we don't check clonecmid
+            forum_utils::execute_sql(
+                "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
+                "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
+                " AND subscribed=1 " .
+                "AND discussionid IS NOT NULL AND discussionid IN ($discussionquery)");
+            //Do some housekeeping in case some invalid data
+            //deleting any group subscription if any (shouldn't have any records to be deleted ideally)
+            forum_utils::delete_records('forumng_subscriptions', 'userid', $userid,
+                    'forumid', $this->forumfields->id, 'groupid', $groupid);
             $subrecord = new StdClass;
             $subrecord->userid = $userid;
             $subrecord->forumid = $this->forumfields->id;
             $subrecord->subscribed = 1;
+            $subrecord->groupid = $groupid;
 
             forum_utils::insert_record('forumng_subscriptions', $subrecord);
-        } else if (!$existing->subscribed) {
-            // See if this is initial-subscription and we are subscribed by
-            // default, if so just remove the record
-            if ($this->is_initially_subscribed($userid, true)) {
-                forum_utils::delete_records(
-                    'forumng_subscriptions', 'id', $existing->id);
-            } else {
-                $subchange = new StdClass;
-                $subchange->id = $existing->id;
-                $subchange->subscribed = 1;
-
-                forum_utils::update_record('forumng_subscriptions', $subchange);
-            }
         }
-
         forum_utils::finish_transaction();
+        if ($log) {
+            $this->log('subscribe', $userid . ' ' .
+                    ($groupid ? 'group ' . $groupid : 'all'));
+        }
     }
 
     /**
      * Unsubscribes a user from this forum.
      * @param $userid User ID (default current)
+     * @param $groupid Group ID to unsubscribe from (default null = whole forum)
+     * @param $log True to log this
      */
-    public function unsubscribe($userid=0) {
+    public function unsubscribe($userid=0, $groupid=null, $log=true) {
         global $CFG;
         $userid = forum_utils::get_real_userid($userid);
-        //delete all the subscriptions to discussions if any
-        forum_utils::execute_sql(
-            "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
-            "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
-            " AND subscribed=1 AND discussionid IS NOT NULL");
-        if ($this->is_initially_subscribed($userid, true)) {
-            $existing = get_record('forumng_subscriptions',
-                'userid', $userid, 'forumid', $this->forumfields->id);
-            if (!$existing) {
-                $subrecord = new StdClass;
-                $subrecord->userid = $userid;
-                $subrecord->forumid = $this->forumfields->id;
-                $subrecord->subscribed = 0;
-
-                forum_utils::insert_record('forumng_subscriptions', $subrecord);
-            } else if ($existing->subscribed) {
-                $subchange = new StdClass;
-                $subchange->id = $existing->id;
-                $subchange->subscribed = 0;
-
-                forum_utils::update_record('forumng_subscriptions', $subchange);
+        // For shared forums, we subscribe to a specific clone
+        if ($this->is_shared()) {
+            $clonecmid = $this->get_course_module_id();
+            $clonevalue = '=' . $clonecmid;
+        } else {
+            $clonecmid = null;
+            $clonevalue = 'IS NULL';
+        }
+        if (!$groupid) {
+            //Unsubscribe from the whole forum; deleting all the discussion/group subscriptions
+            forum_utils::execute_sql(
+                "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
+                "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
+                " AND clonecmid $clonevalue AND subscribed=1 " .
+                "AND (discussionid IS NOT NULL OR groupid IS NOT NULL)");
+            if ($this->is_initially_subscribed($userid, true)) {
+                $existing = get_record('forumng_subscriptions',
+                    'userid', $userid, 'forumid', $this->forumfields->id,
+                    'clonecmid', $clonecmid);
+                if (!$existing) {
+                    $subrecord = new StdClass;
+                    $subrecord->userid = $userid;
+                    $subrecord->forumid = $this->forumfields->id;
+                    $subrecord->subscribed = 0;
+                    $subrecord->clonecmid = $clonecmid;
+    
+                    forum_utils::insert_record('forumng_subscriptions', $subrecord);
+                } else if ($existing->subscribed) {
+                    $subchange = new StdClass;
+                    $subchange->id = $existing->id;
+                    $subchange->subscribed = 0;
+    
+                    forum_utils::update_record('forumng_subscriptions', $subchange);
+                }
+            } else {
+                forum_utils::delete_records('forumng_subscriptions', 'userid', $userid,
+                    'forumid', $this->forumfields->id, 'clonecmid', $clonecmid);
             }
         } else {
+            //Unsubscribe from the specified group; remove all the subscritions to the discussions which belongs to the group if any
+            $discussionquery = "SELECT id FROM {$CFG->prefix}forumng_discussions
+                WHERE forumid = {$this->forumfields->id} AND groupid = $groupid";
+            forum_utils::execute_sql(
+                "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
+                "WHERE userid=" . $userid . " AND forumid=" . $this->forumfields->id .
+                " AND subscribed=1 " .
+                "AND discussionid IS NOT NULL AND discussionid IN ($discussionquery)");
             forum_utils::delete_records('forumng_subscriptions', 'userid', $userid,
-                'forumid', $this->forumfields->id);
+                    'forumid', $this->forumfields->id, 'groupid', $groupid);
+        }
+        if ($log) {
+            $this->log('unsubscribe', $userid . ' ' .
+                    ($groupid ? 'group ' . $groupid : 'all'));
         }
     }
 
@@ -1109,6 +1641,9 @@ WHERE userid=$userid AND discussionid $inorequals");
     private function can_be_subscribed($userid=0) {
         global $USER;
         $userid = forum_utils::get_real_userid($userid);
+        $cm = $this->get_course_module();
+        $course = $this->get_course();
+        $context = $this->get_context();
 
         // Guests cannot subscribe
         if(isguest($userid)) {
@@ -1126,41 +1661,45 @@ WHERE userid=$userid AND discussionid $inorequals");
         // This is not a loop, just so I can use break
         do {
             // Check user can see forum
-            $this->check_cm();
-            if (!has_capability('mod/forumng:viewdiscussion', $this->context,
+            if (!has_capability('mod/forumng:viewdiscussion', $context,
                 $userid)) {
                 $result = false;
                 break;
             }
             // For current user, can take shortcut
             if ($userid == $USER->id) {
-                if (!$this->cm->uservisible) {
+                if (empty($cm->uservisible)) {
+                    $uservisible = false;
+                } else {
+                    $uservisible = true;
+                }
+                if (!$uservisible) {
                     $result = false;
                     break;
                 }
             } else {
-                $visible = $this->cm->visible;
+                $visible = $cm->visible;
                 if(class_exists('ouflags')) {
                     // OU extra access restrictions
                     require_once($CFG->libdir . '/conditionlib.php');
                     require_once($CFG->dirroot . '/local/module_access.php');
-                    $conditioninfo = new condition_info($this->cm);
+                    $conditioninfo = new condition_info($cm);
                     $visible = $visible &&
                         $conditioninfo->is_available($crap, false, $userid) &&
-                        is_module_student_accessible($this->cm, $this->course);
+                        is_module_student_accessible($cm, $course);
                 }
                 if (!$visible && !has_capability(
-                    'moodle/site:viewhiddenactivities', $this->context, $userid)) {
+                    'moodle/site:viewhiddenactivities', $context, $userid)) {
                     $result = false;
                     break;
                 }
-                if ($this->cm->groupmembersonly && !has_capability(
-                    'moodle/site:accessallgroups', $this->context, $userid)) {
+                if ($cm->groupmembersonly && !has_capability(
+                    'moodle/site:accessallgroups', $context, $userid)) {
                     // If the forum is restricted to group members only, then
                     // limit it to people within groups on the course - or
                     // groups in the grouping, if one is selected
-                    $groupobjs = groups_get_all_groups($this->course->id, $userid,
-                        $this->cm->groupingid, 'g.id');
+                    $groupobjs = groups_get_all_groups($course->id, $userid,
+                        $cm->groupingid, 'g.id');
                     if (!$groupobjs || count($groupobjs)==0) {
                         $result = false;
                         break;
@@ -1225,8 +1764,10 @@ WHERE userid=$userid AND discussionid $inorequals");
     public function is_in_auto_subscribe_list($userid=0, $expectingquery=false) {
         global $CFG, $USER;
         $userid = forum_utils::get_real_userid($userid);
+        $context = $this->get_context();
+
         // Check capability without doanything
-        if(!has_capability('mod/forumng:viewdiscussion', $this->context,
+        if(!has_capability('mod/forumng:viewdiscussion', $context,
             $userid, false)) {
             return false;
         }
@@ -1272,7 +1813,7 @@ WHERE
         $roleids = forum_utils::safe_explode(',', $CFG->forumng_subscriberoles);
         if(isset($USER) && $userid == $USER->id) {
             // Get all context paths - this and ancestors
-            $path = $this->context->path;
+            $path = $context->path;
             do {
                 $contextpaths[$path] = true;
                 $path = substr($path, 0, strrpos($path, '/'));
@@ -1292,7 +1833,7 @@ WHERE
             }
         } else {
             $roleidcheck = forum_utils::in_or_equals($roleids);
-            $contextids = forum_utils::safe_explode('/', $this->context->path);
+            $contextids = forum_utils::safe_explode('/', $context->path);
             $contextidcheck = forum_utils::in_or_equals($contextids);
             if (!$expectingquery) {
                 debugging('DB query required for is_in_auto_subscribe_list. ' .
@@ -1318,10 +1859,12 @@ WHERE
      * @param bool $expectingquery True if expecting query (note this
      *   value is ignored if you specify a non-current userid, then it will
      *   always make queries)
-     * @return object with two fields, $wholeforum and $discussionids
-     * If $wholeforum = 0, not subscribed;
-     * If $wholeforum = 1 and $discussionids is empty, subscribed to the whole forum;
-     * If $wholeforum = 1 and $discussionids isn't empty, subscribed to a list of discussions
+     * @return object with three fields, $wholeforum, $discussionids (associated array with discussion id as the key and its group id as value
+     * and $groupids
+     * If $wholeforum = true and both $discussionids and $groupids is empty, subscribed to the whole forum;
+     * If $wholeforum = false and $discussionids isn't empty while the groupids is empty, subscribed to a list of discussions
+     * If $wholeforum = false and $discussionids is empty while the groupids is not empty, subscribed to a list of groups
+     * If $wholeforum = false and both $discussionids and groupids is not empty, subscribed to both a list of discussions and a list of groups
      */
     public function get_subscription_info($userid=0, $expectingquery=false) {
         global $CFG, $FORUMNG_CACHE;
@@ -1330,11 +1873,12 @@ WHERE
         if(!isset($FORUMNG_CACHE->subscriptioninfo)) {
             $FORUMNG_CACHE->subscriptioninfo = array();
         }
-        if(array_key_exists($userid, $FORUMNG_CACHE->subscriptioninfo)) {
-            return $FORUMNG_CACHE->subscriptioninfo[$userid];
+        $key = $userid . ':' . $this->get_id();
+        if(array_key_exists($key, $FORUMNG_CACHE->subscriptioninfo)) {
+            return $FORUMNG_CACHE->subscriptioninfo[$key];
         }
 
-        $user = (object)(array('wholeforum'=>false, 'discussionids'=>array()));
+        $user = (object)(array('wholeforum'=>false, 'discussionids'=>array(), 'groupids'=>array()));
 
         // If subscription's banned, you ain't subscribed
         $subscriptionoption = $this->get_effective_subscription_option();
@@ -1361,38 +1905,74 @@ WHERE
             $user->wholeforum = true;
         }
 
-        $rs = get_recordset_sql("
-SELECT s.subscribed, s.discussionid, fd.groupid AS discussiongroupid, discussiongm.id AS discussiongroupmember
+        // For shared forums, we subscribe to a specific clone
+        if ($this->is_shared()) {
+            $clonevalue = '=' . $this->get_course_module_id();
+        } else {
+            $clonevalue = 'IS NULL';
+        }
+        $rs = get_recordset_sql($sql = "
+SELECT s.subscribed, s.discussionid, s.groupid, fd.groupid AS discussiongroupid, discussiongm.id AS discussiongroupmember, subscriptiongm.id AS subscriptiongroupmember
 FROM
     {$CFG->prefix}forumng_subscriptions s
     LEFT JOIN {$CFG->prefix}forumng_discussions fd ON fd.id = s.discussionid
     LEFT JOIN {$CFG->prefix}groups_members discussiongm ON fd.groupid = discussiongm.groupid AND s.userid = discussiongm.userid
+    LEFT JOIN {$CFG->prefix}groups_members subscriptiongm ON s.groupid = subscriptiongm.groupid AND s.userid = subscriptiongm.userid
 WHERE
-    s.forumid={$this->forumfields->id} AND s.userid={$userid} AND (fd.forumid={$this->forumfields->id} OR s.discussionid IS NULL)");
+    s.forumid={$this->forumfields->id} 
+    AND s.userid={$userid} 
+    AND (fd.forumid={$this->forumfields->id} OR s.discussionid IS NULL)
+    AND s.clonecmid $clonevalue");
         if(!$rs) {
-            throw new forum_exception('Failed to get subscriber list');
+            throw new forum_exception('Failed to get subscriber list [' . $sql . ']');
         }
 
+        $context = $this->get_context();
+        $canviewdiscussion = has_capability('mod/forumng:viewdiscussion', $context, $userid);
+        $canaccessallgroups = has_capability('moodle/site:accessallgroups', $context, $userid);
         while($rec = rs_fetch_next_record($rs)) {
-            //subscribed to the whole forum when subscribed == 1 and disucssionid =='';
-            // *** Put the allowedusers checks in same part of code so not duplicated
+
             if ($rec->subscribed) {
-                //has_capability('mod/forumng:viewdiscussion', $this->context);
-                if (!$rec->discussionid) {
-                    if (has_capability('mod/forumng:viewdiscussion', $this->context, $userid)) {
-                        $user->wholeforum = true;
+                //has_capability('mod/forumng:viewdiscussion', $this->get_context());
+                //Rewrite the whole block
+                if ($rec->groupid) {
+                    //Subscrbied to a list of groups only
+                    // Only allow this row to count if the user has access to subscribe to group
+                    // 1. User must have mod/forumng:viewdiscussion
+                    // 2. One of the following must be true:
+                    //    a. Forum is set to visible groups (if forum is set for no groups, we will ignore this group subscription
+                    //    b. User belongs to the group (check the field)
+                    //    c. User has accessallgroups
+                    $groupok = $this->get_group_mode() == VISIBLEGROUPS || $rec->subscriptiongroupmember || $canaccessallgroups;
+                    if ($canviewdiscussion && $groupok ) {
+                        $user->groupids[$rec->groupid] = $rec->groupid;
+                    }
+                } else if ($rec->discussionid) {
+                    //$groupok if disucssion belong to all groups or the user in the same group as the discussion belongs to or
+                    //the forum is set to be visible groups
+                    $groupok = !$rec->discussiongroupid || $rec->discussiongroupmember ||
+                        $this->get_group_mode() == VISIBLEGROUPS || $canaccessallgroups;
+                    if ($canviewdiscussion && $groupok) {
+                        $user->discussionids[$rec->discussionid] = $rec->discussiongroupid;
                     }
                 } else {
-                    // **** also add to the below that should include check for visible groups
-                    $groupok = !$rec->discussiongroupid || $rec->discussiongroupmember || $this->get_group_mode()==VISIBLEGROUPS;
-                    if (has_capability('mod/forumng:viewdiscussion', $this->context, $userid) &&
-                        ($groupok || has_capability('moodle/site:accessallgroups', $this->context, $userid))) {
-                        $user->discussionids[$rec->discussionid] = $rec->discussionid;
-                    }
+                    //Subscribed to the whole forum, quit the loop as no more records should match if the database data isn't messed up
+                    // Only allow this row to count if the user has access to subscribe to whole forum
+                        // 1. User must have mod/forumng:viewdiscussion
+                        // 2. One of the following must be true:
+                        //    a. Forum is set to no groups, or to visible groups
+                        //    b. User has accessallgroups
+                        $groupok = $this->get_group_mode() == VISIBLEGROUPS ||
+                            $this->get_group_mode() == NOGROUPS || $canaccessallgroups;
+                        if ($canviewdiscussion && $groupok) {
+                            $user->wholeforum = true;
+                            break;
+                        }
                 }
-            } else {
-                    // set wholeforum = false for user (if they are in the array)
-                    $user->wholeforum = false;
+            } else if ($subscriptionoption == self::SUBSCRIPTION_INITIALLY_SUBSCRIBED) {
+                // This is an 'unsubscribe' request. These are only allowed
+                // for initial-subscription, otherwise ignored
+                $user->wholeforum = false;
             }
         }
         rs_close($rs);
@@ -1400,6 +1980,7 @@ WHERE
         // clear the discussions array if wholeforum is true
         if ($user->wholeforum) {
             $user->discussionids = array ();
+            $user->groupids = array ();
         }
 
         $FORUMNG_CACHE->subscriptioninfo[$userid] = $user;
@@ -1464,6 +2045,7 @@ WHERE
         }
 
         $groups = $this->get_permitted_groups();
+        $context = $this->get_context();
 
         // Get all users (limited to the specified groups if applicable)
         // who are allowed to view discussions in this forum
@@ -1474,7 +2056,7 @@ WHERE
             }
             $fields.= 'u.' . $field;
         }
-        $users = get_users_by_capability($this->context,
+        $users = get_users_by_capability($context,
             'mod/forumng:viewdiscussion', $fields, '', '', '', $groups, '', false);
         $users = $users ? $users : array();
 
@@ -1485,7 +2067,7 @@ WHERE
         // joins/restrictions to get_users_by_capability :(
         $roleids = forum_utils::safe_explode(',', $CFG->forumng_subscriberoles);
         $roleidcheck = forum_utils::in_or_equals($roleids);
-        $contextids = forum_utils::safe_explode('/', $this->context->path);
+        $contextids = forum_utils::safe_explode('/', $context->path);
         $contextidcheck = forum_utils::in_or_equals($contextids);
         if ($groupid == forum::ALL_GROUPS || $groupid == forum::NO_GROUPS) {
             $groupcheck = '';
@@ -1522,13 +2104,13 @@ WHERE
      */
     private function get_permitted_groups() {
         $groups = '';
-        $this->check_cm();
-        if ($this->cm->groupmembersonly) {
+        $cm = $this->get_course_module();
+        if ($cm->groupmembersonly) {
             // If the forum is restricted to group members only, then
             // limit it to people within groups on the course - or
             // groups in the grouping, if one is selected
-            $groupobjs = groups_get_all_groups($this->course->id, 0,
-                $this->cm->groupingid, 'g.id');
+            $groupobjs = groups_get_all_groups($this->get_course()->id, 0,
+                $cm->groupingid, 'g.id');
             $groups = array();
             foreach ($groupobjs as $groupobj) {
                 $groups[] = $groupobj->id;
@@ -1566,6 +2148,7 @@ WHERE
                 foreach($users as $user) {
                     $user->wholeforum = true;
                     $user->discussionids = array ();
+                    $user->groupids = array ();
                 }
                 break;
 
@@ -1574,15 +2157,24 @@ WHERE
                 // fall through to the standard code below.
         }
 
+        $context = $this->get_context();
+
+        // For shared forums, we only return the subscribers for the current
+        // clone
+        $clonecheck = "";
+        if ($this->is_shared()) {
+            $clonecheck = 'AND s.clonecmid = ' . $this->get_course_module_id();
+        }
+
         // Obtain the list of users who have access all groups on the forum,
         // unless it's in no-groups mode
         $groupmode = $this->get_group_mode();
         if ($groupmode) {
-            $aagusers = get_users_by_capability($this->context,
+            //Get a list of user who can access all groups
+            $aagusers = get_users_by_capability($context,
                 'moodle/site:accessallgroups', 'u.id');
             $aagusers = $aagusers ? $aagusers : array();
         }
-
         // Get the list of subscribed users.
         if ($groupid == forum::ALL_GROUPS || $groupid == forum::NO_GROUPS) {
             $groupcheck = '';
@@ -1590,20 +2182,24 @@ WHERE
             $groupcheck = "INNER JOIN {$CFG->prefix}groups_members gm ON gm.userid=u.id AND gm.groupid=$groupid";
         }
 
-        $rs = get_recordset_sql("
+        $rs = get_recordset_sql($sql = "
 SELECT
     ".forum_utils::select_username_fields('u', true).",
-    s.subscribed, s.discussionid, fd.groupid AS discussiongroupid, discussiongm.id AS discussiongroupmember
+    s.subscribed, s.discussionid, s.groupid, fd.groupid AS discussiongroupid, discussiongm.id AS discussiongroupmember,
+    subscriptiongm.id AS subscriptiongroupmember
 FROM
     {$CFG->prefix}forumng_subscriptions s
     INNER JOIN {$CFG->prefix}user u ON u.id=s.userid
     $groupcheck
     LEFT JOIN {$CFG->prefix}forumng_discussions fd ON fd.id = s.discussionid
     LEFT JOIN {$CFG->prefix}groups_members discussiongm ON fd.groupid = discussiongm.groupid AND s.userid = discussiongm.userid
+    LEFT JOIN {$CFG->prefix}groups_members subscriptiongm ON s.groupid = subscriptiongm.groupid AND s.userid = subscriptiongm.userid
 WHERE
-    s.forumid={$this->forumfields->id} AND (fd.forumid={$this->forumfields->id} OR s.discussionid IS NULL)");
+    s.forumid={$this->forumfields->id}
+    AND (fd.forumid={$this->forumfields->id} OR s.discussionid IS NULL)
+    $clonecheck");
         if(!$rs) {
-            throw new forum_exception('Failed to get subscriber list');
+            throw new forum_exception('Failed to get subscriber list [' . $sql . ']');
         }
 
         // Filter the result against the list of allowed users
@@ -1617,43 +2213,58 @@ WHERE
                     // Obtain the list of users who are allowed to see the forum.
                     // As get_users_by_capability can be expensive, we only do this
                     // once we know there actually are subscribers.
-                    $allowedusers = get_users_by_capability($this->context,
+                    $allowedusers = get_users_by_capability($context,
                         'mod/forumng:viewdiscussion', 'u.id', '', '', '',
                         $groups, '', true, false, true);
                     $allowedusers = $allowedusers ? $allowedusers : array();
                 }
-                //discussionid is null
-                if (!$rec->discussionid) {
-                    if (array_key_exists($rec->u_id, $allowedusers)) {
-                        if (!array_key_exists($rec->u_id, $users)) {
-                            $user = forum_utils::extract_subobject($rec, 'u_');
-                            $user->discussionids = array();
-                            $user->wholeforum = true;
-                            $users[$user->id] = $user;
-                        } else {
-                            $users[$rec->u_id]->wholeforum = true;
-                        }
+                // Get reference to current user, or make new object if required
+                if (!array_key_exists($rec->u_id, $users)) {
+                    $user = forum_utils::extract_subobject($rec, 'u_');
+                    $user->wholeforum = false;
+                    $user->discussionids = array();
+                    $user->groupids = array();
+                    $newuser = true;
+                } else {
+                    $user = $users[$rec->u_id];
+                    $newuser = false;
+                }
+                $ok = false;
+                //Subscribed to a discussion
+                if ($rec->discussionid) {
+                    $groupok = !$rec->discussiongroupid || $rec->discussiongroupmember ||
+                        $groupmode==VISIBLEGROUPS || array_key_exists($user->id, $aagusers);
+                    if (array_key_exists($user->id, $allowedusers) && $groupok) {
+                        $ok = true;
+                        $user->discussionids[$rec->discussionid] = $rec->discussiongroupid;
                     }
-                } else {////discussionid is not null where subscribe =1
-                    // **** also add to the below that should include check for visible groups
-                    $groupok = !$rec->discussiongroupid || $rec->discussiongroupmember || $groupmode==VISIBLEGROUPS;
-                    if (array_key_exists($rec->u_id, $allowedusers) &&
-                        ($groupok || array_key_exists($rec->u_id, $aagusers))) {
-                        if (!array_key_exists($rec->u_id, $users)) {
-                            $user = forum_utils::extract_subobject($rec, 'u_');
-                            $user->wholeforum = false;
-                            $user->discussionids = array($rec->discussionid => $rec->discussionid);
-                            $users[$user->id] = $user;
-                        } else {
-                            $users[$rec->u_id]->discussionids[$rec->discussionid] = $rec->discussionid;
-                        }
+                //Subscribed to a group
+                } else if ($rec->groupid) {
+                    $groupok = $groupmode == VISIBLEGROUPS ||
+                        ($groupmode == SEPARATEGROUPS &&
+                        ($rec->subscriptiongroupmember || array_key_exists($user->id, $aagusers)));
+                    if (array_key_exists($user->id, $allowedusers) && $groupok) {
+                        $user->groupids[$rec->groupid] = $rec->groupid;
+                        $ok = true;
                     }
+                //Subscribed to the whole forum
+                } else {
+                    // extra conditions for forum not separate groups or accessallgroups
+                    $groupok = $groupmode != SEPARATEGROUPS || array_key_exists($user->id, $aagusers);
+                    if (array_key_exists($user->id, $allowedusers) && $groupok) {
+                        $user->wholeforum = true;
+                        $ok = true;
+                    }
+                }
+                // If this is a new user object, add it to the array provided the row was valid
+                if($newuser && $ok) {
+                    $users[$user->id] = $user;
                 }
             } else {
                 // This is an 'unsubscribe' request. These are only allowed
                 // for initial-subscription, otherwise ignored
                 if ($subscriptionoption == self::SUBSCRIPTION_INITIALLY_SUBSCRIBED
-                    && array_key_exists($rec->u_id, $users)) {
+                    && array_key_exists($user->id, $users)) {
                     // set wholeforum = false for user (if they are in the array)
                     $users[$rec->u_id]->unsubscribe = true;
                     $users[$rec->u_id]->wholeforum = false;
@@ -1662,14 +2273,29 @@ WHERE
         }
         rs_close($rs);
 
-        // loop through array and clear the discussions array if wholeforum is true
+        //1. loop through array and clear the discussions/groupids array if wholeforum is true
+        //2. Find any user unsubscribed from initial subscribed forum. If the user has been subscribed to discussions/groups
+        //   remove the $user->unsubscribe flag; Otherwise remove the user from the list.
         foreach($users as $key=>$user) {
             if ($user->wholeforum) {
                 $user->discussionids = array ();
+                $user->groupids = array ();
             }
+            // Remove discussionids for discussions that are already covered by group subscriptions
+            // TODO
+            if (count($user->discussionids) != 0 && count($user->groupids) != 0) {
+                foreach ($user->discussionids as  $id => $dgroupid) {
+                    if(!$dgroupid || array_key_exists($dgroupid, $user->groupids)) {
+                        unset($user->discussionids[$id]);
+                    }
+                }
+            }
+            // If the user has unsubscribed from an initial subscription, then remove the entry
+            // from the results array unless there are s subscriptions to discussions or groups
             if (!empty($user->unsubscribe)) {
+                //Remove the unsubscribe as the user is likely to subscribed to discussions or groups
                 unset($user->unsubscribe);
-                if (count($user->discussionids) == 0) {
+                if (count($user->discussionids) == 0 && count($user->groupids) == 0) {
                     unset($users[$key]);
                 }
             }
@@ -1708,39 +2334,45 @@ WHERE
     function require_view($groupid, $userid=0, $autologinasguest=false) {
         global $CFG;
 
-        $this->check_cm();
+        $cm = $this->get_course_module();
+        $course = $this->get_course();
+        $context = $this->get_context();
         if (!$userid) {
             // User must be logged in and able to access the activity. (This
             // call sets up the global course and checks various other access
             // restrictions that apply at course-module level, such as visibility.)
-            if (count((array)$this->course) == 1) {
-                require_login($this->course->id, $autologinasguest, $this->cm);
+            if (count((array)$course) == 1) {
+                require_login($course->id, $autologinasguest, $cm);
             } else {
-                require_login($this->course, $autologinasguest, $this->cm);
+                require_login($course, $autologinasguest, $cm);
             }
         } else {
             // For non-logged-in user we check basic course permission and
             // a couple of the 'hidden' flags
-            require_capability('moodle/course:view', $this->context, $userid);
+            require_capability('moodle/course:view', $context, $userid);
 
             // This check makes 2 DB queries :(
-            if (!($this->course->visible
-                && course_parent_visible($this->course))) {
+            if (!($course->visible
+                && course_parent_visible($course))) {
                 require_capability('moodle/course:viewhiddencourses',
-                    $this->context);
+                    $context);
             }
-            if (!$this->cm->visible) {
+            if (!$cm->visible) {
                 require_capability('moodle/course:viewhiddenactivities',
-                    $this->context);
+                    $context);
             }
 
             // Check OU custom restrictions (start/end dates)
             if (class_exists('ouflags')) {
                 require_once($CFG->dirroot . '/local/module_access.php');
                 define('SKIP_SAMS_CHECK', true);
-                require_module_access($this->cm, $this->course, $userid);
+                require_module_access($cm, $course, $userid);
             }
         }
+
+        // Check they have the forumng view capability (this is there largely
+        // so that we can override it to prevent prisoners from accessing)
+        require_capability('mod/forumng:view', $context, $userid);
 
         // Note: There is no other capability just to view the forum front page,
         // so just check group access
@@ -1748,7 +2380,7 @@ WHERE
             && !$this->can_access_group($groupid, false, $userid)) {
             // We already know they don't have this capability, but it's
             // a logical one to use to give an error message.
-            require_capability('moodle/site:accessallgroups', $this->context, $userid);
+            require_capability('moodle/site:accessallgroups', $context, $userid);
         }
     }
 
@@ -1766,7 +2398,7 @@ WHERE
         $whynot = '';
         if (!$this->can_start_discussion($groupid, $whynot)) {
             print_error($whynot, 'forumng',
-              'view.php?id=' . $this->get_course_module_id());
+                    $this->get_url(forum::PARAM_HTML));
         }
     }
 
@@ -1783,8 +2415,7 @@ WHERE
         global $USER;
 
         // Check groupmode.
-        $this->check_cm();
-        $groupmode = groups_get_activity_groupmode($this->cm);
+        $groupmode = groups_get_activity_groupmode($this->get_course_module());
         if (!$groupmode) {
             // No groups - you can only view 'all groups' mode
             return $groupid === self::NO_GROUPS;
@@ -1796,7 +2427,7 @@ WHERE
         }
 
         // If you have access all groups, you can see it
-        if (has_capability('moodle/site:accessallgroups', $this->context, $userid)) {
+        if (has_capability('moodle/site:accessallgroups', $this->get_context(), $userid)) {
             return true;
         }
 
@@ -1807,9 +2438,9 @@ WHERE
 
         // Trying to view a specific group, must be a member
         if (isset($USER->groupmember) && (!$userid || $USER->id==$userid)
-            && array_key_exists($this->course->id, $USER->groupmember)) {
+            && array_key_exists($this->get_course()->id, $USER->groupmember)) {
             // Current user, use cached value
-            return array_key_exists($groupid, $USER->groupmember[$this->course->id]);
+            return array_key_exists($groupid, $USER->groupmember[$this->get_course()->id]);
         } else {
             // Not current user, test in database
             return groups_is_member($groupid, $userid);
@@ -1821,7 +2452,7 @@ WHERE
      * @return bool True if user can view discussions in this forum
      */
     function can_view_discussions($userid=0) {
-        return has_capability('mod/forumng:viewdiscussion', $this->context,
+        return has_capability('mod/forumng:viewdiscussion', $this->get_context(),
             $userid);
     }
 
@@ -1834,7 +2465,7 @@ WHERE
             self::SUBSCRIPTION_NOT_PERMITTED) {
                 return false;
         }
-        return has_capability('mod/forumng:viewsubscribers', $this->context,
+        return has_capability('mod/forumng:viewsubscribers', $this->get_context(),
             $userid);
     }
 
@@ -1842,16 +2473,17 @@ WHERE
      * @return bool True if user should see unread data in this forum
      */
     function can_mark_read($userid=0) {
-        global $CFG;
+        global $CFG, $USER;
+        $user = forum_utils::get_user($userid);
         return $this->can_view_discussions($userid)
-            && $CFG->forumng_trackreadposts;
+                && $CFG->forumng_trackreadposts && !isguestuser($user);
     }
 
     /**
      * @return bool True if user can view hidden discussions in this forum
      */
     function can_view_hidden($userid=0) {
-        return has_capability('mod/forumng:viewallposts', $this->context,
+        return has_capability('mod/forumng:viewallposts', $this->get_context(),
             $userid);
     }
 
@@ -1865,7 +2497,7 @@ WHERE
         return (($this->forumfields->postingfrom > $now) ||
             ($this->forumfields->postinguntil &&
                 $this->forumfields->postinguntil <= $now)) &&
-            !has_capability('mod/forumng:ignorepostlimits', $this->context);
+            !has_capability('mod/forumng:ignorepostlimits', $this->get_context());
     }
 
     /**
@@ -1876,7 +2508,7 @@ WHERE
      */
     public function has_post_quota($userid = 0) {
         return ($this->forumfields->maxpostsblock &&
-            !has_capability('mod/forumng:ignorepostlimits', $this->context))
+            !has_capability('mod/forumng:ignorepostlimits', $this->get_context()))
             ? true : false;
     }
 
@@ -1953,7 +2585,7 @@ WHERE
 
         // Capability
         if (!has_capability('mod/forumng:startdiscussion',
-            $this->context, $userid)) {
+            $this->get_context(), $userid)) {
             $whynot = 'startdiscussion_nopermission';
             return false;
         }
@@ -1984,7 +2616,7 @@ WHERE
      * @return bool True if user is allowed to set 'mail now' option
      */
     function can_mail_now($userid=0) {
-        return has_capability('mod/forumng:mailnow', $this->context, $userid);
+        return has_capability('mod/forumng:mailnow', $this->get_context(), $userid);
     }
 
     /**
@@ -1992,7 +2624,7 @@ WHERE
      * @return True if user can set posts as important
      */
     function can_set_important($userid=0) {
-        return has_capability('mod/forumng:setimportant', $this->context, $userid);
+        return has_capability('mod/forumng:setimportant', $this->get_context(), $userid);
     }
 
     /**
@@ -2001,7 +2633,7 @@ WHERE
      */
     function can_manage_discussions($userid=0) {
         return has_capability('mod/forumng:managediscussions',
-            $this->context, $userid);
+            $this->get_context(), $userid);
     }
 
     /**
@@ -2013,7 +2645,7 @@ WHERE
             self::SUBSCRIPTION_NOT_PERMITTED) {
                 return false;
         }
-        return has_capability('mod/forumng:managesubscriptions', $this->context,
+        return has_capability('mod/forumng:managesubscriptions', $this->get_context(),
             $userid);
     }
 
@@ -2022,7 +2654,7 @@ WHERE
      * @return bool True if user has capability
      */
     public function can_create_attachments($userid=0) {
-        return has_capability('mod/forumng:createattachment', $this->context,
+        return has_capability('mod/forumng:createattachment', $this->get_context(),
             $userid);
     }
 
@@ -2204,6 +2836,11 @@ WHERE fd.forumid = $forumid";
     /**
      * Queries for all forums on a course, including additional data about unread
      * posts etc.
+     * NOTE: If shared forums are in use, this will usually return the CLONE
+     * forum object, which doesn't hold any data about the actual forum;
+     * the exception is that unread data will be obtained from the real forum.
+     * If you would like to obtain the real forum instead, please make sure
+     * $realforums is set to true. This has a performance cost.
      * @param object $course Moodle course object
      * @param int $userid User ID, 0 = current user, -1 = no unread data is needed
      * @param bool $unreadasbinary If true, unread data MAY BE binary (1/0)
@@ -2212,20 +2849,20 @@ WHERE fd.forumid = $forumid";
      * @param array $specificids If array has no entries, returns all forums
      *   on the course; if it has at least one entry, returns only those forums 
      *   with course-module ID listed in the array
-     * @return array Array of forum objects (keys are forum IDs)
+     * @param bool $realforums Set this to true to obtain real forums
+     *   if any are clones; has a performance cost if shared forums are used
+     * @return array Array of forum objects (keys are forum IDs; in the case of
+     *   shared forums, the id is of the clone not the forum, even if
+     *   $realforums is set)
      */
     static function get_course_forums($course, $userid = 0,
-        $unread = self::UNREAD_DISCUSSIONS, $specificids = array()) {
+        $unread = self::UNREAD_DISCUSSIONS, $specificids = array(),
+        $realforums = false) {
         global $USER, $CFG;
 
         $userid = forum_utils::get_real_userid($userid);
         $result = array();
-        $modinfo = get_fast_modinfo($course);
-
-        $extraconditions = '';
-        if(count($specificids)) {
-            $extraconditions .= 'cm.id ' . forum_utils::in_or_equals($specificids);
-        }
+        $modinfo = self::get_modinfo_special($course, $specificids);
 
         // Obtains extra information needed only when acquiring unread data
         $aagforums = array();
@@ -2233,6 +2870,9 @@ WHERE fd.forumid = $forumid";
         $groups = array();
         if ($unread != self::UNREAD_NONE) {
             foreach($modinfo->cms as $cmid => $cm) {
+                if (count($specificids) && !in_array($cmid, $specificids)) {
+                    continue;
+                }
                 $context = get_context_instance(CONTEXT_MODULE, $cmid);
                 if ($cm->modname == 'forumng') {
                     if(has_capability(
@@ -2265,8 +2905,9 @@ WHERE
                 rs_close($rs);
             }
         }
-        $rows = self::query_forums(0, $course, $userid,
-            $unread, $groups, $aagforums, $viewhiddenforums, $extraconditions);
+
+        $rows = self::query_forums($specificids, $course, $userid,
+            $unread, $groups, $aagforums, $viewhiddenforums);
         foreach ($rows as $rec) {
             // Check course-module exists
             if(!array_key_exists($rec->cm_id, $modinfo->cms)) {
@@ -2291,6 +2932,39 @@ WHERE
             $forum = new forum($course, $cm,
                 get_context_instance(CONTEXT_MODULE, $cm->id), $forumfields);
             $result[$forumfields->id] = $forum;
+            if ($forum->is_shared()) {
+                $forum->set_clone_reference(self::CLONE_DIRECT);
+            }
+
+            // For clone forums (only pointers to genuine shared forums)
+            if ($forum->is_clone()) {
+                // If we are retrieving the real forum, get it individually
+                if ($realforums) {
+                    $othercourse = forum_utils::get_record_sql("
+SELECT
+    c.*
+FROM
+    {$CFG->prefix}course_modules cm
+    INNER JOIN {$CFG->prefix}course c ON c.id = cm.course
+WHERE
+    cm.id = {$forumfields->originalcmid}");
+                    $extra = self::get_course_forums($othercourse, $userid,
+                        $unread, array($forumfields->originalcmid));
+                    if (count($extra) != 1) {
+                        throw new forum_exception(
+                            'Unable to find shared forum ' .
+                            $forumfields->originalcmid);
+                    }
+                    foreach ($extra as $extraforum) {
+                        $extraforum->set_clone_reference($cm->id);
+                        $result[$forumfields->id] = $extraforum;
+                    }
+                } else if ($unread != self::UNREAD_NONE) {
+                    // Even if not retrieving the real forum, we still use
+                    // its undead data when unread data is on
+                    $forum->init_unread_from_original($unread);
+                }
+            }
         }
         return $result;
     }
@@ -2302,43 +2976,33 @@ WHERE
     /**
      * Internal method. Queries for a number of forums, including additional
      * data about unread posts etc. Returns the database result.
-     * @param int $singleforum If specified, course-module ID of desired forum
+     * @param array $cmids If specified, array of course-module IDs of desired
+     *   forums
      * @param object $course If specified, course object
      * @param int $userid User ID, 0 = current user
      * @param int $unread Type of unread data to obtain (UNREAD_xx constant).
-     * @param string $orderby ORDER BY clause
-     * @param int $limitfrom Limit on results
-     * @param int $limitnum Limit on results
      * @param array $groups Array of group IDs to which the given user belongs
      *   (may be null if unread data not required)
      * @param array $aagforums Array of forums in which the user has
      *   'access all groups' (may be null if unread data not required)
      * @param array $viewhiddenforums Array of forums in which the user has
      *   'view hidden discussions' (may be null if unread data not required)
-     * @param string $extraconditions Extra SQL conditions to further constrain
-     *   resulting forums, e.g. 'cm.id IN (1,2,3)'
      * @return array Array of row objects
      */
-    private static function query_forums($singleforum=0, $course=null,
-        $userid, $unread, $groups, $aagforums, $viewhiddenforums,
-        $extraconditions='') {
+    private static function query_forums($cmids=array(), $course=null,
+        $userid, $unread, $groups, $aagforums, $viewhiddenforums) {
         global $CFG, $USER;
-
-        if((!$singleforum && !$course) ||
-            ($singleforum && $course)) {
+        if ((!count($cmids) && !$course)) {
             throw new forum_exception(
-            	"forum::query_forums requires exactly one of forum id, course id");
+                "forum::query_forums requires course id or cmids");
         }
-        if($singleforum) {
-            $conditions = "cm.id = $singleforum";
+        if (count($cmids)) {
+            $conditions = "cm.id " . forum_utils::in_or_equals($cmids);
         } else {
             $conditions = "f.course = {$course->id}";
         }
 
-        if ($extraconditions) {
-            $conditions .= " AND ($extraconditions)";
-        }
-
+        $singleforum = count($cmids) == 1 ? reset($cmids) : false;
         $inviewhiddenforums = forum_utils::in_or_equals($viewhiddenforums);
 
         // This array of additional results is used later if combining
@@ -2364,7 +3028,7 @@ WHERE
             if ($singleforum) {
                 // If it is for a single forum, get the restriction from the
                 // forum type
-                $forum = forum::get_from_cmid($singleforum);
+                $forum = forum::get_from_cmid($singleforum, forum::CLONE_DIRECT);
                 $type = $forum->get_type();
                 if ($type->has_unread_restriction()) {
                     $value = $type->get_unread_restriction_sql($forum);
@@ -2376,16 +3040,19 @@ WHERE
                 // When it is not for a single forum, we can only group together
                 // results for types that do not place restrictions on the
                 // unread count.
-                $modinfo = get_fast_modinfo($course);
+                $modinfo = self::get_modinfo_special($course, $cmids);
                 $okayids = array();
-                if(array_key_exists('forumng', $modinfo->instances)) {
-                    foreach($modinfo->instances['forumng'] as $info) {
-                        $type = str_replace('"', '',
-                            str_replace('class="forumng-type-', '', $info->extra));
+                if (array_key_exists('forumng', $modinfo->instances)) {
+                    foreach ($modinfo->instances['forumng'] as $info) {
+                        if (count($cmids) && !in_array($info->id, $cmids)) {
+                            continue;
+                        }
+                        $type = self::get_type_from_modinfo_info($info);
                         if (forum_type::get_new($type)->has_unread_restriction()) {
                             // This one's a problem! Do it individually
-                            $problemresults = self::query_forums($info->id, null,
-                                $userid, $unread, $groups, $aagforums, $viewhiddenforums);
+                            $problemresults = self::query_forums(
+                                array($info->id), null, $userid, $unread,
+                                $groups, $aagforums, $viewhiddenforums);
                             foreach($problemresults as $problemresult) {
                                 $plusresult[$problemresult->f_id] = $problemresult;
                             }
@@ -2403,7 +3070,7 @@ WHERE
                 } else {
                     // Fall through to normal calculation, but change conditions
                     // to include only the 'normal' forums
-                    $conditions = "cm.id " . forum_utils::in_or_equals(
+                    $conditions .= " AND cm.id " . forum_utils::in_or_equals(
                         $okayids);
                 }
             }
@@ -2466,7 +3133,7 @@ $sharedquerypart
         } else {
             $readtracking = "NULL AS numreadposts, NULL AS timeread";
         }
-
+        $now = time();
         $orderby = "LOWER(f.name)";
 
         // Main query. This retrieves:
@@ -2601,9 +3268,6 @@ ORDER BY
         if (!remove_dir($folder)) {
             throw new forum_exception("Error deleting playspace: $folder");
         }
-        forum_utils::folder_debug('remove_dir',
-            'forum::delete_attachment_playspace', 'pl=' . $playspaceid,
-            $folder);
     }
 
     // Search
@@ -2627,6 +3291,8 @@ ORDER BY
         // If cmid is specified, only retrieve that one
         if ($cmid) {
             $cmrestrict = "cm.id = $cmid AND";
+        } else {
+            $cmrestrict = '';
         }
         // Get module-instances that need updating
         $cms = get_records_sql("
@@ -2679,7 +3345,7 @@ WHERE
                 }
                 set_time_limit($timelimitbefore);
                 $discussion = forum_discussion::get_from_id($discussionrec->id,
-                    -1);
+                    forum::CLONE_DIRECT, -1);
                 $root = $discussion->get_root_post();
                 $root->search_update();
                 $root->search_update_children();
@@ -2708,9 +3374,10 @@ WHERE
         $cmid = $this->get_course_module_id();
         $strsearchthisactivity = get_string('searchthisforum', 'forumng');
         $queryesc = htmlspecialchars($querytext);
+        $linkfields = $this->get_link_params(forum::PARAM_FORM);
         $buttontext = !forum::search_installed() ? '' : <<<EOF
 <form action="search.php" method="get"><div>
-  <input type="hidden" name="id" value="{$cmid}"/>
+$linkfields
   <label class="accesshide" for="forumng-searchquery">{$strsearchthisactivity}</label>
   <input type="text" name="query" id="forumng-searchquery" value="{$queryesc}"/>
   <input type="submit" value="{$strsearchthisactivity}"/>
@@ -2811,6 +3478,28 @@ EOF;
     }
 
     /**
+     * Displays discussion list features for this forum. Features are the
+     * plugins in the 'feature' subfolder - basically a row of buttons along
+     * the bottom.
+     * @param int $groupid Group ID
+     * @return string HTML code for discussion list features
+     */
+    public function display_discussion_list_features($groupid) {
+        // Print discussion list feature buttons (userposts button)
+        $features = '';
+        foreach(discussion_list_feature::get_all() as $feature) {
+            if ($feature->should_display($this, $groupid)) {
+                $features .= $feature->display($this, $groupid);
+            }
+        }
+        if ($features) {
+            return '<div id="forumng-features">' . $features . '</div>';
+        } else {
+            return '';
+        }
+    }
+
+    /**
      * Displays subscribe options for this forum.
      * @param bool $expectquery True if we expect this to make a DB query
      * @return string HTML code for subscribe information section
@@ -2818,11 +3507,11 @@ EOF;
     public function display_subscribe_options($expectquery = false) {
         // Is user subscribed to this forum?
         $text = '';
-        //If $subscribed equals 0: not subscribed; 1: partial subscribed; 2: full subscribed
         $subscribed = self::NOT_SUBSCRIBED;
         $canchange = false;
         $canview = false;
         $type = $this->get_effective_subscription_option();
+        $cm = $this->get_course_module();
         if ($type == self::SUBSCRIPTION_NOT_PERMITTED) {
             // Subscription not allowed
             $text = get_string('subscribestate_not_permitted', 'forumng');
@@ -2832,21 +3521,116 @@ EOF;
         } else {
             global $USER;
             $subscription_info = $this->get_subscription_info(0, $expectquery);
-            if ($subscription_info->wholeforum) {
-                //subscribed to the entire forum
-                $subscribed = self::FULLY_SUBSCRIBED;
-                $text = get_string('subscribestate_subscribed', 'forumng',
-                    '<strong>' . $USER->email . '</strong>');
-            } else if (count($subscription_info->discussionids) == 0) {
-                //not subscribed at all
-                $text = get_string('subscribestate_unsubscribed', 'forumng');
+            if (!$this->get_group_mode()) {
+                if ($subscription_info->wholeforum) {
+                    //subscribed to the entire forum
+                    $subscribed = self::FULLY_SUBSCRIBED;
+                    $text = get_string('subscribestate_subscribed', 'forumng',
+                        '<strong>' . $USER->email . '</strong>');
+                } else if (count($subscription_info->discussionids) == 0) {
+                    //not subscribed at all
+                    $text = get_string('subscribestate_unsubscribed', 'forumng');
+                } else {
+                    //subscribed to one or more discussions
+                    $subscribed = self::PARTIALLY_SUBSCRIBED;
+                    $text = get_string('subscribestate_partiallysubscribed', 'forumng',
+                        '<strong>' . $USER->email . '</strong>');
+                }
             } else {
-                //subscribed to one or more discussions
-                $subscribed = self::PARTIALLY_SUBSCRIBED;
-                $text = get_string('subscribestate_partiallysubscribed', 'forumng',
-                    '<strong>' . $USER->email . '</strong>');
+                $currentgroupid = $this->get_activity_group($cm, true);
+                if ($subscription_info->wholeforum) {
+                    //subscribed to the entire forum
+                    if ($currentgroupid == forum::ALL_GROUPS) {
+                        $text = get_string('subscribestate_subscribed', 'forumng',
+                        '<strong>' . $USER->email . '</strong>');
+                        $subscribed = self::FULLY_SUBSCRIBED;
+                    } else {
+                        $text = get_string('subscribestate_subscribed', 'forumng',
+                                '<strong>' . $USER->email . '</strong>') . ' ' .
+                                ($canchange ? get_string(
+                                    'subscribestate_subscribed_notinallgroup',
+                                    'forumng') : '');
+                        $subscribed = self::FULLY_SUBSCRIBED_GROUPMODE;
+                    }
+                } else if (count($subscription_info->groupids) == 0) {
+                    if (count($subscription_info->discussionids) == 0) {
+                        //not subscribed at all
+                        if ($currentgroupid == forum::ALL_GROUPS) {
+                            //return the default value NOT_SUBSCRIBED
+                            $text = get_string('subscribestate_unsubscribed', 'forumng');
+                        } else {
+                            $text = get_string('subscribestate_unsubscribed_thisgroup', 'forumng');
+                            $subscribed = self::THIS_GROUP_NOT_SUBSCRIBED;
+                        }
+                    } else {
+                        //only subscribed to discussions;
+                        if ($currentgroupid == forum::ALL_GROUPS) {
+                            $subscribed = self::PARTIALLY_SUBSCRIBED;
+                            $text = get_string('subscribestate_partiallysubscribed', 'forumng',
+                                '<strong>' . $USER->email . '</strong>');
+                        } else {
+                            //Set default that the discussions do not belong to the current group
+                            $text = get_string('subscribestate_unsubscribed_thisgroup', 'forumng');
+                            $subscribed = self::THIS_GROUP_NOT_SUBSCRIBED;
+                            //Check if any of the discussions belongs to the current group
+                            foreach ($subscription_info->discussionids as $discussionid => $groupid) { 
+                                if ($groupid == $currentgroupid) {
+                                    $text = get_string('subscribestate_partiallysubscribed_thisgroup', 'forumng',
+                                        '<strong>' . $USER->email . '</strong>');
+                                    $subscribed = self::THIS_GROUP_PARTIALLY_SUBSCRIBED;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                } else {
+                    //subscribed to one or more groups as the groupids array are not empty
+                    if ($currentgroupid == forum::ALL_GROUPS) {
+                        $text = get_string('subscribestate_groups_partiallysubscribed', 'forumng',
+                            '<strong>' . $USER->email . '</strong>');
+                        //treat this scenario the same as discussions partically subscribed since they all give the same options which is
+                        //subscribe to the whole forum or unsubscribe from the whole forum
+                        $subscribed = self::PARTIALLY_SUBSCRIBED;
+                    } else {
+                        //Check if have subscribed to the current group
+                        $currentgroup_subscription_status = false;
+                        //Check if any of the discussions belong to the current group
+                        foreach ($subscription_info->groupids as $id) { 
+                            if ($id == $currentgroupid) {
+                                $text = get_string('subscribestate_subscribed_thisgroup', 'forumng',
+                                    '<strong>' . $USER->email . '</strong>');
+                                $subscribed = self::THIS_GROUP_SUBSCRIBED;
+                                $currentgroup_subscription_status = true;
+                                break;
+                            }
+                        }
+                        if (!$currentgroup_subscription_status) {
+                            //not subscribed to the current group. 
+                            if (count($subscription_info->discussionids) == 0) {
+                                $text = get_string('subscribestate_unsubscribed_thisgroup', 'forumng');
+                                $subscribed = self::THIS_GROUP_NOT_SUBSCRIBED;
+                            } else {
+                                //Check if any discussions subscribed belong to this group
+                                //Set default that the discussions do not belong to the current group
+                                $text = get_string('subscribestate_unsubscribed_thisgroup', 'forumng');
+                                $subscribed = self::THIS_GROUP_NOT_SUBSCRIBED;
+                                //Check if any of the discussions belong to the current group
+                                foreach ($subscription_info->discussionids as $discussionid => $groupid) { 
+                                    if ($groupid == $currentgroupid) {
+                                        $text = get_string('subscribestate_partiallysubscribed_thisgroup', 'forumng',
+                                            '<strong>' . $USER->email . '</strong>');
+                                        $subscribed = self::THIS_GROUP_PARTIALLY_SUBSCRIBED;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
+            // Display extra information if they are forced to subscribe
             if ($this->is_forced_to_subscribe()) {
                 $text .= ' ' . get_string('subscribestate_forced', 'forumng');
             } else {
@@ -2865,7 +3649,7 @@ EOF;
      */
     public function display_user_name($user) {
         return fullname($user, has_capability(
-            'moodle/site:viewfullnames', $this->context));
+            'moodle/site:viewfullnames', $this->get_context()));
     }
 
     /**
@@ -2875,9 +3659,13 @@ EOF;
      */
     public function display_user_link($user) {
         global $CFG;
-        $courseid = $this->course->id;
-        return "<a href='{$CFG->wwwroot}/user/view.php?id={$user->id}&amp;" .
-            "course=$courseid'>" . $this->display_user_name($user) . "</a>";
+        if ($this->is_shared()) {
+            $coursepart = '';
+        } else {
+            $coursepart = '&amp;course=' . $this->get_course()->id;
+        }
+        return "<a href='{$CFG->wwwroot}/user/view.php?id={$user->id}" .
+            "$coursepart'>" . $this->display_user_name($user) . "</a>";
     }
 
     /**
@@ -2925,14 +3713,76 @@ EOF;
         return '';
     }
 
+    public function display_sharing_info() {
+        global $CFG;
+        // If it's not shared, nothing to show
+        if (!$this->is_shared()) {
+            return '';
+        }
+        // Only show this to people who can edit and stuff
+        if (!has_capability('moodle/course:manageactivities', $this->get_context(), 0)) {
+            return '';
+        }
+        // OK, let's show!
+        $out = '<div class="forumng-shareinfo">';
+        if ($this->get_course_module_id() != $this->get_course_module_id(true)) {
+            // We are looking at a clone. Show link to original, if user can 
+            // see it, otherwise text.
+            $a = (object)array(
+                'url' => $CFG->wwwroot . '/mod/forumng/view.php?id=' .
+                        $this->get_course_module_id(true),
+                'shortname' => s($this->get_course(true)->shortname)
+            );
+            $out .= get_string('sharedviewinfoclone', 'forumng', $a);
+        } else {
+            // We are looking at an original.
+            // I want to display the idnumber here - unfortuantely this requires
+            // an extra query because it is not included in get_fast_modinfo.
+            $idnumber = get_field('course_modules', 'idnumber', 'id',
+                $this->get_course_module_id(true));
+            $out .= get_string('sharedviewinfooriginal', 'forumng', $idnumber);
+            $out .= ' ';
+
+            // Show links to each clone, if you
+            // can see them.
+            $contexts = $this->get_clone_contexts();
+            if (count($contexts) == 0) {
+                $out .= get_string('sharedviewinfonone', 'forumng');
+            } else {
+                $list = '';
+                foreach ($contexts as $context) {
+                    if ($list) {
+                        $list .= ', ';
+                    }
+
+                    // Make it a link if you have access
+                    if ($link = has_capability('moodle/course:view', $context)) {
+                        $list .= '<a href="' . $CFG->wwwroot .
+                                '/mod/forumng/view.php?id=' .
+                                $context->instanceid . '">';
+                    }
+                    $list .= s($context->courseshortname);
+                    if ($link) {
+                        $list .= '</a>';
+                    }
+                }
+                $out .= get_string('sharedviewinfolist', 'forumng', $list);
+            }
+        }
+        $out .= '</div>';
+        return $out;
+    }
+
     /**
      * Prints the header and breadcrumbs for a page 'within' a forum.
      * @param string $pagename Name of page
+     * @param array $navigation If specified, adds extra elements before the
+     *   page name
      */
-    public function print_subpage_header($pagename) {
+    public function print_subpage_header($pagename, $navigation=array()) {
         global $PAGEWILLCALLSKIPMAINDESTINATION;
+        $PAGEWILLCALLSKIPMAINDESTINATION = true;
 
-        $navigation = array();
         $navigation[] = array(
             'name'=>$pagename, 'type'=>'forumng');
 
@@ -2972,6 +3822,7 @@ EOF;
                 'showadvanced' => null,
                 'hideadvanced' => null,
                 'rate' => null,
+                'expand' => '#',
                 'jserr_load' => null,
                 'jserr_save' => null,
                 'jserr_alter' => null,
@@ -3096,7 +3947,8 @@ EOF;
         global $CFG;
         $userid = forum_utils::get_real_userid($userid);
 
-        return $CFG->wwwroot . '/mod/forumng/feed.php?id=' . $this->cm->id .
+        return $CFG->wwwroot . '/mod/forumng/feed.php?' .
+            $this->get_link_params(forum::PARAM_PLAIN) .
             '&user=' . $userid . ($groupid == self::ALL_GROUPS
                 || $groupid == self::NO_GROUPS ? '' : '&group=' . $groupid) .
             '&key=' . $this->get_feed_key($groupid, $userid) . '&format=' .
@@ -3280,7 +4132,7 @@ EOF;
         // Note: In 1.9, completion facilities do not exist except in the OU
         // version.
         return class_exists('ouflags') &&
-            completion_is_enabled($this->course, $this->cm) ==
+            completion_is_enabled($this->get_course(), $this->get_course_module()) ==
                 COMPLETION_TRACKING_AUTOMATIC;
     }
 
@@ -3552,7 +4404,7 @@ WHERE
             forum_utils::update_record('course_sections', $updatesection);
          }
         // Construct forum object for new forum
-        $newforum = self::get_from_id($forumng->id);
+        $newforum = self::get_from_id($forumng->id, forum::CLONE_DIRECT);
 
         if ($progress) {
             print ' ' . get_string('convert_process_state_done', 'forumng') . '</li>';
@@ -3715,14 +4567,34 @@ WHERE
                         "/{$course->id}/{$CFG->moddata}/forum/{$forum->id}/{$recp->id}";
                     $newfolder = forum_post::get_any_attachment_folder(
                         $course->id, $forumng->id, $newd->id, $newp->id);
+                    $filesok = 0;
+                    $filesfailed = 0;
                     foreach ($attachments as $attachment) {
                         // Create folder if it isn't there
                         $attachment = clean_filename($attachment);
                         check_dir_exists($newfolder, true, true);
 
                         // Copy file
-                        forum_utils::copy("$oldfolder/$attachment",
-                            "$newfolder/$attachment");
+                        try {
+                            forum_utils::copy("$oldfolder/$attachment",
+                                "$newfolder/$attachment");
+                            $filesok ++;
+                        } catch(forum_exception $e) {
+                            if ($progress) {
+                                print "[<strong>Warning</strong>: file copy failed for post " . $recp->id .
+                                    " => " . $newp->id . ", file " . s($attachment) . "]";
+                            }
+                            $filesfailed ++;
+                        }
+                    }
+
+                    // If all files failed, clean up
+                    if ($filesfailed && !$filesok) {
+                        rmdir($newfolder);
+                        $noattachments = (object)array(
+                            'id'=>$newp->id, 'attachments'=>0);
+                        forum_utils::update_record(
+                        'forumng_posts', $noattachments);
                     }
 
                     // Convert ratings
@@ -3824,6 +4696,70 @@ GROUP BY
             }
         }
 
+        // Transfer role assignments
+        $oldcontext = get_context_instance(CONTEXT_MODULE, $cm->id);
+        $newcontext = get_context_instance(CONTEXT_MODULE, $newcm->id);
+        $roles = get_records('role_assignments', 'contextid', $oldcontext->id);
+        if ($roles) {
+            if ($progress) {
+                print '<li>' . get_string('convert_process_assignments', 'forumng');
+                flush();
+            }
+            foreach ($roles as $role) {
+                $newrole = $role;
+                $newrole->contextid = $newcontext->id;
+                $newrole->enrol = addslashes($newrole->enrol);
+                forum_utils::insert_record('role_assignments', $newrole);
+            }
+            if ($progress) {
+                print ' ' . get_string('convert_process_state_done', 'forumng') . '</li>';
+            }
+        }
+        // Transfer capabilities
+        $capabilities = array(
+            'moodle/course:viewhiddenactivities' => 'moodle/course:viewhiddenactivities',
+            'moodle/site:accessallgroups' => 'moodle/site:accessallgroups',
+            'moodle/site:trustcontent' => 'moodle/site:trustcontent',
+            'moodle/site:viewfullnames' => 'moodle/site:viewfullnames',
+
+            'mod/forum:viewdiscussion' => 'mod/forumng:viewdiscussion',
+            'mod/forum:startdiscussion' => 'mod/forumng:startdiscussion',
+            'mod/forum:replypost' => 'mod/forumng:replypost',
+            'mod/forum:viewrating' => 'mod/forumng:viewrating',
+            'mod/forum:viewanyrating' => 'mod/forumng:viewanyrating',
+            'mod/forum:rate'=> 'mod/forumng:rate',
+            'mod/forum:createattachment' => 'mod/forumng:createattachment',
+            'mod/forum:deleteanypost' => 'mod/forumng:deleteanypost',
+            'mod/forum:splitdiscussions' => 'mod/forumng:splitdiscussions',
+            'mod/forum:movediscussions' => 'mod/forumng:movediscussions',
+            'mod/forum:editanypost' => 'mod/forumng:editanypost',
+            'mod/forum:viewsubscribers' => 'mod/forumng:viewsubscribers',
+            'mod/forum:managesubscriptions' => 'mod/forumng:managesubscriptions',
+            'mod/forum:viewhiddentimedposts' => 'mod/forumng:viewallposts'
+        );
+        $caps = get_records('role_capabilities', 'contextid', $oldcontext->id);
+        if ($caps) {
+            if ($progress) {
+                print '<li>' . get_string('convert_process_overrides', 'forumng');
+                flush();
+            }
+            foreach ($caps as $cap) {
+                foreach ($capabilities as $key=>$capability) {
+                    if ($cap->capability != $key) {
+                        continue;
+                    }
+                    $newcap = $cap;
+                    $newcap->contextid = $newcontext->id;
+                    $newcap->capability = $capability;
+                    $newcap->capability = addslashes($newcap->capability);
+                    forum_utils::insert_record('role_capabilities', $newcap);
+                }
+            }
+            if ($progress) {
+                print ' ' . get_string('convert_process_state_done', 'forumng') . '</li>';
+            }
+        }
+
         // Do course cache
         rebuild_course_cache($course->id, true);
 
@@ -3852,7 +4788,14 @@ GROUP BY
                         'forumng', $a) . '</li>';
             }
         }
-
+        if ($progress) {
+            print '<li>' . get_string('convert_process_update_subscriptions', 'forumng');
+            flush();
+        }
+        self::group_subscription_update(false, $newcm->id);
+        if ($progress) {
+            print ' ' . get_string('convert_process_state_done', 'forumng') . '</li>';
+        }
         forum_utils::finish_transaction();
 
         if ($progress) {
@@ -3862,66 +4805,6 @@ GROUP BY
                     get_string('convert_newforum', 'forumng') . '</a>');
             print '</ul><p>' . get_string('convert_process_complete', 'forumng',
                 $a) . '</p>';
-        }
-        // Transfer role assignments
-        $oldcontext = get_context_instance(CONTEXT_MODULE, $cm->id);
-        $newcontext = get_context_instance(CONTEXT_MODULE, $newcm->id);
-        $roles = get_records('role_assignments', 'contextid', $oldcontext->id);
-        if ($roles) {
-            foreach ($roles as $role) {
-                $newrole = $role;
-                $newrole->contextid = $newcontext->id;
-                $newrole->enrol = addslashes($newrole->enrol);
-                try {
-                    insert_record('role_assignments', $newrole);
-                } catch (forum_exception $e) {
-                    $error  = "(cannot insert record to 'roel_assignments' table)";
-                    forum_utils::handle_exception($e . $error);
-                }
-            }
-        }
-        // Transfer capabilities
-        $capabilities = array(
-            'moodle/course:viewhiddenactivities' => 'moodle/course:viewhiddenactivities',
-            'moodle/site:accessallgroups' => 'moodle/site:accessallgroups',
-            'moodle/site:trustcontent' => 'moodle/site:trustcontent',
-            'moodle/site:viewfullnames' => 'moodle/site:viewfullnames',
-
-            'mod/forum:viewdiscussion' => 'mod/forumng:viewdiscussion',
-            'mod/forum:startdiscussion' => 'mod/forumng:startdiscussion',
-            'mod/forum:replypost' => 'mod/forumng:replypost',
-            'mod/forum:viewrating' => 'mod/forumng:viewrating',
-            'mod/forum:viewanyrating' => 'mod/forumng:viewanyrating',
-            'mod/forum:rate'=> 'mod/forumng:rate',
-            'mod/forum:createattachment' => 'mod/forumng:createattachment',
-            'mod/forum:deleteanypost' => 'mod/forumng:deleteanypost',
-            'mod/forum:splitdiscussions' => 'mod/forumng:splitdiscussions',
-            'mod/forum:movediscussions' => 'mod/forumng:movediscussions',
-            'mod/forum:editanypost' => 'mod/forumng:editanypost',
-            'mod/forum:viewsubscribers' => 'mod/forumng:viewsubscribers',
-            'mod/forum:managesubscriptions' => 'mod/forumng:managesubscriptions',
-            'mod/forum:viewhiddentimedposts' => 'mod/forumng:viewallposts'
-        );
-        $caps = get_records('role_capabilities', 'contextid', $oldcontext->id);
-        if ($caps) {
-            foreach ($caps as $cap) {
-                foreach ($capabilities as $key=>$capability) {
-                    if ($cap->capability != $key) {
-                        continue;
-                    }
-                    $newcap = $cap;
-                    $newcap->contextid = $newcontext->id;
-                    $newcap->capability = $capability;
-                    $newcap->capability = addslashes($newcap->capability);
-                    try {
-                        insert_record('role_capabilities', $newcap);
-                    } catch (forum_exception $e) {
-                        $error  = "(cannot insert record to 'role_capabilities' table)";
-                        forum_utils::handle_exception($e . $error);
-                    }
-                    break;
-                }
-            }
         }
     }
 
@@ -3942,6 +4825,87 @@ GROUP BY
         try {
             $posts = forum_utils::get_record_sql($sql);
             return $posts;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Gets all users within this forum who are supposed to be 'monitored'
+     * (that means users who are in the monitorroles setting).
+     *
+     * Note: In Moodle 2 we should be able to replace this with getting the
+     * enrolled users for the course, I think?
+     * @param int $groupid Group ID or ALL_GROUPS/NO_GROUPS to get all users
+     */
+    function get_monitored_users($groupid) {
+        global $CFG;
+        if ($groupid > 0) {
+            //Get all users from the chosen group
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.username, gm.groupid
+                FROM " . $CFG->prefix . "groups_members gm
+                JOIN " . $CFG->prefix . "user u ON u.id = gm.userid
+                WHERE gm.groupid = $groupid 
+                ORDER BY u.lastname, u.firstname";
+
+            if ($users = get_records_sql($sql)) {
+                return $users;
+            }
+        }
+        else {
+            // Get roleids from the monitor roles setting
+            if (!$roleids = forum_utils::safe_explode(',',
+                    $CFG->forumng_monitorroles)) {
+                return array();
+            }
+            $roleidfind = forum_utils::in_or_equals($roleids);
+            $context = $this->get_context();
+            $contextids = forum_utils::safe_explode('/', $context->path);
+            $contextidfind = forum_utils::in_or_equals($contextids);
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.username
+                    FROM " . $CFG->prefix . "role_assignments ra
+                    JOIN " . $CFG->prefix . "user u ON u.id = ra.userid
+                    WHERE ra.roleid $roleidfind AND ra.contextid $contextidfind
+                    ORDER BY u.lastname, u.firstname";
+            if ($users = get_records_sql($sql)) {
+                return $users;
+            }
+        }
+        return array();
+    }
+
+    /**
+     * Gets all user post counts
+     * @param int $groupid
+     * @param int $userid
+     * @param string $type
+     * @return array An associative array of $userid => (info object)
+     *   where info object has ->discussions and ->replies values
+     */
+    public function get_all_user_post_counts($groupid, $userid, $type='discussion') {
+        try {
+            global $CFG;
+            $forumid = $this->get_id();
+            $where = " WHERE d.forumid = $forumid";
+            $where .= "  AND p.userid = $userid";
+
+            // Check whether it is a new discussion or a reply
+            if ($type ==='reply') {
+                $where .= " AND p.parentpostid IS NOT NULL";
+            } else {
+                $where .= " AND p.parentpostid IS NULL";
+            }
+
+            $sql = 'SELECT p.id, p.userid, p.discussionid, p.parentpostid 
+                FROM '.$CFG->prefix.'forumng_discussions d
+                JOIN '.$CFG->prefix.'forumng_posts p
+                ON d.id = p.discussionid' .
+                $where;
+            if ($posts = get_records_sql($sql)) {
+                $userposts = array();
+                $userposts[$userid] = count($posts); 
+                return $userposts;
+            }
         } catch (Exception $e) {
             return false;
         }
@@ -3977,6 +4941,186 @@ GROUP BY
             return false;
         }
     }
-    
+
+    // Shared/clone forums
+    //////////////////////
+
+    /**
+     * Redirects to the original forum that this is a clone of, setting
+     * session to indicate that user came from this forum. Does not return.
+     * @throws forum_exception If this is not a clone forum I
+     */
+    public function redirect_to_original() {
+        global $CFG, $SESSION;
+        $cmid = $this->forumfields->originalcmid;
+        if (!$cmid) {
+            throw new forum_exception('This forum is not a clone');
+        }
+        if (!isset($SESSION->forumng_sharedforumcm)) {
+            $SESSION->forumng_sharedforumcm = array();
+        }
+        $SESSION->forumng_sharedforumcm[$cmid] = $this->get_course_module();
+        redirect($CFG->wwwroot . '/mod/forumng/view.php?id=' . $cmid .
+                '&clone=' . $this->get_course_module()->id);
+    }
+
+    /**
+     * Gets unread data from original forum.
+     * @param int $unread UNREAD_xx constant
+     * @throws forum_exception If this is not a clone forum
+     */
+    public function init_unread_from_original($unread) {
+        $cmid = $this->forumfields->originalcmid;
+        if (!$cmid) {
+            throw new forum_exception('This forum is not a clone');
+        }
+        $viewhiddenforums = array();
+        if (has_capability('mod/forumng:viewallposts', get_context_instance(
+                CONTEXT_MODULE, $cmid))) {
+            $viewhiddenforums[] = get_field(
+                    'course_modules', 'instance', 'id', $cmid);
+        }
+        $rows = forum::query_forums(array($cmid), null, 0, $unread,
+                array(), array(), $viewhiddenforums);
+        if (count($rows) != 1) {
+            throw new forum_exception('Unexpected data extracting base forum');
+        }
+        switch ($unread) {
+        case self::UNREAD_BINARY:
+            $this->forumfields->hasunreaddiscussions =
+                    reset($rows)->f_hasunreaddiscussions;
+            break;
+        case self::UNREAD_DISCUSSIONS:
+            $this->forumfields->numunreaddiscussions =
+                    reset($rows)->f_numunreaddiscussions;
+            break;
+        }
+    }
+
+    /**
+     * Obtains the course-module for a shared forum, or false if there isn't
+     * one, based on the idnumber.
+     * @param string $idnumber ID number (text, no slashes)
+     * @return object Course-module object (raw from database) or false if not
+     *   found / not a forum / etc
+     */
+    public static function get_shared_cm_from_idnumber($idnumber) {
+        global $CFG;
+        $idnumbersl = addslashes($idnumber);
+        return get_record_sql("
+SELECT
+    cm.*
+FROM
+    {$CFG->prefix}course_modules cm
+    INNER JOIN {$CFG->prefix}modules m ON m.id = cm.module
+    INNER JOIN {$CFG->prefix}forumng f ON f.id = cm.instance
+WHERE
+    cm.idnumber = '$idnumbersl'
+    AND m.name = 'forumng'
+    AND f.shared = 1");
+    }
+
+    /**
+     * Update the forumng_subscription table to incorporate the group subscription feature.
+     * @param bool $moodleupdate If this is true, the function is running as part of the 
+     *   moodle upgrade.php for Sep 2010 release. In this case, the database queries must
+     *   not be changed and other code must work the same way (avoid calls to functions
+     *   except Moodle standard ones)
+     */
+    public function group_subscription_update($moodleupdate=false, $cmid=0) {
+        global $CFG;
+        forum_utils::start_transaction();
+
+        if ($cmid) {
+            //only update one forum
+            $optionalquery = "AND cm.id = $cmid";
+        } else {
+            $optionalquery = '';
+        }
+        // Query get the distinct forums
+        $sql_count = "
+SELECT
+    COUNT(DISTINCT cm.id) AS totalnumberforum
+FROM 
+    {$CFG->prefix}forumng_subscriptions fs
+    INNER JOIN {$CFG->prefix}course_modules cm on fs.forumid = cm.instance 
+    INNER JOIN {$CFG->prefix}modules m on cm.module = m.id 
+    INNER JOIN {$CFG->prefix}course c on c.id = cm.course 
+WHERE 
+    discussionid IS NULL AND m.name='forumng' $optionalquery
+    AND (CASE WHEN c.groupmodeforce=1 THEN c.groupmode ELSE cm.groupmode END ) = 1";
+
+        //Query lists all subscriptions to forums that have separate groups
+        $sql_sub = "
+SELECT
+    cm.id AS cmid, fs.id AS subid, fs.userid, fs.forumid, c.id AS courseid, cm.groupingid 
+FROM
+    {$CFG->prefix}forumng_subscriptions fs
+    INNER JOIN {$CFG->prefix}course_modules cm on fs.forumid = cm.instance 
+    INNER JOIN {$CFG->prefix}modules m on cm.module = m.id 
+    INNER JOIN {$CFG->prefix}course c on c.id = cm.course 
+WHERE 
+    discussionid IS NULL and m.name='forumng' $optionalquery
+    AND (CASE WHEN c.groupmodeforce=1 THEN c.groupmode ELSE cm.groupmode END ) = 1 
+ORDER BY cm.id, fs.id";
+
+        //Query lists all groups that the user belongs to from the above query
+        $sql_group = "
+SELECT
+    subs.subid, g.id AS groupid
+FROM
+    ($sql_sub) subs 
+    INNER JOIN {$CFG->prefix}groups_members gm ON gm.userid = subs.userid 
+    INNER JOIN {$CFG->prefix}groups g ON gm.groupid = g.id AND g.courseid = subs.courseid 
+    LEFT JOIN {$CFG->prefix}groupings_groups gg ON gg.groupid = g.id AND subs.groupingid = gg.groupingid 
+WHERE
+    (subs.groupingid = 0 or gg.id IS NOT NULL)
+ORDER BY
+    subs.cmid, subs.subid";
+        $rs = forum_utils::get_recordset_sql($sql_group);
+        $results = array();
+        while($rec = rs_fetch_next_record($rs)) {
+            if (!array_key_exists($rec->subid, $results)) {
+                $results[$rec->subid] = array();
+            }
+            $results[$rec->subid][] = $rec->groupid;
+        }
+        rs_close($rs);
+        $rs = forum_utils::get_recordset_sql($sql_sub);
+        $lastcmid = 0;
+        $forumcount = 1;
+        $totalforumcount = 0;
+        $totalforumcount = count_records_sql($sql_count);
+
+        while($rec = rs_fetch_next_record($rs)) {
+            if ($lastcmid != $rec->cmid) {
+                if ($moodleupdate) {
+                    print "Updating the subscriptions $forumcount/$totalforumcount (current cmid:$rec->cmid) <br />";
+                }
+                $context = get_context_instance(CONTEXT_MODULE, $rec->cmid);
+                $aagusers = get_users_by_capability($context,
+                    'moodle/site:accessallgroups', 'u.id');
+                $aagusers = $aagusers ? $aagusers : array();
+                $lastcmid = $rec->cmid;
+                $forumcount++;
+            }
+            if (!array_key_exists($rec->userid, $aagusers)) {
+                //Delete the whole forum subscription
+                forum_utils::delete_records('forumng_subscriptions', 'id', $rec->subid);
+                //check if the subid exists in the results array
+                if (array_key_exists($rec->subid, $results)) {
+                    foreach($results[$rec->subid] as $groupid) {
+                        $subrecord = new StdClass;
+                        $subrecord->userid = $rec->userid;
+                        $subrecord->forumid = $rec->forumid;
+                        $subrecord->subscribed = 1;
+                        $subrecord->groupid = $groupid;
+                        forum_utils::insert_record('forumng_subscriptions', $subrecord);
+                    }
+                }
+            }
+        }
+        forum_utils::finish_transaction();
+    }
 }
 ?>

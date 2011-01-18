@@ -28,13 +28,17 @@ $string['postmailinfo'] = 'This is a copy of a message posted on the $a website.
 To add your reply via the website, click on this link:';
 $string['forum'] = 'Forum';
 $string['subscribed'] = 'Subscribed';
+$string['subscribegroup'] = 'Subscribe to this group';
 $string['subscribeshort'] = 'Subscribe';
 $string['subscribelong'] = 'Subscribe to whole forum';
+$string['unsubscribegroup'] = 'Unsubscribe from this group';
+$string['unsubscribegroup_partial'] = 'Unsubscribe from discussions in this group';
 $string['unsubscribeshort'] = 'Unsubscribe';
-$string['unsubscribelong'] = 'Unsubscribe from all discussions';
+$string['unsubscribelong'] = 'Unsubscribe from the forum';
 $string['subscribediscussion'] = 'Subscribe to discussion';
 $string['unsubscribediscussion'] = 'Unsubscribe from discussion';
 $string['subscribeddiscussionall'] = 'All';
+$string['subscribedthisgroup'] = 'This group';
 $string['discussions'] = 'Discussions';
 $string['posts'] = 'Posts';
 $string['subscribe'] = 'Subscribe to this forum';
@@ -123,14 +127,20 @@ $string['permanentdeletion_never']='Never (do not wipe unused data)';
 $string['permanentdeletion_soon']='Wipe as soon as possible';
 $string['usebcc']='Send emails with BCC';
 $string['configusebcc']='Leave this value at 0 to use Moodle default mail handling (safest). Set to a number (e.g. 50)  to group forum emails together using the BCC header so that Moodle only has to send a single email which your mail server delivers to many subscribers. This can improve performance of email in forum cron, but does not have some features of standard Moodle email such as charset options and bounce handling.';
+$string['donotmailafter']='Do not mail after (hours)';
+$string['configdonotmailafter']='To prevent causing a mail flood if the server cron does not run for a time, the forum will not send out emails for posts that are older than this many hours.';
 $string['re']='Re: $a'; // I made a new string because I like it better with $a
 $string['discussionsunread']='Discussions (unread)';
 $string['feeds'] = 'Feeds';
 $string['atom'] = 'Atom';
 $string['subscribe_confirm'] = 'You have been subscribed.';
 $string['unsubscribe_confirm'] = 'You have been unsubscribed.';
+$string['subscribe_confirm_group'] = 'You have been subscribed to the group.';
+$string['unsubscribe_confirm_group'] = 'You have been unsubscribed from the group.';
 $string['subscribe_already'] = 'You are already subscribed.';
+$string['subscribe_already_group'] = 'You are already subscribed to this group.';
 $string['unsubscribe_already'] = 'You are already unsubscribed.';
+$string['unsubscribe_already_group'] = 'You are already unsubscribed from this group.';
 $string['subscription_initially_subscribed'] = 'Everyone is initially subscribed';
 $string['subscription_not_permitted'] = 'Subscription is not permitted';
 $string['feeditems'] = 'Recent items in feeds';
@@ -156,8 +166,13 @@ $string['alt_discussion_timeout'] = 'Not currently visible to users (time limit)
 $string['alt_discussion_sticky'] = 'This discussion always appears at top of list';
 $string['alt_discussion_locked'] = 'Discussion is read-only';
 $string['subscribestate_partiallysubscribed'] = 'You receive messages from some discussions in this forum via email to $a.';
+$string['subscribestate_partiallysubscribed_thisgroup'] = 'You receive messages from some discussions in this group via email to $a.';
+$string['subscribestate_groups_partiallysubscribed'] = 'You receive messages from some groups in this forum via email to $a.';
 $string['subscribestate_subscribed'] = 'You receive messages from this forum via email to $a.';
+$string['subscribestate_subscribed_thisgroup'] = 'You receive messages from this group via email to $a.';
+$string['subscribestate_subscribed_notinallgroup'] = 'Click the Unsubscribe button to unsubscribe from the forum.';
 $string['subscribestate_unsubscribed'] = 'You do not currently receive messages from this forum by email. If you would like to, please click Subscribe.';
+$string['subscribestate_unsubscribed_thisgroup'] = 'You do not currently receive messages from this group by email. If you would like to, please click Subscribe to this group.';
 $string['subscribestate_not_permitted'] = 'This forum does not allow email subscription.';
 $string['subscribestate_forced'] = '(This forum does not allow you to unsubscribe.)';
 $string['subscribestate_no_access'] = 'You do not have access to subscribe to this forum by email.';
@@ -248,12 +263,15 @@ $string['exportedtitle'] = 'Forum discussion &lsquo;$a->subject&rsquo; exported 
 $string['viewreaders'] = 'Show readers';
 $string['readersof'] = 'Readers of discussion';
 $string['set'] = 'Set';
-$string['readersinfo'] = 'The following list shows people who have viewed this
+$string['readersinfo'] = 'The following list shows relevant people who have viewed this
 discussion via the website. It is in date order, most recent first.';
 $string['readersinfo2'] = 'The list only includes people who have viewed the
-discussion, or clicked the \'Mark read\' link, in a web browser. Some people
-might follow the forum by email subscription or via data feeds, neither of
-which are covered by this list.';
+discussion in a web browser. Some people might follow the forum by email
+subscription or via Atom or RSS feeds, which will not show on this list.
+When people use the \'manually mark discussions read\' option, they are not
+shown in this list until they mark the discussion read. Conversely, it is
+possible to appear in this list by clicking one of the \'Mark read\' buttons
+without actually viewing the discussion.';
 $string['showusername'] = 'Show usernames';
 $string['configshowusername'] = 'Include usernames in reports related to the
 forum, which may be seen by moderators [but not ordinary students]';
@@ -282,6 +300,7 @@ $string['search_update_count'] = '$a forums to process.';
 $string['searchthisforum'] = 'Search this forum';
 $string['viewsubscribers'] = 'View subscribers';
 $string['inreplyto'] = 'In reply to';
+$string['forumng:view'] = 'View forum';
 $string['forumng:ignorepostlimits'] = 'Ignore post count limits';
 $string['forumng:mailnow'] = 'Mail posts before editing timeout';
 $string['forumng:setimportant'] = 'Mark posts as important';
@@ -336,6 +355,16 @@ $string['jumpto'] = 'Jump to:';
 $string['jumpnext'] = 'Next unread';
 $string['jumpprevious'] = 'Previous unread';
 $string['jumppreviousboth'] = 'previous';
+$string['enableadvanced'] = 'Enable advanced features';
+$string['configenableadvanced'] = 'This option enables advanced forum features which may be unnecessarily complex for many installations. Currently, this just enables forum sharing, but we might add more later.';
+$string['shared'] = 'Share this forum';
+$string['sharing'] = 'Forum sharing';
+$string['useshared'] = 'Use existing shared forum';
+$string['sharedinfo'] = 'This is a shared forum. The access settings here are not shared, and apply only to students who access the shared forum from this particular course. If you want to edit other settings for the forum, please <a href=\'$a\'>edit the original forum setttings</a> instead.';
+$string['sharedviewinfooriginal'] = '<strong>This forum is shared</strong> under the name <strong>$a</strong> for use in other courses.';
+$string['sharedviewinfonone'] = 'It is not currently included in any other course.';
+$string['sharedviewinfolist'] = 'It is included in the following: $a.';
+$string['sharedviewinfoclone'] = '<strong>This is a shared forum</strong>. The <a href=\'{$a->url}\'>original forum</a> is in {$a->shortname}.';
 
 // strings for computing guide
 $string['computingguide']='Guide to using forums';
@@ -373,7 +402,10 @@ $string['convert_process_subscriptions_initial'] = 'Converting initial subscript
 $string['convert_process_discussions'] = 'Converting discussions...';
 $string['convert_process_dashboard'] = 'Converting dashboard favourites...';
 $string['convert_process_dashboard_done'] = 'done (OK {$a->yay}, failed {$a->nay}).';
+$string['convert_process_assignments'] = 'Updating role assignments...';
+$string['convert_process_overrides'] = 'Updating role overrides...';
 $string['convert_process_search'] = 'Regenerating search data...';
+$string['convert_process_update_subscriptions'] = 'Converting to group subscriptions...';
 $string['convert_process_complete'] = 'Conversion complete in {$a->seconds}s (view {$a->link}).';
 $string['convert_newforum'] = 'new forum';
 $string['convert_noneselected'] = 'No forums selected for conversion! Please select one or more forums.';
@@ -406,9 +438,14 @@ $string['externaldashboardremove'] = 'Remove forum from dashboard';
 
 // New error strings
 $string['error_subscribeparams'] = 'Parameters incorrect: requires either id or course or d.';
+$string['error_nopermission'] = 'You are not permitted to carry out this request.';
 $string['error_exception'] = 'A forum error occurred. Please try again later, or try something else.<div class=\'forumng-errormessage\'>Error message: $a</div>';
 $string['error_cannotchangesubscription'] = 'You are not permitted to subscribe to, or unsubscribe from, this forum.';
 $string['error_cannotchangediscussionsubscription'] = 'You are not permitted to subscribe to, or unsubscribe from, this discussion.';
+$string['error_cannotchangegroupsubscription'] = 'You are not permitted to subscribe to, or unsubscribe from your selected group.';
+$string['error_cannotsubscribetogroup'] = 'You are not permitted to subscribe to your selected group.';
+$string['error_cannotunsubscribefromgroup'] = 'You are not permitted to unsubscribe from your selected group.';
+$string['error_invalidsubscriptionrequest'] = 'Your subscription request is invalid.';
 $string['error_unknownsort'] = 'Unknown sort option.';
 $string['error_ratingthreshold'] = 'Rating threshold must be a positive number.';
 $string['error_duplicate'] = 'You have already created a post using the previous form. (This error sometimes occurs if you click the post button twice. In that case, your post has probably been saved.)';
@@ -484,12 +521,12 @@ $string['alert_turnedoff'] = 'The alert function is not available.';
 $string['move_notselected'] = 'You must select a target forum from the dropdown before clicking the Move button.';
 $string['partialsubscribed'] = 'Partial';
 $string['move_nogroups'] = 'You do not have access to any groups in the selected target forum.';
-$string['beforestartdate'] = 'You can read any messages in this forum, but not post your own messages. This forum opens for posting on $a.';
-$string['beforestartdatecapable'] = 'Students can read any messages in this forum, but not post their own messages until $a. You have access to post messages before this time.';
+$string['beforestartdate'] = 'You can read any posts within this forum, but not submit your own posts. This forum opens for posting on $a.';
+$string['beforestartdatecapable'] = 'Students can read any posts within this forum, but not submit their own posts until $a. You have access to submit posts before this time.';
 $string['beforeenddate'] = 'This forum closes for new posts on $a.';
 $string['beforeenddatecapable'] = 'This forum closes for new student posts on $a.';
-$string['afterenddate'] = 'You can read any messages in this forum, but not post your own messages. This forum closed for posting on $a.';
-$string['afterenddatecapable'] = 'Students can read any messages in this forum, but not post their own messages since the forum closed on $a. You still have access to post messages.';
+$string['afterenddate'] = 'You can read any posts within this forum, but not submit your own posts. This forum closed for posting on $a.';
+$string['afterenddatecapable'] = 'Students can read any posts within this forum, but not submit their own posts since the forum closed on $a. You still have access to submit posts.';
 $string['removeolddiscussions'] = 'Remove old discussions';
 $string['removeolddiscussionsafter'] = 'Remove old discussions after how many months';
 $string['removeolddiscussionsdefault'] = 'Never remove';
@@ -503,6 +540,11 @@ $string['invalidforum']='This forum no longer exists';
 $string['errorinvalidforum'] = 'The target forum for archiving old discussions no longer exists. Please choose a different forum.';
 $string['archive_errorgrouping']='The forum that receives old discussions has a different group setting. Please update the forum and change the <strong>Remove old discussions</strong> options.';
 $string['archive_errortargetforum']='The forum that used to receive old discussions no longer exists. Please update the forum and change the <strong>Remove old discussions</strong> options.';
+$string['error_notwhensharing'] = 'This option is not available when sharing the forum.';
+$string['error_sharingrequiresidnumber'] = 'When sharing the forum, you must enter an ID number which is unique across the entire system.';
+$string['error_sharingidnumbernotfound'] = 'When using a shared forum, you must enter an ID number that exactly matches one previously entered in a forum that is shared.';
+$string['error_sharinginuse'] = 'You cannot turn sharing off for this forum because there are already forums that share it. If necessary, delete these other forums first.';
+$string['error_nosharedforum'] = 'Forum <strong>{$a->name}</strong>: Could not restore as shared forum; ID number {$a->idnumber} not found. Restored forum is an independent forum.';
 
 //advanced search
 $string['advancedsearch'] = 'Advanced search';
@@ -522,6 +564,28 @@ $string['to'] = ' to: $a';
 $string['inappropriatedateortime'] = '<strong>Date range from</strong> is after current date/time. Please check and try again!';
 $string['daterangemismatch'] = 'Date range mismatch: <strong>Date range from</strong> is after <strong>Date range to</strong>. Please check and try again!';
 $string['nosearchcriteria'] = 'No search criteria: Please use one or more of the above criteria and try again!';
+$string['searchallforums'] = 'Search all forums';
+
+// discussion list feature
+$string['viewpostsbyuser'] = 'View posts by user';
+$string['user'] = 'User';
+$string['replies'] = 'Replies';
+$string['allpostsby'] = 'All posts by: $a';
+$string['showallpostsby'] = 'Show all posts by $a';
+$string['userposts'] = 'User posts';
+$string['listofuserposts'] = '<h3>List of users who have posted to this forum</h3>';
+$string['monitorroles'] = 'Monitor roles';
+$string['configmonitorroles'] = 'Roles which are included when monitoring users forum participation and showing read discussions.';
+$string['newdiscussion'] = 'New discussion';
+$string['nothingtodisplay'] = '<h3>Nothing to display</h3>';
+$string['nousersfound'] = 'So far, nobody who meets the above conditions has read this forum discussion';
+$string['re'] = 'Re: $a';
+
+$string['manualmark_auto'] = 'Automatically marking discussions read';
+$string['manualmark_manual'] = 'Manually marking discussions read';
+$string['manualmark_change'] = 'Change';
+
+$string['markdiscussionread'] = 'Mark discussion read';
 
 
 /* Remaining ones from forum I haven't used yet

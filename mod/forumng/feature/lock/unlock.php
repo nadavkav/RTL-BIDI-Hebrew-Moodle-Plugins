@@ -3,9 +3,10 @@ require_once('../../../../config.php');
 require_once($CFG->dirroot . '/mod/forumng/forum.php');
 
 $d = required_param('d', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try {
-    $discussion = forum_discussion::get_from_id($d);
+    $discussion = forum_discussion::get_from_id($d, $cloneid);
     $forum = $discussion->get_forum();
     $cm = $forum->get_course_module();
     $course = $forum->get_course();
@@ -16,7 +17,7 @@ try {
     // Is this the actual unlock?
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $discussion->unlock();
-        redirect('../../discuss.php?d=' . $discussion->get_id());
+        redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     }
 
     // Confirm page. Work out navigation for header
@@ -41,8 +42,8 @@ try {
     // Show confirm option
     $confirmstring = get_string('confirmunlock', 'forumng');
     notice_yesno($confirmstring, 'unlock.php', '../../discuss.php',
-        array('d'=>$discussion->get_id()),
-        array('d'=>$discussion->get_id()),
+        array('d'=>$discussion->get_id(), 'clone'=>$cloneid),
+        array('d'=>$discussion->get_id(), 'clone'=>$cloneid),
         'post', 'get');
 
     // Display footer

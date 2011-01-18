@@ -29,6 +29,7 @@ while($rec = rs_fetch_next_record($rs)) {
         if($rec->deleted) {
             $info .= ' deleted';
         }
+        // Note this is only test code - it does not support shared forums
         print "<div><a href='discuss.php?d={$rec->discussionid}#p{$rec->postid}'><tt>$folder</tt></a> (" . userdate($rec->modified) . "$info)</div>";
         $failed++;
 

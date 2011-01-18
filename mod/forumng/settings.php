@@ -16,7 +16,11 @@ $settings->add(new admin_setting_configtext('forumng_usebcc',
     get_string('usebcc', 'forumng'),
     get_string('configusebcc', 'forumng'), 0, PARAM_INT));
 
-// Number of discussions on a page
+$settings->add(new admin_setting_configtext('forumng_donotmailafter',
+    get_string('donotmailafter', 'forumng'),
+    get_string('configdonotmailafter', 'forumng'), 48, PARAM_INT));
+
+    // Number of discussions on a page
 $settings->add(new admin_setting_configtext('forumng_discussionsperpage',
     get_string('discussionsperpage', 'forumng'),
     get_string('configdiscussionsperpage', 'forumng'), 20, PARAM_INT));
@@ -84,6 +88,31 @@ if(class_exists('admin_setting_pickroles')) {
         get_string('configsubscriberoles', 'forumng'), $default, PARAM_SEQUENCE));
 }
 
+$defaultroles=array('moodle/legacy:student','moodle/legacy:teacher');
+if (class_exists('admin_setting_pickroles')) {
+    $settings->add(new admin_setting_pickroles('forumng_monitorroles',
+        get_string('monitorroles','forumng'),
+        get_string('configmonitorroles','forumng'),$defaultroles));
+} else {
+    $default='';
+    if (!isset($CFG->forumng_monitorroles)) {
+        $result=array();
+        foreach($defaultroles as $capability) {
+            if ($caproles = get_roles_with_capability($capability, CAP_ALLOW)) {
+                foreach ($caproles as $caprole) {
+                    if(!in_array($caprole->id,$result)) {
+                        $result[] = $caprole->id;
+                    }
+                }
+            }
+        }
+        $default=implode(',',$result);
+    }
+    $settings->add(new admin_setting_configtext('forumng_monitorroles',
+        get_string('monitorroles', 'forumng'),
+        get_string('configmonitorroles', 'forumng'), $default, PARAM_SEQUENCE));
+}
+
 $options = forum::get_feedtype_options();
 $options[-1]=get_string('perforumoption','forumng');
 $settings->add(new admin_setting_configselect('forumng_feedtype',
@@ -127,13 +156,14 @@ $settings->add(new admin_setting_configcheckbox('forumng_showidnumber',
     get_string('showidnumber', 'forumng'),
     get_string('configshowidnumber', 'forumng'), 0));
 
-// Option about debugging
-$settings->add(new admin_setting_configcheckbox('forumng_crondebug',
-    get_string('crondebug', 'forumng'), get_string('crondebugdesc', 'forumng'), 0));
-
 $settings->add(new admin_setting_configtext('forumng_reportunacceptable', get_string('reportunacceptable', 'forumng'),
                    get_string('configreportunacceptable', 'forumng'), '', PARAM_NOTAGS));
 
 $settings->add(new admin_setting_configtext('forumng_computing_guide', get_string('computingguideurl', 'forumng'),
     get_string('computingguideurlexplained', 'forumng'), '', PARAM_NOTAGS));
+
+$settings->add(new admin_setting_configcheckbox('forumng_enableadvanced',
+    get_string('enableadvanced', 'forumng'),
+    get_string('configenableadvanced', 'forumng'), 0));
+
 ?>

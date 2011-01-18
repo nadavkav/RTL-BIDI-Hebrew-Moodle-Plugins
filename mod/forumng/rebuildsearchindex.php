@@ -8,9 +8,10 @@ require_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
 // This file lets the search index be manually rebuilt. We should probably 
 // delete it later.
 $cmid = required_param('id', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try {
-    $forum = forum::get_from_cmid($cmid);
+    $forum = forum::get_from_cmid($cmid, $cloneid);
     $cm = $forum->get_course_module();
     forum::search_installed();
 

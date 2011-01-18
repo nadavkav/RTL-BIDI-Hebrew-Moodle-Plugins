@@ -1,6 +1,19 @@
 <?php
 $mod_forumng_capabilities = array(
 
+    'mod/forumng:view' => array(
+
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'legacy' => array(
+            'user' => CAP_ALLOW,
+            'guest' => CAP_ALLOW,
+            'student' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
+        )
+    ),
+
     'mod/forumng:viewdiscussion' => array(
 
         'captype' => 'read',

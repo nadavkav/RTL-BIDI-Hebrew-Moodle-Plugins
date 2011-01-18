@@ -179,8 +179,6 @@ ORDER BY
             }
             closedir($handle);
             forum_utils::rmdir($folder);
-            forum_utils::folder_debug('rmdir', 'forum_draft::delete',
-                'draft=' . $this->draftfields->id, $folder);
         }
 
         forum_utils::finish_transaction();

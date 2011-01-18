@@ -72,6 +72,18 @@ function forumng_backup_one_mod($bf, $preferences, $forumng) {
         $xb->tag_full('COMPLETIONPOSTS', $forumng->completionposts);
         $xb->tag_full('REMOVEAFTER', $forumng->removeafter);
         $xb->tag_full('REMOVETO', $forumng->removeto);
+        $xb->tag_full('SHARED', $forumng->shared);
+        // When this is a clone forum, we store the idnumber of the original
+        // forum so that it can be found afterward; this makes sense rather
+        // than using the normal cmid mapping because it might be on a different
+        // course or something, also idnumber is shown in the interface.
+        if ($forumng->originalcmid) {
+            $idnumber = get_field('course_modules', 'idnumber', 'id',
+                $forumng->originalcmid);
+            if ($idnumber) {
+                $xb->tag_full('ORIGINALCMIDNUMBER', $idnumber);
+            }
+        }
 
         // We only back up most content when 'user data' is turned on
         if($userdata) {
@@ -253,12 +265,19 @@ function forumng_backup_discussion($xb, $discussion) {
 
     // Posts
     $xb->tag_start('POSTS');
-    $rs = forum_utils::get_recordset(
+    $records = forum_utils::get_records(
         'forumng_posts', 'discussionid', $discussion->id, 'id');
-    while($post = rs_fetch_next_record($rs)) {
-        forumng_backup_post($xb, $post);
+    $done = array ();
+    while(count($records)>0) {
+        foreach($records as $post) {
+            if ($post->parentpostid == null || array_key_exists($post->parentpostid, $done) ) {
+                forumng_backup_post($xb, $post);
+                $done[$post->id] = true;
+                unset($records[$post->id]);
+            }
+        }
     }
-    rs_close($rs);
+    rs_close($records);
     $xb->tag_end('POSTS');
 
     // Read data
@@ -344,6 +363,7 @@ function forumng_backup_subscription($xb, $subscription) {
     forumng_backup_userid($xb, $subscription->userid);
     $xb->tag_full('SUBSCRIBED', $subscription->subscribed);
     $xb->tag_full_notnull('DISCUSSIONID', $subscription->discussionid);
+    $xb->tag_full_notnull('GROUPID', $subscription->groupid);
     $xb->tag_end('SUBSCRIPTION');
 }
 

@@ -12,10 +12,11 @@ if (class_exists('ouflags')) {
 
 // Post ID
 $postid = required_param('p', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try {
     // Get post
-    $post = forum_post::get_from_id($postid, true);
+    $post = forum_post::get_from_id($postid, $cloneid, true);
 
     // Get convenience variables
     $discussion = $post->get_discussion();

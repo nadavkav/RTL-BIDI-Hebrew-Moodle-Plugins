@@ -7,6 +7,7 @@ if (class_exists('ouflags')) {
 
 // Post ID
 $postid = required_param('p', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 // 1 = set flag, 0 = clear it
 $flag = required_param('flag', PARAM_INT);
@@ -23,11 +24,14 @@ $timeread = optional_param('timeread', 0, PARAM_INT);
 
 try {
     // Get post
-    $post = forum_post::get_from_id($postid, true, true);
+    $post = forum_post::get_from_id($postid, $cloneid, true, true);
 
     // Do all access security checks
     $post->require_view();
-    
+    if (!$post->can_flag()) {
+        print_error('error_nopermission', 'forumng');
+    }
+
     // Change the flag
     $post->set_flagged($flag);
 
@@ -39,9 +43,10 @@ try {
 
     // Redirect
     if ($back == 'view') {
-        redirect('view.php?id=' . $post->get_forum()->get_course_module_id());
+        redirect($post->get_forum()->get_url(forum::PARAM_PLAIN));
     } else {
-        redirect('discuss.php?d=' . $post->get_discussion()->get_id() .
+        redirect('discuss.php?' .
+            $post->get_discussion()->get_link_params(forum::PARAM_PLAIN) .
             ($timeread ? '&timeread=' . $timeread : '') .
             '#p' . $post->get_id());
     }

@@ -16,11 +16,11 @@ require_once(dirname(__FILE__).'/forum.php');
  * - Posts which are timed and not yet due - even if user has permission to
  *   see them (it is more useful for the timed posts to be mailed out at the
  *   'right time' even to these users, plus is easier)
+ *
+ * When used with shared forums, this will return multiple copies of each
+ * message (one from each shared forum including the original one).
  */
 class forum_mail_list {
-    /** Do not mail posts more than 2 days old (in case cron isn't run) */
-    const DO_NOT_MAIL_AFTER_HOURS = 48;
-
     /** Config flag used to prevent sending mails twice */
     const PENDING_MARK_MAILED = 'pending_mark_mailed';
 
@@ -69,24 +69,24 @@ SELECT
     ".forum_utils::select_username_fields('eu').",
     ".forum_utils::select_username_fields('replyu').",
     ".forum_utils::select_username_fields('replyeu').",
-    ".forum_utils::select_course_fields('c')."
+    ".forum_utils::select_course_fields('c').",
+    clonecm.id AS cloneid
 $querychunk
 ORDER BY
-    f.course, f.id, fd.id, fp.id" ))) {
+    clonecm.course, f.id, fd.id, fp.id" ))) {
             throw new forum_exception("Mail queue query failed");
         }
     }
 
     /**
      * Obtains the next post in current forum.
-     * @param object &$post Output variable: Receives the post object
-     * @param object &$inreplyto Output variable: Receives the post this one was
+     * @param forum_post &$post Output variable: Receives the post object
+     * @param forum_post &$inreplyto Output variable: Receives the post this one was
      *   replying to
      * @return bool True if a post could be retrieved, false if there are
      *   no more posts in this forum (call next_forum)
      */
-    function next_post(&$post, &$inreplyto, $debug=0) {
-    	print ($debug) ? ("\n    --in next->post"):'';
+    function next_post(&$post, &$inreplyto) {
         // Make sure we have a forum/discussion setup
         if ($this->forum==null || $this->discussion==null)  {
             throw new forum_exception("Cannot call next_post when not inside
@@ -95,14 +95,11 @@ ORDER BY
 
         // Get record
         if ($this->storedrecord) {
-        	print ($debug) ? ('    this->storedrecord is true'):'';
             $record = $this->storedrecord;
             $this->storedrecord = null;
         } else {
-        	print ($debug) ? ("    getting next record in rs"):'';
             $record = rs_fetch_next_record($this->rs);
             if (!$record) {
-            	print ($debug) ? ("    end of the line- "):'';
                 // End of the line. Mark everything as mailed
                 $this->mark_mailed($this->time);
                 rs_close($this->rs);
@@ -113,8 +110,8 @@ ORDER BY
         }
 
         // If record discussion is not the same as current discussion
-        if ($record->fd_id != $this->discussion->get_id()) {
-        	print ($debug) ? ("    record discussions differ"):'';
+        if ($record->fd_id != $this->discussion->get_id()
+            || $record->cloneid != $this->forum->get_course_module_id()) {
             $this->storedrecord = $record;
             $this->discussion = null;
             return false;
@@ -135,12 +132,14 @@ ORDER BY
         }
 
         $this->postcount++;
-        print ($debug) ? ("    --next->post return true"):'';
         return true;
     }
 
-    function next_discussion(&$discussion, $debug=0) {
-    	print ($debug) ? ("\n  --in next->discussion"):'';
+    /**
+     * Obtains the next discussion in the list.
+     * @param forum_discussion $discussion Discussion
+     */
+    function next_discussion(&$discussion) {
         // Make sure we have a forum setup but no discussion
         if ($this->forum==null)  {
             throw new forum_exception("Cannot call next_discussion when not inside
@@ -148,25 +147,20 @@ ORDER BY
         }
         // Skip if required to get to new discussion
         while ($this->discussion!=null) {
-        	print ($debug) ? ('calling next->post from next_discussion'):''; 
-            $this->next_post($post, $inreplyto, $debug);
+            $this->next_post($post, $inreplyto);
         }
 
         // Get record
         if ($this->storedrecord) {
-        	print ($debug) ? ('    this->storedrecord is true'):'';
             $record = $this->storedrecord;
             $this->storedrecord = null;
         } else if(!$this->rs) {
-        	print ($debug) ? ("    already used entire list"):'';
             // Already used entire list and closed recordset
             $this->forum = null;
             return false;
         } else {
-        	print ($debug) ? ("    getting next record is rs"):'';
             $record = rs_fetch_next_record($this->rs);
             if (!$record) {
-            	print ($debug) ? ("\n    end of the line"):'';
                 // End of the line. Mark everything as mailed
                 $this->mark_mailed($this->time);
                 rs_close($this->rs);
@@ -175,15 +169,13 @@ ORDER BY
                 return false;
             }
         }
-        
+
         // If record forums are not the same as current forum
-        if ($record->f_id != $this->forum->get_id()) {
-            print ($debug) ? ("    forums differ "):'';
+        if ($record->cloneid != $this->forum->get_course_module_id()) {
             $this->storedrecord = $record;
             $this->forum = null;
             return false;
         }
-        
 
         // Store record and check discussion
         $this->storedrecord = clone($record);
@@ -192,16 +184,20 @@ ORDER BY
         $discussion = new forum_discussion($this->forum,
             $discussionfields, false, -1);
         $this->discussion = $discussion;
-        print ($debug) ? ("    --next->discussion return true"):'';
         return true;
     }
 
-    function next_forum(&$forum, &$cm, &$context, &$course, $debug=0) {
-    	print ($debug) ? ("\n--in next_forum-- "):'';
+    /**
+     * 
+     * @param forum $forum Forum
+     * @param object $cm Course-module object
+     * @param object $context Context object
+     * @param object $course Course object
+     */
+    function next_forum(&$forum, &$cm, &$context, &$course) {
         // Skip if required to get to new forum
         while ($this->forum!=null) {
-        	print ($debug) ? ('calling next_discussion from next_forum'):''; 
-            $this->next_discussion($discussion, $debug);
+            $this->next_discussion($discussion);
         }
 
         // Get record
@@ -209,14 +205,11 @@ ORDER BY
             $record = $this->storedrecord;
             $this->storedrecord = null;
         } else if(!$this->rs) {
-        	print ($debug) ? ("  --used entire list"):'';
             // Already used entire list and closed recordset
             return false;
         } else {
-        	print ($debug) ? (' --getting next record'):'';
             $record = rs_fetch_next_record($this->rs);
             if (!$record) {
-            	print ($debug) ? ("    end of the line"):'';
                 // End of the line. Mark everything as mailed
                 $this->mark_mailed($this->time);
                 rs_close($this->rs);
@@ -232,8 +225,13 @@ ORDER BY
         $context = forum_utils::extract_subobject($record, 'x_');
         $forum = new forum($course, $cm, $context,
             forum_utils::extract_subobject($record, 'f_'));
+        if ($forum->is_shared()) {
+            $forum->set_clone_reference($record->cloneid);
+            $cm = $forum->get_course_module();
+            $course = $forum->get_course();
+            $context = $forum->get_context();
+        }
         $this->forum = $forum;
-        print ($debug) ? ("  --exiting next->forum true"):'';
         return true;
     }
 
@@ -266,14 +264,27 @@ WHERE
         return forum::MAILSTATE_MAILED;
     }
 
+    /**
+     * Safety net is to prevent the forum sending out very old emails if cron
+     * is down for a long time, potentially causing a mail flood.
+     * @param int $time Current/base time (seconds)
+     * @return int Oldest time (seconds) of messages to process
+     */
+    protected function get_safety_net($time) {
+        global $CFG;
+        $hours = isset($CFG->forumng_donotmailafter)
+                ? $CFG->forumng_donotmailafter : 48;
+        return $time - $hours * 3600;
+    }
+
     protected function get_query_chunk($time) {
         global $CFG;
 
         // We usually only mail out posts after a delay of maxeditingtime.
         $mailtime = $time - $CFG->maxeditingtime;
 
-        // In case cron has not run for a while,
-        $safetynet = $time - self::DO_NOT_MAIL_AFTER_HOURS * 3600;
+        // In case cron has not run for a while
+        $safetynet = $this->get_safety_net($time);
 
         global $CFG;
         return "
@@ -290,6 +301,10 @@ FROM
     INNER JOIN {$CFG->prefix}course_modules cm ON f.id = cm.instance
     INNER JOIN {$CFG->prefix}context x ON x.instanceid = cm.id
     INNER JOIN {$CFG->prefix}course c ON c.id = f.course
+    INNER JOIN {$CFG->prefix}forumng clonef 
+        ON (clonef.originalcmid = cm.id OR (f.originalcmid IS NULL AND clonef.id = f.id))
+    INNER JOIN {$CFG->prefix}course_modules clonecm ON clonef.id = clonecm.instance
+    INNER JOIN {$CFG->prefix}modules m ON m.id = cm.module AND m.id = clonecm.module
 WHERE
     -- Skip future posts (this is more relevant when using the set state
     -- version of the query)...
@@ -303,6 +318,11 @@ WHERE
 
     -- Don't mail out really old posts (unless they were previously hidden)
     AND (fp.created > $safetynet OR fd.timestart > $safetynet)
+    
+    -- Group mode posts on non-group forums are not shown in the UI so let's
+    -- not mail them either
+    AND (fd.groupid IS NULL OR (c.groupmodeforce = 0 AND cm.groupmode <> 0) OR
+        (c.groupmodeforce <> 0 AND c.groupmode <> 0))
 
     -- Discussion must meet time requirements
     AND fd.timestart < $time
@@ -315,7 +335,7 @@ WHERE
     AND fp.oldversion = 0
     
     -- Course-module and context limitations
-    AND cm.module = (SELECT id FROM {$CFG->prefix}modules WHERE name='forumng')
+    AND m.name='forumng'
     AND x.contextlevel = 70";
     }
 }

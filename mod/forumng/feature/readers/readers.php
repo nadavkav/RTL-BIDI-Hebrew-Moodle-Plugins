@@ -3,10 +3,11 @@ require_once('../../../../config.php');
 require_once($CFG->dirroot . '/mod/forumng/forum.php');
 
 $d = required_param('d', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 $groupid = optional_param('group', -1, PARAM_INT);
 
 try {
-    $discussion = forum_discussion::get_from_id($d);
+    $discussion = forum_discussion::get_from_id($d, $cloneid);
     $forum = $discussion->get_forum();
     $course = $forum->get_course();
     $cm = $forum->get_course_module();
@@ -45,7 +46,7 @@ try {
                 reset($groups);
                 $groupid = key($groups);
             }
-            if ($groupid != 0) {
+            if ($groupid > 0) {
                 if(!array_key_exists($groupid, $groups)) {
                     print_error('groupunknown');
                 }
@@ -82,14 +83,29 @@ try {
     if ($groups) {
         if ($aag) {
             $groups[0] = get_string('allparticipants');
+            // Bring allparticipants to the top
+            ksort($groups);
         }
-        print '<form id="forumng-groupselector" method="get" ' .
-            'action="readers.php"><div><input type="hidden" name="d" value="'.
-            $d . '" /><label for="menugroup">' . get_string('group') .
-            '</label> ';
-        choose_from_menu($groups, 'group', $groupid, '');
-        print '<input type="submit" value="' . get_string('set', 'forumng') .'" />' .
-            '</div></form>';
+
+        $groupmode = groups_get_activity_groupmode($cm);
+        if ($groupmode == VISIBLEGROUPS) {
+            $grouplabel = get_string('groupsvisible');
+        } else {
+            $grouplabel = get_string('groupsseparate');
+        }
+
+         // Build url and the params
+        $page_url = $CFG->wwwroot . 
+            "/mod/forumng/feature/readers/readers.php?".$discussion->get_link_params(forum::PARAM_HTML);
+
+        if(count($groups)== 1) {
+            print ('<div class="groupselector">'. $grouplabel .': '. end($groups).'</div>');
+        } else {
+            // do only if we have more than one group
+            $popupform = popup_form($page_url.'&amp;group=', $groups, 'forumng-groupselector', 
+                         $groupid, '', '', '', false, 'self', $grouplabel);
+       }
+
     }
 
     // Show intro to table
@@ -97,8 +113,18 @@ try {
         get_string('readersinfo', 'forumng') . '</p><p>' .
         get_string('readersinfo2', 'forumng') . '</p></div>';
 
-    // Get list of all users who viewed the discussion, ordered by date
-    $readers = $discussion->get_readers($groupid ? $groupid : forum::ALL_GROUPS);
+        // Get list of all users who viewed the discussion, ordered by date
+    if (!$readers = $discussion->get_readers($groupid ? $groupid : forum::ALL_GROUPS)){
+        print_box(get_string('nousersfound', 'forumng'));
+
+        // Display link to the discussion 
+        print link_arrow_left($discussion->get_subject(),
+        '../../discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML));
+
+        // Display footer
+        print_footer($course);
+        return;
+    }
 
     $table = new stdClass;
     $table->head = array(get_string('time'), get_string('user'));
@@ -126,7 +152,10 @@ try {
     print_table($table);
 
     print link_arrow_left($discussion->get_subject(),
-        '../../discuss.php?d=' . $d);
+        '../../discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML));
+
+    // Display footer
+    print_footer($course);
 } catch(forum_exception $e) {
     forum_utils::handle_exception($e);
 }

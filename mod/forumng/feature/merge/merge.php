@@ -3,10 +3,11 @@ require_once('../../../../config.php');
 require_once($CFG->dirroot . '/mod/forumng/forum.php');
 
 $d = required_param('d', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 $stage = optional_param('stage', 1, PARAM_INT);
 
 try {
-    $discussion = forum_discussion::get_from_id($d);
+    $discussion = forum_discussion::get_from_id($d, $cloneid);
     $forum = $discussion->get_forum();
     $cm = $forum->get_course_module();
     $course = $forum->get_course();
@@ -24,8 +25,8 @@ try {
 
         if(!isset($_POST['cancel'])) {
             // Get source discussion and check permissions
-            $sourcediscussion =
-                forum_discussion::get_from_id($SESSION->forumng_mergefrom);
+            $sourcediscussion = forum_discussion::get_from_id(
+                    $SESSION->forumng_mergefrom, $SESSION->forumng_mergefromclone);
             $sourcediscussion->require_view();
             if (!$sourcediscussion->can_split($whynot)) {
                 print_error($whynot, 'forumng');
@@ -36,30 +37,28 @@ try {
         }
 
         unset($SESSION->forumng_mergefrom);
-        redirect('../../discuss.php?d=' . $d);
+        redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     }
 
     // Create form
     require_once('merge_form.php');
-    $mform = new mod_forumng_merge_form('merge.php', array('d'=>$d));
+    $mform = new mod_forumng_merge_form('merge.php', array('d'=>$d, 'clone'=>$cloneid));
 
     if ($mform->is_cancelled()) {
-        redirect('../../discuss.php?d=' . $d);
+        redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     } else if (($fromform = $mform->get_data(false)) ||
         get_user_preferences('forumng_hidemergehelp', 0)) {
         // Remember in session that the discussion is being merged
         $SESSION->forumng_mergefrom = $d;
+        $SESSION->forumng_mergefromclone = $cloneid;
 
         if (!empty($fromform->hidelater)) {
             set_user_preference('forumng_hidemergehelp', 1);
         }
 
         // Redirect back to view page
-        redirect('../../view.php?id=' . $cm->id);
+        redirect($forum->get_url(forum::PARAM_PLAIN));
     }
-
-    // Redirect to new forum
-    //redirect('../../view.php?id=' . $target);
 
     // Work out navigation for header
     $pagename = get_string('merge', 'forumng');

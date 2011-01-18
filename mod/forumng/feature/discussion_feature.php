@@ -1,5 +1,4 @@
 <?php
-require_once($CFG->dirroot . '/mod/forumng/feature/forum_feature.php');
 
 /**
  * Discussion features appear at the bottom of a discussion page.
@@ -41,6 +40,9 @@ abstract class discussion_feature extends forum_feature {
         $method = $post ? 'post' : 'get';
         $optionshtml = '';
         $options['d'] = $discussion->get_id();
+        if ($discussion->get_forum()->is_shared()) {
+            $options['clone'] = $discussion->get_forum()->get_course_module_id();
+        }
         if ($post) {
             $options['sesskey'] = sesskey();
         }
@@ -53,7 +55,7 @@ abstract class discussion_feature extends forum_feature {
         if ($highlight) {
             $class = ' class="forumng-highlight"';
         }
-        return "<form method='$method' action='$script'$class><div>" .
+        return "<form method='$method' action='$script' $class><div>" .
             "$optionshtml<input type='submit' value='$name' />" .
             "$extrahtml</div></form>";
     }

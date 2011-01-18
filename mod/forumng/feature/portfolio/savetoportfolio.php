@@ -23,7 +23,7 @@ class portfolio_post_selector extends post_selector {
 
         // Add link back to discussion
         $postshtml .= '<div><a href="' . $CFG->wwwroot . 
-            '/mod/forumng/discuss.php?d=' . $discussion->get_id() . '">' .
+            '/mod/forumng/discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML) . '">' .
             get_string('savedposts_original', 'forumng') . '</a></div>';
 
         // Get title
@@ -53,8 +53,7 @@ class portfolio_post_selector extends post_selector {
             $postshtml);
 
         // Redirect back to discussion
-        $discussionurl = $CFG->wwwroot . '/mod/forumng/discuss.php?d=' . 
-            $discussion->get_id();
+        $discussionurl = $CFG->wwwroot . '/mod/forumng/discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN);
         if ($dataid === FALSE) {
             print_error('error_portfoliosave', 'forumng', $discussionurl);
         } else {

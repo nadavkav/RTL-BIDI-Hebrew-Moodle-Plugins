@@ -200,7 +200,7 @@ class forum_discussion {
      *   module's URL
      */
     function get_log_url() {
-        return 'discuss.php?d='.$this->discussionfields->id;
+        return 'discuss.php?' . $this->get_link_params(forum::PARAM_PLAIN);
     }
 
     /**
@@ -242,9 +242,10 @@ class forum_discussion {
     /**
      * @return string URL of this discussion
      */
-    public function get_url() {
+    public function get_url($type = forum::PARAM_PLAIN) {
         global $CFG;
-        return $CFG->wwwroot . '/mod/forumng/discuss.php?d=' . $this->get_id();
+        return $CFG->wwwroot . '/mod/forumng/discuss.php?' .
+                $this->get_link_params($type);
     }
 
     // Factory method
@@ -255,18 +256,19 @@ class forum_discussion {
      * single forum discussion ID. Intended when entering a page which uses
      * discussion ID as a parameter.
      * @param int $id ID of forum discussion
+     * @param int $cloneid ID of clone (or 0 or forum::CLONE_DIRECT as relevant)
      * @param int $userid User ID; 0 = current user, -1 = do not get unread data
      * @param bool $usecache True if cache should be used (if available)
      * @param bool $storecache True if newly-retrieved discussion should be 
      *   stored to cache
      * @return forum_discussion Discussion object
      */
-    public static function get_from_id($id, $userid=0, $usecache=false, $storecache=false) {
+    public static function get_from_id($id, $cloneid, $userid=0, $usecache=false, $storecache=false) {
         if ($usecache) {
             global $SESSION;
             self::check_cache();
             foreach ($SESSION->forumng_cache->discussions as $info) {
-                if ($info->userid==forum_utils::get_real_userid($userid) && $info->id==$id) {
+                if ($info->userid==forum_utils::get_real_userid($userid) && $info->id==$id && $info->cloneid==$cloneid) {
                     $info->lastused = time();
                     $result = self::create_from_cache($info);
                     if ($result) {
@@ -275,7 +277,7 @@ class forum_discussion {
                 }
             }
         }
-        return self::get_base('fd.id='.$id, $userid, $storecache);
+        return self::get_base('fd.id='.$id, $userid, $storecache, $cloneid);
     }
 
     /**
@@ -289,7 +291,7 @@ class forum_discussion {
      *   stored to cache
      * @return forum_discussion Discussion object
      */
-    static function get_from_post_id($postid, $userid=0, $usecache=false, $storecache=false) {
+    static function get_from_post_id($postid, $cloneid, $userid=0, $usecache=false, $storecache=false) {
         if ($usecache) {
             global $SESSION;
             self::check_cache();
@@ -312,10 +314,10 @@ class forum_discussion {
         global $CFG;
         return self::get_base("fd.id =
             (SELECT discussionid FROM {$CFG->prefix}forumng_posts WHERE id=$postid)",
-            $userid, $storecache);
+            $userid, $storecache, $cloneid);
     }
 
-    private static function get_base($where, $userid, $cache) {
+    private static function get_base($where, $userid, $cache, $cloneid) {
         // If user isn't logged in, don't get unread data
         if (!isloggedin()) {
             $userid = -1;
@@ -328,7 +330,7 @@ class forum_discussion {
         rs_close($rs);
 
         // Get forum and construct discussion
-        $forum = forum::get_from_id($discussionfields->forumid);
+        $forum = forum::get_from_id($discussionfields->forumid, $cloneid);
         $result = new forum_discussion($forum, $discussionfields, true,
             forum_utils::get_real_userid($userid));
         if ($cache) {
@@ -384,6 +386,7 @@ class forum_discussion {
         $info->userid = $this->get_unread_data_user_id();
         $info->posts = array();
         $info->settingshash = $this->get_forum()->get_settings_hash();
+        $info->cloneid = $this->get_forum()->get_course_module_id();
 
         if ($this->rootpost) {
             $this->rootpost->list_child_ids($info->posts);
@@ -417,7 +420,7 @@ class forum_discussion {
      */
     private static function create_from_cache($info) {
         $discussionfields = unserialize($info->discussionfields);
-        $forum = forum::get_from_id($discussionfields->forumid);
+        $forum = forum::get_from_id($discussionfields->forumid, $info->cloneid);
         if ($forum->get_settings_hash() != $info->settingshash) {
             return null;
         }
@@ -931,14 +934,14 @@ WHERE
      * in the filesystem. You can also use this method to change group.
      * (Note that once a discussion has been moved its data fields are no longer
      * valid and the object should be discarded.)
-     * @param int $targetcourseid New course ID (must match new forum)
+     * @param forum $targetforum Target forum for move
      * @param int $targetforumid New forum ID
      * @param int $targetgroupid New group ID
      */
-    public function move($targetcourseid, $targetforumid, $targetgroupid) {
+    public function move($targetforum, $targetgroupid) {
         $update = new StdClass;
-        if ($targetforumid != $this->discussionfields->forumid) {
-            $update->forumid = $targetforumid;
+        if ($targetforum->get_id() != $this->discussionfields->forumid) {
+            $update->forumid = $targetforum->get_id();
         }
         if ($targetgroupid != $this->discussionfields->groupid) {
             $update->groupid = $targetgroupid;
@@ -952,25 +955,22 @@ WHERE
         forum_utils::start_transaction();
         forum_utils::update_record('forumng_discussions', $update);
 
-        if ($targetforumid != $this->forum->get_id() ||
-            $targetcourseid != $this->forum->get_course_id()) {
+        if ($targetforum->get_id() != $this->forum->get_id()) {
             // Moving to different forum, we need to move attachments if any.
             $folder = $this->get_attachment_folder();
             if (is_dir($folder)) {
                 $targetfolder = $this->get_attachment_folder(
-                    $targetcourseid, $targetforumid);
+                    $targetforum->get_course_id(), $targetforum->get_id());
                 check_dir_exists(dirname($targetfolder), true, true);
                 forum_utils::rename($folder, $targetfolder);
-                forum_utils::folder_debug('rename',
-                    'forum_discussion::move', 'd=' . $this->get_id(), 
-                    $folder, $targetfolder);
             }
 
             // Completion status may have changed in source and target forums
             // Performance optimise: only do this if completion is enabled
             if ($this->forum->is_auto_completion_enabled()) {
                 $this->update_completion(false);
-                $newdiscussion = forum_discussion::get_from_id($this->get_id(), -1);
+                $newdiscussion = forum_discussion::get_from_id($this->get_id(),
+                    $this->get_forum()->get_course_module_id(), -1);
                 $newdiscussion->update_completion(true);
             }
         }
@@ -979,16 +979,14 @@ WHERE
         forum_utils::finish_transaction();
     }
     /**
-     * Copy the discussion and its relevant posts
-     * @param object $targetforum The forum the discussion copying to
-     * @param int $groupid If 'All participants' has been selected from the Separate groups dropdown box, 
-     * use default value 0 will assign to the $groupid
+     * Copy the discussion and its  posts to another forum and/or group.
+     * @param forum $targetforum Forum to copy the discussion to
+     * @param int $groupid If 'All participants' has been selected from the
+     *   Separate groups dropdown box, use default value 0
      */
     function copy($targetforum, $groupid) {
         global $SESSION, $CFG;
-        $olddiscussionid = $SESSION->forumng_copyfrom;
-        $olddiscussion = forum_discussion::get_from_id($olddiscussionid);
-        $oldforum = $olddiscussion->get_forum();
+        $oldforum = $this->get_forum();
         $oldforumid = $oldforum->get_id();
         $oldcourseid = $oldforum->get_course_id();
         $targetforumid = $targetforum->get_id();
@@ -1006,7 +1004,7 @@ WHERE
         forum_utils::start_transaction();
         $newdiscussionid =  forum_utils::insert_record('forumng_discussions', $discussionobj);
         $rs = forum_utils::get_recordset(
-            'forumng_posts', 'discussionid', $olddiscussionid);
+            'forumng_posts', 'discussionid', $this->get_id());
         //$newids and $parentused are temp arrays used to 
         //$newids is a array of new postids using the indices of its old postids
         //update the parentid of the post records copied over
@@ -1044,11 +1042,9 @@ WHERE
                 "parentpostid=" . $newparentpostid .
                 " WHERE parentpostid=" . $key . "AND discussionid = " . $newdiscussionid);
         }
-        //Copy attachment
-        //$targetdiscussion = forum_discussion::get_from_id($newdiscussionid);
-        //$attachments = forum_post::get_from_id($key)->get_attachment_names();
+        //Copy attachments
         foreach ($hasattachments as $key=>$value) {
-            $oldfolder = forum_post::get_any_attachment_folder ($oldcourseid, $oldforumid, $olddiscussionid, $key);
+            $oldfolder = forum_post::get_any_attachment_folder ($oldcourseid, $oldforumid, $this->get_id(), $key);
             $newfolder = forum_post::get_any_attachment_folder ($targetcourseid, $targetforumid, $newdiscussionid, $value);
             $handle = forum_utils::opendir($oldfolder);
             $created = false;
@@ -1072,6 +1068,7 @@ WHERE
         }
         forum_utils::finish_transaction();
     }
+
     /**
      * Clones this discussion but changes the post IDs, for internal use
      * only (in split).
@@ -1190,9 +1187,6 @@ WHERE
             if (!remove_dir($folder)) {
                 throw new forum_exception("Error deleting attachment folder: $folder");
             }
-            forum_utils::folder_debug('remove_dir',
-                'forum_discussion::permanently_delete', 'd=' . $this->get_id(), 
-                $folder);
         }
         //Log delete
         if($log) {
@@ -1306,10 +1300,6 @@ WHERE
                     $oldname = $oldfolder . '/' . $name;
                     $newname = $newfolder . '/' . $name;
                     forum_utils::rename($oldname, $newname);
-                    forum_utils::folder_debug('rename',
-                        'forum_discussion::merge_into', 'd=' . $this->get_id() .
-                        ', target=' . $targetdiscussion->get_id(), 
-                        $oldname, $newname);
                 }
             }
             closedir($handle);
@@ -1339,12 +1329,16 @@ WHERE
      */
     public function get_readers($groupid=forum::ALL_GROUPS) {
         global $CFG;
+        $context = $this->get_forum()->get_context();
+        // Create comma separated list of context ids
+        $context_ids = str_replace('/',',', substr($context->path, 1));
         $id = $this->discussionfields->id;
         $groupjoin = $groupquery = '';
+        $groupwhere = '';
         if ($groupid) {
-            $groupjoin = "INNER JOIN {$CFG->prefix}groups_members gm ON gm.userid=fr.userid
+            $groupjoin = " INNER JOIN {$CFG->prefix}groups_members gm ON gm.userid=fr.userid
     INNER JOIN {$CFG->prefix}groups g ON gm.groupid = g.id";
-            $groupwhere = "AND g.id=$groupid";
+            $groupwhere = " AND g.id=$groupid";
         }
 
         $result = get_records_sql("
@@ -1360,6 +1354,9 @@ FROM
 WHERE
     fr.discussionid = $id
     $groupquery
+    AND fr.userid in(SELECT userid FROM {$CFG->prefix}role_assignments ra  
+        WHERE ra.contextid in($context_ids)AND ra.roleid in ($CFG->forumng_monitorroles))
+            $groupwhere
 ORDER BY
     fr.time DESC");
         $result = $result ? $result : array();
@@ -1527,7 +1524,7 @@ ORDER BY
     }
 
     /**
-     * @return int NOT_SUBSCRIBED:0; PARTIALLY_SUBSCRIBED:1; FULLY_SUBSCRIBED:2
+     * @return int NOT_SUBSCRIBED:0; PARTIALLY_SUBSCRIBED:1; FULLY_SUBSCRIBED:2; THIS_GROUP_SUBSCRIBED:5; THIS_GROUP_NOT_SUBSCRIBED:6;
      * @param int $userid User who's not read the discussion (0=current)
      */
     function is_subscribed($userid=0) {
@@ -1537,11 +1534,29 @@ ORDER BY
                 //subscribed to the entire forum
                 return forum::FULLY_SUBSCRIBED;
             } else if (count($subscription_info->discussionids) == 0) {
-                //not subscribed at all
-                return forum::NOT_SUBSCRIBED;
+                if (count($subscription_info->groupids) == 0) {
+                    //not subscribed at all
+                    return forum::NOT_SUBSCRIBED;
+                } else {
+                    if ($this->get_forum()->get_group_mode()) {
+                        //if the group mode turned on, we need to check if subscribed to the group 
+                        //that the current discussion belongs to
+                        foreach ($subscription_info->groupids as $id) {
+                            if ($this->get_group_id() == $id) {
+                                return forum::THIS_GROUP_SUBSCRIBED;
+                            }
+                        }
+                        return forum::THIS_GROUP_NOT_SUBSCRIBED;
+                    } else {
+                        return forum::NOT_SUBSCRIBED;
+                    }
+                }
+
             } else {
+                //discussionids array is not empty
+                //No needs to check the groupids here assuming all the subscripiton data in the database is not messed up
                 $discussionid = $this->get_id();
-                foreach ($subscription_info->discussionids as $id) {
+                foreach ($subscription_info->discussionids as $id => $groupid) {
                     if ($discussionid == $id) {
                         return forum::PARTIALLY_SUBSCRIBED;
                     }
@@ -1607,6 +1622,31 @@ ORDER BY
      */
     public function pretend_time_read($time=0) {
         $this->pretendtimeread = $time;
+    }
+
+    /**
+     * Use to obtain link parameters when linking to any page that has anything
+     * to do with discussions.
+     */
+    public function get_link_params($type) {
+        if ($type == forum::PARAM_FORM) {
+            $d = '<input type="hidden" name="d" value="' .
+                    $this->get_id() . '" />';
+        } else {
+            $d = 'd=' . $this->discussionfields->id;
+        }
+        return $d . $this->get_forum()->get_clone_param($type);
+    }
+
+    /**
+     * Use to obtain link parameters when linking to any page that has anything
+     * to do with discussions.
+     * @return array Array of parameters e.g. ('d'=>317)
+     */
+    public function get_link_params_array() {
+        $result = array('d' => $this->discussionfields->id);
+        $this->get_forum()->add_clone_param_array($result);
+        return $result;
     }
 
     /**
@@ -1740,25 +1780,23 @@ WHERE
      * user cannot view it.
      * This function should be a complete access check. It calls the forum's
      * equivalent method.
-     * Note that this function only works for the current user when used in
-     * interactive mode (ordinary web page view). It cannot be called in cron,
-     * web services, etc.
+     * @param int $userid ID of user to check for
      */
-    function require_view() {
+    function require_view($userid=0) {
         // If this is a 'all groups' post, then we only require access to the
         // 'no groups' forum view (any group can see it)
         $groupid = is_null($this->discussionfields->groupid) ?
             forum::NO_GROUPS : $this->discussionfields->groupid;
 
         // Check forum view permission and group access
-        $this->forum->require_view($groupid, 0, true);
+        $this->forum->require_view($groupid, $userid, true);
 
         // Check viewdiscussion
         require_capability('mod/forumng:viewdiscussion',
-            $this->forum->get_context());
+            $this->forum->get_context(), $userid);
 
         // Let forum type check permission too
-        if (!$this->forum->get_type()->can_view_discussion($this)) {
+        if (!$this->forum->get_type()->can_view_discussion($this, $userid)) {
             print_error('error_cannotviewdiscussion', 'forumng');
         }
 
@@ -1771,7 +1809,7 @@ WHERE
         // The post is outside the permitted time limit, so you need
         // special permission to view it
         require_capability('mod/forumng:viewallposts',
-            $this->forum->get_context());
+            $this->forum->get_context(), $userid);
     }
 
     /**
@@ -1838,8 +1876,9 @@ WHERE
      * @return bool True if this user is allowed to subscribe
      */
     public function can_subscribe($userid=0) {
-        //if forum::FULLY_SUBSCRIBED or forum::PARTIALLY_SUBSCRIBED return false
-        if ($this->is_subscribed($userid)) {
+        //if PARTIALLY_SUBSCRIBED:1 or FULLY_SUBSCRIBED:2 or THIS_GROUP_SUBSCRIBED:5 return false
+        if ($this->is_subscribed($userid) != forum::NOT_SUBSCRIBED && 
+            $this->is_subscribed($userid) != forum::THIS_GROUP_NOT_SUBSCRIBED) {
             return false;
         }
         if (!$this->get_forum()->can_change_subscription($userid)) {
@@ -1854,15 +1893,13 @@ WHERE
      */
     public function can_unsubscribe($userid=0) {
         $issubscribed = $this->is_subscribed($userid);
-        if ($issubscribed == forum::FULLY_SUBSCRIBED ||
-            $issubscribed == forum::NOT_SUBSCRIBED ) {
-            return false;
-        }
-        if (!$this->get_forum()->can_change_subscription($userid)) {
-            return false;
-        }
-        return true;
+        if ($issubscribed == forum::PARTIALLY_SUBSCRIBED && 
+            $this->get_forum()->can_change_subscription($userid)) {
+                return true;
+            }
+        return false;
     }
+
     // UI
     /////
 
@@ -1939,22 +1976,33 @@ WHERE
      * @param string $pagename Name of page
      */
     public function print_subpage_header($pagename) {
-        global $PAGEWILLCALLSKIPMAINDESTINATION;
-        $PAGEWILLCALLSKIPMAINDESTINATION = true;
-
         $navigation = array();
         $navigation[] = array(
             'name'=>shorten_text(htmlspecialchars(
                 $this->get_subject())),
             'link'=>$this->get_url(), 'type'=>'forumng');
-        $navigation[] = array(
-            'name'=>$pagename, 'type'=>'forumng');
+        $this->forum->print_subpage_header($pagename, $navigation);
+    }
 
-        print_header_simple(format_string($this->forum->get_name()) . ': ' . $pagename,
-            "", build_navigation($navigation, $this->forum->get_course_module()), "", "", true,
-            '', navmenu($this->forum->get_course(), $this->forum->get_course_module()));
+    /**
+     * Displays row of buttons that go along the bottom of a discussion.
+     * @return string HTML code for all feature buttons in this discussion
+     */
+    public function display_discussion_features() {
+        // Get forum type
+        $type = $this->get_forum()->get_type();
 
-        print skip_main_destination();
+        // Print discussion features
+        $features = '';
+        foreach(discussion_feature::get_all() as $feature) {
+            if ($feature->should_display($this) &&
+                $type->allow_discussion_feature($this, $feature)) {
+                $features .= $feature->display($this);
+            }
+        }
+        if ($features) {
+            print '<div id="forumng-features">' . $features . '</div>';
+        }
     }
 
     /**
@@ -1974,7 +2022,7 @@ WHERE
         // Print link back to discussion list
         print '<div id="forumng-arrowback">' .
             link_arrow_left($this->get_forum()->get_name(), 
-                'view.php?id=' . $this->get_forum()->get_course_module_id()) .
+                'view.php?' . $this->get_forum()->get_link_params(forum::PARAM_HTML)) .
                  '</div>';
     }
 
@@ -1983,38 +2031,69 @@ WHERE
      * Subscribe a user to this discussion. (Assuming it permits manual subscribe/
      * unsubscribe.)
      * @param $userid User ID (default current)
+     * @param $log True to log this
      */
-    public function subscribe($userid=0) {
+    public function subscribe($userid=0, $log=true) {
         global $CFG;
         $userid = forum_utils::get_real_userid($userid);
+        // For shared forums, we subscribe to a specific clone
+        if ($this->get_forum()->is_shared()) {
+            $clonecmid = $this->get_forum()->get_course_module_id();
+            $clonevalue = '=' . $clonecmid;
+        } else {
+            $clonecmid = null;
+            $clonevalue = 'IS NULL';
+        }
         forum_utils::start_transaction();
         //Clear any previous subscriptions to this discussion from the same user if any 
         forum_utils::execute_sql(
             "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
-            "WHERE userid=" . $userid . " AND discussionid=" . $this->discussionfields->id);
+            "WHERE userid=" . $userid .
+            " AND discussionid=" . $this->discussionfields->id .
+            " AND clonecmid " . $clonevalue);
 
         $subrecord = new StdClass;
         $subrecord->userid = $userid;
         $subrecord->forumid = $this->get_forum()->get_id();
         $subrecord->subscribed = 1;
         $subrecord->discussionid = $this->discussionfields->id;
+        $subrecord->clonecmid = $clonecmid;
         forum_utils::insert_record('forumng_subscriptions', $subrecord);
         forum_utils::finish_transaction();
+
+        if ($log) {
+            $this->log('subscribe', $userid . ' discussion ' . $this->get_id());
+        }
     }
 
     /**
      * Unsubscribe a user from this discussion.
      * @param $userid User ID (default current)
+     * @param $log True to log this
      */
-    public function unsubscribe($userid=0) {
+    public function unsubscribe($userid=0, $log=true) {
         global $CFG;
         $userid = forum_utils::get_real_userid($userid);
+        // For shared forums, we subscribe to a specific clone
+        if ($this->get_forum()->is_shared()) {
+            $clonecmid = $this->get_forum()->get_course_module_id();
+            $clonevalue = '=' . $clonecmid;
+        } else {
+            $clonecmid = null;
+            $clonevalue = 'IS NULL';
+        }
         forum_utils::start_transaction();
         //Clear any previous subscriptions to this discussion from the same user if any 
         forum_utils::execute_sql(
             "DELETE FROM {$CFG->prefix}forumng_subscriptions " .
-            "WHERE userid=" . $userid . " AND discussionid=" . $this->discussionfields->id);
+            "WHERE userid=" . $userid .
+            " AND discussionid=" . $this->discussionfields->id .
+            ' AND clonecmid ' . $clonevalue);
         forum_utils::finish_transaction();
+
+        if ($log) {
+            $this->log('unsubscribe', $userid . ' discussion ' . $this->get_id());
+        }
     }
     
     /**
@@ -2058,7 +2137,8 @@ WHERE
         $userid = forum_utils::get_real_userid($userid);
         $groupid = $this->get_group_id();
 
-        return $CFG->wwwroot . '/mod/forumng/feed.php?d=' . $this->get_id() .
+        return $CFG->wwwroot . '/mod/forumng/feed.php?' .
+            $this->get_link_params(forum::PARAM_PLAIN) .
             '&user=' . $userid .
             '&key=' . $this->get_forum()->get_feed_key($groupid, $userid) .
             '&format=' . ($feedformat == forum::FEEDFORMAT_RSS ? 'rss' : 'atom');

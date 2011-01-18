@@ -94,10 +94,7 @@ abstract class post_selector {
      */
     static function go($selector) {
         $d = required_param('d', PARAM_INT);
-        if (optional_param('cancel', '', PARAM_RAW)) {
-            // CALL TYPE 6
-            redirect('../../discuss.php?d=' . $d);
-        }
+        $cloneid = optional_param('clone', 0, PARAM_INT);
 
         $fromselect = optional_param('fromselect', 0, PARAM_INT);
         $all = optional_param('all', '', PARAM_RAW);
@@ -105,7 +102,11 @@ abstract class post_selector {
 
         try {
             // Get basic objects
-            $discussion = forum_discussion::get_from_id($d);
+            $discussion = forum_discussion::get_from_id($d, $cloneid);
+            if (optional_param('cancel', '', PARAM_RAW)) {
+                // CALL TYPE 6
+                redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
+            }
             $forum = $discussion->get_forum();
             $cm = $forum->get_course_module();
             $course = $forum->get_course();
@@ -130,7 +131,9 @@ abstract class post_selector {
 ?>
 <h2><?php print $buttonname; ?></h2>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get"><div>
-<input type="hidden" name="d" value="<?php print $d; ?>" />
+<?php
+print $discussion->get_link_params(forum::PARAM_FORM)
+?>
 <p><?php print_string('selectorall', 'forumng'); ?></p>
 <div class="forumng-buttons">
 <input type="submit" name="all" value="<?php print_string('discussion', 'forumng'); ?>" />
@@ -146,7 +149,9 @@ abstract class post_selector {
   <p><?php print_string('selectintro', 'forumng'); ?></p>
 </div>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><div>
-<input type="hidden" name="d" value="<?php print $d; ?>" />
+<?php
+print $discussion->get_link_params(forum::PARAM_FORM)
+?>
 <input type="hidden" name="fromselect" value="1" />
 <?php
                     print $forum->get_type()->display_discussion($discussion, array(
@@ -190,7 +195,7 @@ abstract class post_selector {
 
                 // Check cancel
                 if ($mform->is_cancelled()) {
-                    redirect('../../discuss.php?d=' . $d);
+                    redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
                 }
 
                 if ($fromform = $mform->get_data()) {

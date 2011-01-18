@@ -9,9 +9,10 @@ if (class_exists('ouflags')) {
 try {
     // Discussion ID (to do a bunch at once)
     $discussionid = optional_param('d', 0, PARAM_INT);
+    $cloneid = optional_param('clone', 0, PARAM_INT);
     if ($discussionid) {
         // Get discussion and check basic security
-        $discussion = forum_discussion::get_from_id($discussionid);
+        $discussion = forum_discussion::get_from_id($discussionid, $cloneid);
         $discussion->require_view();
 
         // Get list of posts to change
@@ -34,7 +35,7 @@ try {
             $post->rate($rating);
         }
         forum_utils::finish_transaction();
-        redirect('discuss.php?d=' . $discussionid);
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     }
 
     // Post ID (to do a single post)
@@ -43,7 +44,7 @@ try {
     $rating = required_param('rating', PARAM_INT);
 
     // Get post and check basic security
-    $post = forum_post::get_from_id($postid);
+    $post = forum_post::get_from_id($postid, $cloneid);
     $post->require_view();
     if (!$post->can_rate()) {
         print_error('rate_nopermission', 'forumng', '', $postid);
@@ -51,10 +52,11 @@ try {
 
     $post->rate($rating);
     if ($ajax) {
-        forum_post::print_for_ajax_and_exit($postid);
+        forum_post::print_for_ajax_and_exit($postid, $cloneid);
     }
-    redirect('discuss.php?d=' . $post->get_discussion()->get_id() .
-        '#'. $postid);
+    redirect('discuss.php?' .
+            $post->get_discussion()->get_link_params(forum::PARAM_PLAIN) .
+            '#'. $postid);
 } catch(forum_exception $e) {
     forum_utils::handle_exception($e);
 }

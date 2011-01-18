@@ -4,10 +4,11 @@ require_once('forum.php');
 
 // Post ID
 $postid = required_param('p', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try {
     // Get post
-    $post = forum_post::get_from_id($postid, true);
+    $post = forum_post::get_from_id($postid, $cloneid, true);
 
     // Get convenience variables
     $discussion = $post->get_discussion();
@@ -23,16 +24,16 @@ try {
 
     require_once('splitpost_form.php');
     $mform = new mod_forumng_splitpost_form('splitpost.php',
-        array('p'=>$postid));
+        array('p'=>$postid, 'clone'=>$cloneid));
 
     if ($mform->is_cancelled()) {
-        redirect('discuss.php?d=' . $discussion->get_id());
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     } else if ($fromform = $mform->get_data(false)) {
         // Split post
         $newdiscussionid = $post->split($fromform->subject);
 
         // Redirect back
-        redirect('discuss.php?d=' . $newdiscussionid);
+        redirect('discuss.php?d=' . $newdiscussionid . $forum->get_clone_param(forum::PARAM_PLAIN));
     }
 
     // Confirm page. Work out navigation for header

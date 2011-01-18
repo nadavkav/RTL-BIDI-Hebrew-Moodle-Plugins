@@ -2,18 +2,27 @@
 require_once('../../config.php');
 require_once('forum.php');
 
+if (class_exists('ouflags')) {
+    require_once('../../local/mobile/ou_lib.php');
+    
+    global $OUMOBILESUPPORT;
+    $OUMOBILESUPPORT = true;
+    ou_set_is_mobile(ou_get_is_mobile_from_cookies());
+}
+
 // Get AJAX parameter which might affect error handling
 $ajax = optional_param('ajax', 0, PARAM_INT);
 
 // Post ID
 $postid = required_param('p', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 // Delete or undelete
 $delete = optional_param('delete', 1, PARAM_INT);
 
 try {
     // Get post
-    $post = forum_post::get_from_id($postid);
+    $post = forum_post::get_from_id($postid, $cloneid);
 
     // Get convenience variables
     $discussion = $post->get_discussion();
@@ -49,12 +58,16 @@ try {
 
         // Redirect back
         if ($ajax) {
-            forum_post::print_for_ajax_and_exit($postid);
+            forum_post::print_for_ajax_and_exit($postid, $cloneid);
         }
-        redirect('discuss.php?d=' . $discussion->get_id() . '#p' .
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN) . '#p' .
             $post->get_id());
     }
 
+    if(class_exists('ouflags') && ou_get_is_mobile()){
+        ou_mobile_configure_theme();
+    }
+    
     // Confirm page. Work out navigation for header
     $pagename = get_string($delete ? 'deletepost' : 'undeletepost', 'forumng',
         $post->get_effective_subject(true));
@@ -70,8 +83,8 @@ try {
         $confirmstring = get_string('confirmundelete', 'forumng');
     }
     notice_yesno($confirmstring, 'deletepost.php', 'discuss.php',
-        array('p'=>$post->get_id(), 'delete'=>$delete),
-        array('d'=>$discussion->get_id()),
+        array('p'=>$post->get_id(), 'delete'=>$delete, 'clone'=>$cloneid),
+        array('d'=>$discussion->get_id(), 'clone'=>$cloneid),
         'post', 'get');
 
     // Print post

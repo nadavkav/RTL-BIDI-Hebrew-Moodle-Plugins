@@ -6,16 +6,17 @@ require_once('forum.php');
 // Script to add attachments to a form
 $cmid = required_param('id', PARAM_INT);
 $postid = optional_param('p', 0, PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try
 {
     // Security check
     if ($postid) {
-        $post = forum_post::get_from_id($postid);
+        $post = forum_post::get_from_id($postid, $cloneid);
         $post->require_view();
         $forum = $post->get_forum();
     } else {
-        $forum = forum::get_from_cmid($cmid);
+        $forum = forum::get_from_cmid($cmid, $cloneid);
         $forum->require_view(forum::NO_GROUPS);
     }
 
@@ -52,7 +53,9 @@ window.opener.currentform.attachmentplayspace.value='<?php print $playspaceid; ?
 ?><form action="addattachment.php" method="post" accept-charset="utf-8"
     enctype="multipart/form-data"><div class="forumng-addattachment-file"><?php 
 ?><h1><?php print_string('choosefile', 'forumng'); ?></h1>
-<input type="hidden" name="id" value="<?php print $cmid; ?>" />
+<?php
+print $forum->get_link_params(forum::PARAM_FORM);
+?>
 <input type="hidden" name="attachmentplayspace" value="<?php print $playspaceid; ?>" />
 <?php if ($postid) { ?>
 <input type="hidden" name="p" value="<?php print $postid; ?>" />

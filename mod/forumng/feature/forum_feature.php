@@ -1,4 +1,6 @@
 <?php
+require_once(dirname(__FILE__).'/discussion_feature.php');
+require_once(dirname(__FILE__).'/discussion_list_feature.php');
 /**
  * Base class for 'forum features' which are facilities which appear at the
  * bottom of (usually) a discussion page.

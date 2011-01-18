@@ -10,11 +10,12 @@ if (class_exists('ouflags')) {
 
 // Post ID
 $postid = required_param('p', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 $raw = optional_param('raw', 0, PARAM_INT);
 
 try {
     // Get post
-    $post = forum_post::get_from_id($postid, true, true);
+    $post = forum_post::get_from_id($postid, $cloneid, true, true);
 
     // Do all access security checks
     $post->require_view();

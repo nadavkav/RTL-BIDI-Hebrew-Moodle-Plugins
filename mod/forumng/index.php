@@ -26,7 +26,6 @@ $strforum = get_string('forum', 'forumng');
 $strdescription = get_string('description');
 $strsubscribed = get_string('subscribed', 'forumng');
 $strdiscussionsunread = get_string('discussionsunread', 'forumng');
-$strmarkallread = get_string('markallread', 'forumng');
 $strsubscribe = get_string('subscribeshort', 'forumng');
 $strunsubscribe = get_string('unsubscribeshort', 'forumng');
 $stryes = get_string('yes');
@@ -79,7 +78,8 @@ try {
     }
 
     // Construct forums array
-    $forums = forum::get_course_forums($course, 0, forum::UNREAD_DISCUSSIONS);
+    $forums = forum::get_course_forums($course, 0, forum::UNREAD_DISCUSSIONS,
+        array(), true);
 
     // Display all forums
     $currentsection = 0;
@@ -140,11 +140,12 @@ try {
         $row[] = "$discussions ($unread)";
 
         $subscription_info = $forum->get_subscription_info();
-        $subscribed = $subscription_info->wholeforum;
-        if ($subscribed) {
+        $subscribed = $subscription_info->wholeforum || count($subscription_info->discussionids) > 0 || 
+            count($subscription_info->groupids) > 0;
+        if ($subscription_info->wholeforum) {
             //subscribed to the entire forum
             $strtemp = $stryes;
-        } else if (count($subscription_info->discussionids) == 0) {
+        } else if (count($subscription_info->discussionids) == 0 && count($subscription_info->groupids) == 0) {
             $strtemp = $strno;
         } else {
             //treat partial subscribe the same as subscribe on the index page but display 'Partial' instead of 'Yes'
@@ -168,7 +169,7 @@ try {
                 }
                 $subscribetext .= "&nbsp;" .
 "<form method='post' action='subscribe.php'><div>" .
-"<input type='hidden' name='id' value='{$cm->id}' />" .
+$forum->get_link_params(forum::PARAM_FORM) .
 "<input type='hidden' name='back' value='index' />" . $submitbutton . "</div></form>";
             }
             $subscribetext .= '</div>';

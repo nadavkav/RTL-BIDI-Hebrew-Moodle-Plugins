@@ -36,6 +36,8 @@ function forumng_restore_mods($mod, $restore) {
             }
             if(isset($xml['INTRO'][0]['#'])) {
                 $forumng->intro = backup_todb($xml['INTRO'][0]['#']);
+            } else {
+                $forumng->intro = null;
             }
             $forumng->ratingscale = $xml['RATINGSCALE'][0]['#'];
             $forumng->ratingfrom = $xml['RATINGFROM'][0]['#'];
@@ -66,6 +68,25 @@ function forumng_restore_mods($mod, $restore) {
             if (isset($xml['REMOVETO'][0]['#'])) {
                 $forumng->removeto = backup_todb($xml['REMOVETO'][0]['#']);
             }
+            if (isset($xml['SHARED'][0]['#'])) {
+                $forumng->shared = $xml['SHARED'][0]['#'];
+            }
+            // To protect the forum intro field from molestation if some idiot
+            // sets it to a weird value...
+            if (preg_match('~%%CMIDNUMBER:[^%]+%%$~', $forumng->intro)) {
+                $forumng->intro .= '%%REMOVETHIS%%';
+            }
+            if (isset($xml['ORIGINALCMIDNUMBER'][0]['#'])) {
+                if ($forumng->intro === null) {
+                    $forumng->intro = '';
+                }
+                // This is a bit of a hack, but we need to wait until everything
+                // is restored, and it is a text value; so temporarily, add it
+                // to the end of the intro field.
+                $forumng->intro .= '%%CMIDNUMBER:' .
+                    backup_todb($xml['ORIGINALCMIDNUMBER'][0]['#']) . '%%';
+            }
+
             // Insert main record
             if (!($forumng->id = insert_record('forumng', $forumng))) {
                 throw new forum_exception('Error creating forumng instance');
@@ -170,6 +191,7 @@ function forumng_decode_content_links ($content,$restore) {
     }
 
     //Link to view by moduleid
+    // TODO Argh, needs fixing
     $searchstring='/\$@(FORUMNGVIEW)\*([0-9]+)@\$/';
     //We look for it
     preg_match_all($searchstring, $result, $foundset);
@@ -198,6 +220,7 @@ function forumng_decode_content_links ($content,$restore) {
     }
 
     //Link to view discussion
+    // TODO This needs to be fixed to take into account the clone feature somehow
     $searchstring='/\$@(FORUMNGDISCUSS)\*([0-9]+)@\$/';
     //We look for it
     preg_match_all($searchstring, $result, $foundset);
@@ -240,10 +263,38 @@ function forumng_decode_content_links_caller($restore) {
 
         // 1. Intros
         if ($intros = get_records_select('forumng', 'course=' .
-            $restore->course_id . ' AND intro IS NOT NULL', '', 'id,intro')) {
+                $restore->course_id . ' AND intro IS NOT NULL', '', 'id, intro, name')) {
             foreach ($intros as $intro) {
+                $newintro = $intro->intro;
+                // Special behaviour hidden in intro
+                $matches = array();
+                if (preg_match('~%%CMIDNUMBER:([^%]+)%%$~', $newintro, $matches)) {
+                    $newintro = substr($newintro, 0, -(strlen($matches[0])));
+                    $idnumber = $matches[1];
+                    $cm = forum::get_shared_cm_from_idnumber($idnumber);
+                    if ($cm) {
+                        set_field('forumng', 'originalcmid', $cm->id, 'id',
+                            $intro->id);
+                    } else {
+                        // The original forum cannot be found, so restore
+                        // this as not shared
+                        if (!defined('RESTORE_SILENTLY')) {
+                            $a = (object)array(
+                                'name' => s($intro->name),
+                                'idnumber' => s($idnumber)
+                            );
+                            print '<br />' . get_string(
+                                    'error_nosharedforum', 'forumng', $a) . 
+                                    '<br />';
+                        }
+                    }
+                }
+                if (preg_match('~%%REMOVETHIS%%$~', $newintro)) {
+                    $newintro = substr($newintro, 0, -14); 
+                }
+
                 $newintro = restore_decode_content_links_worker(
-                    $intro->intro, $restore);
+                    $newintro, $restore);
                 if ($newintro != $intro->intro) {
                     if (!set_field('forumng', 'intro', addslashes($newintro),
                         'id', $intro->id)) {
@@ -574,6 +625,19 @@ function forumng_restore_subscription($restore, $xml, $forumng) {
         $subscription->subscribed = 1;
     }
 
+    if (isset($xml['GROUPID'])) {
+        $newid = backup_getid($restore->backup_unique_code, 'groups',
+            $xml['GROUPID'][0]['#']);
+        if ($newid && $newid->new_id) {
+            $subscription->groupid = $newid->new_id;
+        } else {
+            if (!defined('RESTORE_SILENTLY')) {
+                echo "Groupid  doesn't exist<br />";
+            }
+            return; 
+        }
+    }
+
     if (isset($xml['DISCUSSIONID'])) {
         $newid = backup_getid($restore->backup_unique_code, 'forumng_discussions',
             $xml['DISCUSSIONID'][0]['#']);
@@ -582,11 +646,11 @@ function forumng_restore_subscription($restore, $xml, $forumng) {
             $subscription->discussionid = $newid->new_id;
         } else {
             if (!defined('RESTORE_SILENTLY')) {
-                echo "Discussionid doesn't exist";
-        }
+                echo "Discussionid doesn't exist<br />";
+            }
             return; 
         }
-    } 
+    }
 
     if (!insert_record('forumng_subscriptions', $subscription)) {
         throw new forum_exception('Failed to insert subscription data');

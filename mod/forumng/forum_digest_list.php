@@ -24,12 +24,17 @@ class forum_digest_list extends forum_mail_list {
         return forum::MAILSTATE_DIGESTED;
     }
 
+    protected function get_safety_net($time) {
+        // The digest safety net is 24 hours earlier because digest posts may
+        // be delayed by 24 hours.
+        return parent::get_safety_net($time) - 24 * 3600;
+    }
+    
     protected function get_query_chunk($time) {
         global $CFG;
 
-        // In case cron has not run for a while,
-        $safetynet = $time -
-            (forum_mail_list::DO_NOT_MAIL_AFTER_HOURS+24) * 3600;
+        // In case cron has not run for a while
+        $safetynet = $this->get_safety_net($time);
 
         global $CFG;
         return "
@@ -46,6 +51,10 @@ FROM
     INNER JOIN {$CFG->prefix}course_modules cm ON f.id = cm.instance
     INNER JOIN {$CFG->prefix}context x ON x.instanceid = cm.id
     INNER JOIN {$CFG->prefix}course c ON c.id = f.course
+    INNER JOIN {$CFG->prefix}forumng clonef 
+        ON (clonef.originalcmid = cm.id OR (f.shared=1 AND clonef.id = f.id))
+    INNER JOIN {$CFG->prefix}course_modules clonecm ON clonef.id = clonecm.instance
+    INNER JOIN {$CFG->prefix}modules m ON m.id = cm.module AND m.id = clonecm.module
 WHERE
     -- Post must be waiting for digest
     fp.mailstate = " . forum::MAILSTATE_MAILED . "
@@ -60,7 +69,7 @@ WHERE
     AND fp.oldversion = 0
 
     -- Course-module and context limitations
-    AND cm.module = (SELECT id FROM {$CFG->prefix}modules WHERE name='forumng')
+    AND m.name='forumng'
     AND x.contextlevel = 70";
     }
 }

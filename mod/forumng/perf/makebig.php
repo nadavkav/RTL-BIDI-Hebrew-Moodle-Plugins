@@ -57,7 +57,7 @@ function make_post($discussion, &$allposts, &$userids, $ratingpercent) {
         my_random_percentage(25) ? 'Reply '.$index : null,
         get_post_text(),FORMAT_HTML,
         array(), false, $userids[mt_rand(0,count($userids)-1)], false);
-    $newpost = forum_post::get_from_id($newpostid);
+    $newpost = forum_post::get_from_id($newpostid, forum::CLONE_DIRECT);
     $allposts[] = $newpost;
 
     // Add ratings
@@ -77,7 +77,7 @@ function make_discussion($forum, $posts, $readusers, &$userids, $ratingpercent) 
     list($discussionid, $postid) = $forum->create_discussion(null,
         'Discussion '.$index, get_post_text(), FORMAT_HTML, array(), false,
         0, 0, false, false, $userids[mt_rand(0,count($userids)-1)], false);
-    $discussion=forum_discussion::get_from_id($discussionid);
+    $discussion=forum_discussion::get_from_id($discussionid, forum::CLONE_DIRECT);
 
     // Make posts
     $count=my_random($posts)-1;
@@ -150,7 +150,7 @@ function make_forumng($courseid, $starttime, $discussions, $posts,
     shuffle($userids);
 
     // OK, forum is created. Let's make discussions
-    $forum=forum::get_from_id($forumng->id);
+    $forum=forum::get_from_id($forumng->id, forum::CLONE_DIRECT);
     $count=my_random($discussions);
     for ($i=0;$i<$count;$i++) {
         make_discussion($forum, $posts,

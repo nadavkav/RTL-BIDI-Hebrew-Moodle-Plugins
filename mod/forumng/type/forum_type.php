@@ -155,7 +155,7 @@ abstract class forum_type {
             $data = new stdClass;
             if($sort == $possiblesort) {
                 $data->before = '<a ' . 'id="sortlink_' . forum::get_sort_letter($possiblesort) . 
-                    '" href="' . $baseurl . '&amp;sort=' .
+                    '" href="' . s($baseurl) . '&amp;sort=' .
                     forum::get_sort_letter($possiblesort) . $reversechar . 
                     '&amp;sortlink=' . forum::get_sort_letter($possiblesort) .
                     '" class="forumng-sortlink" '.
@@ -164,7 +164,7 @@ abstract class forum_type {
                 $data->after = '</a>' . $this->get_sort_arrow($sort, $sortreverse);
             } else {
                 $data->before = '<a ' . 'id="sortlink_' . forum::get_sort_letter($possiblesort) .
-                    '" href="' . $baseurl . '&amp;sort=' .
+                    '" href="' . s($baseurl) . '&amp;sort=' .
                     forum::get_sort_letter($possiblesort) . '&amp;sortlink=' .
                     forum::get_sort_letter($possiblesort) . '" class="forumng-sortlink" '.
                     'title="'. forum::get_sort_title($possiblesort) . ' ' .
@@ -288,7 +288,7 @@ abstract class forum_type {
             }
         }
         $result .=
-            "<a href='discuss.php?d=" . $discussion->get_id() . "'>" .
+            "<a href='discuss.php?" . $discussion->get_link_params(forum::PARAM_HTML) . "'>" .
             format_string($discussion->get_subject(), true, $courseid) .
             "</a></td>";
 
@@ -328,11 +328,10 @@ abstract class forum_type {
             }
             if ($unreadposts) {
                 $result .=
-                '<a href="discuss.php?d=' . $discussion->get_id() . 
+                '<a href="discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML) . 
                 '#firstunread">' . $unreadposts . '</a>' .
-                '<form method="post" action="markread.php">&nbsp;&nbsp;&nbsp;<div>'.
-                '<input type="hidden" name="d" value="' .
-                    $discussion->get_id() . '" />' .
+                '<form method="post" action="markread.php"><div>&nbsp;&nbsp;&nbsp;'.
+                $discussion->get_link_params(forum::PARAM_FORM) .
                 '<input type="hidden" name="back" value="view" />' .
                 '<input type="image" title="' .
                     get_string('markdiscussionread', 'forumng') .
@@ -388,21 +387,7 @@ abstract class forum_type {
      * @return string HTML code for end of table
      */
     public function display_discussion_list_end($forum, $groupid) {
-        global $CFG;
-        if($forum->can_mark_read()) {
-            $markread = '</table>&nbsp;<form class = "markread" method="post" action="markread.php"><div>' .
-                '<input type="hidden" name="id" value="' .
-                    $forum->get_course_module_id() . '" />' .
-                '<input type="hidden" name="group" value="' .
-                    (int)$groupid . '" />' .
-                '<input type="hidden" name="back" value="view" />' .
-                '<input type="submit" value="' .
-                    get_string('markallread', 'forumng') .
-                '" /></div></form>';
-        } else {
-            $markread = '</table>';
-        }
-        return $markread;
+        return '</table>';
     }
 
     /**
@@ -528,8 +513,10 @@ abstract class forum_type {
         $result .= '<td class="cell c0">';
 
         // Get post URL
-        $link = '<a href="discuss.php?d=' . $post->get_discussion()->get_id() .
-            '#p' . $post->get_id() . '">';
+        $discussion = $post->get_discussion();
+        $link = '<a href="discuss.php?' .
+                $discussion->get_link_params(forum::PARAM_HTML) .
+                '#p' . $post->get_id() . '">';
 
         // Get post summary
         $summary = self::get_post_summary($post->get_subject(), 
@@ -552,9 +539,10 @@ abstract class forum_type {
             '" /></div></form></td>';
 
         // Discussion cell
-        $result .= '<td class="cell c1"><a href="discuss.php?d=' .
-            $post->get_discussion()->get_id() . '">' . 
-            format_string($post->get_discussion()->get_subject()) . '</a></td>';
+        $result .= '<td class="cell c1"><a href="discuss.php?' .
+                $discussion->get_link_params(forum::PARAM_HTML) .
+                $discussion->get_id() . '">' . 
+                format_string($discussion->get_subject()) . '</a></td>';
 
         // Date cell
         $result .= '<td class="cell c2 lastcol">' .
@@ -593,9 +581,8 @@ abstract class forum_type {
      */
     public function display_post_button($forum, $groupid) {
         return '<div id= "forumng-buttons"><form action="editpost.php" method="get" class="forumng-post-button"><div>' .
-            '<input type="hidden" name="id" value="' .
-                $forum->get_course_module_id() . '"/>' .
-            ($groupid != forum::NO_GROUPS
+                $forum->get_link_params(forum::PARAM_FORM) .
+                ($groupid != forum::NO_GROUPS
                 ? '<input type="hidden" name="group" value="' . (int)$groupid . '" />'
                 : '') .
             '<input type="submit" value="' .
@@ -618,6 +605,7 @@ abstract class forum_type {
                 '<input type="submit" name="cancel" value="' .
                 get_string('cancel') . '" />' .
                 '<input type="hidden" name="cmid" value="' . $cmid . '" />' . 
+                '<input type="hidden" name="clone" value="' . $SESSION->forumng_copyfromclone . '" />' . 
                 ($groupid != forum::NO_GROUPS
                 ? '<input type="hidden" name="group" value="' . (int)$groupid . '" />'
                 : '') . '</div></form>';
@@ -649,7 +637,7 @@ abstract class forum_type {
      * Display subscribe options.
      * @param forum $forum Forum
      * @param string $text Textual note
-     * @param int $subscribed 0, 1 partially subscribed, 2 full subscribed
+     * @param int $subscribed
      * @param bool $button True if subscribe/unsubscribe button should be shown
      * @param bool $viewlink True if 'view subscribers' link should be shown
      * @return string HTML code for this area
@@ -659,9 +647,14 @@ abstract class forum_type {
         $out = '<div class="forumng-subscribe-options">' .
             '<h3>' . get_string('subscription', 'forumng') . '</h3>' .
             '<p>' . $text . '</p>';
+        $cm = $forum->get_course_module();
         if ($button) {
             $outsubmit = '';
-            if ($subscribed == forum::FULLY_SUBSCRIBED) {
+            $currentgroupid = forum::get_activity_group($cm, true);
+            if ($currentgroupid == forum::NO_GROUPS) {
+                $currentgroupid = 0;
+            }
+            if ($subscribed == forum::FULLY_SUBSCRIBED || $subscribed == forum::FULLY_SUBSCRIBED_GROUPMODE) {
                 $outsubmit .= '<input type="submit" name="submitunsubscribe" value="' . get_string('unsubscribeshort','forumng') . '" />';
             } else if ($subscribed == forum::PARTIALLY_SUBSCRIBED) {
                 //print both subscribe button and unsubscribe button
@@ -669,21 +662,34 @@ abstract class forum_type {
                     get_string('subscribelong','forumng') . '" />' .
                     '<input type="submit" name="submitunsubscribe" value="' .
                     get_string('unsubscribelong','forumng') . '" />';
-            } else {
+            } else if ($subscribed == forum::NOT_SUBSCRIBED) {
                 //default unsubscribed, print subscribe button
                 $outsubmit .= '<input type="submit" name="submitsubscribe" value="' . get_string('subscribeshort','forumng') . '" />';
-            }
+            } else if ($subscribed == forum::THIS_GROUP_PARTIALLY_SUBSCRIBED) {
+                $outsubmit .= '<input type="submit" name="submitsubscribe_thisgroup" value="' .
+                    get_string('subscribegroup','forumng') . '" />' .
+                    '<input type="submit" name="submitunsubscribe_thisgroup" value="' .
+                    get_string('unsubscribegroup_partial','forumng') . '" />'.
+                    '<input type="hidden" name="g" value="' . $currentgroupid . '" />';
+            } else if ($subscribed == forum::THIS_GROUP_SUBSCRIBED) {
+                $outsubmit .= '<input type="submit" name="submitunsubscribe_thisgroup" value="' .
+                    get_string('unsubscribegroup','forumng') . '" />'.
+                    '<input type="hidden" name="g" value="' . $currentgroupid . '" />';
+            } else if ($subscribed == forum::THIS_GROUP_NOT_SUBSCRIBED) {
+                $outsubmit .= '<input type="submit" name="submitsubscribe_thisgroup" value="' .
+                    get_string('subscribegroup','forumng') . '" />'.
+                    '<input type="hidden" name="g" value="' . $currentgroupid . '" />';
+            } 
 
             $out .= '<form action="subscribe.php" method="post"><div>' .
-            '<input type="hidden" name="id" value="' .
-                $forum->get_course_module_id() . '"/>' .
-            '<input type="hidden" name="back" value="view" />' .
+                $forum->get_link_params(forum::PARAM_FORM) .
+                '<input type="hidden" name="back" value="view" />' .
                 $outsubmit . '</div></form>';
         }
         if ($viewlink) {
             $out .= ' <div class="forumng-subscribe-admin">' .
-                '<a href="subscribers.php?id=' .
-                $forum->get_course_module_id() . '">' .
+                '<a href="subscribers.php?' .
+                $forum->get_link_params(forum::PARAM_HTML) . '">' .
                 get_string('viewsubscribers', 'forumng') . '</a></div>';
         }
         $out .= '</div>';
@@ -711,8 +717,7 @@ abstract class forum_type {
             '<h3>' . get_string('subscription', 'forumng') . '</h3>' .
             '<p>' . $status .
             '</p>' . '<form action="subscribe.php" method="post"><div>' .
-            '<input type="hidden" name="d" value="' .
-            $discussion->get_id() . '"/>' .
+            $discussion->get_link_params(forum::PARAM_FORM) .
             '<input type="hidden" name="back" value="discuss" />' .
             '<input type="submit" name="' . $submit . '" value="' .
             $button . '" /></div></form></div>';
@@ -775,8 +780,13 @@ abstract class forum_type {
         // viewing it has the ability to view deleted posts.
         $deletedhide = $post->get_deleted()
             && !$options[forum_post::OPTION_VIEW_DELETED_INFO];
-        //Hide deleted messages if they have no replies
-        if ($deletedhide && !$post->has_children()) {
+        // Hide deleted messages if they have no replies
+        if ($deletedhide && !$email && !$post->has_children()) {
+            // note: !email check is to deal with posts that are deleted
+            // between when the mail list finds them, and when it sends out
+            // mail. It would be confusing to send out a blank email so let's
+            // not do that. Also, ->has_children() is not safe to call during
+            // email processing because it doesn't load the whole discussion.
             return '';
         }
 
@@ -802,9 +812,10 @@ abstract class forum_type {
             // Basic intro
             $classes = $expanded ? ' forumng-full' : ' forumng-short';
             $classes .= $post->is_important() ? ' forumng-important' : '';
-            $classes .= (!$email && $post->is_unread())
-                ? ' forumng-unread' : ' forumng-read';
+            $classes .= (!$email && !$options[forum_post::OPTION_UNREAD_NOT_HIGHLIGHTED] && 
+                $post->is_unread()) ? ' forumng-unread' : ' forumng-read';
             $classes .= $post->get_deleted() ? ' forumng-deleted' : '';
+            $classes .= ' forumng-p' .$postnumber;
             $out .= $lf . '<div class="forumng-post' . $classes . '"><a id="p' .
                 $post->get_id() . '"></a>';
             if ($options[forum_post::OPTION_FIRST_UNREAD]) {
@@ -890,10 +901,11 @@ abstract class forum_type {
         $expandlink = '';
         if (!$expanded && !$deletedhide) {
             $expandlink = '&nbsp;[<a class="forumng-expandlink" ' .
-                'href="' . $linkprefix . 'discuss.php?d=' .
-                $post->get_discussion()->get_id() . '&amp;expand=1#p' .
-                $post->get_id() . '">' . get_string('expand', 'forumng',
-                $postnumber) . '</a>] <img src="' . $CFG->pixpath .
+                'href="' . $linkprefix . 'discuss.php?' . 
+                $discussion->get_link_params(forum::PARAM_HTML) .
+                '&amp;expand=1#p' .
+                $post->get_id() . '">' . get_string('expandall', 'forumng') .
+                '</a>] <img src="' . $CFG->pixpath .
                 '/spacer.gif" width="16" height="16" alt="" />';
         }
 
@@ -913,8 +925,10 @@ abstract class forum_type {
                 $out .=  $by->name;
             } else {
                 $out .= '<a href="' . $CFG->wwwroot . '/user/view.php?id=' .
-                    $post->get_user()->id . '&amp;course=' .
-                    $post->get_forum()->get_course_id() . '">' . $by->name . '</a>';
+                    $post->get_user()->id .
+                    ($post->get_forum()->is_shared() ? '' : '&amp;course=' .
+                    $post->get_forum()->get_course_id()) .
+                    '">' . $by->name . '</a>';
             }
             if ($postnumber) {
                 if ($options[forum_post::OPTION_VISIBLE_POST_NUMBERS]) {
@@ -941,7 +955,7 @@ abstract class forum_type {
                 }
 
                 if ($options[forum_post::OPTION_COMMAND_HISTORY]) {
-                    $out .= ' (<a href="history.php?p=' . $post->get_id() .
+                    $out .= ' (<a href="history.php?' . $post->get_link_params(forum::PARAM_HTML) .
                         '">' . get_string('history', 'forumng') . '</a>)';
                 }
                 $out .= '</span>';
@@ -1010,7 +1024,7 @@ abstract class forum_type {
                     // Digest contains link to original post
                     $out .=
                         '<a href="' . $linkprefix .
-                        'discuss.php?d=' . $discussion->get_id() .
+                        'discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML) .
                         '#p' . $post->get_id() . '">' .
                         format_string($subject) . '</a>';
                 } else {
@@ -1021,7 +1035,7 @@ abstract class forum_type {
                 $out .= format_string($subject, true);
                 if ($options[forum_post::OPTION_DIGEST]) {
                     // Link to original post
-                    $out .= " <{$linkprefix}discuss.php?d=" .
+                    $out .= " <{$linkprefix}discuss.php?" . $discussion->get_link_params(forum::PARAM_HTML) .
                         $discussion->get_id() . '#p' . $post->get_id() . '>';
                 }
                 $out .= $lf;
@@ -1080,7 +1094,7 @@ abstract class forum_type {
                             mimeinfo('type', $attachment));
 
                         $out .= '<li><a href="' . $linkprefix .
-                            'attachment.php?p=' . $post->get_id() .
+                            'attachment.php?' . $post->get_link_params(forum::PARAM_HTML) .
                             '&amp;file=' . $attachment . '">' . '<img src="' .
                             $iconsrc . '" alt="' . $alt . '" /> <span>' .
                             htmlspecialchars($attachment) . '</span></a></li>';
@@ -1158,6 +1172,14 @@ abstract class forum_type {
             }
 
             // Commands at bottom of mail
+
+            if(class_exists('ouflags') && ou_get_is_mobile_from_cookies()){
+            	$mobileclass = ' class="forumng-mobilepost-link"';
+            }
+            else {
+            	$mobileclass = '';
+            }
+            
             if ($html) {
                 $commands = '';
                 $expires = $post->can_ignore_edit_time_limit() ? '' :
@@ -1190,7 +1212,7 @@ abstract class forum_type {
 
                 //Direct link
                 if ($options[forum_post::OPTION_COMMAND_DIRECTLINK]) {
-                    $commands .= '<li class="forumng-permalink"><a href="discuss.php?d=' . $discussion->get_id() . '#p' . $post->get_id() .
+                    $commands .= '<li class="forumng-permalink"><a href="discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML) . '#p' . $post->get_id() .
                         '" title="' . get_string('directlinktitle', 'forumng').'">' .
                         get_string('directlink', 'forumng', $postnumber) .
                         '</a></li>';
@@ -1198,50 +1220,59 @@ abstract class forum_type {
 
                 // Alert link
                 if ($options[forum_post::OPTION_COMMAND_REPORT]) {
-                    $commands .= '<li><a href="' . $linkprefix . 'alert.php?p=' . $post->get_id() .
-                        '" title="'.get_string('alert_linktitle', 'forumng').'">' .
-                        get_string('alert_link', 'forumng', $postnumber) .
-                        '</a></li>';
+                    $commands .= '<li><a href="' . $linkprefix . 'alert.php?' .
+                            $post->get_link_params(forum::PARAM_HTML) .
+                            '" title="'.get_string('alert_linktitle', 'forumng').'">' .
+                            get_string('alert_link', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 // Split link
                 if ($options[forum_post::OPTION_COMMAND_SPLIT]) {
                     $commands .= '<li class="forumng-split"><a href="' . $linkprefix .
-                        'splitpost.php?p=' . $post->get_id() . '">' .
-                        get_string('split', 'forumng', $postnumber) .
-                        '</a></li>';
+                            'splitpost.php?' .
+                            $post->get_link_params(forum::PARAM_HTML) . '">' .
+                            get_string('split', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 // Delete link
                 if ($options[forum_post::OPTION_COMMAND_DELETE]) {
-                    $commands .= '<li><a href="' . $linkprefix .
-                        'deletepost.php?p=' . $post->get_id() . $expires . '">' .
-                        get_string('delete', 'forumng', $postnumber) .
-                        '</a></li>';
+                    $commands .= '<li><a' . $mobileclass . ' href="' . $linkprefix .
+                            'deletepost.php?' .
+                            $post->get_link_params(forum::PARAM_HTML) .
+                            $expires . '">' .
+                            get_string('delete', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 // Undelete link
                 if ($options[forum_post::OPTION_COMMAND_UNDELETE]) {
                     $commands .= '<li><a href="' . $linkprefix .
-                        'deletepost.php?p=' . $post->get_id() . '&amp;delete=0">' .
-                        get_string('undelete', 'forumng', $postnumber) .
-                        '</a></li>';
+                            'deletepost.php?' .
+                            $post->get_link_params(forum::PARAM_HTML) .
+                            '&amp;delete=0">' .
+                            get_string('undelete', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 // Edit link
                 if ($options[forum_post::OPTION_COMMAND_EDIT]) {
-                    $commands .= '<li><a href="' . $linkprefix .
-                        'editpost.php?p=' . $post->get_id() . $expires. '">' .
-                        get_string('edit', 'forumng', $postnumber) .
-                        '</a></li>';
+                    $commands .= '<li><a' . $mobileclass . ' href="' . $linkprefix .
+                            'editpost.php?' .
+                            $post->get_link_params(forum::PARAM_HTML) .
+                            $expires. '">' .
+                            get_string('edit', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 // Reply link
                 if ($options[forum_post::OPTION_COMMAND_REPLY]) {
-                    $commands .= '<li class="forumng-replylink"><a href="' . $linkprefix .
-                        'editpost.php?replyto=' . $post->get_id() . '">' .
-                        get_string('reply', 'forumng', $postnumber) .
-                        '</a></li>';
+                    $commands .= '<li class="forumng-replylink"><a' . $mobileclass . ' href="' . $linkprefix .
+                            'editpost.php?replyto=' . $post->get_id() .
+                            $post->get_forum()->get_clone_param(forum::PARAM_HTML) .
+                            '">' . get_string('reply', 'forumng', $postnumber) .
+                            '</a></li>';
                 }
 
                 if ($commands) {
@@ -1258,7 +1289,9 @@ abstract class forum_type {
                             $course->shortname) . $lf;
                     }
                     $out .= "{$linkprefix}editpost.php?replyto=" .
-                        $post->get_id() . $lf;
+                            $post->get_id() .
+                            $post->get_forum()->get_clone_param(forum::PARAM_PLAIN) .
+                            $lf;
                 }
 
                 // Only the reply command is available in text mode
@@ -1306,8 +1339,7 @@ abstract class forum_type {
                 '</script>';
             $html = '<form method="post" id="forumng-actionform" ' .
                 'action="action.php"><div>' . $script . $html .
-                '<input type="hidden" name="d" value="' . $discussion->get_id() .
-                '" />';
+                $discussion->get_link_params(forum::PARAM_FORM);
             if ($hasratings) {
                 $html .= '<input type="submit" id="forumng-saveallratings" value="' .
                     get_string('saveallratings', 'forumng') . '" name="action.rate"/>';
@@ -1511,6 +1543,14 @@ form.htmlarea.generate();
      */
     protected function get_string($forum, $string, $a=null) {
         return get_string($string, 'forumng', $a);
+    }
+
+    /**
+     * @return bool True if the user is allowed to select this type, false
+     *   if it's only used internally
+     */
+    public function is_user_selectable() {
+        return true;
     }
 }
 ?>

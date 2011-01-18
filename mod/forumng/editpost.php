@@ -17,7 +17,7 @@ if (class_exists('ouflags') && $ajax) {
     $DASHBOARD_COUNTER = DASHBOARD_FORUMNG_AJAX;
 }
 
-function finish($postid, $url, $fromform, $uploadfolder, $ajaxdata='') {
+function finish($postid, $cloneid, $url, $fromform, $uploadfolder, $ajaxdata='') {
     // Clear out used playspace and/or uploadfolder
     if (isset($fromform->attachmentplayspace)) {
         // Unless we're keeping it, wipe the playspace
@@ -28,8 +28,6 @@ function finish($postid, $url, $fromform, $uploadfolder, $ajaxdata='') {
     // Get rid of temporary upload folder
     if ($uploadfolder) {
         remove_dir($uploadfolder);
-        forum_utils::folder_debug('remove_dir',
-            'editpost.php/finish', '', $uploadfolder);
     }
 
     global $ajax;
@@ -41,7 +39,7 @@ function finish($postid, $url, $fromform, $uploadfolder, $ajaxdata='') {
             exit;
         } else {
             // Default otherwise is to print post
-            forum_post::print_for_ajax_and_exit($postid,
+            forum_post::print_for_ajax_and_exit($postid, $cloneid,
                 array(forum_post::OPTION_DISCUSSION_SUBJECT => true));
         }
     }
@@ -67,6 +65,7 @@ try {
     $ispost = false;
     $edit = false;
     $islock = false;
+    $cloneid = optional_param('clone', 0, PARAM_INT);
 
     // See if this is a draft post
     $draft = null;
@@ -84,20 +83,21 @@ try {
         if ($draft->is_reply()) {
             $replytoid = $draft->get_parent_post_id();
         } else {
-            $forum = forum::get_from_id($draft->get_forum_id());
+            $forum = forum::get_from_id($draft->get_forum_id(),
+                optional_param('clone', 0, PARAM_INT));
             $groupid = $draft->get_group_id();
         }
     }
 
     if($forum || 
         ($cmid = optional_param('id', 0, PARAM_INT))) {
-        // For new discussions, id (forum cmid) and groupid are required (groupid
+            // For new discussions, id (forum cmid) and groupid are required (groupid
         // may be forum::ALL_GROUPS if required)
         if ($forum) {
             // Came from draft post
             $cmid = $forum->get_course_module_id();
         } else {
-            $forum = forum::get_from_cmid($cmid);
+            $forum = forum::get_from_cmid($cmid, $cloneid);
         }
         if ($forum->get_group_mode()) {
             if (!$draft) {
@@ -128,7 +128,7 @@ try {
     } else if($replytoid || 
         ($replytoid = optional_param('replyto', 0, PARAM_INT))) {
         // For replies, replyto= (post id of one we're replying to) is required
-        $replyto = forum_post::get_from_id($replytoid);
+        $replyto = forum_post::get_from_id($replytoid, $cloneid);
         $discussion = $replyto->get_discussion();
         $forum = $replyto->get_forum();
 
@@ -146,7 +146,7 @@ try {
     } else if($lock = optional_param('lock', 0, PARAM_INT)) {
         // For locks, d= discussion id of discussion we're locking
         $discussionid = required_param('d', PARAM_INT);
-        $discussion = forum_discussion::get_from_id($discussionid);
+        $discussion = forum_discussion::get_from_id($discussionid, $cloneid);
         $replyto = $discussion->get_root_post();
         $forum = $discussion->get_forum();
         $discussion->require_edit();
@@ -162,7 +162,7 @@ try {
     } else if($discussionid = optional_param('d', 0, PARAM_INT)) {
         // To edit discussion settings only (not the standard post settings
         // such as subject, which everyone can edit), use d (discussion id)
-        $discussion = forum_discussion::get_from_id($discussionid);
+        $discussion = forum_discussion::get_from_id($discussionid, $cloneid);
         $post = $discussion->get_root_post();
         $forum = $discussion->get_forum();
         $discussion->require_edit();
@@ -175,7 +175,7 @@ try {
     } else  {
         // To edit existing posts, p (forum post id) is required
         $postid = required_param('p', PARAM_INT);
-        $post = forum_post::get_from_id($postid);
+        $post = forum_post::get_from_id($postid, $cloneid);
         $discussion = $post->get_discussion();
         $forum = $post->get_forum();
 
@@ -196,6 +196,10 @@ try {
 
     // See if this is a save action or a form view
     require_once('editpost_form.php');
+    if ($cloneid) {
+        // Clone parameter is required for all actions
+        $params['clone'] = $cloneid;
+    }
     $mform = new mod_forumng_editpost_form('editpost.php',
         array('params'=>$params, 'isdiscussion'=>$isdiscussion,
             'forum'=>$forum, 'edit'=>$edit, 'ispost'=>$ispost, 'islock'=>$islock,
@@ -207,11 +211,11 @@ try {
 
     if ($mform->is_cancelled()) {
         if ($edit) {
-            redirect('discuss.php?d=' . $post->get_discussion()->get_id());
+            redirect('discuss.php?' . $post->get_discussion()->get_link_params(forum::PARAM_PLAIN));
         } else if ($islock) {
-            redirect('discuss.php?d=' . $discussion->get_id());
+            redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
         } else {
-            redirect('view.php?id=' . $forum->get_course_module_id());
+            redirect('view.php?' . $forum->get_link_params(forum::PARAM_PLAIN));
         }
     } else if ($fromform = $mform->get_data()) {
         if (class_exists('ouflags') && $ispost) {
@@ -253,7 +257,7 @@ try {
                 // Attachments are saved initially into a temp folder, then
                 // moved into place
                 $uploadfolder = $CFG->dataroot . '/moddata/forumng/uploads/' .
-                    mt_rand();
+                    $USER->id . ',' .  mt_rand();
                 $mform->save_files($uploadfolder);
                 if(is_dir($uploadfolder)) {
                     $handle = opendir($uploadfolder);
@@ -316,7 +320,7 @@ try {
                     $isdiscussion && $fromform->group ? $fromform->group : null, $options);
 
                 // Redirect to edit it again
-                finish(0, 'editpost.php?draft=' . $draft->get_id(), $fromform,
+                finish(0, $cloneid, 'editpost.php?draft=' . $draft->get_id(), $fromform,
                     $uploadfolder, $draft->get_id() . ':' . $date);
             } else {
                 // Save new draft
@@ -329,7 +333,7 @@ try {
                     $fromform->format, $attachments, $options);
 
                 // Redirect to edit it again
-                finish(0, 'editpost.php?draft=' . $newdraftid, $fromform,
+                finish(0, $cloneid, 'editpost.php?draft=' . $newdraftid, $fromform,
                     $uploadfolder, $newdraftid . ':' . $date);
             }
         } else if (!$edit) {
@@ -349,8 +353,8 @@ try {
                     }
                 }
                 if (isset($SESSION->forumng_createdrandoms[$random])) {
-                    print_error('error_duplicate', 'forumng', $CFG->wwwroot .
-                        '/mod/forumng/view.php?id=' . $forum->get_course_module_id());
+                    print_error('error_duplicate', 'forumng',
+                            $forum->get_url(forum::PARAM_PLAIN));
                 }
                 $SESSION->forumng_createdrandoms[$random] = $now;
             }
@@ -374,16 +378,17 @@ try {
                 }
 
                 // Redirect to view discussion
-                finish($postid, 'discuss.php?d=' . $discussionid, $fromform,
-                    $uploadfolder);
+                finish($postid, $cloneid, 'discuss.php?d=' . $discussionid .
+                        $forum->get_clone_param(forum::PARAM_PLAIN), $fromform,
+                        $uploadfolder);
             } else if ($islock) {
                 $postid = $discussion->lock(stripslashes($fromform->subject),
                     stripslashes($fromform->message),
                     $fromform->format, $attachments, !empty($fromform->mailnow));
 
                 // Redirect to view discussion
-                finish($postid,
-                    'discuss.php?d=' . $replyto->get_discussion()->get_id(),
+                finish($postid, $cloneid,
+                    'discuss.php?' . $replyto->get_discussion()->get_link_params(forum::PARAM_PLAIN),
                     $fromform, $uploadfolder);
             } else {
                 add_attachments_from_draft($draft, $deleteattachments, 
@@ -400,9 +405,9 @@ try {
                 }
 
                 // Redirect to view discussion
-                finish($postid, 'discuss.php?d=' .
-                    $replyto->get_discussion()->get_id() . '#p' . $postid,
-                    $fromform, $uploadfolder);
+                finish($postid, $cloneid, 'discuss.php?' .
+                    $replyto->get_discussion()->get_link_params(forum::PARAM_PLAIN) .
+                    '#p' . $postid, $fromform, $uploadfolder);
             }
         } else {
             // Editing
@@ -431,8 +436,9 @@ try {
             forum_utils::finish_transaction();
 
             // Redirect to view discussion
-            finish($post->get_id(), 'discuss.php?d=' .
-                $post->get_discussion()->get_id() . '#p' . $post->get_id(),
+            finish($post->get_id(), $cloneid, 'discuss.php?' .
+                $post->get_discussion()->get_link_params(forum::PARAM_PLAIN) .
+                '#p' . $post->get_id(),
                 $fromform, $uploadfolder);
         }
 
@@ -451,7 +457,7 @@ try {
             $navigation[] = array(
                 'name'=>shorten_text(htmlspecialchars(
                     $discussion->get_subject())),
-                'link'=>$discussion->get_url(), 'type'=>'forumng');
+                'link'=>$discussion->get_url(forum::PARAM_HTML), 'type'=>'forumng');
         }
         $navigation[] = array(
             'name'=>$pagename, 'type'=>'forumng');

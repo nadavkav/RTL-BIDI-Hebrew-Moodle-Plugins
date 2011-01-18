@@ -11,7 +11,7 @@ class general_forum_type extends forum_type {
     public function print_view_page($forum, $groupid) {
         global $SESSION;
         $forumid = $forum->get_id();
-        $baseurl = 'view.php?id=' . $forum->get_course_module_id();
+        $baseurl = 'view.php?' . $forum->get_link_params(forum::PARAM_PLAIN);
 
         if(isset($SESSION->forumng_discussionlist[$forumid]) &&
             property_exists($SESSION->forumng_discussionlist[$forumid], 'groupid') && 
@@ -143,6 +143,8 @@ class general_forum_type extends forum_type {
 
         print $list->display_paging_bar($baseurl);
 
+        print $forum->display_discussion_list_features($groupid);
+
         // Flagged posts
         $flagged = $forum->get_flagged_posts();
         if (count($flagged) > 0) {
@@ -156,11 +158,15 @@ class general_forum_type extends forum_type {
 
         // Subscribe and view subscribers links
         print $forum->display_subscribe_options();
-        
+
         // Atom/RSS links
         print $forum->display_feed_links($groupid);
+
         // display the warning message for invalid archive setting
         print $forum->display_archive_warning();
+
+        // Display sharing information
+        print $forum->display_sharing_info();
     }
 
     /**
@@ -209,21 +215,21 @@ class general_forum_type extends forum_type {
         $fakedate = '&amp;timeread=' . $previousread ;
         print '<div id="forumng-expandall">';
         $showexpandall = preg_match(
-            '~<a [^>]*href="discuss\.php\?d=[0-9]+&amp;expand=1#p[0-9]+">~', 
+            '~<a [^>]*href="discuss\.php\?d=[0-9]+[^"]*&amp;expand=1#p[0-9]+">~',
             $content);
         $showcollapseall = preg_match(
             '~<div class="forumng-post forumng-full.*<div class="forumng-post forumng-full~s',
             $content);
         if ($showexpandall) {
             print '<a href="' .
-                $discussion->get_url() . '&amp;expand=1' . $fakedate . '">' .
+                $discussion->get_url(forum::PARAM_HTML) . '&amp;expand=1' . $fakedate . '">' .
                 get_string('expandall', 'forumng') . '</a>';
             if ($showcollapseall) {
                 print ' &#x2022; ';
             }
         }
         if ($showcollapseall) {
-            print '<a href="' . $discussion->get_url() . '&amp;collapse=1' . $fakedate . 
+            print '<a href="' . $discussion->get_url(forum::PARAM_HTML) . '&amp;collapse=1' . $fakedate .
                 '">' . get_string('collapseall', 'forumng') . '</a> ';
         }
         print '</div>';
@@ -237,14 +243,20 @@ class general_forum_type extends forum_type {
         // Link back to forum
         print $discussion->display_link_back_to_forum();
 
+        // Display discussion features (row of buttons)
+        print $discussion->display_discussion_features();
+
         // Display the subscription options to this disucssion if available
         print $discussion->display_subscribe_options();
 
         // Atom/RSS links
         print $discussion->display_feed_links();
 
-        // Set read data
-        $discussion->mark_read();
+        // Set read data [shouldn't this logic be somewhere else as it is not
+        // part of display?]
+        if (forum::mark_read_automatically()) {
+            $discussion->mark_read();
+        }
     }
 }
 ?>

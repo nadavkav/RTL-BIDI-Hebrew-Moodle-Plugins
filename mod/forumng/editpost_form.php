@@ -5,10 +5,8 @@ require_once($CFG->libdir.'/formslib.php');
 class mod_forumng_editpost_form extends moodleform {
 
     function definition() {
-
         global $CFG, $USER;
         $mform = $this->_form;
-
         $params = $this->_customdata['params'];
         $forum = $this->_customdata['forum'];
         $edit = $this->_customdata['edit'];
@@ -125,21 +123,15 @@ class mod_forumng_editpost_form extends moodleform {
                 'questions', 'richtext'), false, 'editorhelpbutton');
 
             $showformat = true;
-            
-            if (class_exists('ouflags')) {
-            	if(ou_get_is_mobile()){
-            		$showformat = false;
-            	}
-            }
-            
-            if($showformat){
-	            $mform->addElement('format', 'format', get_string('format'),
-	                array('id'=>'id_format' . $ajaxversion));
+
+            if($showformat){          	
+                $mform->addElement('format', 'format', get_string('format'),
+                    array('id'=>'id_format' . $ajaxversion));
             }
 
             // If you can create attachments...
             if ($forum->can_create_attachments()) {
-            	$mform->addElement('header', 'id_attachments','');
+                $mform->addElement('header', 'id_attachments' . $ajaxversion,'');
                 $attachmentlist = '';
                 $attachmentnames = array();
                 if ($edit && $post) {
@@ -202,8 +194,8 @@ class mod_forumng_editpost_form extends moodleform {
             }
 
             // If you can mail now, we show this option
-            $mform->addElement('header', 'id_importance','');
-                $attachmentlist = '';
+            $mform->addElement('header', 'id_importance' . $ajaxversion,'');
+            $attachmentlist = '';
             if (!$edit && $forum->can_mail_now()) {
                 $mform->addElement('checkbox', 'mailnow', get_string('mailnow', 'forumng'));
                 $mform->setHelpButton('mailnow', array('mailnow',
@@ -339,6 +331,13 @@ class mod_forumng_editpost_form extends moodleform {
             $errors['timeend'] = get_string('timestartenderror', 'forumng');
         }
         return $errors;
+    }
+    function definition_after_data() {
+        parent::definition_after_data();
+        $mform =& $this->_form;
+        if ($mform->elementExists('format')) {
+            $mform->getElement('format')->setValue(FORMAT_MOODLE);
+        }
     }
 }
 ?>

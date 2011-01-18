@@ -48,6 +48,7 @@ class forum_post {
     const OPTION_JUMP_PREVIOUS = 'jump_previous';
     const OPTION_JUMP_PARENT = 'jump_parent';
     const OPTION_FIRST_UNREAD = 'first_unread';
+    const OPTION_UNREAD_NOT_HIGHLIGHTED = 'unread_not_highlighted';
 
     /** Constant indicating that post is not rated by user */
     const NO_RATING = 999;
@@ -91,11 +92,24 @@ class forum_post {
     }
 
     /**
+     * Use to obtain link parameters when linking to any page that has anything
+     * to do with posts.
+     */
+    public function get_link_params($type) {
+        return 'p=' . $this->postfields->id .
+                $this->get_forum()->get_clone_param($type);
+    }
+
+    /**
      * @return bool True if can flag
      */
     function can_flag() {
         // Cannot flag for deleted post
         if ($this->get_deleted() || $this->discussion->is_deleted()) {
+            return false;
+        }
+        // The guest user cannot flag
+        if (isguestuser()) {
             return false;
         }
         return true;
@@ -551,6 +565,8 @@ WHERE
      * single forum post ID. Intended when entering a page which uses post ID
      * as a parameter.
      * @param int $id ID of forum post
+     * @param int $cloneid If this is in a shared forum, must be the id of the
+     *   clone forum currently in use, or CLONE_DIRECT; otherwise must be 0
      * @param bool $wholediscussion If true, retrieves entire discussion
      *   instead of just this single post
      * @param bool $usecache True to use cache when retrieving the discussion
@@ -558,9 +574,10 @@ WHERE
      *   retrieved)
      * @return forum_post Post object
      */
-    public static function get_from_id($id, $wholediscussion=false, $usecache=false, $userid=0) {
+    public static function get_from_id($id, $cloneid,
+            $wholediscussion=false, $usecache=false, $userid=0) {
         if ($wholediscussion) {
-            $discussion = forum_discussion::get_from_post_id($id, $usecache, $usecache);
+            $discussion = forum_discussion::get_from_post_id($id, $cloneid, $usecache, $usecache);
             $root = $discussion->get_root_post();
             return $root->find_child($id);
         } else {
@@ -571,7 +588,7 @@ WHERE
             }
             $postfields = reset($records);
 
-            $discussion = forum_discussion::get_from_id($postfields->discussionid);
+            $discussion = forum_discussion::get_from_id($postfields->discussionid, $cloneid);
             $newpost = new forum_post($discussion, $postfields);
             return $newpost;
         }
@@ -593,7 +610,8 @@ WHERE
 SELECT
     fp.message AS content, fp.subject, firstpost.subject AS firstpostsubject,
     firstpost.id AS firstpostid, fd.id AS discussionid,
-    f.name AS activityname, cm.id AS cmid, fd.timestart, fd.timeend
+    f.name AS activityname, cm.id AS cmid, fd.timestart, fd.timeend,
+    f.shared AS shared
 FROM
     {$CFG->prefix}forumng_posts fp
     INNER JOIN {$CFG->prefix}forumng_discussions fd ON fd.id=fp.discussionid
@@ -607,20 +625,28 @@ WHERE
             return false;
         }
 
-        // Title is discussion subject...
-        $result->title = $result->firstpostsubject;
-        // ...plus post subject, if not discussion post ourselves
-        if ($result->subject && ($result->firstpostid != $document->intref1)) {
-            $result->title .= ': ' . $result->subject;
+        // Title is either the post subject or Re: plus the discussion subject if the post subject is blank
+        $result->title = $result->subject;
+
+        if (is_null($result->title)) {
+            $result->title = get_string('re', 'forumng', $result->firstpostsubject);
+        }
+
+        // Link is to value in url if present, otherwise to original forum
+        if ($result->shared) {
+            $clonebit = '&amp;clone=' .
+                    optional_param('clone', $result->cmid, PARAM_INT);
+        } else {
+            $clonebit = '';
         }
 
         // Work out URL to post
         $result->url = $CFG->wwwroot . '/mod/forumng/discuss.php?d=' .
-            $result->discussionid . '#p' . $document->intref1;
+            $result->discussionid . $clonebit . '#p' . $document->intref1;
 
         // Activity name and URL
         $result->activityurl = $CFG->wwwroot . '/mod/forumng/view.php?id=' .
-            $result->cmid;
+            $result->cmid . $clonebit;
 
         // Hide results outside their time range (unless current user can see)
         $now = time();
@@ -843,7 +869,7 @@ ORDER BY
         $id = $this->discussion->create_reply($this, $subject, $message, $format,
             $attachments,$setimportant,$mailnow, $userid);
         if($log) {
-            $this->log('add reply');
+            $this->log('add reply', $id);
         }
         forum_utils::finish_transaction();
         $this->get_discussion()->uncache();
@@ -978,29 +1004,41 @@ ORDER BY
         $attachments = $this->get_attachment_names();
         $copiedattachments = 0;
         if ($attachments) {
-            // Move the folder
-            forum_utils::rename($newfolder=$this->get_attachment_folder(),
-                $oldfolder=$this->get_attachment_folder($copyid));
-            forum_utils::folder_debug('rename',
-                'forum_post::edit', 'p=' . $this->get_id(), 
-                $newfolder, $oldfolder);
+            // NOTE: The names are confusing. $newfolder is the EXISTING folder
+            // but it relates to the attachments for the NEW version of the
+            // post. $oldfolder is a newly-created folder but it relates to
+            // attachments for the OLD version of the posdt
+            $newfolder = $this->get_attachment_folder();
+            $oldfolder = $this->get_attachment_folder($copyid);
 
-            // If we're keeping attachments, copy them too
-            if ($deleteattachments !== true) {
-                $created = false;
-                foreach ($attachments as $name) {
-                    if (!$deleteattachments || !in_array($name, $deleteattachments)) {
-                        if (!$created) {
-                            if (!mkdir($newfolder)) {
-                                throw new forum_exception(
-                                    'Error creating updated attachment folder');
-                            }
-                            $created = true;
-                        }
-                        forum_utils::copy("$oldfolder/$name", "$newfolder/$name");
+            // Copy the attachments folder to an 'old' historic one, then 
+            // delete files from the current attachment folder. This used to be
+            // done with rename but we experienced failures when creating the
+            // folder with the same name as the one we just renamed away.
+            forum_utils::mkdir($oldfolder);
+            $handle = forum_utils::opendir($newfolder);
+            $keepfolder = false;
+            while (false !== ($name = readdir($handle))) {
+                if ($name != '.' && $name != '..') {
+                    $source = "$newfolder/$name";
+
+                    // Copy file to the 'old' version folder
+                    forum_utils::copy($source, "$oldfolder/$name");
+
+                    // Consider whether it should be deleted from the 'new'
+                    // version folder
+                    if ($deleteattachments === true ||
+                        ($deleteattachments && in_array($name, $deleteattachments))) {
+                        forum_utils::unlink($source);
+                    } else {
+                        $keepfolder = true;
                         $copiedattachments++;
                     }
                 }
+            }
+            closedir($handle);
+            if (!$keepfolder) {
+                forum_utils::rmdir($newfolder);
             }
         }
 
@@ -1105,11 +1143,8 @@ ORDER BY
                 $searchdoc->delete();
             }
         } else {
-            // Title is the discussion subject plus ': ' plus post subject
-            $title = $this->get_discussion()->get_subject($expectingquery);
-            if (!$this->is_root_post() && !is_null($this->get_subject())) {
-                $title .= ': ' . $this->get_subject();
-            }
+            // $title here is not the title appearing in the search result but the text which decides the search score
+            $title = $this->get_subject();
             $searchdoc->update($title, $this->get_message());
         }
         forum_utils::finish_transaction();
@@ -1128,7 +1163,8 @@ ORDER BY
         if (!is_array($this->children)) {
             // ...then get one
             $discussion = forum_discussion::get_from_id(
-                $this->discussion->get_id());
+                $this->discussion->get_id(),
+                $this->get_forum()->get_course_module_id());
             $post = $discussion->get_root_post()->find_child($this->get_id());
             // Do this update on the new discussion
             $post->search_update_children();
@@ -1304,9 +1340,6 @@ WHERE
                         $madenewfolder = true;
                     }
                     forum_utils::rename($oldfolder, $newfolder);
-                    forum_utils::folder_debug('rename',
-                        'forum_post::split', 'p=' . $this->get_id(), 
-                        $oldfolder, $newfolder);
                 }
             }
         }
@@ -1364,13 +1397,21 @@ WHERE
 
     /**
      * Records an action in the Moodle log for current user.
-     * @param $action Action name - see datalib.php for suggested verbs
+     * @param string $action Action name - see datalib.php for suggested verbs
      *   and this code for example usage
+     * @param int $replyid Specify only when adding a reply; when specified,
+     *   this is the reply ID (used because the reply entry is logged under
+     *   the new post, not the old one)
      */
-    function log($action) {
+    function log($action, $replyid=0) {
+        if ($replyid) {
+            $postid = $replyid;
+        } else {
+            $postid = $this->postfields->id;
+        }
         add_to_log($this->get_forum()->get_course_id(), 'forumng',
             $action,
-            $this->discussion->get_log_url().'#p'.$this->postfields->id,
+            $this->discussion->get_log_url() . '#p' . $postid,
             $this->postfields->id,
             $this->get_forum()->get_course_module_id());
     }
@@ -1739,8 +1780,8 @@ WHERE
         // Check post edit
         $whynot = '';
         if (!$this->can_edit($whynot)) {
-            print_error($whynot, 'forumng',
-              'discuss.php?d=' . $this->discussion->get_id());
+            print_error($whynot, 'forumng','discuss.php?' .
+                    $this->discussion->get_link_params(forum::PARAM_HTML));
         }
     }
 
@@ -1755,8 +1796,8 @@ WHERE
         // Check post reply
         $whynot = '';
         if (!$this->can_reply($whynot)) {
-            print_error($whynot, 'forumng',
-              'discuss.php?d=' . $this->discussion->get_id());
+            print_error($whynot, 'forumng','discuss.php?' .
+                    $this->discussion->get_link_params(forum::PARAM_HTML));
         }
     }
 
@@ -1832,15 +1873,16 @@ WHERE
 
             $text .= format_string($forum->get_name(), true);
             $html .= "<a target='_blank' " .
-                "href='$CFG->wwwroot/mod/forumng/view.php?id=$cmid'>" .
+                "href='$CFG->wwwroot/mod/forumng/view.php?" .
+                $forum->get_link_params(forum::PARAM_HTML) . "'>" .
                 format_string($forum->get_name(), true) . '</a>';
 
             // Makes a query :(
             if($discussionsubject = $discussion->get_subject(true)) {
                 $text .= ' -> ' . format_string($discussionsubject, true);
                 $html .= " &raquo; <a target='_blank' " .
-                    "href='$CFG->wwwroot/mod/forumng/discuss.php?d=" .
-                    $discussion->get_id() . "'>" .
+                    "href='$CFG->wwwroot/mod/forumng/discuss.php?" .
+                    $discussion->get_link_params(forum::PARAM_HTML) . "'>" .
                     format_string($discussionsubject, true).'</a>';
             }
 
@@ -1871,24 +1913,27 @@ WHERE
 
             // Get parent post (unfortunately this requires extra queries)
             $parent = forum_post::get_from_id(
-                $this->postfields->parentpostid, false);
+                $this->postfields->parentpostid,
+                $this->get_forum()->get_course_module_id(), false);
 
             $options = array(
                 self::OPTION_EMAIL => true,
                 self::OPTION_NO_COMMANDS => true,
                 self::OPTION_TIME_ZONE => $timezone);
             $html .= $parent->display(true, $options);
-            $text .= $parent->display(true, $options);
+            $text .= $parent->display(false, $options);
         }
 
         if (!$digest && $canunsubscribe) {
             $text .= "\n" . forum_cron::EMAIL_DIVIDER;
             $text .= get_string("unsubscribe", "forum");
-            $text .= ": $CFG->wwwroot/mod/forumng/subscribe.php?id=$cmid\n";
+            $text .= ": $CFG->wwwroot/mod/forumng/subscribe.php?" .
+                $this->get_forum()->get_link_params(forum::PARAM_PLAIN) . "\n";
 
             $html .= "<hr size='1' noshade='noshade' />" .
                 "<div class='forumng-email-unsubscribe'>" .
-                "<a href='$CFG->wwwroot/mod/forumng/subscribe.php?id=$cmid'>" .
+                "<a href='$CFG->wwwroot/mod/forumng/subscribe.php?" .
+                $this->get_forum()->get_link_params(forum::PARAM_HTML) . "'>" .
                 get_string('unsubscribe', 'forumng'). '</a></div>';
         }
         
@@ -2048,6 +2093,9 @@ WHERE
             $options[self::OPTION_FIRST_UNREAD] = !$options[self::OPTION_EMAIL] &&
                 $this->is_unread() && !$this->get_previous_unread();
         }
+        if (!array_key_exists(self::OPTION_UNREAD_NOT_HIGHLIGHTED, $options)) {
+            $options[self::OPTION_UNREAD_NOT_HIGHLIGHTED] = false;
+        }
 
         // Get forum type to do actual display
         return $this->get_forum()->get_type()->display_post(
@@ -2190,15 +2238,17 @@ WHERE
     /**
      * Prints AJAX version of the post to output, and exits.
      * @param mixed $postorid Post object or ID of post
+     * @param int $cloneid If $postorid is an id, a clone id may be necessary
+     *   to construct the post
      * @param array $options Post options if any
      * @param int $postid ID of post
      */
-    public static function print_for_ajax_and_exit($postorid,
+    public static function print_for_ajax_and_exit($postorid, $cloneid=null,
         $options=array()) {
         if (is_object($postorid)) {
             $post = $postorid;
         } else {
-            $post = forum_post::get_from_id($postorid, true);
+            $post = forum_post::get_from_id($postorid, $cloneid, true);
         }
         header('Content-Type: text/plain');
         print trim($post->display(true, $options));

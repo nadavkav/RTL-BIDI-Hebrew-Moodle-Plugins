@@ -63,6 +63,7 @@ class mod_forumng_forward_form extends moodleform {
             $mform->addElement('hidden', 'all', 1);
         }
         $mform->addElement('hidden', 'd', $this->_customdata->discussionid);
+        $mform->addElement('hidden', 'clone', $this->_customdata->cloneid);
         $mform->addElement('hidden', 'postselectform', 1);
 
         $this->add_action_buttons(true, get_string('forward', 'forumng'));

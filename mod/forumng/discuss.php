@@ -10,7 +10,6 @@ if (class_exists('ouflags')) {
 }
 
 require_once('forum.php');
-require_once($CFG->dirroot . '/mod/forumng/feature/discussion_feature.php');
 if (class_exists('ouflags')) {
     $DASHBOARD_COUNTER = DASHBOARD_FORUMNG_VIEW;
 }
@@ -18,12 +17,14 @@ if (class_exists('ouflags')) {
 // Require discussion parameter here. Other parameters may be required in forum
 // type.
 $discussionid = required_param('d', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 try {
     // Construct discussion variable (will check id is valid)
     // Retrieve new copy of discussion from database, but store it in cache
     // for further use.
-    $discussion = forum_discussion::get_from_id($discussionid, 0, false, true);
+    $discussion = forum_discussion::get_from_id($discussionid, $cloneid,
+            0, false, true);
     $forum = $discussion->get_forum();
     $course = $forum->get_course();
 
@@ -36,14 +37,14 @@ try {
         if (!$draft->is_reply() || 
             $draft->get_discussion_id() != $discussionid) {
             print_error('draft_mismatch', 'forumng', 
-                $CFG->wwwroot . '/mod/forumng/view.php?id=' . $forum->get_course_module_id());
+                $forum->get_url(forum::PARAM_HTML));
         }
         $root = $discussion->get_root_post();
         $inreplyto = $root->find_child($draft->get_parent_post_id(), false);
         if (!$inreplyto || !$inreplyto->can_reply($whynot) ||
             !$discussion->can_view()) {
             print_error('draft_cannotreply', 'forumng', 
-                $CFG->wwwroot . '/mod/forumng/view.php?id=' . $forum->get_course_module_id(),
+                $forum->get_url(forum::PARAM_HTML),
                 get_string($whynot, 'forumng'));
         }
         $inreplyto->force_expand();
@@ -94,7 +95,7 @@ try {
         $draft->print_js_variable($draftplayspaceid);
     }
 
-    print '<div id="forumng-main" class="forumng-discuss' .
+    print '<div id="forumng-main" class="forumng-discuss forumng-nojs' .
         ($discussion->is_deleted() ? ' forumng-deleted-discussion' : '' ) . '">';
     print $forum->get_type()->display_switch_link();
     print skip_main_destination();
@@ -103,24 +104,15 @@ try {
     $type = $forum->get_type();
     $type->print_discussion_page($discussion);
 
-    // Print discussion features
-    $features = '';
-    foreach(discussion_feature::get_all() as $feature) {
-        if ($feature->should_display($discussion) &&
-            $type->allow_discussion_feature($discussion, $feature)) {
-            $features .= $feature->display($discussion);
-        }
-    }
-    if ($features) {
-        print '<div id="forumng-features">' . $features . '</div>';
-    }
-
     print '</div>';
 
     if ($bad = forum_utils::is_bad_browser()) {
         print '<div class="forumng-bad-browser">'. 
             get_string('badbrowser', 'forumng', $bad) . '</div>';
     }
+
+    // Log request
+    $discussion->log('view discussion');
 
     // Display footer
     print_footer($course);

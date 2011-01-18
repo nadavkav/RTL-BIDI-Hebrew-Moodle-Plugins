@@ -302,7 +302,7 @@ class forum_utils {
             'intro', 'ratingscale', 'ratingfrom', 'ratinguntil', 'grading',
             'attachmentmaxbytes', 'reportingemail', 'subscription', 'feedtype', 'feeditems',
             'maxpostsperiod', 'maxpostsblock', 'postingfrom', 'postinguntil',
-            'typedata', 'magicnumber'), $alias);
+            'typedata', 'magicnumber', 'originalcmid', 'shared'), $alias);
     }
 
     /**
@@ -413,7 +413,7 @@ class forum_utils {
     /////////////////////////
 
     /**
-     * @param $userid User ID or 0 for default
+     * @param int $userid User ID or 0 for default
      * @return Genuine (non-zero) user ID
      */
     static function get_real_userid($userid=0) {
@@ -423,6 +423,19 @@ class forum_utils {
             throw new forum_exception('Cannot determine user ID');
         }
         return $userid;
+    }
+
+    /**
+     * @param int $userid User ID or 0 for default
+     * @return User object
+     */
+    static function get_user($userid=0) {
+        global $USER;
+        if ($userid && (empty($USER->id) || $USER->id != $userid)) {
+            $user = forum_utils::get_record('id', $userid);
+        } else {
+            $user = $USER;
+        }
     }
 
     static private $scales = array();
@@ -497,8 +510,31 @@ class forum_utils {
             print "\n-->";
         }
 
+        // Make a short version of the trace string for log
+        $minitrace = self::get_minitrace_part($e->getFile(), $e->getLine());
+        foreach($e->getTrace() as $entry) {
+            $minitrace .= ' ' .
+                self::get_minitrace_part($entry['file'], $entry['line']);
+        }
+        $minitrace = shorten_text($minitrace, 120, true);
+        $message = shorten_text($e->getMessage(), 120, true);
+        global $FULLME, $USER, $CFG;
+        $url = str_replace($CFG->wwwroot . '/mod/forumng/', '', $FULLME);
+        add_to_log(0, 'forumng', 'error', $url,
+            "$message / $minitrace", 0, $USER->id);
+
         // Error to user with just the message
         print_error('error_exception', 'forumng', '', $e->getMessage());
+    }
+
+    private static function get_minitrace_part($file, $line) {
+        global $CFG;
+        // Remove dirroot
+        $file = str_replace($CFG->dirroot, '', $file);
+        // Remove mod/forum
+        $file = str_replace('/mod/forumng/', '', $file);
+        // Return file:line
+        return "$file:$line";
     }
 
     /**
@@ -554,7 +590,7 @@ WHERE
      */
     public static function update_with_subquery_grrr_mysql($update, $inids) {
         global $CFG;
-        if ($CFG->dbtype == 'mysql') {
+        if (preg_match('~^mysql~', $CFG->dbtype)) {
             // MySQL is a PoS so the update can't directly run (you can't update
             // a table based on a subquery that refers to the table). Instead,
             // we do the same thing but with a separate update using an IN clause.
@@ -578,26 +614,6 @@ WHERE
             // avoiding the need to transfer an ID list around.
             forum_utils::execute_sql(
                 str_replace("%'IN'%", "IN ($inids)", $update));
-        }
-    }
-
-    /**
-     * This method should be deleted. Temporarily, it provides a way to debug
-     * a problem we are having with folders disappearing.
-     * @param string $type Type of change (rename, rmdir)
-     * @param string $function Name of function class::function
-     * @param string $info Info e.g. p=12345
-     * @param string $folder Folder name (original)
-     * @param string $newfolder For renames, new folder name
-     */
-    public static function folder_debug($type, $function, $info, $folder,
-        $newfolder='') {
-        global $CFG;
-        if (!empty($CFG->forumng_debugfolderissues)
-            && preg_match('~/[0-9]+/moddata/~', $folder)) {
-            add_to_log(0, 'forumng', 'debugfolderissues', '',
-                $type . ' ' . $function . ($info ? ' ' . $info : '') . ' ' .
-                $folder . ($newfolder ? ' => ' . $newfolder : '') );
         }
     }
 }

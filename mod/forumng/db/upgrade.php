@@ -152,8 +152,65 @@ function xmldb_forumng_upgrade($oldversion=0) {
     /// Launch add field removeto
         $result = $result && add_field($table, $field);
     }
-    
 
+    if ($result && $oldversion < 2010071900) {
+
+    /// Define field shared to be added to forumng
+        $table = new XMLDBTable('forumng');
+        $field = new XMLDBField('shared');
+        $field->setAttributes(XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, null, '0', 'removeto');
+
+    /// Launch add field shared
+        $result = $result && add_field($table, $field);
+
+    /// Define field originalcmid to be added to forumng
+        $field = new XMLDBField('originalcmid');
+        $field->setAttributes(XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, null, null, 'shared');
+
+    /// Launch add field originalcmid
+        $result = $result && add_field($table, $field);
+
+    /// Define key originalcmid (foreign) to be added to forumng
+        $key = new XMLDBKey('originalcmid');
+        $key->setAttributes(XMLDB_KEY_FOREIGN, array('originalcmid'), 'course_modules', array('id'));
+
+    /// Launch add key originalcmid
+        $result = $result && add_key($table, $key);
+    }
+
+    if ($result && $oldversion < 2010072100) {
+
+    /// Define field clonecmid to be added to forumng_subscriptions
+        $table = new XMLDBTable('forumng_subscriptions');
+        $field = new XMLDBField('clonecmid');
+        $field->setAttributes(XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, null, null, 'discussionid');
+
+    /// Launch add field clonecmid
+        $result = $result && add_field($table, $field);
+
+    /// Define key clonecmid (foreign) to be added to forumng_subscriptions
+        $key = new XMLDBKey('clonecmid');
+        $key->setAttributes(XMLDB_KEY_FOREIGN, array('clonecmid'), 'course_modules', array('id'));
+
+    /// Launch add key clonecmid
+        $result = $result && add_key($table, $key);
+    }
+    
+    if ($result && $oldversion < 2010073000) {
+
+    /// Define field groupid to be added to forumng_subscriptions
+        $table = new XMLDBTable('forumng_subscriptions');
+        $field = new XMLDBField('groupid');
+        $field->setAttributes(XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, null, null, 'clonecmid');
+
+    /// Launch add field groupid
+        $result = $result && add_field($table, $field);
+    }
+    if ($result && $oldversion < 2010073001) {
+        $db->debug = false;
+        forum::group_subscription_update(true);
+        $db->debug = true;
+    }
     return $result;
 }
 

@@ -11,6 +11,7 @@ $discussionid = optional_param('d', 0, PARAM_INT);
 if ((!$cmid && !$discussionid) || ($cmid && $discussionid)) {
     print_error('error_markreadparams', 'forumng');
 }
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 // Permitted values 'view', 'discuss'
 $back = optional_param('back', '', PARAM_ALPHA);
@@ -24,11 +25,13 @@ if (($back=='discuss' && !$discussionid)) {
 try {
     // Handle whole forum
     if ($cmid) {
-        $forum = forum::get_from_cmid($cmid);
-        $groupid = required_param('group', PARAM_INT);
+        $forum = forum::get_from_cmid($cmid, $cloneid);
+        $groupid = optional_param('group', -1, PARAM_INT);
         if ($groupid == 0) {
             // Just the distinction between 0 and null
             $groupid = forum::ALL_GROUPS;
+        } else if ($groupid == -1) {
+            $groupid = forum::NO_GROUPS;
         }
         $forum->require_view($groupid);
         if (!$forum->can_mark_read()) {
@@ -37,9 +40,10 @@ try {
         $forum->mark_read($groupid);
     }
 
-    // Handle single discussion course
+    // Handle single discussion
     if ($discussionid) {
-        $discussion = forum_discussion::get_from_id($discussionid);
+        $discussion = forum_discussion::get_from_id($discussionid, $cloneid);
+        $forum = $discussion->get_forum();
         $discussion->require_view();
         if (!$discussion->get_forum()->can_mark_read()) {
             print_error('error_cannotmarkread', 'forumng');
@@ -53,9 +57,9 @@ try {
         if (!$courseid) {
             $courseid = $forum->get_course()->id;
         }
-        redirect('discuss.php?d=' . $discussionid);
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     } else  {
-        redirect('view.php?id=' . $cmid);
+        redirect($forum->get_url(forum::PARAM_PLAIN));
     }
 } catch(Exception $e) {
     forum_utils::handle_exception($e);

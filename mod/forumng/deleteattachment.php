@@ -7,6 +7,7 @@ require_once('forum.php');
 // yet.)
 
 $cmid = required_param('id', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 $file = required_param('file', PARAM_FILE);
 $playspaceid = optional_param('attachmentplayspace', 0, PARAM_SEQUENCE);
 $postid = optional_param('p', 0, PARAM_INT);
@@ -14,10 +15,10 @@ $postid = optional_param('p', 0, PARAM_INT);
 try {
     // Security check
     if ($postid) {
-        $post = forum_post::get_from_id($postid);
+        $post = forum_post::get_from_id($postid, $cloneid);
         $post->require_view();
     } else {
-        $forum = forum::get_from_cmid($cmid);
+        $forum = forum::get_from_cmid($cmid, $cloneid);
         $forum->require_view(forum::NO_GROUPS);
     }
 

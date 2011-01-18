@@ -3,10 +3,11 @@ require_once('../../../../config.php');
 require_once($CFG->dirroot . '/mod/forumng/forum.php');
 
 $d = required_param('d', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 $delete = required_param('delete', PARAM_INT);
 
 try {
-    $discussion = forum_discussion::get_from_id($d);
+    $discussion = forum_discussion::get_from_id($d, $cloneid);
     $forum = $discussion->get_forum();
     $cm = $forum->get_course_module();
     $course = $forum->get_course();
@@ -18,10 +19,10 @@ try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($delete) {
             $discussion->delete();
-            redirect('../../view.php?id=' . $cm->id);
+            redirect($forum->get_url(forum::PARAM_PLAIN));
         } else {
             $discussion->undelete();
-            redirect('../../discuss.php?d=' . $d);
+            redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
         }
     }
 
@@ -48,8 +49,8 @@ try {
     $confirmstring = get_string($delete ? 'confirmdeletediscussion'
         : 'confirmundeletediscussion', 'forumng');
     notice_yesno($confirmstring, 'delete.php', '../../discuss.php',
-        array('d'=>$discussion->get_id(), 'delete'=>$delete),
-        array('d'=>$discussion->get_id()),
+        array('d'=>$discussion->get_id(), 'delete'=>$delete, 'clone'=>$cloneid),
+        array('d'=>$discussion->get_id(), 'clone'=>$cloneid),
         'post', 'get');
 
     // Display footer

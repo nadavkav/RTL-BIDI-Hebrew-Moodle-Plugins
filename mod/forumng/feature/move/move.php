@@ -4,22 +4,28 @@ require_once($CFG->dirroot . '/mod/forumng/forum.php');
 
 $d = required_param('d', PARAM_INT);
 $target = required_param('target', PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
 if (!$target) {
     print_error('move_notselected', 'forumng');
 }
 
 try {
-    $discussion = forum_discussion::get_from_id($d);
-    $targetforum = forum::get_from_cmid($target);
+    $discussion = forum_discussion::get_from_id($d, $cloneid);
+
+    // Get target forum
+    $targetforum = forum::get_from_cmid($target, forum::CLONE_DIRECT);
+
+    // If it is a clone, find the original
+    $targetforum = $targetforum->get_real_forum();
 
     // Check permission for move
     $discussion->require_view();
     require_capability('mod/forumng:movediscussions',
         $discussion->get_forum()->get_context());
     require_capability('mod/forumng:movediscussions',
-        get_context_instance(CONTEXT_MODULE, $target));
-    $aag = has_capability(
-        'moodle/site:accessallgroups', $targetforum->get_context());
+        $targetforum->get_context());
+    $aag = has_capability('moodle/site:accessallgroups',
+        $targetforum->get_context());
 
     // Work out target group for move
     $targetgroup = $discussion->get_group_id();
@@ -42,7 +48,7 @@ try {
                 $targetgroup = null;
             }
         }
-        
+
         // If we don't actually have a target group, get the list of allowed
         // groups and see if there is only one option - if so we will use it
         if (!$targetgroup) {
@@ -74,9 +80,9 @@ try {
             require_once(dirname(__FILE__) . '/group_form.php');
             $mform = new mod_forumng_group_form('move.php', (object)array(
                 'targetforum' => $targetforum, 'discussionid' => $d,
-                'groups' => $options));
+                'cloneid' => $cloneid, 'groups' => $options));
             if ($mform->is_cancelled()) {
-                redirect('../../discuss.php?d=' . $d);
+                redirect('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
             }
             if (($fromform = $mform->get_data()) && 
                 array_key_exists($fromform->group, $options)) {
@@ -92,11 +98,10 @@ try {
     }
 
     // Perform move
-    $discussion->move($targetforum->get_course_id(), $targetforum->get_id(),
-        $targetgroup);
+    $discussion->move($targetforum, $targetgroup);
 
     // Redirect to new forum
-    redirect('../../view.php?id=' . $target);
+    redirect($targetforum->get_url(forum::PARAM_PLAIN));
 } catch(forum_exception $e) {
     forum_utils::handle_exception($e);
 }

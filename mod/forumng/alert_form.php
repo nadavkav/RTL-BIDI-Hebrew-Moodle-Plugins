@@ -62,6 +62,7 @@ class mod_forumng_alert_form extends moodleform {
 
         //Add postid as hidden field
         $mform->addElement('hidden', 'p', $this->_customdata->postid);
+        $mform->addElement('hidden', 'clone', $this->_customdata->cloneid);
     }
 
     function validation($data, $files) {

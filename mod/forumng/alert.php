@@ -12,7 +12,8 @@ require_once('forum.php');
 
 try {
     $postid = required_param('p', PARAM_INT);
-    $post = forum_post::get_from_id($postid);
+    $cloneid = optional_param('clone', 0, PARAM_INT);
+    $post = forum_post::get_from_id($postid, $cloneid);
     $discussion = $post->get_discussion();
     $d = $discussion->get_id();
     $forum = $post->get_forum();
@@ -31,12 +32,13 @@ try {
             'forumname' => $forum->get_name(),
             'discussionid' => $d,
             'postid' => $postid,
+            'cloneid' => $cloneid,
             'email' => $USER->email, 
             'username' => $USER->username,
             'ip' => getremoteaddr(),
             'fullname' => fullname($USER, true),
             'coursename' => $course->shortname,
-            'url' => $CFG->wwwroot . '/mod/forumng/discuss.php?d=' . $d . '#p'.$postid
+            'url' => $CFG->wwwroot . '/mod/forumng/discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN) . '#p'.$postid
     );
 
     $mform = new mod_forumng_alert_form('alert.php', $customdata);
@@ -44,7 +46,7 @@ try {
 
     // If cancelled, return to the post
     if ($mform->is_cancelled()) {
-        redirect('discuss.php?d=' . $d . '#p' . $postid);
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN) . '#p' . $postid);
     }
 
     //if the alert form has been submitted successfully, send the email
@@ -137,7 +139,8 @@ try {
         $discussion->print_subpage_header($pagename);
 
         print_box(get_string('alert_feedback', 'forumng'));
-        print_continue('discuss.php?d=' . $d.'#p'.$postid);
+        print_continue('discuss.php?' .
+                $discussion->get_link_params(forum::PARAM_HTML) . '#p' . $postid);
 
     } else {
         //show the alert form

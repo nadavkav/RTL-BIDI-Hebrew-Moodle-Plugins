@@ -17,6 +17,7 @@ class forward_post_selector extends post_selector {
         $customdata = (object)array(
             'subject' => $discussion->get_subject(),
             'discussionid' => $discussion->get_id(),
+            'cloneid' => $discussion->get_forum()->get_course_module_id(),
             'postids' => $selected,
             'onlyselected' => !$all);
         return new mod_forumng_forward_form('forward.php', $customdata);
@@ -88,7 +89,7 @@ class forward_post_selector extends post_selector {
         $discussion->print_subpage_header($this->get_page_name());
 
         print_box(get_string('forward_done', 'forumng'));
-        print_continue('../../discuss.php?d=' . $discussion->get_id());
+        print_continue('../../discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
         print_footer($COURSE);
     }
 

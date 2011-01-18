@@ -43,7 +43,8 @@ class move_forum_feature extends discussion_feature {
         $results = array();
         foreach($modinfo->instances['forumng'] as $other) {
             // Don't let user move discussion to its current forum
-            if ($other->instance == $discussion->get_forum()->get_id()) {
+            if ($other->instance == $discussion->get_forum()->get_id() ||
+                $other->id == $discussion->get_forum()->get_course_module_id()) {
                 continue;
             }
             $othercontext = get_context_instance(CONTEXT_MODULE, $other->id);
@@ -62,8 +63,8 @@ class move_forum_feature extends discussion_feature {
         $select = choose_from_menu($results, 'target', '',
             get_string('movethisdiscussionto', 'forumng'),'', 0, true);
         return '<form method="post" action="feature/move/move.php"><div>' .
-            '<input type="hidden" name="d" value="' . $discussion->get_id() .
-            '" />' . $select . '<input class="forumng-zero-disable" ' .
+            $discussion->get_link_params(forum::PARAM_FORM) .
+            $select . '<input class="forumng-zero-disable" ' .
             'type="submit" value="' .get_string('move') . '" /></div></form>';
     }
 }

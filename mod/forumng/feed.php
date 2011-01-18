@@ -16,6 +16,7 @@ if (!$d) {
     $cmid = required_param('id', PARAM_INT);
     $groupid = optional_param('group', 'unspecified', PARAM_INT);
 }
+$cloneid = optional_param('clone', 0, PARAM_INT);
 
 // User identification
 $userid = required_param('user', PARAM_INT);
@@ -28,13 +29,13 @@ $rss = $format == 'rss';
 try {
     // Load forum
     if ($d) {
-        $discussion = forum_discussion::get_from_id($d);
+        $discussion = forum_discussion::get_from_id($d, $cloneid);
         $forum = $discussion->get_forum();
         $groupid = $discussion->get_group_id();
-        $url = $CFG->wwwroot . '/mod/forumng/discuss.php?d=' . $d;
+        $url = $discussion->get_url(forum::PARAM_PLAIN);
     } else {
-        $forum = forum::get_from_cmid($cmid);
-        $url = $CFG->wwwroot . '/mod/forumng/view.php?id=' . $cmid;
+        $forum = forum::get_from_cmid($cmid, $cloneid);
+        $url = $forum->get_url(forum::PARAM_PLAIN);
         if ($groupid == 'unspecified') {
             $groupid = $forum->get_group_mode() == SEPARATEGROUPS 
                 ? forum::ALL_GROUPS : forum::NO_GROUPS;

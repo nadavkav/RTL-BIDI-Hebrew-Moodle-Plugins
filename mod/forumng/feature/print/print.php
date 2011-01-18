@@ -16,7 +16,7 @@ class print_post_selector extends post_selector {
         $d = $discussion->get_id();
         $forum = $discussion->get_forum();
         print_header($this->get_page_name());
-        $printablebacklink = $CFG->wwwroot . '/mod/forumng/discuss.php?d=' . $d ;
+        $printablebacklink = $CFG->wwwroot . '/mod/forumng/discuss.php?' . $discussion->get_link_params(forum::PARAM_HTML) ;
         print '
 <div class="forumng-printable-header">
 <div class="forumng-printable-backlink">' . link_arrow_left($discussion->get_subject(), $printablebacklink) . '</div>

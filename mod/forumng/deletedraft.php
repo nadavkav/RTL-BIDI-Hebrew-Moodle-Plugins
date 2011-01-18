@@ -5,7 +5,8 @@ require_once('forum.php');
 try {
     // Load draft and forum
     $draft = forum_draft::get_from_id(required_param('draft', PARAM_INT));
-    $forum = forum::get_from_id($draft->get_forum_id());
+    $forum = forum::get_from_id($draft->get_forum_id(),
+        optional_param('clone', 0, PARAM_INT));
     $course = $forum->get_course();
     $cm = $forum->get_course_module();
 
@@ -17,7 +18,7 @@ try {
     // If they are actually deleting it, go ahead
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $draft->delete();
-        redirect('view.php?id=' . $cm->id);
+        redirect($forum->get_url());
     }
 
     // Confirm page. Work out navigation for header    

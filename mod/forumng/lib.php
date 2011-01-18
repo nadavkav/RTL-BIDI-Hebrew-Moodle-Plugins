@@ -5,6 +5,25 @@ function forumng_add_instance($forumng) {
     // require this lib.php; only include when functions are called
     require_once(dirname(__FILE__).'/forum.php');
 
+    $useshared = !empty($forumng->usesharedgroup['useshared']);
+    if ($useshared) {
+        $idnumber = $forumng->usesharedgroup['originalcmidnumber'];
+        if (!($originalcm = get_record('course_modules', 'idnumber', $idnumber,
+            'module', get_field('modules', 'id', 'name', 'forumng')))) {
+            return false;
+        }
+        if (!($originalforumng = get_record('forumng', 'id', $originalcm->instance))) {
+            return false;
+        }
+
+        // Create appropriate data for forumng table
+        $forumng = (object)array(
+            'name' => addslashes($originalforumng->name),
+            'course' => $forumng->course,
+            'type' => 'clone',
+            'originalcmid' => $originalcm->id);
+    }
+
     // Pick a random magic number
     $part1 = mt_rand(0, 99999999);
     $part2 = mt_rand(0, 99999999);
@@ -17,8 +36,12 @@ function forumng_add_instance($forumng) {
         return false;
     }
 
-    $forum=forum::get_from_id($id, false);
-    $forum->created($forumng->cmidnumber);
+    // Handle post-creation actions (but only if a new forum actually was
+    // created, and not just a new reference to a shared one!)
+    if (!$useshared) {
+        $forum=forum::get_from_id($id, forum::CLONE_DIRECT, false);
+        $forum->created($forumng->cmidnumber);
+    }
 
     return $id;
 }
@@ -43,7 +66,7 @@ function forumng_update_instance($forumng) {
     }
 
     try {
-        $forum=forum::get_from_id($forumng->id);
+        $forum=forum::get_from_id($forumng->id, forum::CLONE_DIRECT);
         $forum->updated($previous);
     } catch(Exception $e) {
         return false;
@@ -57,7 +80,7 @@ function forumng_delete_instance($id, $ociskip=true) {
     require_once(dirname(__FILE__).'/forum.php');
 
     try {
-        $forum = forum::get_from_id($id);
+        $forum = forum::get_from_id($id, forum::CLONE_DIRECT);
         // avoid deleting OCI specific forum if running in upload block
         if ($ociskip) {
             global $restore;
@@ -164,9 +187,10 @@ function forumng_print_overview($courses,&$htmlarray) {
                 // note like all mymoodle, there's no check current user can see each forum
                 // ok for openlearn & vital but might need addressing if VLE ever use it
                 if ($forum->has_unread_discussions()) { // only listing unread, not new & unread for performance
-                    $str .= '<div class="overview forumng"><div class="name">'.$strforum.':'.
-                        ' <a title="'.$strforum.'" href="'.$CFG->wwwroot.'/mod/forumng/view.php?id='.
-                        $forum->get_course_module_id().'">'.$forum->get_name().'</a></div>';
+                    $str .= '<div class="overview forumng"><div class="name">' .
+                        $strforum . ':' . ' <a title="' . $strforum . '" href="' .
+                        $forum->get_url(forum::PARAM_HTML).'">' .
+                        $forum->get_name() . '</a></div>';
                     $str .= '<div class="info">'.$forum->get_num_unread_discussions(). ' '.$strnumunread.'</div></div>';
                 }
 
@@ -213,7 +237,7 @@ function forumng_supports($feature) {
  */
 function forumng_get_completion_state($course, $cm, $userid, $type) {
     // Use forum object to handle this request
-    $forum = forum::get_from_cmid($cm->id);
+    $forum = forum::get_from_cmid($cm->id, forum::CLONE_DIRECT);
     return $forum->get_completion_state($userid, $type);
 }
 

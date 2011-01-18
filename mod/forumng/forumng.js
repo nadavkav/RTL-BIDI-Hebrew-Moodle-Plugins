@@ -3,9 +3,10 @@ var forumng_strings;
 var forumng_ratingstars;
 var forumng_cmid;
 var forumng_select = {};
-var forumng_discussionid;
+var forumng_discussionid, forumng_cloneparam, forumng_cloneid;
 var forumng_quotaleft;
 var forumng_mouseuser;
+var forumng_viewportwidth;
 
 function forumng_log(thing) {
     if (typeof(console) !== 'undefined') {
@@ -21,6 +22,18 @@ function forumng_init() {
                 return this.replace(/^\s+/, '') . replace(/\s+$/, '');
             };
         }
+
+        // Get clone param if it's in url
+        forumng_cloneparam = window.location.search.match(/&(clone=([0-9]+))/);
+        if (!forumng_cloneparam) {
+            forumng_cloneparam = '';
+            forumng_cloneid = 0;
+        } else {
+            forumng_cloneparam = forumng_cloneparam[0];
+            forumng_log(forumng_cloneparam);
+            forumng_cloneid = forumng_cloneparam.replace(/^.*clone=([0-9]+).*$/, '$1');
+        }
+
         //Magicalise the hidden 'switch view mode' link
         if (document.getElementById('forumng-switchlinkid')) {
             var link = document.getElementById('forumng-switchlinkid');
@@ -60,6 +73,9 @@ function forumng_init_discuss() {
     forumng_discussionid = window.location.search.replace(
         /^.*[?&]d=([0-9]+).*$/ , '$1');
 
+    // Tell CSS that we have JS working
+    YAHOO.util.Dom.removeClass('forumng-main', 'forumng-nojs');
+
     // Set up magic links
     document.forumng_expirelinks = [];
     forumng_init_content(document);
@@ -75,6 +91,66 @@ function forumng_init_discuss() {
 
     // Init feature buttons
     forumng_init_feature_buttons();
+    
+    // Apply stop indents
+    forumng_apply_stop_indents();
+    var region = YAHOO.util.Dom.getRegion(document.getElementById('forumng-main'));
+    forumng_viewportwidth = region.right - region.left;
+    setInterval(function() { 
+        var region = YAHOO.util.Dom.getRegion(document.getElementById('forumng-main'));
+        var width = region.right - region.left;
+        if (width != forumng_viewportwidth) {
+            forumng_viewportwidth = width;
+            forumng_apply_stop_indents();
+        }
+    }, 250);
+}
+
+function forumng_apply_stop_indents() {
+    // Pick max indent level
+    var region = YAHOO.util.Dom.getRegion(document.getElementById('forumng-main'));
+    var width = region.right - region.left;
+    var minwidth = 360;
+    var maxindentpixels = width - minwidth;
+    var stopIndent;
+
+    // There are 5 indents of 40px then 5 of 30px, then all 20px
+    if (maxindentpixels > 350) {
+        stopIndent = 10 + Math.floor((maxindentpixels - 350) / 20);
+    } else if(maxindentpixels > 200) {
+        stopIndent = 5 + Math.floor((maxindentpixels - 200) / 30);
+    } else {
+        stopIndent = Math.floor(maxindentpixels / 40);
+    }
+
+    // sort indents
+    forumng_replies = YAHOO.util.Dom.getElementsByClassName('forumng-replies', 'div');
+
+    // build list of answers
+    for (var i=0; i<forumng_replies.length; i++) {
+        var reply = forumng_replies[i];
+        var indent = forumng_get_reply_indent(reply);
+        if(indent == stopIndent){
+            YAHOO.util.Dom.addClass(reply, 'forumng-stop-indent');
+        } else {
+            YAHOO.util.Dom.removeClass(reply, 'forumng-stop-indent');
+        }
+    }
+}
+
+function forumng_get_reply_indent(reply) {
+    if (reply.forumng_indent) {
+        return reply.forumng_indent;
+    }
+
+    var indent = 1;
+    // for a given reply go through each parent to find its nexting.
+    var ancestor = YAHOO.util.Dom.getAncestorByClassName(reply, 'forumng-replies');
+    if(ancestor){
+        indent +=forumng_get_reply_indent(ancestor);
+    }
+    reply.forumng_indent = indent;
+    return indent;
 }
 
 function forumng_init_editpost() {
@@ -119,6 +195,10 @@ function forumng_init_content(el) {
     for (var i=0; i<links.length; i++) {
         var link = links[i];
 
+        if(link.className == 'forumng-mobilepost-link'){
+        	continue;
+        }
+        
         // Any link with &expires= will be hidden a bit before that time
         match = link.href.match(/[?&]expires=([0-9]+)(&|$)/);
         if (match) {
@@ -127,25 +207,25 @@ function forumng_init_content(el) {
 
         // Magicalise 'Expand' links
         var match = link.href.match(
-            /\/discuss\.php\?d=([0-9]+)&expand=1#p([0-9]+)$/);
+            /\/discuss\.php\?d=([0-9]+).*&expand=1#p([0-9]+)$/);
         if (match && link.className=='forumng-expandlink') {
             forumng_init_expand(link, match, expandposts[parseInt(match[2])]);
         }
 
         // Magicalise 'Reply' links
-        match = link.href.match(/\/editpost\.php\?replyto=([0-9]+)$/);
+        match = link.href.match(/\/editpost\.php\?replyto=([0-9]+).*$/);
         if (match) {
             forumng_init_reply(link, parseInt(match[1]));
         }
 
         // Magicalise 'Edit' links
-        match = link.href.match(/\/editpost\.php\?p=([0-9]+)$/);
+        match = link.href.match(/\/editpost\.php\?p=([0-9]+).*$/);
         if (match) {
             forumng_init_edit(link, parseInt(match[1]));
         }
 
         // Magicalise 'Delete' / 'Undelete' links
-        match = link.href.match(/\/deletepost\.php\?p=([0-9]+)(?:&delete=([0-9]+))?$/);
+        match = link.href.match(/\/deletepost\.php\?p=([0-9]+)(?:&clone=[0-9]+)?(?:&delete=([0-9]+))?$/);
         if (match) {
             forumng_init_delete(link, parseInt(match[1]), match[2] && match[2]==0);
         }
@@ -298,6 +378,10 @@ function forumng_init_expand(link, matches, expandnow) {
     link.postid = matches[2];
     link.delay = true;
 
+    // Replace 'expand all' text with 'expand this post'
+    var postnum = link.post.className.replace(/^.*forumng-p([0-9]+).*$/, '$1');
+    link.innerHTML = forumng_strings.expand.replace('#', postnum); 
+
     link.onclick = function() {
         if (link.inProcess) {
             return false;
@@ -305,7 +389,7 @@ function forumng_init_expand(link, matches, expandnow) {
         link.post.focushandler = null;
         YAHOO.util.Connect.asyncRequest('POST','expandpost.php',
             {success:forumng_expand_ok,failure:forumng_expand_error,scope:link},
-            'p='+link.postid);
+            'p=' + link.postid + forumng_cloneparam);
         if (forumng_pixpath) {
             link.loader.src = forumng_pixpath + '/i/ajaxloader.gif';
         }
@@ -507,7 +591,7 @@ function forumng_init_reply(link, replytoid) {
                     forumng_htmlarea_progress_state(form.htmlarea, 1);
                 }
             }
-            forumng_save(form, 'replyto=' + form.replytoid,
+            forumng_save(form, 'replyto=' + form.replytoid + forumng_cloneparam,
                     forumng_save_ok_reply, forumng_save_error);
             return false;
         };
@@ -524,7 +608,8 @@ function forumng_init_reply(link, replytoid) {
                     forumng_htmlarea_progress_state(form.htmlarea, 1);
                 }
             }
-            forumng_save(form, 'replyto=' + form.replytoid + '&savedraft=1&keepplayspace=1',
+            forumng_save(form, 'replyto=' + form.replytoid + forumng_cloneparam +
+                    '&savedraft=1&keepplayspace=1',
                     forumng_save_ok_draft, forumng_save_error);
             return false;
         }
@@ -635,6 +720,7 @@ function forumng_init_attachments(form, attachments) {
         button.disabled = true;
         window.currentform = form;
         var dialog = window.open('addattachment.php?id=' + forumng_cmid +
+            forumng_cloneparam +
             (form.editpostid ? '&p=' + form.editpostid : '') +
             (form.attachmentplayspace.value
                     ? '&attachmentplayspace=' + form.attachmentplayspace.value : '' ),
@@ -685,7 +771,7 @@ function forumng_add_attachment(form, attachment) {
         }
         form.attachmentlock = true;
         img.src = forumng_pixpath + '/i/ajaxloader.gif';
-        var data = 'id=' + forumng_cmid +
+        var data = 'id=' + forumng_cmid +  forumng_cloneparam +
             '&file=' + encodeURIComponent(attachment);
         if (form.editpostid) {
             data += '&p=' + form.editpostid;
@@ -759,15 +845,25 @@ function forumng_init_editor(form, value) {
             if(form.mce) {
                 tinyMCE.execCommand('mceAddControl', false, form.message.id);
                 // And this one required so that mceFocus works
-                setTimeout(function() {
-                    tinyMCE.execCommand('mceFocus', false, form.message.id) } , 0);
+                var focusFunction = function() {
+                    tinyMCE.execCommand('mceFocus', false, form.message.id);
+                };
+
+                if(navigator.product != 'Gecko') {
+                    setTimeout(focusFunction, 0);
+                } else {
+                    setTimeout(function() {
+                        form.subject.focus();
+                        setTimeout(focusFunction , 0);
+                    }, 0);
+                }
             } else {
                 form.inithtmlarea();
             }
         },0);
+        form.format.value = 1;
     }
 }
-
 
 function forumng_save(form, param, ok, error) {
     var data = 'ajax=1&' + param;
@@ -822,6 +918,7 @@ function forumng_save_ok_reply(o) {
         replies = document.createElement('div');
         replies.className = 'forumng-replies';
         this.post.parentNode.insertBefore(replies, this.post.nextSibling);
+        forumng_apply_stop_indents();
     }
 
     // Add item there
@@ -851,7 +948,7 @@ function forumng_kill_reply_links(root) {
     var links = root.getElementsByTagName('a');
     for (var i=links.length-1; i>=0; i--) {
         var link = links[i];
-        if (link.href && link.href.match(/editpost\.php\?replyto=[0-9]+$/)) {
+        if (link.href && link.href.match(/editpost\.php\?replyto=[0-9]+.*$/)) {
             link.parentNode.parentNode.removeChild(link.parentNode);
         }
     }
@@ -911,7 +1008,7 @@ function forumng_init_edit(link, postid) {
         // Set up form details for edit
         form.editpostid = postid;
         YAHOO.util.Connect.asyncRequest('GET',
-            'expandpost.php?raw=1&playspace=1&p=' + postid,
+            'expandpost.php?raw=1&playspace=1&p=' + postid + forumng_cloneparam,
             {success:forumng_editstart_ok,failure:forumng_editstart_error,scope:form});
         return false;
     }
@@ -983,7 +1080,7 @@ function forumng_editstart_ok(o) {
                 forumng_htmlarea_progress_state(this.form.htmlarea, 1);
             }
         }
-        forumng_save(this.form, 'p=' + this.form.editpostid,
+        forumng_save(this.form, 'p=' + this.form.editpostid + forumng_cloneparam,
                 forumng_save_ok_edit, forumng_save_error);
         return false;
     };
@@ -1049,6 +1146,12 @@ function forumng_init_form(f) {
     var formatItem = f.format.parentNode.parentNode;
     if (f.tryinghtmleditor.value=='1') {
         formatItem.style.display='none';
+    }
+    f.expectingeditor = f.tryinghtmleditor.value=='1';
+    f.usingeditor = f.expectingeditor && (window.tinyMCE || window.HTMLArea) ;
+    if (f.usingeditor) {
+        f.format.value = 1;
+        //alert('Set the value of the form to 1 in init_forum');
     }
 }
 
@@ -1142,7 +1245,6 @@ function forumng_confirm(message, actiontext, canceltext, highlight, action) {
     var buttondiv = document.createElement('div');
     buttondiv.className = 'forumng-buttons';
     dialog.appendChild(buttondiv);
-
     var cancel = document.createElement('input');
     cancel.type = 'button';
     cancel.value = canceltext;
@@ -1170,6 +1272,7 @@ function forumng_confirm_make_button(actiontext, action, cancel) {
         cancel.onclick();
         action();
     }
+    forumng_focus(yes);
     return yes;
 }
 
@@ -1185,7 +1288,8 @@ function forumng_init_delete(link, postid, undelete) {
                 forumng_strings.core_cancel, link.post, function() {
             YAHOO.util.Connect.asyncRequest('POST','deletepost.php',
                 {success:forumng_delete_ok,failure:forumng_delete_error,scope:link},
-                'p=' + link.postid + '&delete=' + (undelete ? 0 : 1) + '&ajax=1');
+                'p=' + link.postid + forumng_cloneparam +
+                '&delete=' + (undelete ? 0 : 1) + '&ajax=1');
             forumng_links_disable(link.post);
             if (forumng_pixpath) {
                 link.loader = document.createElement('img');
@@ -1344,7 +1448,8 @@ function forumng_init_rating(div) {
                     }
                     YAHOO.util.Connect.asyncRequest('POST','rate.php',
                         {success:forumng_star_ok,failure:forumng_delete_error,scope:div},
-                        'p=' + div.postid + '&rating=' + div.newrating + '&ajax=1');
+                        'p=' + div.postid  + forumng_cloneparam
+                        + '&rating=' + div.newrating + '&ajax=1');
                     forumng_links_disable(div.post);
 
                     // Use the current star as a loader icon place
@@ -1398,7 +1503,8 @@ function forumng_init_rating(div) {
 
             YAHOO.util.Connect.asyncRequest('POST','rate.php',
                 {success:forumng_delete_ok,failure:forumng_delete_error,scope:div},
-                'p=' + div.postid + '&rating=' + div.select.value + '&ajax=1');
+                'p=' + div.postid  + forumng_cloneparam +
+                '&rating=' + div.select.value + '&ajax=1');
             forumng_links_disable(div.post);
 
             if (forumng_pixpath) {
@@ -1513,7 +1619,10 @@ function forumng_select_init(target) {
     var extraneousDisplay = forumng_select.on ? 'none' : 'block';
     document.getElementById('forumng-expandall').style.display = extraneousDisplay;
     document.getElementById('forumng-features').style.display = extraneousDisplay;
-    document.getElementById('forumng-subscribe-options').style.display = extraneousDisplay;
+    var subscribeOptions = document.getElementById('forumng-subscribe-options');
+    if(subscribeOptions) {
+        subscribeOptions.style.display = extraneousDisplay;
+    }
 
     var main = document.getElementById('forumng-main');
     if (forumng_select.on) {
@@ -1536,6 +1645,13 @@ function forumng_select_init(target) {
         field.name = 'fromselect';
         field.value = 1;
         form.inputs.appendChild(field);
+        if (forumng_cloneid) {
+            field = document.createElement('input');
+            field.type = 'hidden';
+            field.name = 'clone';
+            field.value = forumng_cloneid;
+            form.inputs.appendChild(field);
+        }
 
         // Make intro
         form.intro = document.createElement('div');
@@ -1635,7 +1751,7 @@ function forumng_init_select_button(submit) {
                 forumng_strings.core_cancel,
                 null, [function() {
                     location.href = submit.form.action + '?d=' +
-                        forumng_discussionid + '&all=1';
+                        forumng_discussionid + forumng_cloneparam + '&all=1';
                 }, function() {
                     forumng_select_init(submit);
                 }]);
@@ -1779,7 +1895,8 @@ function forumng_init_flag_div(div) {
             failure:function(o) {
                 alert(forumng_strings.jserr_alter);
             }}, 
-            'p='+div.postid+'&flag=' + (div.on ? 0 : 1) + '&ajax=1');
+            'p='+div.postid  + forumng_cloneparam +
+            '&flag=' + (div.on ? 0 : 1) + '&ajax=1');
 
         return false;
     };
@@ -1852,15 +1969,35 @@ function forumng_init_view() {
     forumng_focus_sort_links();
     var links = document.getElementsByTagName('a');
     for (var i=0; i<links.length; i++) {
-        var link = links[i];    
+        var link = links[i];
         var match = link.className.match(/^forumng-draftreply-([0-9]+)-([0-9]+)$/);
         if (match) {
             var linkmatch = link.href.match(/draft=([0-9]+)$/);
-            link.href = 'discuss.php?d=' + match[1] + '&draft=' + linkmatch[1] + 
-                '#p' + match[2];
+            link.href = 'discuss.php?d=' + match[1] + forumng_cloneparam +
+                '&draft=' + linkmatch[1] + '#p' + match[2];
         }
     }
     forumng_init_flags(document.body);
+
+    // Change selected buttons into links with text in brackets
+    var specialbuttons = YAHOO.util.Dom.getElementsByClassName(
+            'forumng-button-to-link', 'input');
+    for (var i=0; i<specialbuttons.length; i++) {
+        forumng_turn_button_into_link(specialbuttons[i]);
+    }
+}
+
+function forumng_turn_button_into_link(button) {
+    var span = document.createElement('span');
+    span.appendChild(document.createTextNode('('));
+    var link = document.createElement('a');
+    link.appendChild(document.createTextNode(button.value));
+    link.href = '#';
+    link.onclick = function() { button.click(); return false; }
+    span.appendChild(link);
+    span.appendChild(document.createTextNode(') '));
+    button.parentNode.insertBefore(span, button);
+    button.style.display = 'none';
 }
 
 function forumng_init_switchlink(link) {

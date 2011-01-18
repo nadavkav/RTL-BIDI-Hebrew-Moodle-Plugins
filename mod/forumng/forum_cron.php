@@ -106,9 +106,6 @@ $mainquery
                     mtrace("\nError deleting post folder: $folder");
                     // But don't stop because we can't undo earlier changes
                 }
-                forum_utils::folder_debug('remove_dir',
-                    'forum_cron::delete_old_posts',
-                    'p=' . $attachmentrecord->postid, $folder);
             }
 
             // Get list of all discussions that might need deleting
@@ -143,9 +140,6 @@ $mainquery
                     if (!rmdir($folder)) {
                         mtrace("\nError deleting discussion folder: $folder");
                     }
-                    forum_utils::folder_debug('rmdir',
-                        'forum_cron::delete_old_posts',
-                        'd=' . $attachmentrecord->discussionid, $folder);
                 }
             }
 
@@ -167,10 +161,32 @@ $mainquery
         self::email_digest();
     }
 
+    /**
+     * @param string $text Text to output, or none if you only want to check
+     *   the value
+     * @param string $lf Set to '' if you don't want a linefeed
+     * @return bool True if debug output is enabled
+     */
+    static function debug($text = '', $lf = "\n") {
+        static $checked = false, $debug;
+        if (!$checked) {
+            $debug = debugging('', DEBUG_DEVELOPER);
+            if (class_exists('ouflags') && !ouflags::enabled('core_admin_crondebug')) {
+                $debug = false;
+            }
+        }
+        if (!$debug) {
+            return false;
+        }
+        if ($text) {
+            mtrace($text, $lf);
+        }
+        return true;
+    }
+
     static function email_normal() {
         global $USER, $CFG, $PERF;
 
-        $debug = $CFG->forumng_crondebug; 
         $exceptioncount = 0;
 
         // Obtain information about all mails that are due for sending
@@ -183,8 +199,15 @@ $mainquery
         $list = new forum_mail_list(true);
         mtrace(round(microtime(true)-$before,1) .'s');
 
+        // Cumulative time spent actually sending emails
+        $mailtime = 0;
+
         // Forum loop
-        while ($list->next_forum($forum, $cm, $context, $course, $debug)) {
+        while ($list->next_forum($forum, $cm, $context, $course)) {
+            self::debug("DEBUG: Forum " . $forum->get_name() .
+                    " on course {$course->shortname} " .
+                    "(cmid {$cm->id} contextid {$context->id})");
+
             // Set up course details
             course_setup($course);
 
@@ -193,13 +216,26 @@ $mainquery
             $emailcount = 0;
 
             // Get subscribers to forum
-            $subscribers = $forum->get_subscribers();
-            self::email_filter_subscribers($course, $cm, $forum, $subscribers, false);
-            if(count($subscribers)==0) {
+            try {
+                $subscribers = $forum->get_subscribers();
+                self::debug("DEBUG: Subscribers before filter " . count($subscribers), '');
+                self::email_filter_subscribers($course, $cm, $forum, $subscribers, false);
+                self::debug(", after " . count($subscribers));
+                if(count($subscribers)==0) {
+                    continue;
+                }
+            } catch(forum_exception $e) {
+                // If an error occurs while getting subscribers, continue
+                // to next forum
+                mtrace(' Exception while getting subscribers for forum ' .
+                        $forum->get_id());
+                mtrace($e->__toString());
                 continue;
             }
 
-            while ($list->next_discussion($discussion, $debug)) {
+            while ($list->next_discussion($discussion)) {
+                self::debug("DEBUG: Discussion " . $discussion->get_subject() .
+                        ' (' . $discussion->get_id() . ')');
 
                 // Evaluate list of users based on this discussion (which holds
                 // group info). Organise list by language, timezone and email
@@ -218,8 +254,26 @@ $mainquery
                             $subscriber;
                     }
                 }
+                if (self::debug()) {
+                    $debugcount = 0;
+                    foreach ($langusers as $lang=>$tzusers) {
+                        foreach ($tzusers as $timezone=>$typeusers) {
+                            foreach ($typeusers as $emailtype=>$users) {
+                                mtrace("DEBUG: Subscribers for lang [$lang] " .
+                                        "tz [$timezone] type [$emailtype]: " .
+                                        count($users));
+                                $debugcount += count($users);
+                            }
+                        }
+                    }
+                    mtrace("DEBUG: Total discussion subscribers: $debugcount");
+                }
 
-                while ($list->next_post($post, $inreplyto, $debug)) {
+                while ($list->next_post($post, $inreplyto)) {
+                    if (self::debug()) {
+                        mtrace("DEBUG: Post " . $post->get_id(), '');
+                        $debugcount = $emailcount;
+                    }
                     try {
                         $from = $post->get_user();
 
@@ -236,38 +290,47 @@ $mainquery
                                         $plaintext, $html, $emailtype & 1,
                                         $emailtype & 2, $emailtype & 4, $lang,
                                         $timezone);
-                                        
+
+                                    $beforemail = microtime(true);
                                     if ($CFG->forumng_usebcc) {
                                         // Use BCC to send all emails at once
                                         $emailcount += self::email_send_bcc(
-                                            $users, $subject,
+                                            $users, $from, $subject,
                                             $html, $plaintext,
-                                            "post " . $post->get_id());
+                                            "post " . $post->get_id(),
+                                            $emailtype & 1, $emailtype & 4);
                                     } else {
                                         // Loop through subscribers, sending mail to
                                         // each one
                                         foreach ($users as $mailto) {
                                             self::email_send($mailto, $from, $subject,
                                                 $plaintext, $html);
-                                            print ($debug) ? ("\n      --emailing to: ".$mailto->firstname.' '.$mailto->lastname.' '.$mailto->email):' ';
                                             $emailcount++;
                                         }
                                     }
+                                    $mailtime += microtime(true) - $beforemail;
                                 }
                             }
                         }
+                        // Reset exception count; while some posts are
+                        // successful, we'll keep trying to send them out
+                        $exceptioncount = 0;
                     } catch(exception $e) {
                         mtrace(' Exception while sending post ' . $post->get_id());
                         mtrace($e->__toString());
                         $exceptioncount++;
 
-                        if ($exceptioncount > 10) {
+                        if ($exceptioncount > 100) {
                             throw new forum_exception(
-                                'Too many post exceptions, aborting');
+                                'Too many post exceptions in a row, aborting');
                         }
                     }
 
                     $postcount++;
+                    if (self::debug()) {
+                        mtrace(", sent " . ($emailcount - $debugcount) .
+                                " emails");
+                    }
                 }
             }
 
@@ -277,7 +340,8 @@ $mainquery
             mtrace("Forum ".$forum->get_name() .
                 ": sent $counts");
             add_to_log($forum->get_course_id(), 'forumng', 'mail ok',
-                'view.php?id=' . $cm->id, $counts);
+                'view.php?' . $forum->get_link_params(forum::PARAM_PLAIN),
+                $counts);
         }
         $queryinfo = '';
         if (!empty($PERF->dbqueries)) {
@@ -285,8 +349,11 @@ $mainquery
               ' queries';
         }
         $totalpostcount = $list->get_post_count_so_far();
+        $totaltime = microtime(true)-$before;
         mtrace("Email processing ($totalpostcount new posts) complete, total: " .
-            round(microtime(true)-$before,1) . 's' . $queryinfo);
+            round($totaltime, 1) . 's (mail sending ' . round($mailtime, 1) .
+            's = ' . round(100.0 * $mailtime / $totaltime, 1) . '%)' .
+            $queryinfo);
     }
 
     /**
@@ -299,40 +366,37 @@ $mainquery
     function subscriber_receives_discussion($forum, $discussion, $subscriber) {
         // Did they subscribe specifically to this discussion?
         $explicitsubscribed = array_key_exists(
-            $discussion->get_id(), $subscriber->discussionids);
+                $discussion->get_id(), $subscriber->discussionids);
+
+        // Did they subscribe to the group this discussion belongs to
+        $explicitsubscribedtogroup = in_array($discussion->get_group_id(),
+                $subscriber->groupids);
 
         $groupid = $discussion->get_group_id();
         $visiblegroups = $forum->get_group_mode() == VISIBLEGROUPS;
 
         // Conditions for each subscriber to get this discussion
-        $result = 
-            // 1. Subscribed to whole forum, or specifically to
-            // this discussion
-            ($subscriber->wholeforum || $explicitsubscribed) &&
+        $result =
+                // 1. Subscribed to whole forum, or specifically to
+                // this discussion, or specifically to this group
+                ($subscriber->wholeforum || $explicitsubscribed ||
+                    $explicitsubscribedtogroup) &&
 
-            // 2. The discussion has no group id, or they
-            // belong to the group, or they can access all groups, 
-            // or they explicitly subscribed to this discussion in 
-            // a visible-groups forum (NOTE: If you subscribe to
-            // the whole forum, this does NOT include other groups
-            // even if the forum is in visible groups mode. This
-            // bizarre behaviour is consistent with Moodle 1.9 
-            // forum.)
-            (!$groupid || $subscriber->accessallgroups ||
-                ($explicitsubscribed && $visiblegroups) ||
-                array_key_exists($groupid, $subscriber->groups)) &&
+                // 2. The discussion has no group id, or they
+                // belong to the group, or they can access all groups, 
+                // or it's visible-groups
+                (!$groupid || $subscriber->accessallgroups || $visiblegroups ||
+                    array_key_exists($groupid, $subscriber->groups)) &&
 
-            // 3. Forum type allows user to view discussion
-            $forum->get_type()->can_view_discussion(
-                $discussion, $subscriber->id);
+                // 3. Forum type allows user to view discussion
+                $forum->get_type()->can_view_discussion(
+                    $discussion, $subscriber->id);
 
         return $result;
     }
 
     function email_digest() {
         global $CFG, $PERF;
-        
-        $debug = $CFG->forumng_crondebug;
 
         // Do digest mails if required. Note this is based on server time not
         // user time.
@@ -347,6 +411,7 @@ $mainquery
         }
 
         if(time() < $nextdigest) {
+            self::debug ("DEBUG: Not yet time for digest");
             return;
         }
 
@@ -373,7 +438,10 @@ $mainquery
         $oldcourse = null;
 
         // Forum loop
-        while ($list->next_forum($forum, $cm, $context, $course, $debug)) {
+        while ($list->next_forum($forum, $cm, $context, $course)) {
+            self::debug("DEBUG: Forum " . $forum->get_name() .
+                    " on course {$course->shortname} " .
+                    "(cmid {$cm->id} contextid {$context->id})");
 
             if (!$oldcourse || ($course->id != $oldcourse->id)) {
                 // Finish off and clear users
@@ -390,12 +458,16 @@ $mainquery
 
             // Get subscribers to forum
             $subscribers = $forum->get_subscribers();
+            self::debug("DEBUG: Subscribers before filter " . count($subscribers), '');
             self::email_filter_subscribers($course, $cm, $forum, $subscribers, true);
+            self::debug(", after " . count($subscribers));
             if(count($subscribers)==0) {
                 continue;
             }
 
-            while ($list->next_discussion($discussion, $debug)) {
+            while ($list->next_discussion($discussion)) {
+                self::debug("DEBUG: Discussion " . $discussion->get_subject() .
+                        ' (' . $discussion->get_id() . ')');
 
                 // Evaluate list of users based on this discussion (which holds
                 // group info). Organise list by language, timezone and email
@@ -408,7 +480,7 @@ $mainquery
                     }
                 }
 
-                while ($list->next_post($post, $inreplyto, $debug)) {
+                while ($list->next_post($post, $inreplyto)) {
                     // Loop through all digest users
                     foreach ($discussionusers as $user) {
                         // Add to digest. (This will set up the user's
@@ -456,10 +528,12 @@ $mainquery
                 $digest->text .= "\n";
                 if ($canunsubscribe) {
                     $digest->html .=
-                        "<a href='$CFG->wwwroot/mod/forum/subscribe.php?id=$cm->id'>" .
+                        "<a href='$CFG->wwwroot/mod/forum/subscribe.php?" .
+                        $forum->get_link_params(forum::PARAM_HTML) . "'>" .
                         get_string("unsubscribe", "forumng") . "</a>";
                     $digest->text .= get_string("unsubscribe", "forumng") .
-                        ": $CFG->wwwroot/mod/forum/subscribe.php?id=$cm->id";
+                        ": $CFG->wwwroot/mod/forum/subscribe.php" .
+                        $forum->get_link_params(forum::PARAM_PLAIN);
                 } else {
                     $digest->html .= get_string("everyoneissubscribed", "forumng");
                     $digest->text .= get_string("everyoneissubscribed", "forumng");
@@ -547,9 +621,11 @@ $mainquery
             $html .= "<div class='forumng-breadcrumbs'>" .
                 "<a target='_blank' href='$CFG->wwwroot/course/view.php?id=$course->id'>$course->shortname</a> -> " .
                 "<a target='_blank' href='$CFG->wwwroot/mod/forumng/index.php?id=$course->id'>$strforums</a> -> " .
-                "<a target='_blank' href='$CFG->wwwroot/mod/forumng/view.php?id=$cm->id'>".format_string($forum->get_name(),true)."</a>";
+                "<a target='_blank' href='$CFG->wwwroot/mod/forumng/view.php?" . $forum->get_link_params(forum::PARAM_HTML) . "'>".format_string($forum->get_name(),true)."</a>";
             if ($discussion->get_subject(false) !== $forum->get_name()) {
-                $html .= " -> <a target='_blank' href='$CFG->wwwroot/mod/forumng/discuss.php?d=" . $discussion->get_id() . "'>" . format_string($discussion->get_subject(false),true) . "</a>";
+                $html .= " -> <a target='_blank' href='$CFG->wwwroot/mod/forumng/discuss.php?" .
+                        $discussion->get_link_params(forum::PARAM_HTML) . "'>" .
+                        format_string($discussion->get_subject(false),true) . "</a>";
             }
             $html .= '</div>';
 
@@ -677,15 +753,19 @@ $mainquery
      * Sends an email to lots of people using BCC.
      * @param array $targets List of target user objects (email, name fields
      *   required)
+     * @param mixed $from User or string who sent email
      * @param string $subject Subject of email
      * @param string $html HTML version of email (blank if none)
      * @param string $text Plain text version of email
      * @param string $showerrortext If set, mtraces errors and includes this
      *   extra string about where the error was.
+     * @param bool $ishtml If true, email is in HTML format
+     * @param bool $viewfullnames If true, these recipients have access to
+     *   see the full name
      * @return int Number of emails sent
      */
-    private static function email_send_bcc($targets, $subject, $html, $text,
-        $showerrortext) {
+    private static function email_send_bcc($targets, $from, $subject, $html, $text,
+        $showerrortext, $ishtml, $viewfullnames) {
         if(self::DEBUG_VIEW_EMAILS) {
             print "<div style='border:1px solid blue; padding:4px;'>";
             print "<h3>Bulk email sent</h3>";
@@ -715,10 +795,13 @@ $mainquery
         // email_to_user does); note that I did it more
         // aggressively due to use of textlib.
         $textlib = textlib_get_instance();
-        $mail->Subject = $tl->substr($subject, 0, 200);
+        $mail->Subject = $textlib->substr($subject, 0, 200);
 
         // Loop through in batches of specified size
-        $copy = clone($targets);
+        $copy = array();
+        foreach ($targets as $key=>$target) {
+            $copy[$key] = $target;
+        }
         while (count($copy)>0) {
             $batch = array_splice($copy, 0,
                 $CFG->forumng_usebcc);
@@ -737,15 +820,17 @@ $mainquery
             if ($CFG->forumng_replytouser &&
                 $from->maildisplay) {
                 $mail->From     = stripslashes($from->email);
-                $mail->FromName = fullname($from, $emailtype & 4);
+                $mail->FromName = fullname($from, $viewfullnames);
             } else {
                 $mail->From     = $CFG->noreplyaddress;
-                $mail->FromName = fullname($from, $emailtype & 4);
+                $mail->FromName = fullname($from, $viewfullnames);
             }
+            
+            $mail->ToName = 'Test to name';
 
             $mail->Subject = $subject;
 
-            if ($emailtype & 1) {
+            if ($ishtml) {
                 $mail->IsHTML(true);
                 $mail->Encoding = 'quoted-printable';
                 $mail->Body    =  $html;
@@ -775,6 +860,15 @@ $mainquery
                 }
                 add_to_log(SITEID, 'forumng', 'mail error',
                     '', 'ERROR: '. $mail->ErrorInfo);
+            } else {
+                // Mail send successful; log all users
+                foreach ($batch as $user) {
+                    // Note this log entry is in the same format as the
+                    // main mail function
+                    add_to_log(SITEID, 'library', 'mailer',
+                            'cron', 'emailsent ' . $user->id . ' (' .
+                            $user->username . '): ' . $subject);                    
+                }
             }
         }
         return $emailcount;
@@ -827,6 +921,9 @@ $mainquery
         // Delete disused playspaces
         self::delete_old_playspaces();
 
+        // Delete old upload folders
+        self::delete_old_uploads();
+
         // Really-delete old posts if that option is enabled
         self::delete_old_posts();
 
@@ -849,7 +946,7 @@ FROM
     INNER JOIN {$CFG->prefix}forumng_posts fp ON fd.lastpostid = fp.id
     INNER JOIN {$CFG->prefix}forumng f ON fd.forumid = f.id
 WHERE
-    f.removeafter<>0 AND fp.modified<$now - f.removeafter 
+    f.removeafter<>0  AND fd.sticky<>1 AND fp.modified<$now - f.removeafter 
 ";
         $count = forum_utils::count_records_sql("SELECT COUNT(1) $housekeepingquery");
         if ($count) {
@@ -865,7 +962,7 @@ SELECT
             $discussionmovecount = 0;
             $discussiondeletecount = 0;
             while($rec = rs_fetch_next_record($housekeepingrs)) {
-                $discussion = forum_discussion::get_from_id($rec->discussionid);
+                $discussion = forum_discussion::get_from_id($rec->discussionid, forum::CLONE_DIRECT);
                 if ($rec->removeto) {
                     //moving to a different forum
                     $forum = $discussion->get_forum();
@@ -874,14 +971,13 @@ SELECT
                     if ($forum->can_archive_forum($modinfo, $cron_log)) {
                         //Do not get the target forum and course id again if the target forum is the same
                         if (!$targetforum || $targetforum->get_id() != $rec->removeto) {
-                            $targetforum = forum::get_from_id($rec->removeto);
-                            $targetcourseid = $targetforum->get_course_id();
+                            $targetforum = forum::get_from_id($rec->removeto, forum::CLONE_DIRECT);
+                            $targetforum = $targetforum->get_real_forum();
                         }
                         //target discussion groupid must be the same as the original groupid 
-                        $targetforumid = $targetforum->get_id();
                         $targetgroupmode = $targetforum->get_group_mode();
                         $targetgroupid = $targetgroupmode ? $discussion->get_group_id() : null;
-                        $discussion->move($targetcourseid, $rec->removeto, $targetgroupid);
+                        $discussion->move($targetforum, $targetgroupid);
                         $discussionmovecount++;
                     }
                 } else {
@@ -912,6 +1008,37 @@ SELECT
             return;
         }
 
+        self::clear_old_folders($start, $folder);
+    }
+
+    /**
+     * If there is a problem midway through uploading files using the simple
+     * non-AJAX method, this can cause zombie upload folders to lurk around.
+     * This function deletes all uploads older than 24 hours.
+     */
+    public static function delete_old_uploads() {
+        global $CFG;
+        $start = microtime(true);
+        mtrace('Deleting old upload folders ', '');
+
+        // Find folder used for attachment playspaces
+        $folder = $CFG->dataroot . '/moddata/forumng/uploads/';
+        if (!is_dir($folder)) {
+            // No uploads at all
+            mtrace('[folder not found]');
+            return;
+        }
+
+        self::clear_old_folders($start, $folder);
+    }
+
+    /**
+     * Given a parent folder, deletes all folders within it (and their
+     * contents) if they are older than 24 hours.
+     * @param float $start Start time
+     * @param string $folder Folder path
+     */
+    private static function clear_old_folders($start, $folder) {
         // Threshold is 24 hours ago
         $threshold = time() - 24 * 3600;
 
@@ -934,10 +1061,8 @@ SELECT
             if (filemtime($target) < $threshold) {
                 // Older than threshold - delete
                 if (!remove_dir($target)) {
-                    mtrace("\nError deleting attachment playspace folder: $target");
+                    mtrace("\nError deleting folder: $target");
                 }
-                forum_utils::folder_debug('remove_dir',
-                    'forum_cron::delete_old_playspaces', '', $target);
                 $killed++;
             } else {
                 $spared++;

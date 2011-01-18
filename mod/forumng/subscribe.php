@@ -13,8 +13,12 @@ require_once('forum.php');
 $courseid = optional_param('course', 0, PARAM_INT);
 $cmid = optional_param('id', 0, PARAM_INT);
 $discussionid = optional_param('d', 0, PARAM_INT);
+$cloneid = optional_param('clone', 0, PARAM_INT);
+$groupid = optional_param('g', 0, PARAM_INT);
 $requestingsubscribe = optional_param('submitsubscribe', '', PARAM_ALPHA);
 $requestingunsubscribe = optional_param('submitunsubscribe', '', PARAM_ALPHA);
+$requestingsubscribe_group = optional_param('submitsubscribe_thisgroup', '', PARAM_ALPHA);
+$requestingunsubscribe_group = optional_param('submitunsubscribe_thisgroup', '', PARAM_ALPHA);
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Get request always does unsubscribe
     $requestingunsubscribe = 'y';
@@ -23,8 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 //Only one of the $courseid, $discussionid and $cmid must be true, also subscribe/unsubscribe
 $options = ($courseid ? 1 : 0) + ($cmid ? 1 : 0) + ($discussionid ? 1 : 0);
-$subscribeoptions = ($requestingsubscribe ? 1 : 0) + ($requestingunsubscribe ? 1 : 0);
-if ($options != 1 || $subscribeoptions != 1) {
+$subscribeoptions = ($requestingsubscribe ? 1 : 0) + ($requestingunsubscribe ? 1 : 0) +
+    ($requestingsubscribe_group ? 1 : 0) + ($requestingunsubscribe_group ? 1 : 0);
+// if group is set check that:
+// - subscribe/uns-group must be set
+// - cmid is set
+// - discussionid is not set
+// If group is not set, check that:
+// - subscribe/uns_group is NOT set
+if ($groupid && ($requestingsubscribe_group || $requestingunsubscribe_group) && $cmid && !$discussionid) {
+    $groupok = true;
+} else if (!($groupid || $requestingunsubscribe_group || $requestingsubscribe_group)) {
+    $groupok = true;
+} else {
+    $groupok = false;
+}
+if ($options != 1 || $subscribeoptions != 1 || !$groupok) {
     print_error('error_subscribeparams', 'forumng');
 }
 
@@ -42,6 +60,41 @@ if (($back=='view' && !$cmid)) {
 if (($back=='discuss' && !$discussionid)) {
     $back = '';
 }
+global $USER;
+$userid = $USER->id;
+
+/**
+ * Return a list of groups the user belongs to that apply to this forum (same grouping)
+ * @param int $userid
+ * @param int $forumid
+ * @return an array of group lists or an empty array
+ */
+function get_group_list($userid, $forumid) {
+    global $CFG;
+    //$courseid = forum::get_from_id($forumng->id, forum::CLONE_DIRECT)->get_course_id();
+    $sql_group = "
+SELECT
+    g.id AS groupid
+FROM
+    {$CFG->prefix}forumng f
+    INNER JOIN {$CFG->prefix}course_modules cm on f.id = cm.instance 
+    INNER JOIN {$CFG->prefix}modules m on cm.module = m.id 
+    INNER JOIN {$CFG->prefix}groups_members gm ON gm.userid = $userid 
+    INNER JOIN {$CFG->prefix}groups g ON gm.groupid = g.id AND g.courseid = cm.course 
+    LEFT JOIN {$CFG->prefix}groupings_groups gg ON gg.groupid = g.id AND cm.groupingid = gg.groupingid 
+WHERE
+    f.id = $forumid
+    AND m.name = 'forumng'
+    AND (cm.groupingid = 0 or gg.id IS NOT NULL)";
+
+    $rs = forum_utils::get_recordset_sql($sql_group);
+    $results = array();
+    while($rec = rs_fetch_next_record($rs)) {
+        $results[] = $rec->groupid;
+    }
+    rs_close($rs);
+    return $results;
+}
 
 try {
     //decide the subscription confirmation string for not directing
@@ -55,7 +108,7 @@ try {
 
     // Handle single discussion
     if ($discussionid) {
-        $discussion = forum_discussion::get_from_id($discussionid);
+        $discussion = forum_discussion::get_from_id($discussionid, $cloneid);
         $discussion->require_view();
         $forum = $discussion->get_forum();
         if (!$discussion->can_subscribe() && !$discussion->can_unsubscribe()) {
@@ -72,8 +125,30 @@ try {
 
     // Handle single forum
     if ($cmid) {
-        $forum = forum::get_from_cmid($cmid);
-        $forum->require_view(forum::NO_GROUPS);
+        $forum = forum::get_from_cmid($cmid, $cloneid);
+        $forumid = $forum->get_id();
+        $group_list = -1;
+        if ($groupid) {
+            $forum->require_view($groupid);
+        } else {
+            // If it is a separate groups forum and current user does not have access all groups
+            $context = get_context_instance(CONTEXT_MODULE, $cmid);
+            $aaguser = has_capability('moodle/site:accessallgroups', $context);
+            if($forum->get_group_mode() == SEPARATEGROUPS && !$aaguser) {
+                $group_list = get_group_list($userid, $forumid);
+                // Get list of groups that this user belongs to that apply to this forum (same grouping)
+                // Call require_view on the first group in this list, or on NO_GROUPS if they don't have any groups
+                if (count($group_list) == 0) {
+                    $forum->require_view(forum::NO_GROUPS);
+                } else {
+                    $forum->require_view($group_list[0]);
+                }
+                
+            } else {
+                // Require access to all groups (if any)
+                $forum->require_view(forum::NO_GROUPS);
+            }
+        }
 
         if (isguestuser()) {
             // This section allows users who are responding to the unsubscribe
@@ -95,41 +170,151 @@ try {
             print_error('error_cannotchangesubscription', 'forumng');
         }
         $subscription_info = $forum->get_subscription_info();
-        if ($subscription_info->wholeforum) {
-            //subscribed to the entire forum
-            $subscribed = forum::FULLY_SUBSCRIBED;
-        } else if (count($subscription_info->discussionids) == 0) {
-            $subscribed = forum::NOT_SUBSCRIBED;
+        $discussionidcount = count($subscription_info->discussionids);
+        $groupidcount = count($subscription_info->groupids);
+        if (!$forum->get_group_mode()) {
+            //No group mode
+            if ($requestingsubscribe_group || $requestingunsubscribe_group) {
+                print_error('error_cannotchangegroupsubscription', 'forumng');
+            }
+            if ($subscription_info->wholeforum) {
+                //subscribed to the entire forum
+                $subscribed = forum::FULLY_SUBSCRIBED;
+            } else if ($discussionidcount == 0) {
+                $subscribed = forum::NOT_SUBSCRIBED;
+            } else {
+                $subscribed = forum::PARTIALLY_SUBSCRIBED;
+            }
+            if ($requestingsubscribe && $subscribed != forum::FULLY_SUBSCRIBED) {
+                $forum->subscribe();
+                $confirmtext = get_string('subscribe_confirm', 'forumng');
+            } else if ($requestingunsubscribe && $subscribed != forum::NOT_SUBSCRIBED) {
+                $forum->unsubscribe();
+                $confirmtext = get_string('unsubscribe_confirm', 'forumng');
+            }
         } else {
-            $subscribed = forum::PARTIALLY_SUBSCRIBED;
+            if ($subscription_info->wholeforum) {
+                if ($requestingunsubscribe) {
+                    $forum->unsubscribe();
+                    $confirmtext = get_string('unsubscribe_confirm', 'forumng');
+                } else {
+                    print_error('error_invalidsubscriptionrequest', 'forumng');
+                }
+            } else if ($discussionidcount != 0 || $groupidcount != 0 ) {
+                //possible for subscribing to /unsubscribing from forum/group
+                if ($requestingsubscribe) {
+                    if ($group_list == -1) {
+                        $forum->subscribe();
+                    } else {
+                        foreach ($group_list as $groupid) {
+                            $forum->subscribe(0, $groupid);
+                        }
+                    }
+                    $confirmtext = get_string('subscribe_confirm', 'forumng');
+                } else if ($requestingunsubscribe) {
+                    $forum->unsubscribe();
+                    $confirmtext = get_string('unsubscribe_confirm', 'forumng');
+                } else if ($requestingsubscribe_group) {
+                    // Check whether the user has subscribed to this group or not
+                    $cansubscribetogroup = true;
+                    foreach ($subscription_info->groupids as $id) { 
+                        if ($id == $groupid) {
+                            $cansubscribetogroup = false;
+                            break;
+                        }
+                    }
+                    if ($cansubscribetogroup) {
+                        $forum->subscribe(0, $groupid);
+                        $confirmtext = get_string('subscribe_confirm_group', 'forumng');
+                    } else {
+                        print_error('subscribe_already_group', 'forumng');
+                    }
+                } else if ($requestingunsubscribe_group) {
+                    $canunsubscribefromgroup = false;
+                    foreach ($subscription_info->groupids as $id) { 
+                        if ($id == $groupid) {
+                            $canunsubscribefromgroup = true;
+                            break;
+                        }
+                    }
+                    //Check if subscribed to any discussions belong to this group
+                    foreach ($subscription_info->discussionids as $id => $grpid) { 
+                        if ($grpid == $groupid) {
+                            $canunsubscribefromgroup = true;
+                            break;
+                        }
+                    }
+                    if ($canunsubscribefromgroup) {
+                        $forum->unsubscribe(0, $groupid);
+                        $confirmtext = get_string('unsubscribe_confirm_group', 'forumng');
+                    } else {
+                        print_error('unsubscribe_already_group', 'forumng');
+                    }
+                } else {
+                    print_error('error_invalidsubscriptionrequest', 'forumng');
+                }
+                
+            } else { // $discussionidcount == 0 && $groupidcount == 0
+                // Not subscribed yet
+                if ($requestingsubscribe) {
+                    // TODO Change to take account of group list if there is one
+                    if ($group_list == -1) {
+                        $forum->subscribe();
+                    } else {
+                        foreach ($group_list as $groupid) {
+                            $forum->subscribe(0, $groupid);
+                        }
+                    }
+                    $confirmtext = get_string('subscribe_confirm', 'forumng');
+                } else if ($requestingsubscribe_group && $groupid) {
+                    $forum->subscribe(0, $groupid);
+                    $confirmtext = get_string('subscribe_confirm_group', 'forumng');
+                } else {
+                    print_error('error_invalidsubscriptionrequest', 'forumng');
+                }
+            }
         }
-        if ($requestingsubscribe && $subscribed != forum::FULLY_SUBSCRIBED) {
-            $forum->subscribe();
-            $confirmtext = get_string('subscribe_confirm', 'forumng');
-        } else if ($requestingunsubscribe && $subscribed != forum::NOT_SUBSCRIBED) {
-            $forum->unsubscribe();
-            $confirmtext = get_string('unsubscribe_confirm', 'forumng');
-        }
+
     }
 
     // Handle whole course
     if ($courseid) {
         $course = get_record('course', 'id', $courseid);
         require_login($course);
-        $forums = forum::get_course_forums($course, 0, forum::UNREAD_NONE);
+        $forums = forum::get_course_forums($course, 0, forum::UNREAD_NONE, array(), true);
+        
         foreach ($forums as $forum) {
+            if (!$forum->can_change_subscription()) {
+                continue;
+            }
             $subscription_info = $forum->get_subscription_info();
+            $discussionidcount = count($subscription_info->discussionids);
             if ($subscription_info->wholeforum) {
                 //subscribed to the entire forum
                 $subscribed = forum::FULLY_SUBSCRIBED;
-            } else if (count($subscription_info->discussionids) == 0) {
+            } else if ($discussionidcount == 0) {
                 $subscribed = forum::NOT_SUBSCRIBED;
             } else {
                 $subscribed = forum::PARTIALLY_SUBSCRIBED;
             }
             if ($forum->can_change_subscription()) {
                 if ($requestingsubscribe && $subscribed != forum::FULLY_SUBSCRIBED) {
-                    $forum->subscribe();
+                     // If this is separate groups and user does not have access all groups, 
+                    // then make a group list
+                    $group_list = -1;
+                    // if separate groups and not access all groups , set to list of groups
+                    $context = $forum->get_context();
+                    $aaguser = has_capability('moodle/site:accessallgroups', $context);
+                    if($forum->get_group_mode() == SEPARATEGROUPS && !$aaguser) {
+                        $group_list = get_group_list($userid, $forumid);
+                    }
+                    if ($group_list == -1) {
+                        $forum->subscribe();
+                    } else {
+                        foreach ($group_list as $groupid) {
+                            $forum->subscribe(0, $groupid);
+                        }
+                    }
                     $confirmtext = get_string('subscribe_confirm', 'forumng');
                 } else if ($requestingunsubscribe && $subscribed != forum::NOT_SUBSCRIBED) {
                     $forum->unsubscribe();
@@ -145,23 +330,18 @@ try {
         if (!$courseid) {
             $courseid = $forum->get_course()->id;
         }
-        $backurl = $CFG->wwwroot . '/mod/forumng/index.php?id=' . $courseid;
         redirect('index.php?id=' . $courseid);
     }
     if ($back == 'view') {
-        $backurl = $CFG->wwwroot . '/mod/forumng/view.php?id=' . $cmid;
-        redirect('view.php?id=' . $cmid);
+        redirect($forum->get_url(forum::PARAM_PLAIN));
     }
     if ($back == 'discuss') {
-        $backurl = $CFG->wwwroot . '/mod/forumng/discussion.php?d=' . $discussionid;
-        redirect('discuss.php?d=' . $discussionid);
+        redirect('discuss.php?' . $discussion->get_link_params(forum::PARAM_PLAIN));
     }
 
     // Not redirecting? OK, confirm
     if ($cmid || $discussionid) {
-        $backurl = $CFG->wwwroot . '/mod/forumng/view.php?id=' . 
-            $forum->get_course_module_id();
-        $PAGEWILLCALLSKIPMAINDESTINATION = true;
+        $backurl = $forum->get_url(forum::PARAM_HTML);
         $forum->print_subpage_header(get_string(
             $subscribe ? 'subscribeshort' : 'unsubscribeshort', 'forumng'));
         notice($confirmtext, $backurl, $forum->get_course());
