@@ -1,0 +1,68 @@
+function __askbloom (editor) {
+
+    nbDialog("<?php echo "$CFG->wwwroot/lib/editor/htmlarea/custom_plugins/askbloom.php?id=$id&sesskey=$USER->sesskey" ?>",774,550, function (param) {
+
+        if (!param) {   // user must have pressed Cancel
+            return false;
+        }
+        var doc = editor._doc;
+        // create the DIV element  to hold the OBJECT embed inside of it
+        newDiv = doc.createElement("div");
+
+        // assign the given arguments
+        for (var field in param) {
+            var value = param[field];
+            if (!value) {
+                continue;
+            }
+            switch (field) {
+                case "objective"   : newDiv.innerHTML = value; break;
+            }
+        }
+
+        // add the newly created element and it's content into the DOM
+        //my_div = document.getElementById("org_div1");
+        //document.body.insertBefore(newDiv, my_div);
+
+        if (HTMLArea.is_ie) {
+            range.pasteHTML(newDiv.outerHTML);
+        } else {
+            // insert the table
+            editor.insertNodeAtSelection(newDiv);
+        }
+        return true;
+
+    });
+}
+
+    <?php
+    // Since database module seem to be fu..... everything
+    // this bull.... hack is necessary.
+    $releaseinfo = explode(".", $CFG->release);
+    $major = intval($releaseinfo[0]);
+    $minor = preg_replace("/([^0-9])/", "", $releaseinfo[1]);
+    $minor = intval($minor);
+    $sub   = !empty($releaseinfo[2]) ? $releaseinfo[2] : 0;
+    $plus = false;
+
+    if ( preg_match("/\+$/", $sub) ) {
+        $plus = true;
+        $sub = preg_replace("/([^0-9])/","", $sub);
+        $sub = intval($sub);
+        if ( $plus ) {
+            $sub += 0.1;
+        }
+    }
+    $release = floatval($major . $minor . $sub);
+
+    if ( $release > 153 ) {
+        echo "\nvar config = new HTMLArea.Config();\n";
+        print_editor_config();
+    } else {
+        print_editor_config();
+    }
+    ?>
+// Register our custom buttons
+config.registerButton("askbloom",  "<?php print_string("askbloom","editor");?>", "askbloom.png", false, __askbloom);
+config.toolbar.push(["askbloom"]);
+HTMLArea.replaceAll(config);
