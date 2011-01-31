@@ -1,5 +1,5 @@
 <?php
-$string['coursesearch'] = 'חיפוש ברכיבים: oublog, ouwiki, forumng';
+$string['coursesearch'] = 'חיפוש בפעילויות OU';
 $string['ousearch'] = 'חיפוש';
 $string['searchfor']='חיפוש: $a';
 $string['untitled']='(ללא כותרת)';
