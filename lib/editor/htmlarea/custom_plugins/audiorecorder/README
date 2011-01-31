@@ -1,0 +1,13 @@
+This plugin is based on several technologies: Java, JavaScript, PHP (of course!) Flash and FFMPEG cli
+
+This plugins is mostly based on the Java Recorder applet from project: listenup (http://www.javasonics.com/)
+current javasonics license allows for 1 minute recording for a non-commercial website use.
+For commercial use and longer recording times, please contact Javasonic.
+
+Users mush have a W3C standard compliant browser to use this plugin with updated Java 1.6 and Flash 10.x installed.
+On the server side, for converting from WAV to MP3, you will have to install FFMPEG library.
+(otherwise, recording will not be available as playable flash element on the page)
+
+Feedback and Support: nadavkav@gmail.com (Nadav Kavalerchik)
+
+Enjoy :-)

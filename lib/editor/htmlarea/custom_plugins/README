@@ -1,0 +1,59 @@
+Overview
+
+This (relatively small) patch to Moodle core (to: lib/weblib.php) enable
+SysAdmin to add folders of extra functionality plugins to the HTMLAREA internal editor
+without the need to change (patch) any of the lib/editor/htmlarea/htmlarea.php code
+for each plugin (toolbar icon) that they wish to add.
+(Actually, very similar to the way we can extend Moodle anywhere else...)
+
+Plus, it enables the SysAdmin to control which plugins are visible (system wide)
+using a "setting" configuration form. (from the system menu block)
+Plugins, included with this patch
+
+    * AskBloom - Help teachers setup a more sophisticated instruction to students as defined by BLOOM
+    * Resize editor - Extend the size of the editor when it is very small
+    * AudioRecorder - Records Audio comments and embed this into the text (+Flash player)
+    * Marker - mark text
+    * InserSWF - Insert Flash movies into the text
+    * InserEmbed - Insert EMBED element anywhere in the text (no need to switch/know html)
+    * Dropbox - support Public sharing of dropbox files
+    * FileManager - Support for embeding Block FileManager files inside the text
+    * IconGallery - Embed Icons (free sets)
+    * CellWith - Change the width of a table's column
+    * DrawSVG - Vector Graphics editing tool + Insert SVG drawing into the textarea
+    * Paint - Pixlr.com editor + Insert image into the textarea
+    * RemoveNOLINK - remove nolink TAG
+
+The Framework
+
+Each plugin folder must include an "opendialog.js.php" file with a function (by the name of the plugin folder)
+which is called upon clicking the toolbar icon. and an "icon.png" file.
+if the plugin requires an extra dialog, a "dialog.php" file can be included. (see included samples)
+if the plugin requires language files, an extra "lang" folder with the relevant lang folders can be included.
+
+A base folder for the plugins must be created by the name "lib/editor/htmlarea/custom_plugins"
+Attached to this issue is a JavaScript file that handles the opening of a Dialog Window (if the plugin requires one)
+its name is "nbdialog.js" and it must be placed inside "lib/editor/htmlarea/custom_plugins".
+
+Together with this patch i am attaching several plugins that were made for this framework.
+( I will be opening a new issue for each plugin, to track changes in each. and link them back to this issue )
+
+Attached is a clean lib/weblib.php file (Moodle version 1.9.10) + the patch applied to it ( for convenience )
+Attached is the patch file which can be applied to all 1.9.x versions
+Attached is a SysAdmin global setting form "htmlarea_plugins.php" which must be placed inside "admin/settings" folder.
+( You, SysAdmin, will have to select any/all the plugins that you wish made available to your users, system wide, before any of them will be visible on the 3rd toolbar strip, in each Editor on your system )
+
+Installation
+
+1. Apply the patch.
+2. Unzip custom_plugins.zip into "lib/editor/htmlarea/custom_plugins"
+3. Copy "htmlarea_plugins.php" to "admin/settings"
+4. As SysAdmin, start a browser and open "http://youmoodle/admin/settings.php?section=htmlareasettings"
+select the plugins you wish to enable and save the settings.
+5. Open the HTMLAREA Editor (and checkout your new plugins!)
+
+I would love to get feedback on this patch and any of the attached plugins.
+
+For BUGs Feedback and support... http://tracker.moodle.org/browse/CONTRIB-2730
+
+Enjoy :-)

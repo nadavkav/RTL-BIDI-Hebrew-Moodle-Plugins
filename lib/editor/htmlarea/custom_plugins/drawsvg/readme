@@ -1,0 +1,34 @@
+This plugin is a little bit challenging...
+
+1. you'll have to remove TAG cleanup from the HTMLAREA.php file
+
+// performs HTML encoding of some given string
+HTMLArea.htmlEncode = function(str) {
+
+    return str; // disable this function for drawsvg plugin to work
+
+    // we don't need regexp for that, but.. so be it for now.
+    str = str.replace(/&/ig, "&amp;");
+    str = str.replace(/</ig, "&lt;");
+    str = str.replace(/>/ig, "&gt;");
+    str = str.replace(/\x22/ig, "&quot;");
+    // \x22 means '"' -- we use hex reprezentation so that we don't disturb
+    // JS compressors (well, at least mine fails.. ;)
+    return str;
+};
+
+2. you'll have to patch Moodle not to clean up the text in Modules you wish to use this plugin
+
+change :
+echo format_text($post->message, FORMAT_HTML);
+
+to:
+echo $post->message;
+
+or:
+$options = new stdClass;
+$options->noclean=true;
+echo format_text($post->message, FORMAT_HTML,$options);
+
+OR:
+set $CFG->enabletrusttext = true;

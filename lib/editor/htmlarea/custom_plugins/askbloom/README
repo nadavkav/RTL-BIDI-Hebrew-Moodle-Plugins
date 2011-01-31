@@ -1,0 +1,13 @@
+AskBloom HTMLAREA custom plugin is heavily based on Ian Byrd's work: "The Differentiator"
+Ian's email: ian@byrdseed.com (http://www.byrdseed.com/about/)
+Ian's website: http://www.byrdseed.com/
+
+The Differentiator: http://www.byrdseed.com/the-differentiator/
+All right reserve to Ian Byrd
+
+Around Aug-2010...
+It was adapted to work with the Moodle framework.
+Translation infrastructure was added + English and Hebrew translation.
+and the necessary wrappers to make it plug into HTMLAREA editor.
+
+Enjoy :-)

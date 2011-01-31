@@ -1,0 +1,12 @@
+This plugin uses Dropbox PHP client library from : http://code.google.com/p/dropbox-php/
+and for Authentication to work...
+You should install OAuth php extension on the Apache2 server
+using "pecl install oauth" command. and restarted the Apache2 server.
+
+You can always download the sources, compile and install it.
+http://pecl.php.net/package/oauth
+(Do not forget to add the proper extension=oauth.so line to the right php.ini)
+
+Feedback and Support: nadavkav@gmail.com (Nadav Kavalerchik)
+
+Enjoy :-)

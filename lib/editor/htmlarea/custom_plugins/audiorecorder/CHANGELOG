@@ -1,0 +1,5 @@
+[1-2-2011]
+fallback to WAV link, if no ffmpeg installed. (Chrome uses internal WAV player, Firefox and IE uses external player)
+
+[20-1-2011]
+Initial version. requires ffmpeg to work properly.

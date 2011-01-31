@@ -1,0 +1,131 @@
+End User License Agreement for the
+Listenup Software Development Kit (SDK)
+
+BEFORE YOU USE THE SOFTWARE DISTRIBUTED WITH THIS LICENSE AGREEMENT, CAREFULLY 
+READ THE TERMS AND CONDITIONS OF THIS AGREEMENT.  BY USING THE SOFTWARE, YOU ARE 
+CONSENTING TO BE BOUND BY AND ARE BECOMING A PARTY TO THIS AGREEMENT.  IF YOU DO 
+NOT AGREE TO ALL OF THE TERMS OF THIS AGREEMENT, THEN DO NOT USE THE SOFTWARE 
+AND DELETE ALL COPIES OF THE SOFTWARE FROM YOUR COMPUTER.
+
+1. Mobileer.com, (the "Company") grants you (the "Customer") a worldwide, non-
+exclusive, restricted right and license to use the accompanying ListenUp SDK 
+(the "Software"), in binary executable form, solely for the purpose of providing 
+the capability of recording audio in a web browser, uploading the recorded audio 
+to a web site owned by the Customer, and playing back audio recordings in a web 
+browser.
+
+The Software consists of:
+
+- compiled ListenUp Applet in JAR files,
+- example HTML pages,
+- example server scripts,
+- and documentation. 
+
+The Software may be used without payment subject to the terms of this agreement. 
+If the Customer wishes to use the software for free then the Software will display an advertisement for ListenUp. 
+Customers wishing to remove the advertisement can purchase a license.
+The price of the license fee is available from the Company at "http://www.javasonics.com/sales/". 
+
+2. The Customer use of the Software is subject to the following restrictions:
+
+- The Customer may not interfere with the display or functionality of the 
+advertisement for ListenUp when runing in Free Mode. The Applet will display a 
+message about ListenUp and provide a button that can take the user to the 
+ListenUp website.
+
+- Use of the Software on the licensed domain may not be rented, leased, or
+sold to other companies or organizations without the Company's prior written
+permission.
+
+- The compiled ListenUp Java code may only be served from the web site as an 
+executable Applet embedded in a web page.
+
+- The server scripts (PHP, JSP) may be executed on the licensed web server but
+may not be distributed to the network client computers.
+
+- Any plugins needed by the ListenUp Applet must be installed by directing the 
+client to "http://www.javasonics.com/plugins/". The Customer may not directly 
+link to non-HTML, binary or archive files that are part of the Software on the 
+www.javasonics.com website. Binary files include those ending with the suffix 
+".exe", ".zip", ".cab", ".class", ".dll" and ".jar".
+
+3. The Software is licensed, not sold.  The Software is protected by copyright 
+law and international copyright treaty provisions, as well as other intellectual 
+property laws and treaties.
+
+4.  The Software may not be rented, leased, sold, or in any other manner 
+commercially exploited without the Company's prior written permission. This 
+License is personal to Customer and Customer agrees not to assign your rights 
+herein. (A separate Redistribution License is available for Customers wishing to
+distribute the Software with their own products.)
+
+5. LIMITATION OF WARRANTY. THE COMPANY MAKES NO REPRESENTATIONS OR
+WARRANTIES ABOUT THE SUITABILITY OF THIS SOFTWARE OR ABOUT ANY CONTENT
+OR INFORMATION PLAYED BY THE SOFTWARE, FOR ANY PURPOSE.  THE SOFTWARE
+IS PROVIDED 'AS IS' WITHOUT EXPRESS OR IMPLIED WARRANTIES, INCLUDING
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR
+NONINFRINGEMENT. THE COMPANY MAY NOT SUPPORT THIS SOFTWARE AND MAY NOT
+ISSUE UPDATES TO THIS SOFTWARE.
+
+6. All video, audio, and other content accessed through the Software is
+the property of the applicable content owner and may be protected by
+applicable copyright law.  This License gives Customer no rights to
+such content, and Company disclaims any liability for misuse of
+content.
+
+7. The Company reserves the right at any time to alter prices, features,
+specifications, capabilities, functions, licensing terms, release
+dates, general availability or other characteristics of the released product.
+
+8. Title, ownership rights, and intellectual property rights in and to the 
+Software shall remain in the Company and/or its suppliers. Customer agrees to 
+abide by the copyright law and all other applicable laws of the United States 
+including, but not limited to, export control laws.  Customer acknowledges that 
+the Software remains proprietary and confidential information and intellectual 
+property of the Company and/or its suppliers and therefore Customer agrees not 
+to modify the Software or attempt to decipher, decompile, disassemble or reverse 
+engineer the Software, except to the extent applicable laws specifically 
+prohibit such restriction. Customer agrees not to attempt to circumvent the 
+license file mechanism that restricts use of the Software to a specific web 
+domain, or the Credit system that controls usage of the Software. Reproduction
+and/or redistribution of any portion of the Software is specifically prohibited
+without the Company's prior written permission.
+
+9. Any Party may terminate the Term of this Agreement effective upon written 
+notice to the other Parties if any other Party materially breaches any of such 
+Party's obligations under this Agreement, and that Party has not cured the 
+breach within thirty (30) days after notice of the breach from the non-breaching 
+Party. However, in case of termination, Sections 3 through 12 of this Agreement 
+shall indefinitely survive its termination. This License shall be governed by 
+and construed in accordance with the laws of the State of California with 
+exclusive venue in courts located in Marin County, California, and, 
+as to matters affecting copyrights, trademarks and patents, by U.S. federal law.  
+This License sets forth the entire agreement between the Company and Customer.
+
+10. DISCLAIMER OF LIABILITY. THE COMPANY OR ITS SUPPLIERS SHALL NOT BE
+LIABLE FOR (a) DIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL OR INDIRECT
+DAMAGES OF ANY SORT WHATSOEVER, WHETHER ARISING IN TORT, CONTRACT OR
+OTHERWISE, (INCLUDING WITHOUT LIMITATION DAMAGES FOR LOSS OF BUSINESS
+PROFITS, REVENUES, OR INFORMATION, OR FOR BUSINESS INTERRUPTION)
+RESULTING FROM CUSTOMER'S USE OF THE SOFTWARE OR INABILITY TO USE
+THE SOFTWARE, EVEN IF THE COMPANY HAS BEEN INFORMED OF THE POSSIBILITY
+OF SUCH DAMAGES, OR (b) FOR ANY CLAIM BY ANY OTHER PARTY THAN CUSTOMER.
+THIS DISCLAIMER OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR
+PERSONAL INJURY WHERE THE APPLICABLE LAW PROHIBITS SUCH LIMITATION.
+FURTHERMORE, SOME STATES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF
+INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THIS LIMITATION AND EXCLUSION
+MAY NOT APPLY TO CUSTOMER.
+
+11.  HIGH RISK ACTIVITIES.  The Software is not fault-tolerant and is
+not designed, manufactured or intended for use or resale as on-line
+control equipment in hazardous environments requiring fail-safe
+performance, such as in the operation of nuclear facilities, aircraft
+navigation or communication systems, air traffic control, direct life
+support machines, or weapons systems, in which the failure of the
+Software could lead directly to death, personal injury, or severe
+physical or environmental damage ("High Risk Activities"). The Company
+and its suppliers specifically disclaim any express or implied warranty
+of fitness for High Risk Activities.
+
+12. The Company does not represent or warrant that the Software is free
+of infringement of any third-party patents.
