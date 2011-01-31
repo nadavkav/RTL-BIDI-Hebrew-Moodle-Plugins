@@ -1,0 +1,51 @@
+<?php
+?>
+<center>
+<form action="#" name="courseselector" method="get">
+<input type="hidden" name="id" value="<?php p($course->id) ?>" />
+<input type="hidden" name="startday" value="<?php p($startday) ?>" />
+<input type="hidden" name="startmonth" value="<?php p($startmonth) ?>" />
+<input type="hidden" name="startyear" value="<?php p($startyear) ?>" />
+<input type="hidden" name="fromstart" value="" />
+<input type="hidden" name="output" value="html" />
+<input type="hidden" name="asxls" value="" />
+<input type="hidden" name="view" value="course" />
+<table width="90%">
+<tr valign="top">
+    <td align="center" colspan="2">
+        <?php
+            print_string('from');
+            echo ' : ';
+            print_date_selector('startday', 'startmonth', 'startyear', $from);
+        ?>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="right">
+        <b><?php
+            print_string('chooseagroup', 'report_trainingsessions');
+         ?> :</b>
+    </td>
+    <td>
+        <?php
+            $groups = groups_get_all_groups($course->id);
+            $groupoptions[0] = get_string('allgroups', 'report_trainingsessions');
+            if (!empty($groups)){
+                foreach($groups as $group){
+                    if ($groupid === false) $groupid = $group->id; // forces a group if not mentionned.
+                    $groupoptions[$group->id] = $group->name;
+                }
+            }
+            choose_from_menu($groupoptions, 'groupid', $groupid);
+        ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2" align="center">
+        <input type="submit" name="go_btn" value="<?php print_string('update') ?>" />
+        &nbsp;<input type="button" name="gostart_btn" value="<?php print_string('updatefromcoursestart', 'report_trainingsessions') ?>" onclick="document.forms['selector'].fromstart.value = 1;document.forms['selector'].submit();" />
+    </td>
+</tr>
+</table>
+</form>
+</center>

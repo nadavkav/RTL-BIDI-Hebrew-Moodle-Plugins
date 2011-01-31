@@ -1,0 +1,23 @@
+<?php
+?>
+<center>
+<form action="#" name="selector" method="get">
+<input type="hidden" name="id" value="<?php p($course->id) ?>" />
+<input type="hidden" name="fromstart" value="" />
+<table width="90%">
+<tr valign="top">
+    <td align="right">
+        <?php
+            print_string('from');
+            echo ' : ';
+            print_date_selector('startday', 'startmonth', 'startyear', $from);
+        ?>
+    </td>
+    <td align="left">
+        <input type="submit" name="go_btn" value="<?php print_string('update') ?>" />
+        &nbsp;<input type="button" name="gostart_btn" value="<?php print_string('updatefromcoursestart', 'report_trainingsessions') ?>" onclick="document.forms['selector'].fromstart.value = 1;document.forms['selector'].submit();" />
+    </td>
+</tr>
+</table>
+</form>
+</center>

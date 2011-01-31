@@ -1,0 +1,33 @@
+<?php
+?>
+<form action="#" name="selector" method="get">
+<input type="hidden" name="id" value="<?php p($course->id) ?>" />
+<input type="hidden" name="fromstart" value="" />
+<table>
+<tr>
+    <td>
+        <?php
+            print_string('from');
+            echo ' : ';
+            print_date_selector('startday', 'startmonth', 'startyear', $from);
+        ?>
+    </td>
+    <td>
+        <?php
+        print_string('user');
+            echo ' : ';
+        $context = get_context_instance(CONTEXT_COURSE, $course->id);
+        $users = get_users_by_capability($context, 'moodle/course:view', 'u.id, firstname, lastname', 'lastname');
+        foreach($users as $user){
+           $useroptions[$user->id] = fullname($user);
+        }
+        choose_from_menu($useroptions, 'userid', $userid);
+        ?>
+    </td>
+    <td>
+        <input type="submit" name="go_btn" value="<?php print_string('update') ?>" />
+        &nbsp;<input type="button" name="gostart_btn" value="<?php print_string('updatefromcoursestart', 'report_trainingsessions') ?>" onclick="document.forms['selector'].fromstart.value = 1;document.forms['selector'].submit();" />
+    </td>
+</tr>
+</table>
+</form>

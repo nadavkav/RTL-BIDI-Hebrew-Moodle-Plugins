@@ -1,0 +1,53 @@
+<?php // $Id: report_trainingsessions.php,v 1.1.2.1 2010/08/20 10:55:21 diml Exp $
+
+$string['advancement'] = 'Avancement';
+$string['ashtml'] = 'Format HTML';
+$string['asxls'] = 'Télécharger au format Excel';
+$string['allgroups'] = 'Tous les groupes';
+$string['connections'] = 'Connexions';
+$string['course'] = 'Formation';
+$string['coursename'] = 'Nom du groupe';
+$string['chooseagroup'] = 'Choisir un groupe';
+$string['chooseaninstitution'] = 'Choisir une institution';
+$string['done'] = 'Réalisé : ';
+$string['elapsed'] = 'Temps total';
+$string['enddate'] = 'Date de fin';
+$string['equlearningtime'] = 'Temps équivalent de formation : ';
+$string['executing'] = 'Formation';
+$string['evaluating'] = 'Evaluation';
+$string['firstname'] = 'Prénom';
+$string['freerun'] = 'Autonome';
+$string['freerun'] = 'Parcours libre';
+$string['generateXLS'] = 'Générer en XLS';
+$string['generatereports'] = 'Générer les rapports';
+$string['hits'] = 'Hits';
+$string['institution'] = 'Etablissement';
+$string['institutions'] = 'Etablissements';
+$string['item'] = 'Elément';
+$string['lastname'] = 'Nom';
+$string['trainingreports'] = 'Rapports de Formation';
+$string['trainingsessions'] = 'Rapports de session';
+$string['trainingsessions_report_advancement'] = 'Rapport d&#145;avancement';
+$string['trainingsessions_report_advancement'] = 'Rapport de l&#145;avancement';
+$string['trainingsessions_report_connections'] = 'Rapport des connexions';
+$string['trainingsessions_report_connections'] = 'Rapport sur les connexions';
+$string['trainingsessions_report_institutions'] = 'Rapport des établissements';
+$string['trainingsessionsreport'] = 'Rapports de session de formation';
+$string['over'] = 'sur';
+$string['parts'] = 'Parties';
+$string['nostructure'] = 'Pas de structure mesurable identifiée';
+$string['role'] = 'Rôle';
+$string['reports'] = 'Rapports de formation';
+$string['sectionname'] = 'Nom de la séquence';
+$string['selectforreport'] = '';
+$string['selectforreport'] = 'Inclure dans les rapports';
+$string['startdate'] = 'Date de début';
+$string['seedetails'] = 'Voir la fiche de détail';
+$string['timeperpart'] = 'Temps par partie';
+$string['totalduration'] = 'Durée totale par séquence';
+$string['updatefromcoursestart'] = 'A partir du début de la formation';
+$string['user'] = 'Par participant';
+$string['visited'] = 'Visité';
+$string['headsection'] = 'Section d\'en-tête';
+
+?>

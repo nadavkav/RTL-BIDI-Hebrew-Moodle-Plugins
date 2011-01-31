@@ -1,0 +1,51 @@
+Use Time Based Course Reports
+####################################
+
+Author : Valery Fremaux (valery.fremaux@club-internet.fr)
+
+Dependancies : works with the blocks/use_stats log analyser module.
+
+####################################
+
+The Course Training Session report provides a structured reporting of elapsed time
+by the usrs within a Moodle course, and presenting those detailed result conformely
+to the course most probable pedagogic layout. 
+
+The pedagogic organisation is compiled from the internal course setup information and
+will be aware of most course formats in Moodle. At least are handled : 
+
+- Topic course format
+- Weekly course format
+
+as standard
+
+- Flexipage course format (and all variants called "page")
+
+In the former cases will the course structure be derivated from section list, getting the
+propoer order of activities and resources as setup by the editing teacher.
+
+In the latter case will the course structure be derivated from a recursive analysis of the 
+flexipage construction, starting from first page. The recursion will essentially count on 
+a pagemenu module that should provide the entire explorable structure of the course. In its 
+standard implementation only published pages (that is visible by students) will be processed.
+
+#####################################
+
+Install : Unzip the report in the course/report directory of your Moodle installation.
+
+You will need having installed the blocks/use_stats custom block
+
+####################################
+
+Features : 
+
+* Per student reports : reports the entire pedagogic track with individual and summarized 
+presence time.
+
+* Per group (or training session bundled in groups) : Reports a summarized presence time 
+for an entire group.
+
+* Excel exports of individual timesheet
+
+* Excel export of a group timesheet as an Excel multiple individual sheet.
+
