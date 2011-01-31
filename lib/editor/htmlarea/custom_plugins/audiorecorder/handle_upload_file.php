@@ -2,12 +2,6 @@
 // HTML File Upload processor
 // (C) Phil Burk, http://www.softsynth.com
 // This version handles file upload in a simple way.
-//
-// IMPORTANT - MAKE THESE CHANGES to fit your application.
-//  1) Change check for the file name to match your naming system.
-//  2) Change or remove the upfile_size_limit code.
-//  3) Change the uploads_dir to match your desired directory.
-//  4) Get your own variables from the POST like userName or whatever.
 
 require_once("../../../../../config.php");
 
@@ -74,12 +68,17 @@ require_once("../../../../../config.php");
       $moveResult = move_uploaded_file( $fromFile, $toFile );
       if( $moveResult ) {
           echo "SUCCESS - $upfile_name uploaded.\n";
-          define('FFMPEG_LIBRARY', '/usr/bin/ffmpeg ');
-          $exec_string = FFMPEG_LIBRARY.' -i '.$toFile.' '.$toFile.'.mp3';
+
+          if (file_exists('/usr/bin/ffmpeg')) {
+          $exec_string = '/usr/bin/ffmpeg -i '.$toFile.' '.$toFile.'.mp3';
           exec($exec_string);
-      } else {
+          // delete WAV file if we converted to MP3
+          //unlink($toFile);
+          exec('rm -rf '.$toFile); // Linux specific!
+          }
+        } else {
           echo "ERROR - move_uploaded_file( $fromFile, $toFile ) failed! See Java Console.\n";
-      }
+        }
     }
 
 ?>

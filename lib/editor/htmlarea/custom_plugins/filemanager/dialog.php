@@ -204,7 +204,7 @@
   print_header_simple();
   echo "<form id=\"filemanager\" method=\"post\" action=\"dialog.php\">";
   print_table( filemanager_print_user_files_form($USER->id));
-  echo "<input type=\"button\" onclick=\"onOK();\">";
+  echo "<input type=\"button\" onclick=\"onOK();\" value=\"".get_string('add')."\">";
   echo "</form>";
   print_footer();
 ?>

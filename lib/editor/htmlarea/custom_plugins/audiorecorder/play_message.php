@@ -25,9 +25,16 @@ require_once("../../../../../config.php");
   var param = new Object();
   //param["audiofile"] = '<a href="<?php echo $_GET['AudioFile'].'.mp3' ?>"><?php echo get_string('clicktoplay','audiorecorder','',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/"); ?></a>';
   // see remarked code at the end of the file (nadavkav)
-    http://localhost/moodle-latest-stable/
+
+  <?php if (file_exists('/usr/bin/ffmpeg')) { ?>
+
   param["audioplayer"] = '<span id="mp3palyer" style="border:1px dashed;"><img src="<?php echo $CFG->wwwroot; ?>/lib/editor/htmlarea/custom_plugins/audiorecorder/icon.png"><object height="15" width="200" type="application/x-shockwave-flash" data="<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/"; ?>mp3player.swf?soundFile=<?php echo $_GET['AudioFile'].'.mp3'; ?>"><param name="quality" value="high"></object></span>';
 
+  <?php } else { ?>
+
+  param["audioplayer"] = <?php echo "'<a target=\"_new\" href=\"".$_GET['AudioFile']."\">".get_string('clicktoplay','audiorecorder','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/')."</a>';"; ?>
+
+  <?php } ?>
   opener.nbWin.retFunc(param);
   window.close();
   return false;
@@ -35,10 +42,9 @@ require_once("../../../../../config.php");
 
 
 var howLong = 5000;
-
-t = null;
+var t = null;
 function closeMe(){
-t = setTimeout("onOk()",howLong);
+  t = setTimeout("onOK()",howLong);
 }
 
 </script>

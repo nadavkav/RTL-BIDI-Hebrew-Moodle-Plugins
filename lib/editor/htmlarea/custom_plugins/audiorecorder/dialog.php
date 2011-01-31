@@ -8,7 +8,7 @@
   @header('Content-Type: text/html; charset=utf-8');
 
 
-  print_header_simple();
+  //print_header_simple();
   //echo "<form id=\"audiorecorder\" method=\"post\" action=\"dialog.php\">";
 
   //echo "<input type=\"button\" onclick=\"onOK();\">";
@@ -62,5 +62,5 @@
 </div>
   
 <?php
-    print_footer();
+    //print_footer();
 ?>

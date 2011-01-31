@@ -41,10 +41,6 @@ function __insertembed (editor) {
             }
         }
 
-        // add the newly created element and it's content into the DOM
-        //my_div = document.getElementById("org_div1");
-        //document.body.insertBefore(newDiv, my_div);
-
         if (HTMLArea.is_ie) {
             range.pasteHTML(newDiv.outerHTML);
         } else {

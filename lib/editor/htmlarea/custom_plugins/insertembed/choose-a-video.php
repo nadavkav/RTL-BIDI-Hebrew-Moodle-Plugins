@@ -46,7 +46,7 @@ font-size: 15px;
 <div style="text-align:right;"><?php echo get_string("chooseembedsite","insertembed",'',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/insertembed/lang/");?></div>
 <div style="text-align:left;">
 <a class="videolink" href="http://video.google.com"> Google Video </a><br/><br/>
-<a class="videolink" href="http://youtube.com"> You Tube - videos </a><br/><br/>
+<a class="videolink" href="http://www.youtube.com"> You Tube - videos </a><br/><br/>
 <a class="videolink" href="http://vimeo.com"> Vimeo - videos </a><br/><br/>
 <a class="videolink" href="http://www.voki.com/"> Voki - speach </a><br/><br/>
 <a class="videolink" href="http://www.toondoo.com/"> ToonDoo - cartoons </a><br/><br/>
