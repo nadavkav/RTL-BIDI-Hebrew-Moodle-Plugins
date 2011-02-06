@@ -1,0 +1,48 @@
+Index: ../moodle-1910/lib/weblib.php
+===================================================================
+--- ../moodle-1910/lib/weblib.php	(revision )
++++ ../moodle-1910/lib/weblib.php	(revision )
+@@ -5038,6 +5038,15 @@
+             }
+             $str .= ($scriptcount < 1) ? '<script type="text/javascript" src="'.
+                     $CFG->httpswwwroot .'/lib/editor/htmlarea/lang/en.php?id='.$courseid.'"></script>'."\n" : '';
++
++            // load all custom HTMLAREA plugins
++            if (!empty($CFG->editor_customplugins) and $scriptcount < 1) {
++              $str .= '<script type="text/javascript" src="'.$CFG->wwwroot .'/lib/editor/htmlarea/custom_plugins/nbdialog.js"></script>'."\n";
++              foreach (explode(',',$CFG->editor_customplugins) as $plugin) {
++                $str .= '<script type="text/javascript" src="'.$CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/'.$plugin.'/opendialog.js.php?id='.$courseid.'"></script>'."\n";
++              }
++            }
++
+             $scriptcount++;
+ 
+             if ($height) {    // Usually with legacy calls
+@@ -5086,7 +5095,7 @@
+  * @param string $name Form element to replace with HTMl editor by name
+  */
+ function use_html_editor($name='', $editorhidebuttons='', $id='') {
+-    global $THEME;
++    global $THEME,$CFG;
+ 
+     $editor = 'editor_'.md5($name); //name might contain illegal characters
+     if ($id === '') {
+@@ -5099,6 +5108,18 @@
+ 
+     echo print_editor_config($editorhidebuttons);
+ 
++    // load all custom HTMLAREA plugins
++    if (!empty($CFG->editor_customplugins)) {
++      echo "\n";$allplugins = '[';
++      foreach (explode(',',$CFG->editor_customplugins) as $plugin) {
++        echo 'config.registerButton("'.$plugin.'",  "'.get_string($plugin,"editor").'", "'.$CFG->wwwroot;
++          echo '/lib/editor/htmlarea/custom_plugins/'.$plugin.'/icon.png", false, __'.$plugin.');'."\n";
++        $allplugins .= '"'.$plugin.'",';
++      }
++      $allplugins = rtrim($allplugins,',').']';
++      echo 'config.toolbar.push('.$allplugins.');'."\n";
++    }
++
+     if (empty($THEME->htmleditorpostprocess)) {
+         if (empty($name)) {
+             echo "\nHTMLArea.replaceAll($editor.config);\n";
