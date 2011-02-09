@@ -1,7 +1,7 @@
 <?php
 /**
  * @author brian king brian@mediagonal.ch,free.as.in.speech@gmail.com
- * complete javascript rewrite by harry winkelmann harry ät winkelmaenner.de - june 2008
+ * complete javascript rewrite by harry winkelmann harry ï¿½t winkelmaenner.de - june 2008
  */
 
 //hw: june 2008
@@ -420,41 +420,41 @@ class dragdrop {
                 "     }"."\n".
                 "});"."\n"."\n".
 
-                "var arrOfGapimageObjects = new Array();"."\n".
-                "var arrOfGapimages = new Array();"."\n".
+                "var arrOfGapimageObjects$background->id = new Array();"."\n".
+                "var arrOfGapimages$background->id = new Array();"."\n".
                 "</script>"."\n"."\n";
         $smarty->assign('script1', $text);
 
         $text  = '<script type="text/javascript">'."\n".
                  '// Initializing the background as valid drop target'."\n".
-                 'var background = new YAHOO.util.DDTarget(backgroundId);'."\n"."\n".
+                 'var background'.$background->id.' = new YAHOO.util.DDTarget(backgroundId'.$background->id.');'."\n"."\n".
 
                  '// Initializing the gapimages'."\n".
-                 'function init() {'."\n".
-                 '    for (var i = 0; i < arrOfGapimageObjects.length; ++i) {'."\n".
-                 '        arrOfGapimages[i] = new YAHOO.util.DDGapImage(arrOfGapimageObjects[i].name);'."\n".
-                 '        arrOfGapimages[i].backgroundId = arrOfGapimageObjects[i].backgroundId;'."\n".
-                 '        arrOfGapimages[i].width = arrOfGapimageObjects[i].width;'."\n".
-                 '        arrOfGapimages[i].height = arrOfGapimageObjects[i].height;'."\n";
+                 'function init'.$background->id.'() {'."\n".
+                 '    for (var i = 0; i < arrOfGapimageObjects'.$background->id.'.length; ++i) {'."\n".
+                 '        arrOfGapimages'.$background->id.'[i] = new YAHOO.util.DDGapImage(arrOfGapimageObjects'.$background->id.'[i].name);'."\n".
+                 '        arrOfGapimages'.$background->id.'[i].backgroundId = arrOfGapimageObjects'.$background->id.'[i].backgroundId;'."\n".
+                 '        arrOfGapimages'.$background->id.'[i].width = arrOfGapimageObjects'.$background->id.'[i].width;'."\n".
+                 '        arrOfGapimages'.$background->id.'[i].height = arrOfGapimageObjects'.$background->id.'[i].height;'."\n";
 
         // the arrange template gets another script than the view template
         if ($displaytype == 'edit') {
-            $text .= '        arrOfGapimages[i].targetx = arrOfGapimageObjects[i].targetx;'."\n";
-            $text .= '        arrOfGapimages[i].targety = arrOfGapimageObjects[i].targety;'."\n";
-            $text .= '        arrOfGapimages[i].initDDGapImage();'."\n";
-            $text .= '        arrOfHotspots[i].gapImage = arrOfGapimages[i];'."\n";
-            $text .= '        arrOfHotspots[i].initDDHotSpot();'."\n";
+            $text .= '        arrOfGapimages'.$background->id.'[i].targetx = arrOfGapimageObjects'.$background->id.'[i].targetx;'."\n";
+            $text .= '        arrOfGapimages'.$background->id.'[i].targety = arrOfGapimageObjects'.$background->id.'[i].targety;'."\n";
+            $text .= '        arrOfGapimages'.$background->id.'[i].initDDGapImage();'."\n";
+            $text .= '        arrOfHotspots'.$background->id.'[i].gapImage = arrOfGapimages'.$background->id.'[i];'."\n";
+            $text .= '        arrOfHotspots'.$background->id.'[i].initDDHotSpot();'."\n";
         }
         else {
-            $text .= '        arrOfGapimages[i].responseForm = YAHOO.util.Dom.get(arrOfGapimageObjects[i].responseFormId);'."\n";
-            $text .= '        arrOfGapimages[i].initDDGapImage();'."\n";
+            $text .= '        arrOfGapimages'.$background->id.'[i].responseForm = YAHOO.util.Dom.get(arrOfGapimageObjects'.$background->id.'[i].responseFormId);'."\n";
+            $text .= '        arrOfGapimages'.$background->id.'[i].initDDGapImage();'."\n";
         }
 
         $text .= '    }'."\n".
                  '}'."\n"."\n".
 
                  '// calling init() when DOM is ready'."\n".
-                 'YAHOO.util.Event.onDOMReady(init);'."\n".
+                 'YAHOO.util.Event.onDOMReady(init'.$background->id.');'."\n".
                  '</script>'."\n"."\n";
         $smarty->assign('script2', $text);
         // added by Harry for javascript - end
@@ -602,7 +602,7 @@ class dragdrop {
             }
         } else {
             // for gapimage tag
-            $tag = "<img style=\"position:relative; cursor:move; z-index:".$name[strlen($name)-1].";\" border=\"0\" id=\"$name\" name=\"$name\" src=\"$image\" title=\"picture: $name\" width=\"$width\" height=\"$height\" galleryimg=\"no\" />";
+            $tag = "<img style=\"position:relative; cursor:move; z-index:".$name[strlen($name)-1].";\" border=\"0\" id=\"$name$questionid\" name=\"$name$questionid\" src=\"$image\" title=\"picture: $name\" width=\"$width\" height=\"$height\" galleryimg=\"no\" />";
         }
         return $tag;
     }

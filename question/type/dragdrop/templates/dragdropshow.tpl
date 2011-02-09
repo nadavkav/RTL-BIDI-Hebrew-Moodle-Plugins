@@ -21,7 +21,7 @@
                     </div>
 
                     <script type="text/javascript">
-                    var backgroundId = "background{$background->id}";
+                    var backgroundId{$background->id} = "background{$background->id}";
                     </script>
 
                 </div>
@@ -57,12 +57,12 @@
                             {$gapimages[img].tag}
 
                             <script type="text/javascript">
-                            arrOfGapimageObjects[{$smarty.section.img.index}]                   = new Object();
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["name"]           = "{$gapimages[img].name}";
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["responseFormId"] = "{$gapimages[img].responseFormId}";
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["backgroundId"]   = backgroundId;
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["width"]          = {$gapimages[img].width};
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["height"]         = {$gapimages[img].height};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]                   = new Object();
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["name"]           = "{$gapimages[img].name}{$id}";
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["responseFormId"] = "{$gapimages[img].responseFormId}";
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["backgroundId"]   = "background{$background->id}";
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["width"]          = {$gapimages[img].width};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["height"]         = {$gapimages[img].height};
                             </script>
                         </td>
                     </tr>

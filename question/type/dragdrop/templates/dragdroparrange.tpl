@@ -139,7 +139,7 @@ YAHOO.extend(YAHOO.util.DDHotSpot, YAHOO.util.Resize, {
 
 });
 
-var arrOfHotspots  = new Array();
+var arrOfHotspots{$background->id}  = new Array();
 
 function toggleDisplay(type, button) {
     // toggle object display

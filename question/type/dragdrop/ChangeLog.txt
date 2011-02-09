@@ -1,6 +1,9 @@
 Drag and Drop ChangeLog
 
-2008-06-05 Version 2008060502 (by Harry Winkelmann, Jean-Michel Védrine, Andreas Grabs)
+2011-02-08 Version 2008060503 (by Nadav Kavalerchik)
+* added support for multiple question on the same page (http://tracker.moodle.org/browse/CONTRIB-2639)
+
+2008-06-05 Version 2008060502 (by Harry Winkelmann, Jean-Michel Vï¿½drine, Andreas Grabs)
 * We have fully qualified URIs in all scripts.
 * Including the dragdrop yui libs in the dragdropshow.tpl template by using
   a new function get_view_tpl_yui_libs() in dragdrop.php.
@@ -26,8 +29,8 @@ Drag and Drop ChangeLog
 * Complete rewrite of the view (dragdropshow.tpl) and arrange (dragdroparrange.tpl) templates.
 * Deleted a lot of original code in dragdrop.php that was responsible for the old
   javascript implementation. Hopefully not too much...
-* Including the dragdrop yui libs in the dragdropshow.tpl template by using the 
-  document.write method of javascript in the script.js file. 
+* Including the dragdrop yui libs in the dragdropshow.tpl template by using the
+  document.write method of javascript in the script.js file.
   This is a little bit ugly but I didn't know a better way.
 * Added some translation strings and translated them also to german language.
 * Added some code for workaround for bug (typo) in /question/format/qti2/qt_common.php
