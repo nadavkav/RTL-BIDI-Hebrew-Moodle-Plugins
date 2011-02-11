@@ -139,12 +139,12 @@ YAHOO.extend(YAHOO.util.DDHotSpot, YAHOO.util.Resize, {
 
 });
 
-var arrOfHotspots{$background->id}  = new Array();
+var arrOfHotspots{/literal}{$background->id}{literal}  = new Array();
 
 function toggleDisplay(type, button) {
     // toggle object display
-    for (var i = 0; i < arrOfHotspots.length; ++i) {
-        arrOfHotspots[i].toggleDisplay(type);
+    for (var i = 0; i < arrOfHotspots{/literal}{$background->id}{literal}.length; ++i) {
+        arrOfHotspots{/literal}{$background->id}{literal}[i].toggleDisplay(type);
     }
     // toggle button value
     if (type == 'DDHotSpot')
@@ -162,14 +162,14 @@ function toggleDisplay(type, button) {
 }
 
 function snapElements(type, button) {
-    for (var i = 0; i < arrOfHotspots.length; ++i) {
-        arrOfHotspots[i].snapElement(type);
+    for (var i = 0; i < arrOfHotspots{/literal}{$background->id}{literal}.length; ++i) {
+        arrOfHotspots{/literal}{$background->id}{literal}[i].snapElement(type);
     }
 }
 
 function computeAllData(type) {
-    for (var i = 0; i < arrOfHotspots.length; ++i) {
-        arrOfHotspots[i].computeData();
+    for (var i = 0; i < arrOfHotspots{/literal}{$background->id}{literal}.length; ++i) {
+        arrOfHotspots{/literal}{$background->id}{literal}[i].computeData();
     }
 }
 
@@ -258,7 +258,7 @@ var showImages  = '{$showimages}';
                             </div>
 
                             <script type="text/javascript">
-                            var backgroundId = "background{$background->id}";
+                            var backgroundId{$background->id} = "background{$background->id}";
                             </script>
 
                         </div>
@@ -295,13 +295,13 @@ var showImages  = '{$showimages}';
                             {$gapimages[img].tag}
 
                             <script type="text/javascript">
-                            arrOfGapimageObjects[{$smarty.section.img.index}]                   = new Object();
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["name"]           = "{$gapimages[img].name}";
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["backgroundId"]   = backgroundId;
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["width"]          = {$gapimages[img].width};
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["height"]         = {$gapimages[img].height};
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["targetx"]        = {$gapimages[img].targetx};
-                            arrOfGapimageObjects[{$smarty.section.img.index}]["targety"]        = {$gapimages[img].targety};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]                   = new Object();
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["name"]           = "{$gapimages[img].name}{$id}";
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["backgroundId"]   = backgroundId{$background->id};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["width"]          = {$gapimages[img].width};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["height"]         = {$gapimages[img].height};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["targetx"]        = {$gapimages[img].targetx};
+                            arrOfGapimageObjects{$background->id}[{$smarty.section.img.index}]["targety"]        = {$gapimages[img].targety};
                             </script>
                         </td>
                     </tr>
@@ -356,7 +356,7 @@ var showImages  = '{$showimages}';
     {$sethotspots[id].id}.gapimage_y      = YAHOO.util.Dom.get("gapimage{$gapimages[id].key}_y");
     {$sethotspots[id].id}.gapimage_width  = YAHOO.util.Dom.get("gapimage{$gapimages[id].key}_width");
     {$sethotspots[id].id}.gapimage_height = YAHOO.util.Dom.get("gapimage{$gapimages[id].key}_height");
-    arrOfHotspots.push({$sethotspots[id].id});
+    arrOfHotspots{$background->id}.push({$sethotspots[id].id});
 </script>
 {/section}
 
