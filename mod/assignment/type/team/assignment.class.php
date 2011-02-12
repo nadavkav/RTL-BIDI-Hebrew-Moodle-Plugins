@@ -1678,6 +1678,34 @@ class assignment_team extends assignment_base {
         }
     }
 
+  /**
+     * Update grade item for this submission.
+     */
+    function update_grade($submission) {
+      // get team
+      $team = $this->get_user_team($submission->userid);
+      // get team members
+      $members = $this->get_members_from_team($team->id);
+      // update each member grade and other info with current user's submissions data
+      foreach ($members as $member) {
+        $membersubmission = $this->get_submission($member->student, true);  // Get or make one
+        $membersubmission->grade      = $submission->grade;
+        $membersubmission->submissioncomment      = $submission->submissioncomment;
+        $membersubmission->teacher      = $submission->teacher;
+        $membersubmission->timemarked      = $submission->timemarked;
+        if (! update_record('assignment_submissions', $membersubmission)) {
+            return false;
+        }
+        // make sure parent class function call is "fired" for each user
+        parent::update_grade($this->assignment, $membersubmission->userid);
+        // update table's info (submissions list UI)
+        print $this->update_main_listing($membersubmission);
+        // add special log entry for team grading
+        add_to_log($this->course->id, 'assignment', 'update grades team',
+           'submissions.php?id='.$this->assignment->id.'&user='.$feedback->userid, $feedback->userid, $this->cm->id);
+      }
+    }
+
     private function get_team_status_name($status) {
         if ($status) {
             return  get_string('teamopen', 'assignment_team');
