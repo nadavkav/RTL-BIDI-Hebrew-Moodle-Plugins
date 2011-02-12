@@ -1,25 +1,25 @@
 <?php
 
-$string['typeteam'] = 'משימה קבוצתית';
-$string['existingteams'] = 'קבוצות קיימות';
-$string['jointeam'] = 'הצטרפו לקבוצה';
-$string['createteam'] = 'יצירת קבוצה';
-$string['teammember'] = 'חברי הקבוצה';
-$string['viewmember'] = 'תצוגת חברי הקבוצה';
-$string['createteamlabel'] = 'הוסיפו אותי לקבוצה חדשה';
-$string['teamname'] = 'שם הקבוצה';
-$string['editteam'] = 'עריכת מאפייני הקבוצה';
-$string['deleteteam'] = 'מחיקת קבוצה';
+$string['typeteam'] = 'משימה בצוות';
+$string['existingteams'] = 'צוותים קיימים';
+$string['jointeam'] = 'הצטרפו לצוות';
+$string['createteam'] = 'יצירת צוות';
+$string['teammember'] = 'חברי הצוות';
+$string['viewmember'] = 'תצוגת חברי הצוות';
+$string['createteamlabel'] = 'הוסיפו אותי לצוות חדש';
+$string['teamname'] = 'שם הצוות';
+$string['editteam'] = 'עריכת מאפייני הצוות';
+$string['deleteteam'] = 'מחיקת צוות';
 $string['openclosemembership'] ='פתיחה/סגירה';
-$string['removeteammember'] = 'הסרת חבר מהקבוצה';
-$string['teamsubmission'] = 'הגשות הקבוצה';
-$string['teamnameerror'] = 'יש להזין שם לקבוצה';
-$string['teamnameexist'] = 'קבוצה בשם זה,קיימת.';
-$string['createteamerror'] = 'שגיאה בעת יצירת הקבוצה';
-$string['jointeamerror'] = 'שגיאה בעת הוספה של חבר חדש לקבוצה';
-$string['lastmembererror'] = 'לא ניתן להסיר את החבר קבוצה האחרון';
-$string['teamclosedwarning'] = 'יכולת הרשמה והצטרפות לקבוצה הסתיימה';
-$string['teamopen'] = 'ניתן להצטרף לקבוצה';
-$string['teamclosed'] = 'הרשמה והצטרפות לקבוצה, הסתיימה.';
+$string['removeteammember'] = 'הסרת חבר מהצוות';
+$string['teamsubmission'] = 'הגשות הצוות';
+$string['teamnameerror'] = 'יש להזין שם לצוות';
+$string['teamnameexist'] = 'צוות בשם זה,קיים.';
+$string['createteamerror'] = 'שגיאה בעת יצירת הצוות';
+$string['jointeamerror'] = 'שגיאה בעת הוספת חבר חדש לצוות';
+$string['lastmembererror'] = 'לא ניתן להסיר את חבר הצוות האחרון';
+$string['teamclosedwarning'] = 'לא ניתן להצטרף לצוות בשלב זה';
+$string['teamopen'] = 'ניתן להצטרף לצוות';
+$string['teamclosed'] = 'הרשמה והצטרפות לצוות, הסתיימה.';
 
 ?>
