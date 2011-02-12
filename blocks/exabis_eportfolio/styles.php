@@ -142,3 +142,9 @@ font-weight: bold;
 .dir-rtl #portfolioExtras .view-group-header div {
     background: url("../../blocks/exabis_eportfolio/pix/bookmarksnotes.png") no-repeat scroll right transparent;
 }
+
+ #blocks-exabis_eportfolio-shared_item .block_eportfolio_center .generalbox {
+    background-color: beige;
+    margin: 0 auto;
+    width: 500px;
+}
