@@ -183,6 +183,18 @@
 	}
 	echo '<script type="text/javascript">'."\n";
 	echo "    var tabView = new YAHOO.widget.TabView('Tabs');"."\n";
+  echo "    var url = location.href.split('#');"."\n";
+  echo "     if (url[1]) {"."\n";
+  echo "         //We have a hash"."\n";
+  echo "         var tabHash = url[1];"."\n";
+  echo "         var tabs = tabView.get('tabs');"."\n";
+  echo "        for (var i = 0; i < tabs.length; i++) {"."\n";
+  echo "              if (tabs[i].get('href') == '#' + tabHash) {"."\n";
+  echo "                  tabView.set('activeIndex', i);"."\n";
+  echo "                  break;"."\n";
+  echo "              }"."\n";
+  echo "          }"."\n";
+  echo "      }"."\n";
 	echo '</script>'."\n";
     echo '	</div>'."\n";
 
