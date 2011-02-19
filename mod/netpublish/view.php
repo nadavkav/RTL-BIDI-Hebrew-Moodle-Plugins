@@ -141,7 +141,7 @@
         $strnoarticles = '<p style="text-align: center; font-weight: bold;">'. get_string("noarticles","netpublish") .'</p>';
     }
     print_simple_box_start('','100%');
-	echo "<style>.box {width:100%; background-image: url(".$magtheme['backgroundimage'].");} </style>";
+    echo "<style>.box {width:100%; background-image: url(".$magtheme['backgroundimage'].");} </style>";
     include_once('view.html.php');
     print_simple_box_end();
 

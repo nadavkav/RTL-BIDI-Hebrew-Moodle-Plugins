@@ -24,7 +24,7 @@
 
   echo "<td width=\"*\" valign=\"top\" style=\"background-image: url(".$magtheme['articlesbackgroundimage']."); -moz-border-radius: 8px;\">";
 
-  if (!empty($strnoarticles)) {
+  if (!empty($strnoarticles) and !$frontpage) {
       echo $strnoarticles;
   } else if (empty($article) and !$frontpage) {
 
@@ -58,12 +58,12 @@
           netpublish_print_actionbuttons($cm, $thearticle, $USER->id, $course->id, true);
           echo "<h2>". stripslashes($thearticle->title) ."</h2>\n";
 
-if ( $_GET['id'] != 15832 ) { // (nadavkav) orit tati hack. do not forget to remove after 9.3.2010
+//if ( $_GET['id'] != 15832 ) { // (nadavkav) orit tati hack. do not forget to remove after 9.3.2010
           echo "<div class=\"authors\"><strong>". $strauthor ."</strong>: ". s($thearticle->firstname) ." ". s($thearticle->lastname);
           netpublish_print_authors($thearticle->authors);
           echo "<br />\n";
           echo "<strong>". $strpublished . "</strong>: ". userdate($thearticle->timepublished) . "</div>\n";
-}
+//}
 
           echo stripslashes($thearticle->intro);
           echo stripslashes($thearticle->content);
@@ -75,7 +75,6 @@ if ( $_GET['id'] != 15832 ) { // (nadavkav) orit tati hack. do not forget to rem
       } else {
           /// display all articles in current section
           ///  (on front page, display all articles in the Magazine/Newspapaer)
-          //print_r($articles);
           $allsections = get_records("netpublish_sections", "publishid", $mod->id);
           foreach ($allsections as $section) {
               $sectionarticles = get_records_select("netpublish_articles", " publishid = $mod->id AND sectionid = $section->id AND statusid = 4 ");
