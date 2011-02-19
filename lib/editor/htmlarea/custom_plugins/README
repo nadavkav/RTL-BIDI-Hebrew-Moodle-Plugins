@@ -21,8 +21,12 @@ Plugins, included with this patch
     * IconGallery - Embed Icons (free sets)
     * CellWith - Change the width of a table's column
     * DrawSVG - Vector Graphics editing tool + Insert SVG drawing into the textarea
-    * Paint - Pixlr.com editor + Insert image into the textarea
+    * Paint (Disabled) - Pixlr.com editor + Insert image into the textarea
     * RemoveNOLINK - remove nolink TAG
+    * PageBackground - load an image as background to the entire textarea
+    * InsertImage - Drag and Drop image(s) to upload them into the textarea (any user)
+    * LineHeight - Set Line Height of current paragraph
+    * TableSupport (Disabled) - Table rows and cells configuration
 
 The Framework
 

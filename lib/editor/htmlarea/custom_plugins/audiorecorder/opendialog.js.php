@@ -15,7 +15,7 @@
 
 function __audiorecorder (editor) {
 
-    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/dialog.php?id=$courseid" ?>",600,300, function (param) {
+    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/dialog.php?id=$courseid" ?>",550,500, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;

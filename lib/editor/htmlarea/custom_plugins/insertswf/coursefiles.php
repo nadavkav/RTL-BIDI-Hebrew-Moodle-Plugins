@@ -65,7 +65,7 @@
             var insimg = upper.document.getElementById('f_url');
 
             try {
-                if(insimg != null) {     ///mine type image/jpeg image/gif image/png > application/x-shockwave-flash (nurit))
+                if(insimg != null) {     // mine type image/jpeg image/gif image/png > application/x-shockwave-flash
                     if(params.itype.indexOf("application/x-shockwave-flash") == -1 ) {
                         alert("<?php echo get_string("notswf","insertswf",'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/insertswf/lang/');?>");
                         return false;
@@ -226,7 +226,7 @@
 
                 echo "<p>$struploadafile ($strmaxsize) --> <strong>$wdir</strong>";
                 echo "<table border=\"0\"><tr><td colspan=\"2\">\n";
-                echo "<form enctype=\"multipart/form-data\" method=\"post\" action=\"coursefilesswf.php\">\n";
+                echo "<form enctype=\"multipart/form-data\" method=\"post\" action=\"coursefiles.php\">\n";
                 upload_print_form_fragment(1,array('userfile'),null,false,null,$course->maxbytes,0,false);
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
@@ -236,7 +236,7 @@
                 echo " <input type=\"submit\" name=\"save\" value=\"$struploadthisfile\" />\n";
                 echo "</form>\n";
                 echo "</td>\n<td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -271,8 +271,8 @@
                     $frameold = $CFG->framename;
                     $CFG->framename = "ibrowser";
                     notice_yesno (get_string("deletecheckfiles"),
-                                "coursefilesswf.php?id=$id&amp;wdir=$wdir&amp;action=delete&amp;confirm=1&amp;sesskey=$USER->sesskey",
-                                "coursefilesswf.php?id=$id&amp;wdir=$wdir&amp;action=cancel");
+                                "coursefiles.php?id=$id&amp;wdir=$wdir&amp;action=delete&amp;confirm=1&amp;sesskey=$USER->sesskey",
+                                "coursefiles.php?id=$id&amp;wdir=$wdir&amp;action=cancel");
                     $CFG->framename = $frameold;
                 } else {
                     displaydir($wdir);
@@ -329,7 +329,7 @@
                 html_header($course, $wdir, "form.name");
                 echo "<p>$strrenamefileto:";
                 echo "<table border=\"0\">\n<tr>\n<td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"post\" id=\"form\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"post\" id=\"form\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"rename\" />\n";
@@ -339,7 +339,7 @@
                 echo " <input type=\"submit\" value=\"$strrename\" />\n";
                 echo "</form>\n";
                 echo "</td><td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -368,7 +368,7 @@
                 html_header($course, $wdir, "form.name");
                 echo "<p>$strcreatefolder:";
                 echo "<table border=\"0\">\n<tr><td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"post\" name=\"form\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"post\" name=\"form\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"mkdir\" />\n";
@@ -377,7 +377,7 @@
                 echo " <input type=\"submit\" value=\"$strcreate\" />\n";
                 echo "</form>\n";
                 echo "</td><td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -405,7 +405,7 @@
                 print_heading("$streditfile");
 
                 echo "<table><tr><td colspan=\"2\">\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"post\" name=\"form\" $onsubmit>\n";
+                echo "<form action=\"coursefiles.php\" method=\"post\" name=\"form\" $onsubmit>\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=file value=\"$file\" />";
@@ -416,7 +416,7 @@
                 echo " <input type=\"submit\" value=\"".get_string("savechanges")."\" />\n";
                 echo "</form>\n";
                 echo "</td>\n<td>\n";
-                echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -461,7 +461,7 @@
                     echo "<br />";
                     echo "<p align=\"center\">".get_string("whattocallzip");
                     echo "<table border=\"0\">\n<tr>\n<td>\n";
-                    echo "<form action=\"coursefilesswf.php\" method=\"post\" name=\"form\">\n";
+                    echo "<form action=\"coursefiles.php\" method=\"post\" name=\"form\">\n";
                     echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                     echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                     echo " <input type=\"hidden\" name=\"action\" value=\"zip\" />\n";
@@ -470,7 +470,7 @@
                     echo " <input type=\"submit\" value=\"".get_string("createziparchive")."\" />";
                     echo "</form>\n";
                     echo "</td>\n<td>\n";
-                    echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+                    echo "<form action=\"coursefiles.php\" method=\"get\">\n";
                     echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                     echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                     echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -499,7 +499,7 @@
                     print_error("unzipfileserror","error");
                 }
 
-                echo "<center><form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<center><form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -546,7 +546,7 @@
                     }
                     echo "</table>\n";
                 }
-                echo "<br /><center><form action=\"coursefilesswf.php\" method=\"get\">\n";
+                echo "<br /><center><form action=\"coursefiles.php\" method=\"get\">\n";
                 echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
                 echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
                 echo " <input type=\"hidden\" name=\"action\" value=\"cancel\" />\n";
@@ -691,7 +691,7 @@ function displaydir ($wdir) {
     $strchoose   = get_string("choose");
 
 
-    echo "<form action=\"coursefilesswf.php\" method=\"post\" name=\"dirform\">\n";
+    echo "<form action=\"coursefiles.php\" method=\"post\" name=\"dirform\">\n";
     echo "<table border=\"0\" cellspacing=\"2\" cellpadding=\"2\" width=\"100%\">\n";
 
     if ($wdir == "/") {
@@ -702,7 +702,7 @@ function displaydir ($wdir) {
             $bdir = "";
         }
         print "<tr>\n<td colspan=\"5\">";
-        print "<a href=\"coursefilesswf.php?id=$id&amp;wdir=$bdir&amp;usecheckboxes=$usecheckboxes\" onclick=\"return reset_value();\">";
+        print "<a href=\"coursefiles.php?id=$id&amp;wdir=$bdir&amp;usecheckboxes=$usecheckboxes\" onclick=\"return reset_value();\">";
         print "<img src=\"$CFG->wwwroot/lib/editor/htmlarea/images/folderup.gif\" height=\"14\" width=\"24\" border=\"0\" alt=\"".get_string('parentfolder')."\" />";
         print "</a></td>\n</tr>\n";
     }
@@ -728,7 +728,7 @@ function displaydir ($wdir) {
                     print_cell("center", "<input type=\"checkbox\" name=\"file$count\" value=\"$fileurl\" onclick=\"return set_rename('$dir');\" />");
                 }
             }
-            print_cell("left", "<a href=\"coursefilesswf.php?id=$id&amp;wdir=$fileurl\" onclick=\"return reset_value();\"><img src=\"$CFG->pixpath/f/folder.gif\" class=\"icon\" alt=\"".get_string('folder')."\" /></a> <a href=\"coursefilesswf.php?id=$id&amp;wdir=$fileurl&amp;usecheckboxes=$usecheckboxes\" onclick=\"return reset_value();\">".htmlspecialchars($dir)."</a>");
+            print_cell("left", "<a href=\"coursefiles.php?id=$id&amp;wdir=$fileurl\" onclick=\"return reset_value();\"><img src=\"$CFG->pixpath/f/folder.gif\" class=\"icon\" alt=\"".get_string('folder')."\" /></a> <a href=\"coursefiles.php?id=$id&amp;wdir=$fileurl&amp;usecheckboxes=$usecheckboxes\" onclick=\"return reset_value();\">".htmlspecialchars($dir)."</a>");
             print_cell("right", "&nbsp;");
             print_cell("right", $filedate);
 
@@ -776,8 +776,8 @@ function displaydir ($wdir) {
             echo "</td>\n";
 
             if ($icon == "zip.gif") {
-                $edittext = "<a href=\"coursefilesswf.php?id=$id&amp;wdir=$wdir&amp;file=$fileurl&amp;action=unzip&amp;sesskey=$USER->sesskey\">$strunzip</a>&nbsp;";
-                $edittext .= "<a href=\"coursefilesswf.php?id=$id&amp;wdir=$wdir&amp;file=$fileurl&amp;action=listzip&amp;sesskey=$USER->sesskey\">$strlist</a> ";
+                $edittext = "<a href=\"coursefiles.php?id=$id&amp;wdir=$wdir&amp;file=$fileurl&amp;action=unzip&amp;sesskey=$USER->sesskey\">$strunzip</a>&nbsp;";
+                $edittext .= "<a href=\"coursefiles.php?id=$id&amp;wdir=$wdir&amp;file=$fileurl&amp;action=listzip&amp;sesskey=$USER->sesskey\">$strlist</a> ";
             } else {
                 $edittext = "&nbsp;";
             }
@@ -807,7 +807,7 @@ function displaydir ($wdir) {
         choose_from_menu ($options, "action", "", "$strwithchosenfiles...", "javascript:getElementById('dirform').submit()");
     }
     if (!empty($USER->fileop) and ($USER->fileop == "move") and ($USER->filesource <> $wdir)) {
-        echo "<form action=\"coursefilesswf.php\" method=\"get\">\n";
+        echo "<form action=\"coursefiles.php\" method=\"get\">\n";
         echo " <input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
         echo " <input type=\"hidden\" name=\"wdir\" value=\"$wdir\" />\n";
         echo " <input type=\"hidden\" name=\"action\" value=\"paste\" />\n";

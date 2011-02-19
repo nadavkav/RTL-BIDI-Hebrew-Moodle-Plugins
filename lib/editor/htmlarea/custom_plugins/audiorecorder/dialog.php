@@ -1,7 +1,7 @@
 <?php // $Id: insert_table.php,v 1.4 2007/01/27 23:23:44 skodak Exp $
   require_once("../../../../../config.php");
   //include "lib.php";
-
+  
   $id = optional_param('id', SITEID, PARAM_INT);
 
   require_course_login($id);
@@ -22,19 +22,6 @@
  $path = make_upload_directory($uploads_dir,false);
 ?>
 <div style="text-align:center;">
-
-<?php
-
-  if (right_to_left() ) {
-    echo '<div style="direction:rtl;text-align:right;">';
-  } else {
-    echo '<div style="direction:ltr;text-align:left;">';
-  }
-  echo get_string('recordinginstructions','audiorecorder','',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/");
-  echo '</div>';
-
-?>
-
 <applet
     CODE="com.softsynth.javasonics.recplay.RecorderUploadApplet"
     CODEBASE="codebase"
@@ -73,7 +60,7 @@
 ?>
 </applet>
 </div>
-
+  
 <?php
     //print_footer();
 ?>

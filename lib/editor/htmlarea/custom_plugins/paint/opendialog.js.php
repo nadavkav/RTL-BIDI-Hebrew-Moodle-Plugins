@@ -14,7 +14,7 @@ require_once("../../../../../config.php");
 
 ?>
 
-function __insertswf (editor) {
+function __paint (editor) {
 
     var outparam = null;
     if (typeof image == "undefined") {
@@ -35,7 +35,7 @@ function __insertswf (editor) {
 
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
-        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertswf/dialog.php?id=$courseid";
+        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/paint/dialog.php?id=$courseid";
     } else {
         //echo "insert_swf.php?id=$id";
     }?>" ,1024,768, function (param) {
@@ -61,7 +61,7 @@ function __insertswf (editor) {
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
                 //img = range.startContainer.previousSibling;
-                var img = editor._doc.createElement("embed"); 
+                var img = editor._doc.createElement("embed"); //nurit img >embed
 
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");

@@ -35,7 +35,7 @@ Index: ../moodle-1910/lib/weblib.php
 +    if (!empty($CFG->editor_customplugins)) {
 +      echo "\n";$allplugins = '[';
 +      foreach (explode(',',$CFG->editor_customplugins) as $plugin) {
-+        echo 'config.registerButton("'.$plugin.'",  "'.get_string($plugin,"editor").'", "'.$CFG->wwwroot;
++        echo 'config.registerButton("'.$plugin.'",  "'.get_string('pluginname',$plugin,'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/'.$plugin.'/lang/').'", "'.$CFG->wwwroot;
 +          echo '/lib/editor/htmlarea/custom_plugins/'.$plugin.'/icon.png", false, __'.$plugin.');'."\n";
 +        $allplugins .= '"'.$plugin.'",';
 +      }

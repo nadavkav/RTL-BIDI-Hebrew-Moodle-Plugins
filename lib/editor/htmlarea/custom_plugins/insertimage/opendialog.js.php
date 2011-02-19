@@ -5,44 +5,41 @@
  * Date: 1/15/11 Time: 9:32 PM
  *
  * Description:
- *
+ *  Enable users, especially, with ROLE Students, to Drag and Drop files (images)
+ *  and upload them immidiatly inside the HTMLAREA editor as IMG elements
+ *  (images are saved on a course level, in a special "users" folder with each user's ID)
  */
 
-require_once("../../../../../config.php");
+  require_once("../../../../../config.php");
 
- $courseid = optional_param('id', SITEID, PARAM_INT);
+  $courseid = optional_param('id', SITEID, PARAM_INT);
+
+  global $USER;
 
 ?>
 
-function __insertswf (editor) {
-
-    var outparam = null;
-    if (typeof image == "undefined") {
-        image = editor.getParentElement();
-        if (image && !/^img$/i.test(image.tagName))
-            image = null;
-    }
-    if (image) outparam = {
-        f_url    : HTMLArea.is_ie ? editor.stripBaseURL(image.src) : image.getAttribute("src"),
-        f_alt    : image.alt,
-        f_border : image.border,
-        f_align  : image.align,
-        f_vert   : image.vspace,
-        f_horiz  : image.hspace,
-        f_width  : image.width,
-        f_height : image.height
-    };
+function __insertimage (editor) {
 
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
-        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertswf/dialog.php?id=$courseid";
+        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertimage/dragdrop.php?courseid=$courseid&userid=$USER->id";
     } else {
         //echo "insert_swf.php?id=$id";
-    }?>" ,1024,768, function (param) {
+    }?>" ,800,600, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;
         }
+        imagelist ='';
+        //for (i=0; i<param.length;i++) {
+        for (i in param) {
+          imagelist = imagelist + param[i] + "<br/>";
+        }
+        var span = editor._doc.createElement("span");
+        span.innerHTML = imagelist;
+        editor.insertNodeAtSelection(span);
+        return true;
+        
         var img = image;
         if (!img) {
             var sel = editor._getSelection();
@@ -61,7 +58,7 @@ function __insertswf (editor) {
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
                 //img = range.startContainer.previousSibling;
-                var img = editor._doc.createElement("embed"); 
+                var img = editor._doc.createElement("img");
 
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");

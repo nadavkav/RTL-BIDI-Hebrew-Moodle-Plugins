@@ -1,0 +1,94 @@
+/* Just some base styles not needed for example to function */
+*, html { font-family: Verdana, Arial, Helvetica, sans-serif; }
+
+body, form, ul, li, p, h1, h2, h3, h4, h5
+{
+	margin: 0;
+	padding: 0;
+}
+body { background-color: #606061; color: #ffffff; }
+img { border: none; }
+p
+{
+	font-size: 1em;
+	margin: 0 0 1em 0;
+}
+
+.clearfix:after 
+{
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix { display: inline-block; }
+html[xmlns] .clearfix { display: block; }
+* html .clearfix { height: 1%; }
+	
+/* Drag drop upload styles */
+#output
+{
+	min-width: 90%;
+	min-height: 250px;
+	padding: 10px;
+	border: 2px dotted #fff;
+	-moz-border-radius: 15px;
+	text-align: center;
+	position: relative;
+}
+#output:before
+{
+	content: "Drag and Drop to upload!";
+	color: #fff;
+	font-size: 50px;
+	font-weight: bold;
+	opacity: 0.5;
+	text-shadow: 1px 1px #000;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 50%;
+	margin: -25px 0 0;
+	z-index: 1;
+}
+ul li
+{
+	float: left;
+	margin: 0 10px 10px 0;
+	list-style: none;
+	position: relative;
+	z-index: 2;
+}
+	li a
+	{
+		opacity: 0.5;
+	}
+	li.loaded a
+	{
+		opacity: 1;
+	}
+		li.loaded .progressBar
+		{
+			display: none;
+		}
+	li .progressBar
+	{
+		position: absolute;
+		top:50%;
+		left: 50%;
+		margin: -10px 0 0 -100px;
+		width: 200px;
+		height: 20px;
+		border: 1px solid #000;
+		-moz-border-radius: 10px;
+		-moz-box-shadow: 1px 1px 2px #fff;
+	}
+		li .progressBar p
+		{
+			width: 20px;
+			height: 20px;
+			-moz-border-radius: 10px;
+			background-color: #1E528C;
+		}

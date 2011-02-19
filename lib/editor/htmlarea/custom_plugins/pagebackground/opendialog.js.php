@@ -2,10 +2,10 @@
 /**
  * Created by Nadav Kavalerchik.
  * Contact info: nadavkav@gmail.com
- * Date: 1/15/11 Time: 9:32 PM
+ * Date: 2/15/11 Time: 9:32 PM
  *
  * Description:
- *
+ *  Set background Image of textarea
  */
 
 require_once("../../../../../config.php");
@@ -14,9 +14,11 @@ require_once("../../../../../config.php");
 
 ?>
 
-function __insertswf (editor) {
+function __pagebackground (editor) {
 
     var outparam = null;
+    var image = editor._doc.body.style.backgroundImage;
+/*
     if (typeof image == "undefined") {
         image = editor.getParentElement();
         if (image && !/^img$/i.test(image.tagName))
@@ -32,17 +34,20 @@ function __insertswf (editor) {
         f_width  : image.width,
         f_height : image.height
     };
-
+*/
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
-        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertswf/dialog.php?id=$courseid";
+        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/pagebackground/dialog.php?id=$courseid";
     } else {
-        //echo "insert_swf.php?id=$id";
-    }?>" ,1024,768, function (param) {
+        //echo "insert_image.php?id=$id";
+    }?>" ,800,550, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;
         }
+        editor._doc.body.style.backgroundImage = "url("+param.f_url+")";
+        //editor._doc.body.style.backgroundColor = "beige";
+/*
         var img = image;
         if (!img) {
             var sel = editor._getSelection();
@@ -61,7 +66,7 @@ function __insertswf (editor) {
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
                 //img = range.startContainer.previousSibling;
-                var img = editor._doc.createElement("embed"); 
+                var img = editor._doc.createElement("embed"); //nurit img >embed
 
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");
@@ -94,5 +99,6 @@ function __insertswf (editor) {
                     break;
             }
         }
+*/
     });
 }

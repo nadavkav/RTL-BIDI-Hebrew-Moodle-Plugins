@@ -12,9 +12,9 @@
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
     if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
-        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
+        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertimage/';
     } else {
-        $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
+        $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertimage/';
     }
 
 ?>
@@ -23,7 +23,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><?php print_string("title","insertswf");?></title>
+<title><?php print_string("title","insertimage");?></title>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -159,6 +159,106 @@ function submit_form(dothis) {
 //]]>
 </script>
 
+<script type="text/javascript">
+  var TCNDDU = TCNDDU || {};
+
+  (function(){
+    var dropContainer,
+      dropListing;
+
+    TCNDDU.setup = function () {
+      dropListing = document.getElementById("output-listing01");
+      dropContainer = document.getElementById("output");
+
+      dropContainer.addEventListener("dragenter", function(event){dropListing.innerHTML = '';event.stopPropagation();event.preventDefault();}, false);
+      dropContainer.addEventListener("dragover", function(event){event.stopPropagation(); event.preventDefault();}, false);
+      dropContainer.addEventListener("drop", TCNDDU.handleDrop, false);
+    };
+
+    TCNDDU.uploadProgressXHR = function (event) {
+      if (event.lengthComputable) {
+        var percentage = Math.round((event.loaded * 100) / event.total);
+        if (percentage < 100) {
+          event.target.log.firstChild.nextSibling.firstChild.style.width = (percentage*2) + "px";
+          event.target.log.firstChild.nextSibling.firstChild.textContent = percentage + "%";
+        }
+      }
+    };
+
+    TCNDDU.loadedXHR = function (event) {
+      var currentImageItem = event.target.log;
+
+      currentImageItem.className = "loaded";
+      console.log("xhr upload of "+event.target.log.id+" complete");
+    };
+
+    TCNDDU.uploadError = function (error) {
+      console.log("error: " + error);
+    };
+
+    TCNDDU.processXHR = function (file, index) {
+      var xhr = new XMLHttpRequest(),
+        container = document.getElementById("item"+index),
+        fileUpload = xhr.upload,
+        progressDomElements = [
+          document.createElement('div'),
+          document.createElement('p')
+        ];
+
+      progressDomElements[0].className = "progressBar";
+      progressDomElements[1].textContent = "0%";
+      progressDomElements[0].appendChild(progressDomElements[1]);
+
+      container.appendChild(progressDomElements[0]);
+
+      fileUpload.log = container;
+      fileUpload.addEventListener("progress", TCNDDU.uploadProgressXHR, false);
+      fileUpload.addEventListener("load", TCNDDU.loadedXHR, false);
+      fileUpload.addEventListener("error", TCNDDU.uploadError, false);
+
+      xhr.open("POST", "upload.php");
+      xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+      xhr.sendAsBinary(file.getAsBinary());
+    };
+
+    TCNDDU.handleDrop = function (event) {
+      var dt = event.dataTransfer,
+        files = dt.files,
+        imgPreviewFragment = document.createDocumentFragment(),
+        count = files.length,
+        domElements;
+
+      event.stopPropagation();
+      event.preventDefault();
+
+      for (var i = 0; i < count; i++) {
+        domElements = [
+          document.createElement('li'),
+          document.createElement('a'),
+          document.createElement('img')
+        ];
+
+        domElements[2].src = files[i].getAsDataURL(); // base64 encodes local file(s)
+        domElements[2].width = 300;
+        domElements[2].height = 200;
+        domElements[1].appendChild(domElements[2]);
+        domElements[0].id = "item"+i;
+        domElements[0].appendChild(domElements[1]);
+
+        imgPreviewFragment.appendChild(domElements[0]);
+
+        dropListing.appendChild(imgPreviewFragment);
+
+        TCNDDU.processXHR(files.item(i), i);
+      }
+    };
+
+    window.addEventListener("load", TCNDDU.setup, false);
+  })();
+</script>
+	<link rel="stylesheet" type="text/css" href="_styles.css" media="screen" />
+
+
 <style type="text/css">
 html, body {
 margin: 2px;
@@ -275,7 +375,7 @@ form { margin-bottom: 0px; margin-top: 0px; }
       <td width="55%" valign="top"><?php
           print_string("filebrowser","editor");
           echo "<br />";
-          echo "<iframe id=\"ibrowser\" name=\"ibrowser\" src=\"{$CFG->wwwroot}/lib/editor/htmlarea/custom_plugins/insertswf/coursefiles.php?usecheckboxes=1&id=$id\" style=\"width: 100%; height: 200px;\"></iframe>";
+          echo "<iframe id=\"ibrowser\" name=\"ibrowser\" src=\"{$CFG->wwwroot}/lib/editor/htmlarea/custom_plugins/insertimage/coursefiles.php?usecheckboxes=1&id=$id\" style=\"width: 100%; height: 200px;\"></iframe>"; //nurit   coursefiles.php
       ?>
       </td>
       <td width="45%" valign="top"><?php print_string("preview","editor");?>:<br />
@@ -344,5 +444,11 @@ form { margin-bottom: 0px; margin-top: 0px; }
     </tr>
   </table>
   <p>&nbsp;</p>
+  <hr/>
+  <div id="output" class="clearfix">
+		<ul id="output-listing01"></ul>
+	</div>
+  <hr/>
+
 </body>
 </html>

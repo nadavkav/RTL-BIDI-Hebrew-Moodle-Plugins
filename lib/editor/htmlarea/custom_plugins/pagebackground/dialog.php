@@ -12,9 +12,9 @@
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
     if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
-        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
+        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/pagebackground/';
     } else {
-        $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
+        $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/pagebackground/';
     }
 
 ?>
@@ -23,14 +23,14 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><?php print_string("title","insertswf");?></title>
+<title><?php print_string("title","pagebackground");?></title>
 
 <script type="text/javascript">
 //<![CDATA[
 var preview_window = null;
 
 function Init() {
-
+/*
   var param = window.dialogArguments;
   if (param) {
       var alt = param["f_url"].substring(param["f_url"].lastIndexOf('/') + 1);
@@ -44,6 +44,7 @@ function Init() {
       document.getElementById("f_height").value = param["f_height"];
       window.ipreview.location.replace('preview.php?id='+ <?php print($id);?> +'&imageurl='+ param.f_url);
   }
+  */
   document.getElementById("f_url").focus();
 };
 
@@ -158,13 +159,13 @@ function submit_form(dothis) {
 
 //]]>
 </script>
-
 <style type="text/css">
 html, body {
 margin: 2px;
 background-color: rgb(212,208,200);
 font-family: Tahoma, Verdana, sans-serif;
 font-size: 11px;
+<?php if (right_to_left()) echo "direction:rtl;"; ?>
 }
 .title {
 background-color: #ddddff;
@@ -275,7 +276,7 @@ form { margin-bottom: 0px; margin-top: 0px; }
       <td width="55%" valign="top"><?php
           print_string("filebrowser","editor");
           echo "<br />";
-          echo "<iframe id=\"ibrowser\" name=\"ibrowser\" src=\"{$CFG->wwwroot}/lib/editor/htmlarea/custom_plugins/insertswf/coursefiles.php?usecheckboxes=1&id=$id\" style=\"width: 100%; height: 200px;\"></iframe>";
+          echo "<iframe id=\"ibrowser\" name=\"ibrowser\" src=\"{$CFG->wwwroot}/lib/editor/htmlarea/custom_plugins/pagebackground/coursefiles.php?usecheckboxes=1&id=$id\" style=\"width: 100%; height: 200px;\"></iframe>";
       ?>
       </td>
       <td width="45%" valign="top"><?php print_string("preview","editor");?>:<br />
@@ -331,7 +332,7 @@ form { margin-bottom: 0px; margin-top: 0px; }
           <input name="btnCfolder" type="submit" id="btnCfolder" value="<?php print_string("createfolder","editor");?>" onclick="return checkvalue('foldername','cfolder');" />
           </form>
           <div class="space"></div>
-          <form action="../coursefiles.php?id=<?php print($id);?>" method="post" enctype="multipart/form-data" target="ibrowser" id="uploader">
+          <form action="coursefiles.php?id=<?php print($id);?>" method="post" enctype="multipart/form-data" target="ibrowser" id="uploader">
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php print($upload_max_filesize);?>" />
           <input type="hidden" name="id" VALUE="<?php print($id);?>" />
           <input type="hidden" name="wdir" value="" />
