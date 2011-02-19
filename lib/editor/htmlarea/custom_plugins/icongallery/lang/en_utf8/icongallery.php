@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname'] = 'Icon Gallery';
 $string['chooseicongallery'] = 'Choose an Icon you wish to insert into your text';
 $string['choosenewgallery'] = 'Or, choose a new icon folder:';
 $string['choosegallery'] ='Choose a folder...';

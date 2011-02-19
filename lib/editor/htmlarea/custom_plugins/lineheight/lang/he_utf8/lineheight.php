@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname']='קביעת מרווח בין שורות';
 $string['title']='קביעת מרווח בין שורות';
 $string['mustenterlineheight']='יש לבחור מרווח בין שורות';
 $string['lineheight']=' מרווח בין השורות';

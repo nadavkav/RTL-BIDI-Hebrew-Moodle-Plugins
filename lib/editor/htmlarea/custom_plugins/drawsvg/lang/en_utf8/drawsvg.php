@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname'] = 'Draw vector images (SVG)';
 $string['title'] = 'Draw (vectors) Diagrams, Objects and Sketches';
 $string['ok'] = 'I am finished';
 $string['cancel'] = 'Cancel';

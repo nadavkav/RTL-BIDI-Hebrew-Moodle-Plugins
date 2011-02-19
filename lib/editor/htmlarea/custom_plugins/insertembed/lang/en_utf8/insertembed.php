@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname'] = 'Insert EMBED into content';
 $string['title'] = 'Insert EMBED into content';
 $string['ok'] = 'I am finished';
 $string['cancel'] = 'Cancel';

@@ -8,7 +8,7 @@
  *
  */
 
-
+$string['pluginname'] = 'מאגר תמונות וסמלים';
 $string['chooseicongallery'] = 'בחרו סמל אותו אתם מעוניינים לשבץ בתמליל שלכם';
 $string['choosenewgallery'] = 'או, בחרו ספריית תמונות חדשה לתצוגה:';
 $string['choosegallery'] ='בחרו ספרייה...';

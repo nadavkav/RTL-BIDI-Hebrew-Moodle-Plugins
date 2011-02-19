@@ -7,7 +7,8 @@
  * Description:
  *
  */
- 
+
+$string['pluginname'] = 'Text Yellow Marker';
 $string['yourcomment'] = 'Your comment...';
 
 ?>

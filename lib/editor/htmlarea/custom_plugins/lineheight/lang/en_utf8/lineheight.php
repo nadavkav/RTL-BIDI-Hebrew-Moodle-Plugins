@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname']='Line Height';
 $string['title']='Line Height';
 $string['mustenterlineheight']='You must choose line height, to continue.';
 $string['lineheight']='Line Height';

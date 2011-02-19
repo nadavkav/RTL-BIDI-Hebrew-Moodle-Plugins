@@ -8,5 +8,6 @@
  *
  */
 
+$string['pluginname'] = 'Background Image';
 $string['notimage'] = 'The selected file is not an Image file. please choose another file';
 ?>

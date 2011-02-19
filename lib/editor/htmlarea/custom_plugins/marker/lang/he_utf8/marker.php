@@ -8,6 +8,7 @@
  *
  */
  
+$string['pluginname'] = 'כתיבת הערה בצבע צהוב';
 $string['yourcomment'] = 'הזינו הערה...';
 
 ?>

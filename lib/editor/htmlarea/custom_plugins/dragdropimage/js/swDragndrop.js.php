@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../../../../../../config.php");
+    global $CFG;
+?>
 //Thanks to: http://www.quirksmode.org/js/detect.html
 
 var BrowserDetect = new Class ({
@@ -123,7 +128,7 @@ var SwDragndrop = new Class({
 		maxSize: 2,			// number of MB per file (in case of file drag and drop -> Firefox 3.6 and above)
 		maxDropFile: 3,		// number of MB per upload (in case of fallback upload -> other browsers)
 		url: 'upload.php<?php echo "?courseid=".$_GET['courseid']."&userid=".$_GET['userid']; ?>',
-		content: "Drag and drop files to upload!"
+		content: "<?php echo get_string('draganddrop','dragdropimage','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dragdropimage/lang/');?>"
     },
     el: null,
     fileListEl: null,

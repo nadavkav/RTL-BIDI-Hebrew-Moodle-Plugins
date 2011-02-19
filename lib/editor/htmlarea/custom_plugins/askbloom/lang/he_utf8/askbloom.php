@@ -1,5 +1,6 @@
 <?php
 
+$string['pluginname'] = 'מחולל הנחיות לתלמידים ברוח הטקסונומיה של בלום';
 $string['windowtitle'] = 'מחולל הנחיה למשימה מתוקשבת (על פי בלום)';
 $string['dearstudents'] = 'תלמידים יקרים, אנא ';
 $string['clicktoentersubject'] = 'הזינו פה, נושא חדש';

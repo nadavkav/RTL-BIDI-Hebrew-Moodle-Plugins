@@ -8,7 +8,7 @@
  *
  */
 
-
+$string['pluginname'] = 'Audio Recorder';
 $string['saveedsuccessfully'] = '<h2>Recording was successfully saved.</h2> <br/><br/>Please click the \"Close Window\" button to finish';
 $string['closewindow'] = 'Close Window';
 $string['clicktoplay'] = 'Click to play';

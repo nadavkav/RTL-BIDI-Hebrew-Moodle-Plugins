@@ -8,6 +8,7 @@
  *
  */
 
+$string['pluginname'] = 'שיבוץ EMBED מאתריי WEB-2';
 $string['title'] = 'הכנסת EMBED לתוכן קיים';
 $string['ok'] = 'סיימתי, אפשר להמשיך';
 $string['cancel'] = 'ביטול';

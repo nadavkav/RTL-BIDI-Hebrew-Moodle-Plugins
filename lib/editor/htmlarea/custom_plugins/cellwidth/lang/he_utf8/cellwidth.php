@@ -7,7 +7,8 @@
  * Description:
  *
  */
- 
+
+$string['pluginname'] = 'עדכון רוחב עמודה בטבלה';
 $string['mustentercellwidth'] = 'יש להזין רוחב עמודה';
 $string['cellwidth'] = 'יש להזין רוחב עמודה';
 $string['title'] = 'עדכון רוחב עמודה בטבלה';

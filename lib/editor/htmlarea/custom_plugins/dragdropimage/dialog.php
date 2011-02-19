@@ -16,8 +16,6 @@
     require_login($id);
     require_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid,$userid));
 
-    //@header('Content-Type: text/html; charset=utf-8');
-
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
 ?>
@@ -29,7 +27,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="description" content="Drag'n'drop script based on mootools 1.2"/>
         <meta name="keywords" content="drag drop dragndrop javascript mootools html5 gmail file upload"/>
-        <link rel="shortcut icon" href="images/favicon.ico" />
         <!--[if IE]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -176,6 +173,10 @@ function onCancel() {
 
     </head>
     <body>
+    <div style="text-align:center;">
+      <br/><input type="button" onclick="onOK();" value="<?php echo get_string("useimages","dragdropimage",'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dragdropimage/lang/');?>">
+    </div>
+
 		<div id='swDragndrop'></div>
         <script src="lib/mootools/mootools-1.2.4-core-jm.js" type="text/javascript"></script>
         <script type="text/javascript" src="js/swDragndrop.js.php<?php echo "?courseid=".$_GET['courseid']."&userid=".$_GET['userid']; ?>"></script>
@@ -184,6 +185,6 @@ function onCancel() {
 		    	var dd = new SwDragndrop('swDragndrop');
 	    	});
         </script>
-        <input type="button" onclick="onOK();" value="Use Images">
+
     </body>
 </html>

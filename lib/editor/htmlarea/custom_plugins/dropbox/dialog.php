@@ -5,6 +5,13 @@
   $useremail = optional_param('useremail', '', PARAM_TEXT);
   $userpassword = optional_param('userpassword', '', PARAM_TEXT);
   $dropboxfolder = optional_param('dropboxfolder', '/Public', PARAM_TEXT);
+  $logoff = optional_param('logoff', '', PARAM_TEXT);
+
+  // reset connection to Dropbox by clearing username and password
+  if (!empty($logoff)) {
+    setcookie('dropbox_useremail','',time() + (360)); // 86400 = 1 day
+    setcookie('dropbox_userpassword','',time() + (360)); // 360 = 1 hour
+  }
 
   require_course_login($id);
   @header('Content-Type: text/html; charset=utf-8');
@@ -43,19 +50,30 @@ if (empty($userpassword)) $userpassword = $_COOKIE['dropbox_userpassword'];
 
 // If no POST and no COOKIE...
 if (empty($useremail) or empty($userpassword)) {
+  print_header_simple();
+  echo "<div style='direction:ltr; text-align:center;'>";
   echo "<form id=\"dropboxuser\" method=\"post\" action=\"dialog.php\">";
-  echo get_string('whatisuseremail').'<input type="text" name="useremail" id="useremail"><br/>';
-  echo get_string('whatisuserpassword').'<input type="text" name="userpassword" id="userpassword"><br/>';
-  echo "<input type=\"submit\" value=\"".get_string('login')."\">";
+  echo get_string('whatisuseremail','dropbox','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dropbox/lang/').'<br/><input type="text" name="useremail" id="useremail"><br/>';
+  echo get_string('whatisuserpassword','dropbox','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dropbox/lang/').'<br/><input type="password" name="userpassword" id="userpassword"><br/>';
+  echo "<br/><input type=\"submit\" value=\"".get_string('login','dropbox','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dropbox/lang/')."\">";
   echo "</form>";
+  echo "</div>";
+  print_footer();
   die;
 }
 // If we got that far, we have a user email and password.
 // Let's save it as a Cookie (for 7 days?)
-setcookie('dropbox_useremail',$useremail,time() + (86400 * 7)); // 86400 = 1 day
-setcookie('dropbox_userpassword',$userpassword,time() + (86400 * 7));
+setcookie('dropbox_useremail',$useremail,time() + (360)); // 86400 = 1 day
+setcookie('dropbox_userpassword',$userpassword,time() + (360)); // 360 = 1 hour
 
-$tokens = $dropbox->getToken($useremail, $userpassword);
+try {
+  $tokens = $dropbox->getToken($useremail, $userpassword);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+    echo 'Please close this window and start again';
+    setcookie('dropbox_useremail','',time() + (360)); // 86400 = 1 day
+    setcookie('dropbox_userpassword','',time() + (360)); // 360 = 1 hour
+}
 //echo "Tokens:\n";
 //print_r($tokens);
 
@@ -82,9 +100,7 @@ function display_folder($dropbox,$folder) {
   
   foreach ($dropboxfiles['contents'] as $items) {
     if ($items['is_dir'] == 1) {
-      //echo '<div style="color:blue;">'.$items['path'].'</div><br/>'."\n";
-      echo '<div style="color:blue;"><a href="dialog.php?dropboxfolder='.$items['path'].'">'.$items['path'].'</a></div>';
-      //display_folder($dropbox,$items['path']);
+      echo '<div style="color:blue;font-size:1.5em;padding-left: 20px;"><a href="dialog.php?dropboxfolder='.$items['path'].'">'.$items['path'].'</a></div>';
     } else {
       echo '<input type="checkbox" name="file" value="http://dl.dropbox.com/u/'.$accountinfo["uid"].str_replace("/Public","",$items["path"]).'">';
       echo '<a target="_new" href="http://dl.dropbox.com/u/'.$accountinfo['uid'].str_replace('/Public','',$items['path']).'">'.$items['path'].'</a><br/>'."\n";
@@ -98,7 +114,8 @@ function display_folder($dropbox,$folder) {
   echo "<div style='direction:ltr;text-align:left;'>";
     echo "<form id=\"dropbox\" method=\"post\" action=\"dialog.php\">";
       display_folder($dropbox,$dropboxfolder); // We can only use the user's Public folder when sharing files outside of Dropbox (without a password)
-    echo "<input type=\"button\" onclick=\"onOK();\" value=\"".get_string('add')."\">";
+    echo "<input type=\"button\" onclick=\"onOK();\" value=\"".get_string('add','dropbox','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dropbox/lang/')."\">";
+    echo "<input type=\"submit\" onclick=\"logoff_dropbox();\" name=\"logoff\" value=\"".get_string('logoff','dropbox','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/dropbox/lang/')."\">";
     echo "</form>";
   echo "</div>";
   print_footer();
@@ -108,16 +125,6 @@ function display_folder($dropbox,$folder) {
 //<![CDATA[
 
 function Init() {
-  var param = window.dialogArguments;
-  /*
-  if (param) {
-      var alt = param["f_url"].substring(param["f_url"].lastIndexOf('/') + 1);
-      document.getElementById("f_url").value = param["f_url"];
-      document.getElementById("f_alt").value = param["f_alt"] ? param["f_alt"] : alt;
-      document.getElementById("f_border").value = parseInt(param["f_border"] || 0);
-      window.ipreview.location.replace('preview.php?id='+ <?php echo $id;?> +'&imageurl='+ param.f_url);
-  }
-*/
   document.getElementById('useremail').focus();
 };
 
@@ -127,7 +134,6 @@ function onOK() {
   var inputs = document.getElementsByTagName('input');
   for(var i = 0; i < inputs.length; i++) {
    if (inputs[i].checked == true){
-     //alert(inputs[i].value);
      param[i] = '<a target="_new" href="'+inputs[i].value+'">'+inputs[i].value+'</a><br/>';
      //param[i] = '<a href="<?php echo $CFG->wwwroot; ?>/blocks/file_manager/file.php?cid=<?php echo $USER->id; ?>&groupid=0&fileid='+inputs[i].value+'">'+inputs[i].name+'</a>';
    };
@@ -143,5 +149,10 @@ function onCancel() {
   window.close();
   return false;
 };
+
+function logoff_dropbox() {
+  document.cookie="dropbox_useremail=;dropbox_password=";
+}
+
 //[[>
 </script>

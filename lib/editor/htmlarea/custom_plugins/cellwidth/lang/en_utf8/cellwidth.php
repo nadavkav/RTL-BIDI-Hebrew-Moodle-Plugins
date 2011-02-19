@@ -7,7 +7,8 @@
  * Description:
  *
  */
- 
+
+$string['pluginname'] = 'Set table\'s column width';
 $string['mustentercellwidth'] = 'You must enter Column width, to continue';
 $string['cellwidth'] = 'Please enter Column width';
 $string['title'] = 'Table column width update';

@@ -1,5 +1,6 @@
 <?php
 
+$string['pluginname'] = 'Ask Bloom - Generate Activity Instruction to students';
 $string['windowtitle'] = 'Student Instruction Generator Wizard (According to updated Bloom)';
 $string['dearstudents'] = 'Dear Students, Please ';
 $string['clicktoentersubject'] = 'Click here, to enter Subject';
