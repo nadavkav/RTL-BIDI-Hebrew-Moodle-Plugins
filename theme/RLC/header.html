@@ -7,9 +7,11 @@
     <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.ico" />
     <?php include("$CFG->javascript"); ?>
     <script src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/Y2K_Neophyte_400-Y2K_Neophyte_italic_400.font.js"></script>
+    <!--script type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/Y2K_Neophyte_400-Y2K_Neophyte_italic_400.font.js"></script-->
+    <!-- Hebrew font Shmulik CLM by Yoram Gnat, part of the Culmus Free Hebrew Fonts project (http://culmus.sourceforge.net/) -->
+    <script type="text/javascript" src="<?php echo $CFG->themewww .'/'. current_theme() ?>/js/Shmulik_CLM_400.font.js"></script>
     <script type="text/javascript">
-    <?php if (!right_to_left() ) { ?>
+    <?php if (right_to_left() ) { ?>
       Cufon.replace('.rlc_blogname');
     <?php }?>
     </script>
@@ -22,6 +24,42 @@
     }
     ?>>
 
+<?php
+/*
+Here's a function that adds to carmel.alex's utf-8 encoding support the ability NOT to reverse numbers
+(for example when you output a phrase as a parameter for a SWF file that can't handle RTL languages itself,
+but obviously any numbers should remain the same as in the original phrase).
+
+function origin: http://www.php.net/manual/en/function.strrev.php
+
+Note that it can be used just as well for UTF-8 usages if you want the numbers to remain intact:
+*/
+
+function utf8_strrev($str, $reverse_numbers) {
+  preg_match_all('/./us', $str, $ar);
+  if ($reverse_numbers)
+    return join('',array_reverse($ar[0]));
+  else {
+      $temp = array();
+      foreach ($ar[0] as $value) {
+         if (is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0])) {
+            foreach ($temp as $key => $value2) {
+               if (is_numeric($value2))
+                 $pos = ($key + 1);
+               else
+                  break;
+            }
+            $temp2 = array_splice($temp, $pos);
+            $temp = array_merge($temp, array($value), $temp2);
+         } else
+            array_unshift($temp, $value);
+      }
+      return implode('', $temp);
+  }
+}
+
+?>
+
 <div id="page">
 
 <div id="rlc_masthead">
@@ -30,7 +68,16 @@
   </div>	<!-- end rlc_catmenucontainer -->
   <div id="rlc_top">
     <div class="rlc_blogname">
-            <h1 class="headermain"><?php echo $heading ?></h1>
+            <h1 class="headermain">
+                <?php if (right_to_left()) {
+                        $hebrewtext = explode(' ',utf8_strrev($heading));
+                        foreach($hebrewtext as $word) {
+                            $reversedline = " $word".$reversedline;
+                        }
+                        echo $reversedline;
+                      } else { echo $heading; }
+                ?>
+            </h1>
     </div> <!-- end rlc_blogname -->
   </div> <!-- end rlc_top -->
 
