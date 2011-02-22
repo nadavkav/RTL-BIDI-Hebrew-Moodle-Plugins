@@ -16,7 +16,7 @@ Index: ../moodle-1910/lib/weblib.php
 +            }
 +
              $scriptcount++;
- 
+
              if ($height) {    // Usually with legacy calls
 @@ -5086,7 +5095,7 @@
   * @param string $name Form element to replace with HTMl editor by name
@@ -24,19 +24,19 @@ Index: ../moodle-1910/lib/weblib.php
  function use_html_editor($name='', $editorhidebuttons='', $id='') {
 -    global $THEME;
 +    global $THEME,$CFG;
- 
+
      $editor = 'editor_'.md5($name); //name might contain illegal characters
      if ($id === '') {
 @@ -5099,6 +5108,18 @@
- 
+
      echo print_editor_config($editorhidebuttons);
- 
+
 +    // load all custom HTMLAREA plugins
 +    if (!empty($CFG->editor_customplugins)) {
 +      echo "\n";$allplugins = '[';
 +      foreach (explode(',',$CFG->editor_customplugins) as $plugin) {
-+        echo 'config.registerButton("'.$plugin.'",  "'.get_string('pluginname',$plugin,'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/'.$plugin.'/lang/').'", "'.$CFG->wwwroot;
-+          echo '/lib/editor/htmlarea/custom_plugins/'.$plugin.'/icon.png", false, __'.$plugin.');'."\n";
++        echo 'config.registerButton("'.$plugin.'",  "'.get_string('pluginname',$plugin,'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/'.$plugin.'/lang/').'", "';
++        echo $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/'.$plugin.'/icon.png", false, __'.$plugin.');'."\n";
 +        $allplugins .= '"'.$plugin.'",';
 +      }
 +      $allplugins = rtrim($allplugins,',').']';
