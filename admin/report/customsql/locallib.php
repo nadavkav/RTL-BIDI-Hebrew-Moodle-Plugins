@@ -252,9 +252,13 @@ function report_customsql_pretify_column_names($row) {
 
 function report_customsql_write_csv_row($handle, $data) {
     global $CFG;
+    $encodings = array('0'=>'UTF-8','1'=>'Latin','2'=>'Windows-1255','3'=>'ISO-8859-8');
     $escapeddata = array();
     foreach ($data as $value) {
         $value = str_replace('%%WWWROOT%%', $CFG->wwwroot, $value);
+        if ($CFG->latinexcelexport > 0) {
+          $value = iconv("UTF-8", $encodings[$CFG->hebrewexcelexport], $value);
+        }
         $escapeddata[] = '"' . str_replace('"', '""', $value) . '"';
     }
     fwrite($handle, implode(',', $escapeddata) . "\r\n");
