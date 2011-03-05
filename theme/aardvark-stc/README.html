@@ -1,0 +1,142 @@
+﻿<head>
+<style type="text/css">
+.style2 {color: #CC0000}
+</style>
+</head>
+
+
+<h3>Aardvark (Newbury College Theme Set) Theme - Pro 1.2</h3>
+<hr />
+
+<p><B><font size="4">Created by Shaun Daubney</font></B><br>
+  Newbury College<br>
+  Monks Lane<br>
+  Newbury, Berks.<br>
+  RG14 7TD<br>
+  <br>
+  <a href="mailto:moodle@newbury-college.ac.uk">moodle@newbury-college.ac.uk</a></p>
+
+<p>Based on my previous "Alternatives" themeset.</p>
+
+<p>This theme has a fixed width. To remove the fixed width, delete "max-width: 960px;" in aardvark_layout.css</p>
+
+<P><B><font size="4">Requirements</font></B></P>
+<ul>
+  <li>Moodle 1.9.5+ (Tested - other versions untested)</li>
+	<li>Firefox 3+, Safari 4+, IE7+ (others untested)</li>
+  <li>Standard Theme</li>
+</ul>
+
+<P><B><font size="4">Known Issues</font></B></P>
+<ul>
+	<li>Menu not compatible with IE6 or earlier</li>
+	<li>Difference in gap between profilename and profileoptions in FF compared to IE</li>
+</ul>
+
+
+<P><B><font size="4">Roadmap</font></B></P>
+
+<p><B>Pro 1.2 (Robocop)</B> - <font color="#339900">Released</font></p>
+<ul>
+	<li>Rebuild from ground up</li>
+	<li>All CSS combined into one handy file</li>
+	<li>Re-organised folder structure</li>
+	<li>More modern styling/design</li>
+</ul>
+
+
+<p><B>Pro 1.1 (Bearhug)</B> - <font color="#339900">Released</font></p>
+<ul>
+  <li>PIX Folder - Additional filetype icons added</li>
+	<li>aardvark_layout.css - Forum controls added to restrict posted images to 
+	fit on to page &quot;.forumpost {width: auto;overflow:none;}&quot; and &quot;.forumpost img 
+	{max-width: 100%;}&quot;</li>
+	<li>aardvark_layout.css - Removed &quot;position&quot; and &quot;left&quot; elements from &quot;.cal_popup_bg 
+	&quot;, &quot;.surround&quot; and &quot;.header-profileblock&quot; to fix calendar pop-ups.</li>
+    <li>aardvark_layout.css - Changed .surround to #surround </li>
+    <li>aardvark_color.css - Changed .surround to #surround </li>
+    <li>header.html - Changed &lt;div class=&quot;surround&quot;&gt; to &lt;div id=&quot;surround&quot;&gt;</li>
+    <li>header.html - Correctly closed link in &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?php echo $CFG-&gt;httpsthemewww .'/'. current_theme() ?&gt;/<span class="style2">aardvark_print.css</span>&quot; type=&quot;text/css&quot; media=<span class="style2">&quot;print&quot; /</span>&gt;</li>
+	<li>aardvark_print.css - Added</li>
+    <li>various css - Changed header-profile classes (.) to IDs (#)</li>
+    <li>header.html - Changed header-profileblock class to ID</li>
+    <li>aardvark_default.css - Removed #header-home and placed contents in #logo</li>
+    <li>header.html - Made the header elements a little more PHP and removed redundant #header-home DIV. Now reads<br />
+      <em>&lt;?php print_container_start(true, '', 'header');<br />
+      echo '&lt;div id=&quot;logo&quot;&gt;';<br />
+      echo '&lt;a href=&quot;'.$CFG-&gt;wwwroot.'&quot; style=&quot;display: block; width: 247px; height: 96px;&quot;&gt; &lt;/a&gt;';<br />
+      echo '&lt;/div&gt;';<br />
+      echo '&lt;div id=&quot;header-profileblock&quot;&gt;';<br />
+include('profileblock.php');<br />
+echo '&lt;/div&gt;';<br />
+?&gt;</em></li>
+    <li>header.html - Validated markup! Woop!!!<br>
+      </li>
+</ul>
+
+
+<p><B>Pro 1.0 (Morlock)</B> - <font color="#339900">Released</font></p>
+<ul>
+  <li>Moved out of beta - A number of issues may still exist relating to 
+  appearance, however the theme has been extensively tested and is considered 
+  stable.</li>
+	<li>profilepic.php - Removed as it was no longer required.</li>
+  <li>footer.html - Added additional login and navigation controls to footer.</li>
+	<li>aardvark_color.css - &quot;h2 .headingblock, .header&quot; image changed to 50px 
+	height version</li>
+</ul>
+
+
+<p><B>Beta 0.5 (Termite)</B> - <font color="#339900">Released</font></p>
+<ul>
+  <li>Fixed some issues with header rendering in some browers</li>
+  <li>Moved to BETA, maybe still a couple of bugs and improvements, but generally 
+    stable. </li>
+</ul>
+<p><B>Alpha 0.4 (Yeti)</B> - <font color="#339900">Released</font></p>
+<ul>
+  <li>Hopefully fixed header login issues - untested except my build where it 
+    works</li>
+  <li>Replaced some missing icons from PIX folder</li>
+  <li>Themeswitch and JS Query files removed (for time being)</li>
+</ul>
+<P><B>Alpha 0.3 (Critter)</B> - <font color="#339900">Released</font></P>
+<ul>
+  <li>Added IF variable to show "login" option in header when user not logged 
+    in</li>
+  <li>New codename (based on default colour)</li>
+  <li>Replaced 'fixed typed' options with language adjustable versions from LANG. 
+  </li>
+</ul>
+<p><B>Alpha 0.2 (Juiced)</B> - <font color="#339900">Released</font></p>
+<ul>
+  <li>New colour scheme</li>
+  <li>Topic areas styled</li>
+  <li>Footer modified</li>
+  <li>Changes to calendar styles</li>
+  <li>Forums rough styled</li>
+</ul>
+
+<P><B>Alpha 0.1 (Vertigo) </B> - <font color="#339900">Released</font></P>
+<ul>
+  <li>Started again from scratch</li>
+  <li>New navigation menu (called Top Menu), now pure CSS</li>
+  <li>Lighter colour scheme</li>
+  <li>User profile details in header</li>
+  <li>Calendar styled</li>
+</ul>
+
+<p>This theme will continue to be developed. If you like this theme and use it yourself, 
+please let me know what types of modifications you make on the Moodle forums, I'd love to see them and maybe pinch some ideas for mine. Also always grateful to 
+receive credit where credit's due.</p>
+
+<P>Discuss this project, with suggestions and fixes <a href="http://moodle.org/mod/data/view.php?d=26&rid=2618">here</a></P>
+
+<p><B><font size="4">Thanks to...</font></B></p>
+<ul>
+  <li><a href="http://www.moodle.org">Moodle.org</a></li>
+</ul>
+<p>Thanks for the support in the forums, the users and contributors around the 
+world and my good friend <a href="http://www.google.co.uk">Google</a>.</p>
+
+<p>Support <a href="http://www.moodle.org">Moodle</a> and Open Source Software.</p>

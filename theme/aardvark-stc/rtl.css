@@ -1,0 +1,16 @@
+#left-column .sideblock .content,
+#right-column .sideblock .content {
+text-align:right;
+}
+
+#aardvark_menu ul li {
+float:right;
+}
+
+#aardvark_menu ul {
+float:right;
+}
+
+#aardvark_menu_date {
+float:left;
+}

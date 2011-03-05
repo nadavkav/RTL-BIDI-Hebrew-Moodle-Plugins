@@ -1,0 +1,671 @@
+/**
+  *  This is what makes the Aardvark unique
+  *
+  */
+
+
+
+/***
+ ***	Core: Body
+ ***/
+
+body {
+	background-color:#efffd7;
+	font-family: Arial, Helvetica, sans-serif;
+    font-size : 13.4px;
+}
+
+a:link,
+a:visited {
+    color:#333333;
+	text-decoration: none;
+}
+
+a:hover {
+    color:#006600;
+	text-decoration: none;
+	
+}
+
+a.dimmed:link,
+a.dimmed:visited {
+	color:#aaaaaa;
+	text-decoration: none;
+
+}
+
+#page {
+	border: 0px solid #ffffff;
+	margin-left: auto; 
+	margin-right: auto;
+	max-width: 960px;
+}
+
+#pagelayout {
+	width:960px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#layout-table {
+	margin-top:0;
+	padding-top:10px;
+}
+
+#layout-table #middle-column{
+  vertical-align:top;
+  padding-left:7px;
+  padding-right:5px;
+}
+
+#layout-table #left-column{
+  vertical-align:top;
+  padding-left:4px;
+  padding-right:0px;
+}
+
+#layout-table #right-column{
+  vertical-align:top;
+  padding-left:0px;
+  padding-right:6px;
+}
+
+
+#content {
+    background: #ffffff url(images/core/h2grad.jpg) top repeat-x; 
+    margin-top:0;
+	padding-top:10px;
+
+}
+
+hr {
+	border-bottom:1px dotted gray;
+	border-top:0px;
+}
+
+h1.main,
+h2.main,
+h3.main,
+h4.main,
+h5.main,
+h6.main {
+	text-align: center;
+	margin:0px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+th.header,
+td.header,
+h1.header,
+h2.header,
+h3.header,
+div.header {     
+    background: #ffffff;
+	border-top: gray 1px dotted;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+	color: #505050;
+}
+
+.generalbox {
+    background: transparent; 
+	border: 0px;
+}
+
+/***
+ ***	Core: Header
+ ***/
+
+#header {
+	height: 100px;
+}
+
+#logo { 
+	background: url(images/header/logo.png) no-repeat left top;
+	width: 100%;
+	height: 100px;
+	float: left;
+	left: 0px;
+} 
+
+/***
+ ***	Core: Footer
+ ***/
+
+#footer {
+	background: #ffffff;
+	margin-top: 0px;
+	padding:10px;
+}
+
+#footer .footerlogos { 
+	margin-top: 5px;
+	border-top: 1px dotted gray;
+}
+
+#footer .footerlogos ul li { 
+	padding-left: 5px;
+	padding-right: 5px;
+	display: inline; 
+	margin:2px;
+}
+
+/***
+ ***	Core: ProfileBlock
+ ***/
+
+#profileblock {
+	float: right;
+	text-align: right;
+	max-width: 550px;
+	right: 0px;
+}
+
+#profilepic {
+	text-align:right;
+	float: right;
+	margin: 8px;
+	width: 80px;
+	height: 80px;
+	border: 1px solid #ffffff;
+}
+
+#profilename {
+	background-color: transparent;
+	text-align:right;
+	width: 440px;
+	margin-right: 5px;
+	margin-top:12px;
+	margin-bottom:0px;
+	float: left;
+}
+
+.profilename, .profilename a {
+	background-color: transparent;
+	color:#666666;
+    font-size:1.2em;
+	letter-spacing: -2px;
+	text-decoration: none;
+	font-weight:bold;
+	margin-right:5px;
+}
+
+.profilename, .profilename a:hover {
+	background-color: transparent;
+	color: #336600;
+	text-decoration:none;
+}
+
+#profileoptions {
+	text-align:right;
+	width: 440px;
+	margin-right: 10px;
+	margin-top: 0px;
+	float: left;
+}
+
+#profileoptions ul li { 
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: transparent;
+	display: inline; 
+	margin-right:5px;
+}
+
+.profileoptions {
+	background-color: transparent;
+	color:#666666;
+	text-decoration: none;
+	letter-spacing: -1px;
+}
+
+.profileoptions, .profileoptions a {
+	background-color: transparent;
+	color:#666666;
+}
+
+.profileoptions a:hover {
+	background-color: transparent;
+	color: #336600;
+	text-decoration:none;
+}
+
+
+/***
+ ***	Core: Aardvark Menu
+ ***/
+
+#aardvark_menu {
+	background:#efffd7 url('images/menu/menugrad.jpg') repeat-x top center;
+	height:40px;
+	clear:both;
+	margin-right:0px;
+	margin-left:0px;
+	
+}	
+
+#aardvark_menu ul {
+	padding:0;
+	margin:0;
+	list-style:none;
+	float:left;
+}
+#aardvark_menu ul li {
+	background:transparent;
+	list-style:none;
+	float:left;
+	height:37px;
+	white-space:nowrap;
+	z-index: 9999;
+}
+#aardvark_menu ul li div{
+	position:relative;
+	zoom:1;
+}
+
+#aardvark_menu ul li a {
+	display:block;
+	height:30px;
+	margin-left:0px;
+	padding: 10px 11px 0 11px;
+	color: #ffffff;
+	background:none;
+	text-shadow:0 1px 1px #101010;
+	}
+	
+#aardvark_menu ul li a:hover{
+	color:#32352c;
+	background:#efffd7 url('images/menu/hovergrad.jpg') repeat-x top center;
+	text-shadow:0 1px 1px #cccccc;
+
+}
+
+#aardvark_menu ul li.line {
+	padding:0;
+}
+
+#aardvark_menu ul ul{
+	padding:20px;
+	margin:0;
+	list-style:none;
+	position:absolute;
+	background:transparent url('images/menu/flyout.png') no-repeat scroll 0 0;
+	height:260px;
+	width:200px;
+	display:none;
+	top:40px;
+	z-index: 1000;
+}
+
+#aardvark_menu ul li:hover ul{
+	display: block;
+}
+
+#aardvark_menu li ul li{
+	list-style:none;
+	float:left;
+	background:transparent;
+	padding-left:9px;
+	height: auto;
+	font-size:0.9em;
+	width:12em;
+}
+
+#aardvark_menu li ul li a {
+	margin:0;
+	display:block;
+	height: auto;
+	color:#555555;
+	background:transparent;
+	text-shadow:none; !important
+}
+
+#aardvark_menu li ul li a:hover {
+	background:transparent;
+	color:#006600;
+	font-weight:bold;
+	text-shadow:none; !important
+}
+
+#aardvark_menu h4 {
+	color:#505050;
+	font-size:1em;
+	font-weight:bold;
+	margin:0 0 0px 10px;
+}
+
+#aardvark_menu_date a {
+	float:right;
+	padding: 10px 5px 0 11px;
+	height:30px;
+	color: #ffffff;
+	text-decoration:none;
+	text-shadow:0 1px 1px #101010;
+	background:#efffd7 url('images/menu/dategrad.jpg') repeat-x top center;
+}
+
+#aardvark_menu_date a:hover {
+	color: #32352c;
+	text-decoration:none;
+	background:#efffd7 url('images/menu/hovergrad.jpg') repeat-x top center;
+	text-shadow:0 1px 1px #cccccc;
+}
+
+/***
+ ***	Core: NavBar
+ ***/
+
+.navbar {
+    background:#ffffff;     
+	border-top:0px;
+	border-bottom:solid 1px gray;
+	border-left:0px;
+	border-right:0px;
+}
+
+/***
+ ***	Core: Side Block
+ ***/
+
+.sideblock .header {
+  background:transparent url(images/miniblock_header.png) no-repeat scroll left top;
+  color:#FFF;
+  border:medium none;
+  height:100%;
+  margin:0;
+  padding:0;
+  text-shadow:0 1px 1px #000000;
+  text-align:left;
+}
+
+.sideblock .header h2 {
+  color:#FFF;
+  font-size:14px;
+  font-weight:bold;
+  letter-spacing:0;
+  padding:0;
+  margin:0;
+}
+
+.sideblock .header .hide-show-image {
+  float:right;
+  height:11px;
+  width:11px;
+  margin-top:0.25em;
+}
+
+.sideblock .header .commands {
+  margin-top: 0.3em;
+  clear: both;
+  height: 16px;
+  background:#FFF;
+  border:1px solid #666;
+  padding:1px;
+  margin:0;
+}
+
+.sideblock .header .commands a {
+  margin: 0px 2px;
+}
+
+#left-column .hidden .header,
+#right-column .hidden .header
+{
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+#left-column .hidden .content,
+#right-column .hidden .content
+{
+  display: none;
+}
+
+#left-column .sideblock {
+  border:medium none;
+  margin-bottom:10px;
+  width:197px;
+}
+
+#left-column .sideblock .content {
+  background:transparent url(images/sideblock_content.png) no-repeat scroll left bottom;
+  border:medium none !important;
+  clear:both;
+  font-size:12px;
+  margin:0;
+  min-height:25px;
+  padding:6px 10px 11px !important;
+  text-align:left;
+}
+
+#left-column .sideblock .header .title {
+  background:transparent url(images/sideblock_header.png) no-repeat scroll left top;
+  border:medium none;
+  height:100%;
+  margin:0;
+  padding:10px 8px 6px 10px;
+}
+
+#right-column .sideblock {
+  width:209px;
+  border:medium none;
+  margin-bottom:10px;
+}
+
+#right-column .sideblock .content {
+  background:transparent url(images/sideblock_content_rt.png) no-repeat scroll left bottom;
+  border:medium none !important;
+  clear:both;
+  font-size:12px;
+  margin:0;
+  min-height:25px;
+  padding:6px 10px 11px !important;
+  text-align:left;
+}
+
+#right-column .sideblock .header .title {
+  background:transparent url(images/sideblock_header_rt.png) no-repeat scroll left top;
+  border:medium none;
+  height:100%;
+  margin:0;
+  padding:10px 8px 6px 10px;
+}
+
+.sideblock .header .icon.hide,
+.sideblock .header .icon.edit {
+  margin-right: 6px;
+}
+
+.sideblock .content {
+  padding: 4px;
+  border-width: 0px;
+  border-style: solid;
+}
+
+.sideblock .content h3,
+.sideblock .content h2 {
+  text-align: left;
+}
+
+.sideblock .content h2 {
+  margin:1.5em 0 0;
+  padding:0;
+}
+
+.sideblock .content .head {
+  margin-top: 10px;
+}
+
+.sideblock .content hr {
+  border: none;
+  height: 1px;
+  margin: 1em 0px;
+  padding: 0px;
+}
+
+.sideblock div.column {
+  margin:0px;
+  margin-right:4px;
+  padding:0px;
+}
+
+.sideblock div.column.c0 {
+  float: left;
+}
+
+.sideblock div.column.c1 {
+  display: inline;
+}
+
+.sideblock .content .c0 img.icon {
+  margin:0px;
+}
+
+.sideblock .content .list, .unlist, .inline-list {
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.sideblock .content .list {
+  width: 100%;
+}
+
+.sideblock .content .list li {
+  clear: left;
+}
+
+.sideblock .content .inline-list li, .inline-list li {
+  display: inline;
+}
+
+.sideblock .content ul.list li.listentry {
+  clear:both;
+}
+
+.sideblock .content div.info {
+  text-align:center;
+}
+
+.sideblock .footer {
+  margin-bottom: 4px;
+  text-align:center;
+  clear:both;
+}
+
+.sideblock img.userpicture {
+  width:16px;
+  height:16px;
+  margin-right:4px;
+}
+
+/***
+ ***	Core: Course (the middle bit)
+ ***/
+
+.coursebox {
+	background: #ffffff;
+	border: 0px;    
+	margin-bottom: 0px;
+	margin-right: 2px;
+}
+
+body#site-index .headingblock,
+body#course-view .headingblock {
+	margin-bottom: 0px;
+}
+
+.section {
+	background: #ffffff;
+}
+
+#course-view .section td.content {
+	border-top:0px;
+	border-left:0px;
+	border-right:0px;
+	border-bottom:1px dashed #dbdbdb;
+}
+
+#course-view .section td.side {
+  border-width:0px;
+}
+
+/***
+ ***	Modules: Forum
+ ***/
+
+.forumpost {
+	border: none;
+	font-size: 0.85em;
+}
+
+.forumpost .left {
+	padding-right: 30px;
+}
+
+.forumpost .starter {
+	background-color: #FFF;
+}
+
+.forumpost .content {
+	border-right: none;
+	border-bottom: none;
+	border-left: none;
+	padding: 1em 1em 1em 2em;
+	background-color: #efffd7;
+}
+
+.forumpost .topic {
+	border-bottom: none;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	padding: 1em;
+	background-color: #efffd7;
+}
+
+.forumpost .side {
+	background: #FFF url(pix/speech_side.gif) no-repeat scroll 100% 100%;
+}
+
+.forumpost .picture {
+	background: #FFF url(pix/speech_top.gif) no-repeat scroll 100% 0;
+}
+/***
+ ***	Modules: Calendar
+***/
+
+/* colors for calendar events */
+#calendar .event_global,
+.minicalendar .event_global,
+.block_calendar_month .event_global {
+  border-color:#def2ba !important;
+  background-color:#efffd7;
+}
+
+#calendar .event_course,
+.minicalendar .event_course,
+.block_calendar_month .event_course {
+  border-color:#c6dfeb !important;
+  background-color:#c6dfeb;
+}
+
+#calendar .event_group,
+.minicalendar .event_group,
+.block_calendar_month .event_group {
+  border-color:#feffc2 !important;
+  background-color:#feffc2;
+}
+
+#calendar .event_user,
+.minicalendar .event_user,
+.block_calendar_month .event_user {
+  border-color:#d9c6e2 !important;
+  background-color:#d9c6e2;
+}
+
+table.minicalendar tr td.weekend {
+  color: red;
+  }
