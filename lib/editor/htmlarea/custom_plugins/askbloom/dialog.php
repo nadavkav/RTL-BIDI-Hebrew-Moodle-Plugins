@@ -215,7 +215,7 @@ function onCancel() {
 <body id="page" onload="Init()">
   <span style="float: right;"><a style="color: red; font-decoration:none;" id="showHelp" href="#"><?php echo get_string('needhelp','askbloom','',$langfolder); ?></a></span><br/>
 
-  <div id="help">
+  <!--div id="help">
     <object id='stU0hcQkxIR15eSFleXlldUVZQ' width='500' height='344' type='application/x-shockwave-flash'
             data='http://www.screentoaster.com/swf/STPlayer.swf'
             codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,115,0'>
@@ -224,7 +224,7 @@ function onCancel() {
       <param name='flashvars' value='video=stU0hcQkxIR15eSFleXlldUVZQ'/>
     </object>
     <p style="text-align: center; color: blue;"><a href="#"><?php echo get_string('clicktohide','askbloom','',$langfolder); ?></a></p>
-  </div>
+  </div-->
 
   <div id="objective">
     <h1 id="obj"><?php echo get_string('dearstudents','askbloom','',$langfolder); ?><span style="" id="thinking_skill"></span><span style="" id="content"></span>
