@@ -22,4 +22,8 @@ $string['davidsononline'] =  'Davidson Online';
 $string['help'] = 'Help';
 $string['logoff'] = 'Log off';
 
+$string['settings'] = 'MyView Settings';
+$string['supportlink'] = 'Support link';
+$string['supportlinkinfo'] = 'Support link URL';
+
 ?>

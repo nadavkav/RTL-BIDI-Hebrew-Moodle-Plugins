@@ -22,4 +22,8 @@ $string['games'] = 'משחקים';
 $string['help'] = 'תמיכה';
 $string['logoff'] = 'יציאה';
 
+$string['settings'] = 'הגדרות MYVIEW';
+$string['supportlink'] = 'קישור תמיכה';
+$string['supportlinkinfo'] = 'כתובת דף תמיכה';
+
 ?>

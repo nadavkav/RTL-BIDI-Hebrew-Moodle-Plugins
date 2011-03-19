@@ -54,7 +54,7 @@ echo '<div class="tbaction"><a href="'.$CFG->wwwroot.'/blocks/exabis_eportfolio/
 echo '<div class="tbaction"><a href="'.$CFG->wwwroot.'/blog/edit.php?action=add"><img class="toolicon" src="'.$CFG->wwwroot.'/myview/toolbar/xchat.png">'.get_string('blogpost','myview','',$CFG->dirroot.'/myview/lang/').'</a></div>';
 
 echo '<div class="tbaction"><a target="_new" href="http://games2all.co.il/GameCategory.asp?CatID=1"><img class="toolicon" src="'.$CFG->wwwroot.'/myview/toolbar/package_games_kids.png">'.get_string('games','myview','',$CFG->dirroot.'/myview/lang/').'</a></div>';
-echo '<div class="tbaction"><a href="'.$CFG->wwwroot.'/message/index.php"><img class="toolicon" src="'.$CFG->wwwroot.'/myview/toolbar/system-help.png">'.get_string('help','myview','',$CFG->dirroot.'/myview/lang/').'</a></div>';
+echo '<div class="tbaction"><a href="'.$CFG->myview_supportlink.'"><img class="toolicon" src="'.$CFG->wwwroot.'/myview/toolbar/system-help.png">'.get_string('help','myview','',$CFG->dirroot.'/myview/lang/').'</a></div>';
 echo "</div>";
 
 echo '<style>.toolicon { padding:10px; } .tbaction {float:right; width:95px;} </style>';
