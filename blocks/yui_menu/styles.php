@@ -159,3 +159,7 @@ width:220px !important;
 .dir-rtl .block_yui_menu div.column.c0 {
     float: right;
 }
+
+.dir-rtl .block_yui_menu .yui_menu_js_tree div.column.c0 {
+    padding: 0 10px;
+}
