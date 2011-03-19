@@ -1,2 +1,2 @@
 <?php
-$displayversion = 'Stable R2.1';
+$displayversion = 'Stable R2.2';

@@ -716,7 +716,7 @@ class ousearch_search {
             if($this->groupids==OUSEARCH_NONE) {
                 $where.=' AND d.groupid IS NULL';
             } else {
-                $where.='AND ';
+                $where.=' AND ';
                 if($this->groupexceptions) {
                     $gxcourses=''; $gxcms=''; $first=true;
                     foreach($this->groupexceptions AS $cm) {
