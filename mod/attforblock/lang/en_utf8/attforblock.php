@@ -142,6 +142,7 @@ $string['sessionstartdate'] = 'Session start date';
 $string['sessionupdated'] = 'Session successfully updated';
 $string['settings'] = 'Settings';
 $string['showdefaults'] = 'Show defaults';
+$string['showcolumns'] ='<strong>Show columns:</strong> (Untick to hide)';
 $string['sicknote'] = 'Sick note';
 $string['sicknotes'] = 'Sick notes';
 $string['signin'] = 'Sign in';

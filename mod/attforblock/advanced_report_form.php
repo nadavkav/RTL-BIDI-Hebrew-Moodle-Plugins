@@ -21,7 +21,7 @@ class mod_attforblock_report_form extends moodleform {
         $mform->addGroup($reporttype, 'reporttype', get_string('reporttype','attforblock'), array(' '), false);
         $mform->setDefault('reporttype', 'all');
         //  add a course select element to the form
-        $courselist = array('-1' => 'All');
+        $courselist = array('-1' => get_string('all'));
         $courses = get_my_courses($USER->id, 'fullname ASC, sortorder ASC,visible DESC', '*', false, 21);
         foreach($courses as $course) {
             $courselist[$course->id] = $course->fullname;
@@ -29,7 +29,7 @@ class mod_attforblock_report_form extends moodleform {
         $mform->addElement('select', 'coursemenu', get_string('course'), $courselist,  array('size' => 1,'class' => 'pool', 'style' => 'width:220px;'));
 
         //  add a group select element to the form
-        $grouplist = array('-1' => 'All');
+        $grouplist = array('-1' => get_string('all'));
         $groups = get_records('groups');
         foreach($groups as $group) {
             $grouplist[$group->id] = $group->name;
@@ -49,7 +49,7 @@ class mod_attforblock_report_form extends moodleform {
         }
         $mform->addElement('select', 'studentmenu', get_string('student', 'attforblock'), $studentlist,  array('size' => 1,'class' => 'pool', 'style' => 'width:220px;'));
         //  add a subject select element to the form
-        $subjectlist = array('-1' => 'All');
+        $subjectlist = array('-1' => get_string('all'));
         if(count_records_select('attendance_subjects')) {	// check if subjects exist
             $subjects = get_subjects($course->id, true);
             foreach($subjects as $subject) {
@@ -57,7 +57,7 @@ class mod_attforblock_report_form extends moodleform {
         }
         $mform->addElement('select', 'subjectmenu', get_string('subject', 'attforblock'), $subjectlist,  array('size' => 1,'class' => 'pool', 'style' => 'width:220px;'));
         //  add a teacher select element to the form
-        $teacherlist = array('-1' => 'All');
+        $teacherlist = array('-1' => get_string('all'));
         if(count_records_select('attendance_teachers')) {	// check if teachers exist
             $teachers = get_teachers($course->id, true);
             foreach($teachers as $teacher) {
@@ -74,7 +74,7 @@ class mod_attforblock_report_form extends moodleform {
         $mform->addElement('select', 'makeupnotemenu', get_string('makeupnote', 'attforblock'), $optionlist,  array('size' => 1,'class' => 'pool', 'style' => 'width:220px;'));
         $mform->addElement('select', 'sicknotemenu', get_string('sicknote', 'attforblock'), $optionlist,  array('size' => 1,'class' => 'pool', 'style' => 'width:220px;'));
         //  	add a status select element to the form
-        $statuslist = array('-1' => 'All');
+        $statuslist = array('-1' => get_string('all'));
         if(count_records_select('attendance_statuses')) {	// check if statuses exist
             $courses = get_my_courses($USER->id, 'fullname ASC, sortorder ASC,visible DESC', '*', false, 21);
             foreach($courses as $course) {

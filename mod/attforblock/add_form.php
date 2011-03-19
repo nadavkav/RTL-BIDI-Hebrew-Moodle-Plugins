@@ -61,7 +61,7 @@ class mod_attforblock_add_form extends moodleform {
         }
         $selectgroups[] =& $mform->createElement('select', 'sgroup', get_string('group'), $options, array('size' => 1,'class' => 'pool', 'style' => 'width:200px;'));
         $selectgroups[] =& $mform->createElement('text', 'hgroup', get_string('addnew', 'attforblock'), 'size="20"');
-        $mform->addGroup($selectgroups, 'sessiongroup', 'Group', ' '.get_string('addnew', 'attforblock'), false);
+        $mform->addGroup($selectgroups, 'sessiongroup', get_string('group'), ' '.get_string('addnew', 'attforblock'), false);
         //  add a session title field to the form from either a drop down list or a text field for new names
         $sessionsgroup =array();
         $options = array('0' => '');
@@ -73,7 +73,7 @@ class mod_attforblock_add_form extends moodleform {
         }
         $sessionsgroup[] =& $mform->createElement('select', 'ssessiontitle', get_string('sessiontitle', 'attforblock'), $options, array('size' => 1,'class' => 'pool', 'style' => 'width:200px;'));
         $sessionsgroup[] =& $mform->createElement('text', 'hsessiontitle', get_string('newsessiontitle', 'attforblock'), 'size="20"');
-        $mform->addGroup($sessionsgroup, 'sessiongroup', 'Session Title', ' '.get_string('addnew', 'attforblock'), false);
+        $mform->addGroup($sessionsgroup, 'sessiongroup', get_string('sessiontitle', 'attforblock'), ' '.get_string('addnew', 'attforblock'), false);
         //  add a subject field to the form
         $subjectgroup = array();
         $options = array('0' => '');
@@ -85,7 +85,7 @@ class mod_attforblock_add_form extends moodleform {
         }
         $subjectgroup[] =& $mform->createElement('select', 'ssubject', get_string('subject', 'attforblock'), $options,  array('size' => 1,'class' => 'pool', 'style' => 'width:200px;'));
         $subjectgroup[] =& $mform->createElement('text', 'hsubject', get_string('newteacher', 'attforblock'), 'size="20"');
-        $mform->addGroup($subjectgroup, 'subjectgroup', 'Subject', ' '.get_string('addnew', 'attforblock'), false);
+        $mform->addGroup($subjectgroup, 'subjectgroup', get_string('subject', 'attforblock'), ' '.get_string('addnew', 'attforblock'), false);
         //  add a teacher field to the form
         $teachersgroup = array();
         $options = array('0' => '');
@@ -97,7 +97,7 @@ class mod_attforblock_add_form extends moodleform {
         }
         $teachersgroup[] =& $mform->createElement('select', 'steacher', get_string('teacher', 'attforblock'), $options,  array('size' => 1,'class' => 'pool', 'style' => 'width:200px;'));
         $teachersgroup[] =& $mform->createElement('text', 'hteacher', get_string('newteacher', 'attforblock'), 'size="20"');
-        $mform->addGroup($teachersgroup, 'teachersgroup', 'Teacher', ' '.get_string('addnew', 'attforblock'), false);
+        $mform->addGroup($teachersgroup, 'teachersgroup', get_string('teacher', 'attforblock'), ' '.get_string('addnew', 'attforblock'), false);
         //  add a description field to the form
         $mform->addElement('text', 'sdescription', get_string('description', 'attforblock'), 'size="48"');
         $mform->setType('sdescription', PARAM_TEXT);

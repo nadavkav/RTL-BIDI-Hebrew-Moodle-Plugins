@@ -78,7 +78,7 @@ if(!count_records('attendance_sessions', 'courseid', $course->id)) {	// no sessi
     $mform_report->display();
 ?>
 </th></tr></thead><tbody><tr><td></td></tr></tbody></table>
-<strong>Show Columns: </strong>(Untick to hide)
+<?php echo get_string('showcolumns','attforblock'); ?>
 <form name="tcol" onsubmit="return false">
     <input type="checkbox" name="showfilter" onclick="toggleVis(this.name)" checked="checked"><?PHP echo get_string('reportfilter', 'attforblock'); ?><br></br>
     <input type="checkbox" name="showgroupby" onclick="toggleVis(this.name)" checked="checked"><?PHP echo get_string('groupedbyheadings', 'attforblock'); ?><br></br>
