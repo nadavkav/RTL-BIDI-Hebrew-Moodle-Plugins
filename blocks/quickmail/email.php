@@ -48,7 +48,10 @@
         $groupmode     = $quickmail->groupmode();
         $haspermission = $quickmail->check_permission();
     }
-    
+
+    // hack, workaround a context error when setting this block as sticky (nadavkav)
+    if (has_capability('block/quickmail:cansend', get_context_instance(CONTEXT_COURSE, $quickmail->instance->id),$USER->id)) $haspermission = true;
+
     if (!$haspermission) {
         error('Sorry, you do not have the correct permissions to use Quickmail.');
     }

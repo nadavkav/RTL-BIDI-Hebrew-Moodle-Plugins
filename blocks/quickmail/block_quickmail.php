@@ -114,7 +114,10 @@ class block_quickmail extends block_list {
      * @return boolean True for access / False for denied
      **/
     function check_permission() {
-        return has_capability('block/quickmail:cansend', get_context_instance(CONTEXT_BLOCK, $this->instance->id));
+      // hack, workaround a context error when setting this block as sticky (nadavkav)
+      if (has_capability('block/quickmail:cansend', get_context_instance(CONTEXT_COURSE, $this->instance->id),$USER->id)) return true;
+
+      return has_capability('block/quickmail:cansend', get_context_instance(CONTEXT_BLOCK, $this->instance->id));
     }
 
     /**
