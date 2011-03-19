@@ -99,7 +99,7 @@ background-color:#FFD582;
   background-color: beige;
   border: 1px outset;
   padding: 1px 4px !important;
-  width: 60px;
+  width: 65px;
 }
 
 #view .view-header {

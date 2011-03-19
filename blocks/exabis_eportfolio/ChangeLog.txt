@@ -8,7 +8,7 @@ Exabis E-Portfolio ChangeLog
 2010-11-20 3.2.3 (nadavkav)
 * styles.php updates (support for rtl)
 * UI changes (make it more easy to use)
-* Choose a Theme to each view
+* Choose a Theme to each view (turn on allowuserthemes site-wide)
 
 2009-03-19 3.2.1
 * minor bug-fixes: corrected user-id-problem
