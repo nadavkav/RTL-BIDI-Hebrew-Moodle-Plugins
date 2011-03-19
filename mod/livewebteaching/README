@@ -1,0 +1,84 @@
+Howdy!
+
+These instructions describe how to install and activate the Live Web Teaching Activity Module (Plugin) for Moodle (version 1.9+). The Plugin is supported by Live Web Teaching (LiveWebTeaching.com).
+
+
+======================	
+Features
+======================
+This Plugin allows to:
+	- Create & schedule Live Sessions, such as webinars, classes, meetings and tutoring, in any course
+	- Initiate Live Sessions in a Live Web Teaching room (virtual classroom) with features such as live audio, video, document sharing, desktop sharing, whiteboard and more.
+	- Restrict students from entering the Live Web Teaching room until a teacher joins
+
+See all features at LiveWebTeaching.com
+
+Hosting of Live Sessions is provided and supported by Live Web Teaching.
+
+
+======================	
+Requirements
+======================
+	1.  A server running Moodle 1.9+
+	2.  A valid API Key and Username provided with a subscription plan purchased at Live Web Teaching
+
+Free Trial
+----------------------
+Live Web Teaching enables to test the Plugin for free with a Trial API Key and Username during a limited time. To get a Trial API Key and Username:
+	1. Register for free or log in at LiveWebTeaching.com
+	2. Go to your My Account. There you will find the Trial API Key and Username, if your Trial period has not expired
+	3. Install the Plugin (see Installation instructions below)
+	4. Enter the Trial API Key and Username (see Activation instructions below)
+
+
+======================
+Installation and activation of Plugin in Moodle 1.9+
+======================
+
+For detailed instructions, go to LiveWebTeaching.com.
+
+Installation of Plugin
+----------------------
+1.  Download and unzip the plugin file to an empty local directory 
+2.  Upload the folder livewebteaching (in the local directory /mod/) to your web server to the directory /moodle/mod/
+3.  Upload the language file(s) (in the local directory /lang/) to the corresponding language directory on your web server /moodle/lang/[language]. For example: For English, upload the file /lang/livewebteaching.php to your web server directory /moodle/lang/en_utf8/
+
+	Note: Language files translate the plugin texts that show in your Moodle interface. The Live Web Teaching Room (virtual classroom) comes with over 20 languages. These can be selected by the participant during a live session, and do not have to be installed by the Moodle administrator.
+
+Next, activate the Plugin following these instructions.
+
+Activation of Plugin
+----------------------
+1.  Login to your Moodle as administrator
+2.  Click Notifications - the Plugins tables are now being set up automatically
+3.  Click the button: Continue
+4.	You'll be prompted to enter the API Key and Username - this will activate the Plugin
+5.  Click the button: Save Changes
+ 
+How to find the API Key at LiveWebTeaching
+----------------------
+1.	Go to LiveWebTeaching.com
+2.  Log into your My Account
+3.  Go to My Subscription, where you will find the API Key and Username
+
+You can now create and instruct Live Sessions in any course.
+
+
+======================
+Feedback & Questions
+======================
+If you have feedback or questions, contact us at
+	http://livewebteaching.com/
+
+
+Happy live teaching!
+feedback [at] livewebteaching [dt] com
+
+
+======================
+About
+======================
+
+Live Web Teaching provides an Activity Module (Plugin) and hosting of a web conferencing system that enables teachers, schools and organisations to deliver live classes, webinars, meetings and other educational activities remote to students anywhere.
+
+The web conferencing technology used for this Plugin is BigBlueButton, developed by Blindside Networks. The Plugin incorporates work of an Moodle activity module developed by Blindside Networks.
