@@ -4345,3 +4345,19 @@ body#course-view .headingblock {
   border-right: 2px solid;
 }
 /*  special touch to the middle column ::END */
+
+.sideblock .header,
+.sideblock h2.header {
+border-radius: 4px;
+-moz-border-radius: 4px;
+}
+
+.sideblock .content {
+border-radius: 5px;
+-moz-border-radius: 5px;
+}
+
+.sideblock {
+border-radius: 10px;
+-moz-border-radius: 10px;
+}

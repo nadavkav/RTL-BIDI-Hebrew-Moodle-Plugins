@@ -1,6 +1,6 @@
 /*******************************************************************
  styles_moz.css
-  
+
  This CSS file uses the non-standard Mozilla CSS extensions
  to add round corners to the current theme.
 
@@ -80,7 +80,7 @@
   -moz-border-radius:3px;
 }
 
-.categorybox, .categoryboxcontent, 
+.categorybox, .categoryboxcontent,
 .coursebox {
   -moz-border-radius:10px;
 }
@@ -339,3 +339,15 @@ body#course-user .section {
   -moz-border-radius-bottomright:15px;
 }
 
+.sideblock .header,
+.sideblock h2.header {
+    -moz-border-radius: 4px 4px 4px 4px;
+}
+
+.sideblock .content {
+    -moz-border-radius: 5px 5px 5px 5px;
+}
+
+.sideblock {
+    -moz-border-radius: 10px 10px 10px 10px;
+}
