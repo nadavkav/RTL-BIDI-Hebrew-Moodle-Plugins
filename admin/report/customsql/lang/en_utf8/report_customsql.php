@@ -66,5 +66,6 @@ $string['unknowndownloadfile'] = 'Unknown download file.';
 $string['userswhocanviewsitereports'] = 'Users who can see system reports (moodle/site:viewreports)';
 $string['userswhocanconfig'] = 'Only administrators (moodle/site:config)';
 $string['whocanaccess'] = 'Who can access this query';
+$string['recordcount'] = 'Record count';
 
 ?>

@@ -67,5 +67,6 @@ $string['unknowndownloadfile'] = 'Unknown download file.';
 $string['userswhocanviewsitereports'] = 'משתמשים בעלי הרשאה: (moodle/site:viewreports) אשר יש להם גישה לדוחות מערכת ';
 $string['userswhocanconfig'] = 'רק מנהלי מערכת בעלי הרשאות: (moodle/site:config) יכולים לראות דוח זה';
 $string['whocanaccess'] = 'למי יש גישה לדוחות';
+$string['recordcount'] = 'מספר הרשומות בדוח';
 
 ?>
