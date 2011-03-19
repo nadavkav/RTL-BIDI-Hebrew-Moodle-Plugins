@@ -685,7 +685,7 @@ class course_format_fn extends course_format {
         $actbar .= '<td width="4" align="center" height="25"></td>';
 
         if ($tablow <= 1) {
-            $actbar .= '<td height="25">'.$strtopicheading.':&nbsp;</td>';
+            //$actbar .= '<td height="25">'.$strtopicheading.':&nbsp;</td>';
         } else {
             $prv = ($tablow - FNMAXTABS) * 1000;
             if ($prv < 0) {
