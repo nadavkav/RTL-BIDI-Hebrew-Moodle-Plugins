@@ -25,5 +25,6 @@ $string['logoff'] = 'יציאה';
 $string['settings'] = 'הגדרות MYVIEW';
 $string['supportlink'] = 'קישור תמיכה';
 $string['supportlinkinfo'] = 'כתובת דף תמיכה';
+$string['latestnews'] = 'הודעות אחרונות';
 
 ?>

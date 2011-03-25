@@ -41,8 +41,9 @@
 
     $PAGE->print_header($mymoodlestr);
 
+
 // Special visual toolbar for user's actions (nadavkav patch)
-echo '<table align=center><tr><td>';
+echo '<table id="actiontoolbar" align=right><tr><td>';
 
 echo '<div class="toolbar" style="margins:1px auto;text-align:center;widht:1024px;">';
 echo '<div class="tbaction"><a href="'.$CFG->wwwroot.'/calendar/view.php?view=month"><img class="toolicon" src="'.$CFG->wwwroot.'/myview/toolbar/preferences-system-time.png">'.get_string('calendar','myview','',$CFG->dirroot.'/myview/lang/').'</a></div>';
@@ -144,8 +145,56 @@ TOOLMAN;
     echo '<td valign="top" id="middle-column">';
     print_container_start(TRUE);
 
-/// The main overview in the middle of the page
+    // All new forum NEWS items (discussions) from all my Courses
+    $sql = 'SELECT c.fullname as course,f.name as forum,fd.id as fdid ,fd.name as disscussion,FROM_UNIXTIME(fd.timemodified ,"%d %M %Y ") AS date
+    FROM mdl_forum_discussions AS fd
+    JOIN mdl_forum AS f ON f.id = fd.forum
+    JOIN mdl_course AS c ON c.id = f.course
+    JOIN mdl_user_lastaccess AS ul ON (c.id = ul.courseid AND ul.userid = '.$USER->id.')
+    WHERE fd.timemodified > ul.timeaccess
+     AND fd.forum IN (SELECT f.id
+     FROM mdl_course_modules AS cm
+     JOIN mdl_modules AS m ON cm.module = m.id
+     JOIN mdl_forum AS f ON cm.instance = f.id
+     WHERE m.name = \'forum\'
+     AND f.type = \'news\')
+      AND c.id IN (SELECT c.id
+       FROM mdl_course AS c
+       JOIN mdl_context AS ctx ON c.id = ctx.instanceid
+       JOIN mdl_role_assignments AS ra ON ra.contextid = ctx.id
+       JOIN mdl_user AS u ON u.id = ra.userid
+       WHERE u.id = '.$USER->id.') ORDER BY fd.timemodified DESC';
+    $discussions = get_records_sql($sql);
+    if ($discussions ) {
+      echo '<h2>'.get_string('latestnews','myview','',$CFG->dirroot.'/myview/lang/').'</h2>';
+      //echo '<div id="tableContainer" class="tableContainer">';
+        echo '<table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable">';
+          echo '<thead class="fixedHeader">';
+            echo '<tr>';
+              echo '<th width="350px">'.get_string('course').'</th>';
+              echo '<th width="350px">'.get_string('discussion','forum').'</th>';
+              echo '<th width="350px">'.get_string('date').'</th>';
+            echo '</tr>';
+          echo '</thead>';
+          echo '<tbody class="scrollContent">';
 
+          foreach ($discussions as $discussion) {
+            echo '<tr>';
+              echo '<td width="300px">'.$discussion->course.'</td>';
+              echo '<td width="300px"><a href="'.$CFG->wwwroot.'/mod/forum/discuss.php?d='.$discussion->fdid.'">'.$discussion->disscussion.'</a></td>';
+              echo '<td width="300px" align="center">'.$discussion->date.'</td>';
+            echo '</tr>';
+          }
+          echo '</tbody>';
+        echo '</table>';
+      //echo '</div>';
+      echo '<style>
+      #tableContainer {width:500px;text-align:right;direction:rtl;}
+      tbody.scrollContent {display: block;height: 150px;overflow: auto;background-color:#f5f5dc;}
+      thead.fixedHeader tr {display: block;}
+      thead.fixedHeader {background-color:#a52a2a;color:white;}
+      </style>';
+    }
     // limits the number of courses showing up
     $courses = get_my_courses($USER->id, 'visible DESC,sortorder ASC', '*', false, 21);
     $site = get_site();
