@@ -50,9 +50,9 @@ header("Location:thepagewhisthecoolstuff.php");
 <!-- update IMG elements in the page and hide the Image editor -->
 <script type="text/javascript">
     if(parent){
-        parent.document.getElementById('editme').src = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
-        parent.document.getElementById('imgurl').value = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
-        parent.pixlr.overlay.hide();
+        parent.document.getElementById('editme<?php echo $_GET['qid']; ?>').src = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
+        parent.document.getElementById('imgurl<?php echo $_GET['qid']; ?>').value = '<?php echo "{$CFG->wwwroot}/file.php/{$_GET['courseid']}/users/{$USER->id}/question{$_GET['qid']}_qatt{$_GET['qatt']}_{$filename}"; ?>';
+        parent.pixlr<?php echo $_GET['qid']; ?>.overlay.hide();
         //parent.document.getElementById('responseform').submit(); // save the image
     }
 </script>

@@ -4,7 +4,7 @@
 	<title>Exit Pixlr</title>
 	<script type="text/javascript">
 		if(parent){
-			parent.pixlr.overlay.hide();
+			parent.pixlr<?php echo $_GET['instanceid']; ?>.overlay.hide();
 		}
 	</script>
 </head>

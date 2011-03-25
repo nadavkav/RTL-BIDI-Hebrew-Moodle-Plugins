@@ -200,7 +200,7 @@ class imagedit_qtype extends default_questiontype {
         if (isset($state->responses[''])) {
             $answers = explode(',',$state->responses['']);
             $value = stripslashes_safe($answers[0]);
-            $imgurl = $answers[1]; // get image from the answers array (textarea)
+            if (!empty($answers[1])) $imgurl = $answers[1]; // get image from the answers array (textarea)
         } else {
             $value = "";
             //$imgurl = null;
@@ -230,22 +230,22 @@ class imagedit_qtype extends default_questiontype {
             $uploadfeedback = $state->uploadfeedback;
         }
 
-        $struploadedfile = '';
+//        $struploadedfile = '';
         // no need to display files. file upload was disabled // (nadavkav)
         //$currentfile = get_student_answer($state->attempt, $question->id);
 
-        if ($currentfile) {
-            $struploadedfile = get_string('answer', 'quiz').': '.$currentfile;
-        }
+//         if (!empty($currentfile)) {
+//             $struploadedfile = get_string('answer', 'quiz').': '.$currentfile;
+//         }
 
         // string prompts for form
-        if ($currentfile) {
-            $struploadfile = get_string('uploadnew', 'qtype_imagedit');
-        } else {
-            $struploadfile = get_string('uploadafile');
-        }
+//         if (!empty($currentfile)) {
+//             $struploadfile = get_string('uploadnew', 'qtype_imagedit');
+//         } else {
+//             $struploadfile = get_string('uploadafile');
+//         }
 
-        $strmaxsize = get_string('maximumupload').' '. display_size($maxbytes);
+//        $strmaxsize = get_string('maximumupload').' '. display_size($maxbytes);
 
         include("$CFG->dirroot/question/type/imagedit/display.html");
 
@@ -267,7 +267,7 @@ class imagedit_qtype extends default_questiontype {
         // no need for file uploads (it is an image editor question type) // (nadavkav)
         //$state->uploadfeedback = imagedit_upload_response($question->name_prefix.'file', $cmoptions->course, $state->attempt, $question->id, $question->options->maxbytes);
 
-        $state->responses[''] .= ",".$_POST['imgurl']; // add image to the response array //(nadavkav)
+        $state->responses[''] .= ",".$_POST['imgurl'.$question->id]; // add image to the response array //(nadavkav)
 
         if ($question->options->essay) {
             clean_param($state->responses[''], PARAM_CLEANHTML);

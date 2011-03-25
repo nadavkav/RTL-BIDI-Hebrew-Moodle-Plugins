@@ -10,20 +10,20 @@
         Original script, if you want to look at the source, remove if live.
         <script type="text/javascript" src="/_script/pixlr.js"></script>
     -->
-    <script type="text/javascript" src="<?php echo $CFG->wwwroot; ?>/question/type/imagedit/pixlr/_script/pixlr_minified.js"></script>
+    <script type="text/javascript" src="<?php echo $CFG->wwwroot; ?>/question/type/imagedit/pixlr/_script/pixlr_minified.js.php?instanceid=<?php echo $question->id; ?>"></script>
     <script type="text/javascript">
         //Global setting edit these
         //pixlr.settings.target = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>save_post_modal.php';
 
-        pixlr.settings.target = '<?php echo "{$CFG->wwwroot}/question/type/imagedit/image-upload.php?courseid={$COURSE->id}&qid={$question->id}&qatt={$state->attempt}"; ?>';
-        pixlr.settings.exit = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>exit_modal.php';
-        pixlr.settings.credentials = true;
-        pixlr.settings.method = 'post';
+        pixlr<?php echo $question->id; ?>.settings.target = '<?php echo "{$CFG->wwwroot}/question/type/imagedit/image-upload.php?courseid={$COURSE->id}&qid={$question->id}&qatt={$state->attempt}"; ?>';
+        pixlr<?php echo $question->id; ?>.settings.exit = '<?php echo $CFG->wwwroot."/question/type/imagedit/pixlr/"; ?>exit_modal.php?instanceid=<?php echo $question->id; ?>';
+        pixlr<?php echo $question->id; ?>.settings.credentials = true;
+        pixlr<?php echo $question->id; ?>.settings.method = 'post';
     </script>
 <b><?php echo get_string("clicktoedit","qtype_imagedit") ?></b><br />
 
 <?php
-if ($imgurl) {
+if (!empty($imgurl)) {
 // if we already have a user's edited image... let see/use it
 $image = $imgurl;
 } else {
@@ -33,8 +33,8 @@ $image = $imgurl;
 
 ?>
 
-<a href="javascript:pixlr.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'<?php echo substr(current_language(),0,2); ?>',method:'POST'});">
-<img id="editme" src="<?php if (isset($imgurl)) { echo $imgurl; } else { echo $image; } ?>" width="250" height="150" title="<?php echo str_replace('file.php','sendfile.php',$image); ?>" /></a><br /><br />
+<a href="javascript:pixlr<?php echo $question->id; ?>.overlay.show({image:'<?php echo str_replace('file.php','sendfile.php',$image); ?>', title:'<?php echo $USER->sesskey; ?>',loc:'<?php echo substr(current_language(),0,2); ?>',method:'POST'});">
+<img id="editme<?php echo $question->id; ?>" src="<?php if (isset($imgurl)) { echo $imgurl; } else { echo $image; } ?>" width="250" height="150" title="<?php echo str_replace('file.php','sendfile.php',$image); ?>" /></a><br /><br />
 <br /><br />
 <?php } ?>
 
@@ -50,7 +50,7 @@ $image = $imgurl;
         ?>
     </div>
 
-    <input type="hidden" id="imgurl" name="imgurl" value="<?php echo $imgurl; ?>">
+    <input type="hidden" id="imgurl<?php echo $question->id; ?>" name="imgurl<?php echo $question->id; ?>" value="<?php echo $imgurl; ?>">
 
     <?php if ($uploadfeedback) { ?>
         <div class="feedback message">
@@ -58,7 +58,7 @@ $image = $imgurl;
         </div>
     <?php } ?>
 
-    <?php if ($struploadedfile) { ?>
+    <?php if (!empty($struploadedfile)) { ?>
         <div class="answer">
             <?php //echo $struploadedfile; ?>
         </div>
