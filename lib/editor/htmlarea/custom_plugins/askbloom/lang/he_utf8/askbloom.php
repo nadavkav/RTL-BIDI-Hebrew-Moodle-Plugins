@@ -122,7 +122,7 @@ $string['titlevoice'] = 'קולי';
 $string['recording'] = 'הקלטה';
 $string['musiccd'] = 'דיסק מוסיקה';
 $string['tvshow'] = 'תוכנית טלוויזיה';
-$string['interview'] = 'רעיון עם אדם';
+$string['interview'] = 'ראיון עם אדם';
 $string['radioshow'] = 'תוכנית רדיו';
 
 $string['titlenotdigital'] = 'לא דיגיטלי';

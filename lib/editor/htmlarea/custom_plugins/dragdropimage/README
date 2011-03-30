@@ -1,0 +1,18 @@
+To eneable "moodle/course:managefiles" permission check,
+uncomment line 18 on dialog.php
+
+And then...
+Teachers, usually have permission "moodle/course:managefiles" set "On" for role "editingteacher"
+so they can upload files, easily.
+
+To let Students upload images, set the "moodle/course:managefiles" permission
+on a:
+1. Site level (role "student")
+Or...
+2. Course / Category Level
+Or..
+3. Activity Level
+
+with Override permissions on role Student.
+
+:-)

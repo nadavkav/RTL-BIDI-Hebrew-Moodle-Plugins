@@ -1,0 +1,4 @@
+Installation
+
+1. copy MOODLE/lib/editor/htmlarea/custom_plugins/paint/sendfile.php to your Moodle's root folder ($CFG->dirroot)
+2. copy crossdomain.xml to the web root of your server (for Apache on Linux use: /var/www/html)

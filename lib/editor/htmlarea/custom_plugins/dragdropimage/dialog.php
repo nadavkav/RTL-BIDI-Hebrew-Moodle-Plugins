@@ -7,14 +7,15 @@
  * Description:
  *
  */
- 
+
     require_once("../../../../../config.php");
 
     $courseid = optional_param('courseid', SITEID, PARAM_INT);
     $userid = optional_param('userid', -1, PARAM_INT);
 
     require_login($id);
-    require_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid,$userid));
+    // uncomment the following line to support "moodle/course:managefiles" permission check
+    //require_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid,$userid));
 
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 

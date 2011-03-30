@@ -5,34 +5,23 @@
  * Date: 1/15/11 Time: 9:32 PM
  *
  * Description:
- *  Edit the current selected Image (IMG html tag) using a remote Pixlr.com online Image editing service
- *  And saving back, the modified image, into the current course (special user's folder) replacing the current image.
- *  So it can be saved (backup) with the course's files.
+ *  Insert an EMBED of a PDF document into the HTML
  */
 
-  require_once("../../../../../config.php");
-  $courseid = optional_param('id', SITEID, PARAM_INT);
+require_once("../../../../../config.php");
+
+ $courseid = optional_param('id', SITEID, PARAM_INT);
 
 ?>
 
-var outparam = null;
+function __insertpdf (editor) {
 
-function __paint (editor) {
-
-    editor.focusEditor();
-    image = editor.getParentElement();
-    editor.selectNodeContents(image);
-
-    //var outparam = null;
+<!--    var outparam = null;
     if (typeof image == "undefined") {
         image = editor.getParentElement();
         if (image && !/^img$/i.test(image.tagName))
             image = null;
     }
-
-    //var sel = editor._getSelection();
-    //var range = editor._createRange(sel);
-
     if (image) outparam = {
         f_url    : HTMLArea.is_ie ? editor.stripBaseURL(image.src) : image.getAttribute("src"),
         f_alt    : image.alt,
@@ -43,18 +32,18 @@ function __paint (editor) {
         f_width  : image.width,
         f_height : image.height
     };
-
+-->
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
-        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/paint/dialog.php?id=$courseid";
+        echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertpdf/dialog.php?id=$courseid";
     } else {
         //echo "insert_swf.php?id=$id";
-    }?>" ,1024,768, function (param) {
+    }?>" ,750,560, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;
         }
-        var img = image;
+//        var img = image;
         if (!img) {
             var sel = editor._getSelection();
             var range = editor._createRange(sel);
@@ -72,14 +61,16 @@ function __paint (editor) {
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
                 //img = range.startContainer.previousSibling;
-                var img = editor._doc.createElement("embed"); //nurit img >embed
+                var img = editor._doc.createElement("embed"); 
 
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");
+                img.setAttribute("width",""+ param.f_width +"");
+                img.setAttribute("height",""+ param.f_height +"");
                 editor.insertNodeAtSelection(img);
             }
         } else {
-            img.src = '<?php echo $CFG->wwwroot; ?>/file.php/'+param.f_url;
+            img.src = param.f_url;
         }
         for (field in param) {
             var value = param[field];

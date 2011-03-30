@@ -91,16 +91,6 @@
 //<![CDATA[
 
 function Init() {
-  var param = window.dialogArguments;
-  /*
-  if (param) {
-      var alt = param["f_url"].substring(param["f_url"].lastIndexOf('/') + 1);
-      document.getElementById("f_url").value = param["f_url"];
-      document.getElementById("f_alt").value = param["f_alt"] ? param["f_alt"] : alt;
-      document.getElementById("f_border").value = parseInt(param["f_border"] || 0);
-      window.ipreview.location.replace('preview.php?id='+ <?php echo $id; ?> +'&imageurl='+ param.f_url);
-  }
-*/
   document.getElementById('objective').focus();
 };
 
