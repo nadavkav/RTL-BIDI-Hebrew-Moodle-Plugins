@@ -29,7 +29,9 @@ function game_snakes_play( $id, $game, $attempt, $snakes)
 	global $CFG;
 
 	$board = get_record_select( 'game_snakes_database', "id=$snakes->snakesdatabaseid");
-
+  echo "<table style=\"direction:left;\">";
+  echo "<tr>";
+  echo "<td>";
 	if( $snakes->position > $board->cols * $board->rows && $snakes->queryid <> 0){
 		$finish = true;
 
@@ -59,7 +61,8 @@ function game_snakes_play( $id, $game, $attempt, $snakes)
 	    }
 		game_snakes_showquestion( $id, $game, $snakes, $query);
 	}
-
+  echo "</td>";
+  echo "<td>";
 
 ?>
     <script language="javascript" event="onload" for="window">
@@ -75,14 +78,14 @@ function game_snakes_play( $id, $game, $attempt, $snakes)
     -->
     </script>
 <style type="text/css">
-div#content {direction: ltr !important}
+div#content {direction: rtl !important}
 </style>
 	<table>
 	<tr>
 		<td>
 
 <DIV ID="board" STYLE="position:relative; left:0px;top:0px; width:<?php p($board->width); ?>px; height:<?php p($board->height); ?>px;"><br>
-<b><center><img src="snakes/boards/<?php p($board->fileboard);?>"></img></center>
+<b><center><img src="snakes/boards/<?php p($board->fileboard);?>"></img> </center>
 </DIV>
 
 <?php
@@ -105,12 +108,21 @@ function game_snakes_showdice( $snakes, $board)
 	$pos = game_snakes_computeplayerposition( $snakes, $board);
 ?>
 <DIV ID="player1" STYLE="float:left;position:relative; left:<?php p( $pos->x);?>px;top:<?php p( $pos->y - $board->height);?>px; width:0px; height:23px;"><br>
-<center><img src="snakes/1/player1.gif"></img></center>
+<img src="snakes/1/player1.gif"></img>
 </DIV>
-	<DIV ID="dice" STYLE="position:relative; left:<?php p( $board->width + round($board->width/3));?>px;top:<?php p( round($board->height/2) - $board->height);?>px; width:0px; height:0px;"><br>
+</td>
+</tr>
+</table>
+	<DIV ID="dice" STYLE="position:absolute;
+right:80px;
+top:80px;
+ width:auto;
+ height:0px;"><br><?php echo get_string('lastmovewas','game'); ?><br><br/>
 	<img src="snakes/1/dice<?php  p( $snakes->dice);?>.gif"></img>
 </DIV>
 <?php
+
+
 }
 
 function game_snakes_computeplayerposition( $snakes, $board)
@@ -123,13 +135,13 @@ function game_snakes_computeplayerposition( $snakes, $board)
 
     // snakes
     if ($snakes->position == 19) $snakes->position = 5;
-    if ($snakes->position == 29) $snakes->position = 8;
+    if ($snakes->position == 27) $snakes->position = 8;
     if ($snakes->position == 62) $snakes->position = 32;
     if ($snakes->position == 58) $snakes->position = 41;
 
 	$x = ($snakes->position - 1) % $board->cols;
 	$y = floor( ($snakes->position-1) / $board->cols);
-echo "<span style=\"float:right;\">pos={$snakes->position} , x=$x , y=$y</span>";
+//echo "<span style=\"float:right;\">pos={$snakes->position} , x=$x , y=$y</span>";
 	$cellwidth = ($board->width - $board->headerx - $board->footerx) / $board->cols;
 	$cellheight = ($board->height - $board->headery - $board->footery) / $board->rows;
 
@@ -271,7 +283,7 @@ function game_snakes_showquestion_glossary( $id, $snakes, $query)
     // Add a hidden field with glossaryentryid
     echo '<input type="hidden" name="glossaryentryid" value="'.$query->glossaryentryid."\" />\n";
 
-    echo game_filtertext( $entry->concept, 0).'<br>'; // definition >> concept (nadavkav)
+    echo game_filtertext( $entry->definition, 0).'<br>'; //  definition>> concept (nadavkav)
 
     echo get_string( 'answer').': ';
 	echo "<input type=\"text\" name=\"answer\" size=30 /><br>";
@@ -325,7 +337,7 @@ function game_snakes_check_questions( $id, $game, $attempt, $snakes)
         $grade = $state->raw_grade;
         if( $grade < 50){
 			//wrong answer
-			game_update_queries( $game, $attempt, $query, 0, '');
+        			game_update_queries( $game, $attempt, $query, 0, '');
             continue;
         }
         //correct answer
@@ -355,17 +367,25 @@ function game_snakes_check_glossary( $id, $game, $attempt, $snakes)
 
     $name = 'resp'.$query->glossaryentryid;
     $useranswer = $responses->answer;
-
-    if( game_upper( $useranswer) != game_upper( $glossaryentry->definition)){ // concept >> definition (nadavkav)
-        //wrong answer
-        $correct = false;
-		game_update_queries( $game, $attempt, $query, 0, $useranswer);//last param is grade
-    }else
-    {
-        //correct answer
+    //if( game_upper( $useranswer) != game_upper( $glossaryentry->definition)){ // concept >> definition (nadavkav)
+	if( strcmp(trim($useranswer),trim($glossaryentry->concept)) == 0 ) { // concept >> definition (nadavkav)
+		//correct answer
 		$correct = true;
-
         game_update_queries( $game, $attempt, $query, 1, $useranswer);//last param is grade
+    } else {
+		//wrong answer
+        $correct = false;
+        //  hanna  add  from---
+        ?>
+        	<DIV ID="wronganswer" STYLE="position:fixed;
+right:50px;
+top:680px;
+ width:auto;
+ height:0px;"><br><?php echo get_string('reattemptgame','game'); ?><br/>
+</DIV>
+         <?php
+         //   echo get_string('reattemptgame','game');   //   till here --- hanna 4/1/11
+		game_update_queries( $game, $attempt, $query, 0, $useranswer);//last param is grade
     }
 
 	//set the grade of the whole game
