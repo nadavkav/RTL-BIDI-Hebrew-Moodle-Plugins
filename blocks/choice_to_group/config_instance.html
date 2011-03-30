@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
    @author Jochen Lackner, Markus Pusswald
    @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -7,58 +7,56 @@
    A menu is displayed to offer choices of what will happen to this "choice".
 */
 
-    require_once($CFG->libdir.'/tablelib.php');
-   
-    global $db, $USER, $CFG;
-    global $blogid; //hackish, but if there is a blogid it would be good to preserve it
-    
-$selection = optional_param('selection',NULL,PARAM_INT); 
-$id = optional_param('id', SITEID, PARAM_INT);
+  require_once($CFG->libdir.'/tablelib.php');
 
-//create a page object for url_get_full()
-$page = page_create_object($this->instance->pagetype, $this->instance->pageid);
+  global $db, $USER, $CFG;
+  global $blogid; //hackish, but if there is a blogid it would be good to preserve it
 
+  $selection = optional_param('selection',NULL,PARAM_INT);
+  $id = optional_param('id', SITEID, PARAM_INT);
 
-$currentaction = optional_param('currentaction', '', PARAM_ALPHA);
-
-if (empty($currentaction) || $currentaction == 'configblock') {
-    $currentaction = 'configblock';
-} else {
-    $currentaction = 'create';
-}
-
-print_box_start();			//Start frame for background
-
-if ($currentaction == 'configblock') {
-	print_box_end();			//end frame for background
-}else{
-	echo "</FORM>";
-
-	$table = new flexible_table('block_choice_to_group');
-	$table->define_columns(array('functions', 'description'));
-    	$table->define_headers(array(get_string('functions', 'block_choice_to_group'), 
-		get_string('description', 'block_choice_to_group')));
-
-	$table->set_attribute('cellspacing', '0');
-	$table->set_attribute('id', 'rssfeeds');
-	$table->set_attribute('class', 'generaltable generalbox');
-	$table->column_class('feed', 'feed');
-    	$table->column_class('actions', 'actions');
-    	$table->setup();
-    
-    
-	echo "<FORM action=\"{$CFG->wwwroot}/blocks/choice_to_group/block_ctg_action.php?".
-	     "selection=$selection&amp;id=$id\" method=\"post\" id=\"block_ctg\" name=".
-	     "\"ctg_form_choice\"  act=\"view\" wert=\"\">";
-        $table->add_data(array("\n"."<input onchange=\"wert=this.value\" type=\"radio\"".
-		" name=\"myRadio\" value=\"1\" CHECKED> ".get_string("mode1_entry", 'block_choice_to_group'), 
-		get_string("mode1_description", 'block_choice_to_group')."\n"));
-	$table->add_data(array("","<input type=\"submit\" value=\"Start\" />"));
-	$table->print_html();
-	echo "</FORM>";
+  //create a page object for url_get_full()
+  $page = page_create_object($this->instance->pagetype, $this->instance->pageid);
 
 
-  	//Do NOT print_box_end() here, this is taken care of by blocks/moodleblock.class.php:582
-}
+  $currentaction = optional_param('currentaction', '', PARAM_ALPHA);
+
+  if (empty($currentaction) || $currentaction == 'configblock') {
+      $currentaction = 'configblock';
+  } else {
+      $currentaction = 'create';
+  }
+
+  print_box_start();			//Start frame for background
+
+  if ($currentaction == 'configblock') {
+    print_box_end();			//end frame for background
+  }else{
+    echo "</FORM>";
+
+    $table = new flexible_table('block_choice_to_group');
+    $table->define_columns(array('functions', 'description'));
+    $table->define_headers(array(get_string('functions', 'block_choice_to_group'), get_string('description', 'block_choice_to_group')));
+    $table->set_attribute('cellspacing', '0');
+    $table->set_attribute('id', 'rssfeeds');
+    $table->set_attribute('class', 'generaltable generalbox');
+    $table->column_class('feed', 'feed');
+    $table->column_class('actions', 'actions');
+    $table->setup();
+
+    echo "<FORM action=\"{$CFG->wwwroot}/blocks/choice_to_group/block_ctg_action.php?".
+        "selection=$selection&amp;id=$id\" method=\"post\" id=\"block_ctg\" name=\"ctg_form_choice\"  act=\"view\" wert=\"\">";
+    $table->add_data(array("\n"."<input onchange=\"wert=this.value\" type=\"radio\" name=\"myRadio\" value=\"1\" CHECKED> ".
+      get_string("mode1_entry", 'block_choice_to_group'),
+      get_string("mode1_description", 'block_choice_to_group')."\n"));
+    $table->add_data(array("\n"."<input onchange=\"wert=this.value\" type=\"radio\" name=\"myRadio\" value=\"2\" CHECKED> ".
+      get_string("mode1_entry", 'block_choice_to_group'),
+      get_string("mode1_description_update", 'block_choice_to_group')."\n"));
+
+    $table->add_data(array("","<input type=\"submit\" value=\"".get_string("choose")."\" />"));
+    $table->print_html();
+    echo "</FORM>";
+
+    //Do NOT print_box_end() here, this is taken care of by blocks/moodleblock.class.php:582
+  }
 ?>
-
