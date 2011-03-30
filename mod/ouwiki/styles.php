@@ -33,13 +33,16 @@
 }
 #mod-ouwiki-view ul.ouw_comments .ouw_recentnot {
     color:#444;
-} 
+}
 
 #mod-ouwiki-edit #ouw_countdown {
     float:right;
     margin-left:2em;
     border:1px solid #ddd;
     padding:4px;
+}
+.dir-rtl#mod-ouwiki-edit #ouw_countdown {
+    float: left;
 }
 #mod-ouwiki-edit form#ouw_edit {
     margin-top:1em;
@@ -50,7 +53,7 @@
 }
 
 #mod-ouwiki-history table,
-#mod-ouwiki-wikihistory table, 
+#mod-ouwiki-wikihistory table,
 #mod-ouwiki-contributions table {
     width:100%;
 }
@@ -64,13 +67,19 @@
     border-left: 1px solid #a7d2ff;
     border-right: 1px solid #a7d2ff;
     border-top:1px solid #888;
-    border-bottom:1px dotted #888;    
+    border-bottom:1px dotted #888;
 }
+.dir-rtl#mod-ouwiki-history .ouw_history th,
+.dir-rtl#mod-ouwiki-wikihistory th,
+.dir-rtl#mod-ouwiki-contributions th {
+    text-align: right;
+}
+
 #mod-ouwiki-history .ouw_history td,
 #mod-ouwiki-wikihistory td,
 #mod-ouwiki-contributions td {
     padding: 3px 12px 3px 4px;
-    border-bottom:1px dotted #888;    
+    border-bottom:1px dotted #888;
 }
 #mod-ouwiki-wikihistory td.ouw_rightcol,
 #mod-ouwiki-contributions td.ouw_rightcol,
@@ -97,6 +106,9 @@
 #mod-ouwiki-history .ouw_history td.comparebutton {
     text-align:right;
     padding-bottom:6px;
+}
+.dir-rtl#mod-ouwiki-history .ouw_history td.comparebutton {
+    text-align:left;
 }
 #mod-ouwiki-history .ouw_history table,
 #mod-ouwiki-wikihistory table{
@@ -131,25 +143,35 @@
     margin:0;
 }
 #mod-ouwiki-viewold .ouw_oldversion .ouw_person {
-    font-weight:normal;    
+    font-weight:normal;
 }
 
 #mod-ouwiki-viewold .ouw_prev {
     float:left;
 }
+.dir-rtl#mod-ouwiki-viewold .ouw_prev {
+    float: right;
+}
 #mod-ouwiki-viewold .ouw_next {
     float:right;
+}
+.dir-rtl#mod-ouwiki-viewold .ouw_next {
+    float: left;
 }
 
 #ouwiki_indexlinks {
     margin:0 0 8px;
     padding:0;
-    text-align:right;    
+    text-align:right;
 }
+.dir-rtl #ouwiki_indexlinks {
+    text-align: left;
+}
+
 #ouwiki_indexlinks ul {
     margin:0;
     padding:0;
-    display:inline;
+    display:inline-block;
 }
 #ouwiki_indexlinks form,
 #ouwiki_indexlinks form div {
@@ -267,9 +289,14 @@
     margin-left:1em;
 }
 
-#mod-ouwiki-diff .ouw_left,.ouw_right {
+#mod-ouwiki-diff .ouw_left,
+#mod-ouwiki-diff .ouw_right {
     float:left;
     width:50%;
+}
+.dir-rtl#mod-ouwiki-diff .ouw_left,
+.dir-rtl#mod-ouwiki-diff .ouw_right {
+    float:right;
 }
 #mod-ouwiki-diff .ouw_diff {
     background:#f0f0f0;
@@ -279,18 +306,18 @@
     border-bottom:1px dotted #888;
     padding:8px;
 }
-#mod-ouwiki-diff .ouw_left .ouw_diff, 
+#mod-ouwiki-diff .ouw_left .ouw_diff,
 #mod-ouwiki-diff .ouw_left .ouw_versionbox {
     margin-right:1em;
 }
-#mod-ouwiki-diff .ouw_right .ouw_diff, 
+#mod-ouwiki-diff .ouw_right .ouw_diff,
 #mod-ouwiki-diff .ouw_right .ouw_versionbox {
     margin-left:1em;
 }
 #mod-ouwiki-diff .ouw_deleted {
     background:white;
     color:red;
-    text-decoration:line-through;    
+    text-decoration:line-through;
 }
 #mod-ouwiki-diff .ouw_added {
     background:white;
@@ -344,7 +371,7 @@
 
 .ouwiki_content .ouw_heading1,
 .ouwiki_content .ouw_heading2 {
-    margin:0.6667em 0 0.3333em 0; 
+    margin:0.6667em 0 0.3333em 0;
 }
 .ouwiki_content .ouw_heading3,
 .ouwiki_content .ouw_heading4,
@@ -352,7 +379,7 @@
     margin:1em 0 0.5em 0;
 }
 .ouwiki_content .ouw_heading6 {
-    margin:1.25em 0 0.625em 0; 
+    margin:1.25em 0 0.625em 0;
 }
 
 .ouwiki_content h1.ouw_fixedheading,
@@ -391,6 +418,9 @@
     width:12em;
     padding-top:2px;
 }
+.dir-rtl .ouw_addcomment label {
+    float:right;
+}
 .ouw_addcomment .ouw_ac_field {
     margin-bottom:0.5em;
 }
@@ -408,7 +438,7 @@
     border:0;
     margin:0;
     padding:0;
-    
+
 }
 .ouw_addcomment textarea {
     font-size:1em;
@@ -419,7 +449,7 @@
     margin-left:12em;
 }
 
-ul.ouw_comments,    
+ul.ouw_comments,
 ul.ouw_comments li.ouw_comment {
     list-style-type:none;
     display:block;
@@ -448,6 +478,9 @@ ul.ouw_comments li.ouw_comment {
 ul.ouw_comments .ouw_commentposter {
     float:left;
     padding-right:1em;
+}
+.dir-rtl ul.ouw_comments .ouw_commentposter {
+    float: right;
 }
 ul.ouw_comments h3.ouw_commenttitle {
     margin:0.5em 0;
@@ -480,6 +513,9 @@ ul.ouw_comments .ouw_commentsubmit input {
 ul.ouw_comments .ouw_commentsubmit {
     text-align:right;
 }
+.dir-rtl ul.ouw_comments .ouw_commentsubmit {
+    text-align:left;
+}
 
 #mod-ouwiki-comments h2 {
     margin-top:3em;
@@ -495,9 +531,12 @@ ul.ouw_comments .ouw_commentsubmit {
   margin-top:1.5em;
   clear:right;
 }
+.dir-rtl#ouw_ac_formcontainer {
+    clear:left;
+}
 .ouw_nocomments #ouw_ac_formcontainer {
     margin-top:0;
-} 
+}
 
 #mod-ouwiki-comments .ouw_deletedcommentinfo {
     margin-bottom:1.5em;
@@ -533,7 +572,7 @@ ul.ouw_comments .ouw_commentsubmit {
     list-style-type:none;
     margin:0;
     padding:0;
-    
+
 }
 
 
@@ -545,12 +584,19 @@ ul.ouw_comments .ouw_commentsubmit {
     width:50%;
     text-align:right;
 }
+.dir-rtl#mod-ouwiki-wikihistory .ouw_paging_prev {
+    float: right;
+    text-align: left;
+}
 #mod-ouwiki-wikihistory .ouw_paging_prev a {
     margin-right:2em;
 }
 #mod-ouwiki-wikihistory .ouw_paging_next {
     float:left;
     width:50%;
+}
+.dir-rtl#mod-ouwiki-wikihistory .ouw_paging_next {
+    float:right;
 }
 #mod-ouwiki-wikihistory .ouw_paging_next a {
     margin-left:2em;
@@ -600,6 +646,9 @@ ul.ouw_comments .ouw_commentsubmit {
 .ouw_subwiki {
     float:left;
 }
+.dir-rtl .ouw_subwiki {
+    float: right;
+}
 .ouwiki_notabs.ouwiki_gotselector {
     margin-top:1em;
 }
@@ -625,7 +674,7 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     margin-top:2em;
 }
 
-#mod-ouwiki-wikiindex .ouw_savetemplate, 
+#mod-ouwiki-wikiindex .ouw_savetemplate,
 #mod-ouwiki-wikihistory .ouw_contributionslink {
     margin-top:2em;
 }
@@ -670,7 +719,7 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
      padding-top:4px;
 }
 .ouw_topheading {
-    background:#dcedff;    
+    background:#dcedff;
     padding:4px 8px 8px;
     border-top:1px solid #888;
     margin-top:1.5em;
@@ -700,26 +749,34 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     margin-top:0;
 }
 
-#mod-ouwiki-reportsgroup .ouw_bar {    
-	  float:left; 
+#mod-ouwiki-reportsgroup .ouw_bar {
+	  float:left;
     position:relative;
-    margin-right:1px;         
+    margin-right:1px;
     overflow:hidden; /* sigh IE6 */
+}
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_bar {
+    float: right;
 }
 
 #mod-ouwiki-reportsgroup .ouw_chartcontainer {
-	position:relative; 	
+	position:relative;
 }
 
 #mod-ouwiki-reportsgroup .ouw_yaxis {
-	position:absolute; 	
-    text-align:right;          
+	position:absolute;
+    text-align:right;
+}
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_yaxis {
+    text-align: left;
 }
 
-
 #mod-ouwiki-reportsgroup .ouw_graphtitle {
-	float:left; 
-    position:relative;             	
+	float:left;
+    position:relative;
+}
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_graphtitle {
+    float: right;
 }
 
 
@@ -727,6 +784,9 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     margin:2em 0;
     width:250px;
     float:left;
+}
+.dir-rtl#mod-ouwiki-reportsgroup div.ouw_groupreport {
+    float:right;
 }
 
 #mod-ouwiki-reportssummary th,
@@ -739,7 +799,13 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     border-left: 1px solid #a7d2ff;
     border-right: 1px solid #a7d2ff;
     border-top:1px solid #888;
-    border-bottom:1px dotted #888;    
+    border-bottom:1px dotted #888;
+}
+.dir-rtl#mod-ouwiki-reportssummary th,
+.dir-rtl#mod-ouwiki-reportsusers th,
+.dir-rtl#mod-ouwiki-reportsuser th,
+.dir-rtl#mod-ouwiki-reportsgroup th {
+    text-align: right;
 }
 
 #mod-ouwiki-reportssummary td,
@@ -747,7 +813,7 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
 #mod-ouwiki-reportsuser td,
 #mod-ouwiki-reportsgroup td {
     padding: 3px 12px 3px 4px;
-    border-bottom:1px dotted #888;    
+    border-bottom:1px dotted #888;
 }
 
 #mod-ouwiki-reportssummary td.ouw_rightcol,
@@ -775,12 +841,18 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     margin-left:20px;
     float:left;
 }
-
-#mod-ouwiki-reportsgroup .ouw_pagelist {
-    clear:left;   
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_graphs {
+    float:right;
 }
 
- 
+#mod-ouwiki-reportsgroup .ouw_pagelist {
+    clear:left;
+}
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_pagelist {
+    clear: right;
+}
+
+
 #mod-ouwiki-reportsgroup .ouw_pagelist,
 #mod-ouwiki-reportssummary .ouw_grouplist,
 #mod-ouwiki-reportsgroup .ouw_userlist,
@@ -788,7 +860,7 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
 #mod-ouwiki-reportsuser .ouw_usereditslist,
 #mod-ouwiki-reportsuser .ouw_usercommentslist,
 #mod-ouwiki-reportsuser .ouw_useractivitybydatelist {
-	margin-top:2em;		
+	margin-top:2em;
 	margin-right:2em;
 }
 
@@ -814,21 +886,21 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     border-left:2px dotted #a7d2ff;
 }
 
-#mod-ouwiki-reportssummary th.ouw_firstingroup, 
+#mod-ouwiki-reportssummary th.ouw_firstingroup,
 #mod-ouwiki-reportssummary .ouw_dodgyextrarow td.ouw_firstingroup,
-#mod-ouwiki-reportsusers th.ouw_firstingroup, 
-#mod-ouwiki-reportsuser th.ouw_firstingroup, 
-#mod-ouwiki-reportsgroup th.ouw_firstingroup, 
+#mod-ouwiki-reportsusers th.ouw_firstingroup,
+#mod-ouwiki-reportsuser th.ouw_firstingroup,
+#mod-ouwiki-reportsgroup th.ouw_firstingroup,
 #mod-ouwiki-reportsgroup .ouw_dodgyextrarow td.ouw_firstingroup {
     border-left:2px dotted #888;
 }
 
-#mod-ouwiki-reportsgroup .ouw_pagecolumn { 
+#mod-ouwiki-reportsgroup .ouw_pagecolumn {
     height:1px;
     width:8em;
 }
 
-#mod-ouwiki-reportssummary .ouw_groupcolumn { 
+#mod-ouwiki-reportssummary .ouw_groupcolumn {
     height:1px;
     width:8em;
 }
@@ -848,9 +920,12 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
 #mod-ouwiki-reportsgroup .ouw_lastdate {
 	text-align:right;
 }
+.dir-rtl#mod-ouwiki-reportsgroup .ouw_lastdate {
+    text-align: left;
+}
 
 #mod-ouwiki-reportsgroup .ouw_timelines_page {
-	margin-top:2em;	
+	margin-top:2em;
 }
 
 #mod-ouwiki-reportsgroup .ouw_timelines_page td {
@@ -945,6 +1020,10 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     float:left;
     margin: 0.2em 0.1em;
 }
+.dir-rtl .ouwiki-annotation .userpicture,
+.dir-rtl .ouwiki-orphaned-annotation .userpicture {
+    float: right;
+}
 
 .ouwiki-annotation .ouwiki-annotation-content,
 .ouwiki-orphaned-annotation .ouwiki-annotation-content {
@@ -1002,11 +1081,15 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
     font-size:11px;
 }
 
-#ouwiki-annotation-dialog label { 
+#ouwiki-annotation-dialog label {
     display:block;
     float:left;
     width:30%;
     clear:left;
+}
+.dir-rtl#ouwiki-annotation-dialog label {
+    float: right;
+    clear: right;
 }
 
 .clear {
@@ -1041,7 +1124,7 @@ a.ouwiki_noshow:link,a.ouwiki_noshow:visited {
 #mod-ouwiki-view .ouw_makecomment,
 #mod-ouwiki-view .ouw_annotate,
 #mod-ouwiki-view .ouw_revealcomment,
-#hideallannotations, 
+#hideallannotations,
 #showallannotations {
 background-color:beige;
 border:2px outset;
@@ -1058,7 +1141,7 @@ background-color:#FFE8E8;
 .dir-rtl #ouwiki_belowtabs th {
 text-align:right;
 }
-
+/*
 .dir-rtl #mod-ouwiki-reportsgroup .ouw_graphs {
 float:right;
 }
@@ -1086,7 +1169,7 @@ float:right;
 #mod-ouwiki-reportsgroup th {
 text-align:right;
 }
-
+*/
 #mod-ouwiki-wikiindex ul.ouw_indextree ul {
 margin-right:1em;
 margin-left:0;
