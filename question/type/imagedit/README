@@ -1,0 +1,7 @@
+Installation:
+
+1. Copy the /question/type/imagedit/move_these_files_to_your_domain_root_folder/crossdomain.xml to your Domain's root folder
+   It is usually on /var/www/html (On a linux server)
+
+2. Copy the /question/type/imagedit/move_these_files_to_your_moodle_root_folder/sendfile.php to your Moodle's root folder
+
