@@ -802,6 +802,11 @@ function oublog_print_post($cm, $oublog, $post, $baseurl, $blogtype, $canmanagep
                     }
                 }
 
+                // Show "Add new Comments" Button (nadavkav 10.4.2011)
+                if (isset($post->comments)) {
+                  echo " <a href=\"{$CFG->wwwroot}/mod/oublog/viewpost.php?post={$post->id}\">".$strcomment."</a> ";
+                }
+
                 // Display link
                 echo " <a href=\"{$CFG->wwwroot}/mod/oublog/viewpost.php?post={$post->id}\">" .
                         $linktext .
@@ -824,6 +829,12 @@ function oublog_print_post($cm, $oublog, $post, $baseurl, $blogtype, $canmanagep
                 echo " <a href=\"{$CFG->wwwroot}/mod/oublog/editcomment.php?blog={$post->oublogid}&amp;post={$post->id}\">$strcomment</a>";
             }
         }
+        // Share post with the outside world, if post is public (nadavkav)
+        if (($post->userid == $USER->id || $canmanageposts)) {
+          echo '<br/><br/><a target="_new" href="http://www.addtoany.com/share_save?linkurl='.$CFG->wwwroot.'/mod/oublog/viewpost.php?post='.$post->id.
+                '&linkname='.format_string($post->title).'"><img src="http://static.addtoany.com/buttons/share_save_171_16.png"></a>';
+        }
+
     }
     echo '</div>';
     echo '</div>';
