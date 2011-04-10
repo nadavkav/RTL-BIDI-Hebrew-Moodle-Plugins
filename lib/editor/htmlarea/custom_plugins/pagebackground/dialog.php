@@ -23,7 +23,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><?php print_string("title","pagebackground");?></title>
+<title><?php echo get_string("title","pagebackground",'',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/pagebackground/lang/");?></title>
 
 <script type="text/javascript">
 //<![CDATA[

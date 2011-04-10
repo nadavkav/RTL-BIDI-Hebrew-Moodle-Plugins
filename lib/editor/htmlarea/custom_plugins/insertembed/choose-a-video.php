@@ -57,6 +57,8 @@ font-size: 15px;
 <a class="videolink" href="http://www.xtimeline.com/"> TimeLine editor </a><br/><br/>
 <a class="videolink" href="http://www.ustream.tv/"> UStream - Live Video Broadcast </a><br/><br/>
 <a class="videolink" href="http://www.mogulus.com/"> Mogulus - Live Video Broadcast </a><br/><br/>
+<a class="videolink" href="http://goanimate.com/"> Go Animate - Create you own animation stories</a><br/><br/>
+
 
 
 </div>

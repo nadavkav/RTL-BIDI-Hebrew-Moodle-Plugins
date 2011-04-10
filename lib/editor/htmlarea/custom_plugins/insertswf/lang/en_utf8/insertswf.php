@@ -9,5 +9,6 @@
  */
 
 $string['pluginname'] = 'Insert Flash';
+$string['title'] = 'Insert Flash';
 $string['notswf'] = 'The selected file is not a Shockwave Flash file. please choose another file';
 ?>

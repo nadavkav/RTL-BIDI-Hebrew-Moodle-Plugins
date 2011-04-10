@@ -23,7 +23,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><?php print_string("title","insertswf");?></title>
+<title><?php echo get_string("title","insertswf",'',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/insertswf/lang/");?></title>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -165,6 +165,8 @@ margin: 2px;
 background-color: rgb(212,208,200);
 font-family: Tahoma, Verdana, sans-serif;
 font-size: 11px;
+<?php if (right_to_left()) echo "direction:rtl;";?>
+
 }
 .title {
 background-color: #ddddff;
@@ -331,7 +333,7 @@ form { margin-bottom: 0px; margin-top: 0px; }
           <input name="btnCfolder" type="submit" id="btnCfolder" value="<?php print_string("createfolder","editor");?>" onclick="return checkvalue('foldername','cfolder');" />
           </form>
           <div class="space"></div>
-          <form action="../coursefiles.php?id=<?php print($id);?>" method="post" enctype="multipart/form-data" target="ibrowser" id="uploader">
+          <form action="coursefiles.php?id=<?php print($id);?>" method="post" enctype="multipart/form-data" target="ibrowser" id="uploader">
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php print($upload_max_filesize);?>" />
           <input type="hidden" name="id" VALUE="<?php print($id);?>" />
           <input type="hidden" name="wdir" value="" />

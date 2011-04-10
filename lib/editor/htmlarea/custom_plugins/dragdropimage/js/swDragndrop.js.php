@@ -156,7 +156,7 @@ var SwDragndrop = new Class({
 		// reflow
 		this.el.empty().grab(this.fileListEl);
 	},
-	
+
 	// multi-upload
 	createInputEls: function () {
 		var li = new Element('li', {'id':'li_'+this.index});
@@ -187,7 +187,7 @@ var SwDragndrop = new Class({
 	processMultiUpload: function(){
 		// create elements
     	var inputEls = this.createInputEls();
-		var inputEl = inputEls.getElement('input'); 
+      var inputEl = inputEls.getElement('input');
     	// add files feature
     	this.initInput(inputEl);
     	// reflow!!
@@ -197,10 +197,10 @@ var SwDragndrop = new Class({
     	inputEl.addEvent('change', function() {
     		// TODO: type validation
     		// TODO: minmax validation
-			// Empty the log and show the spinning indicator.
-			inputEl.getNext().empty().addClass('ajax-loader').set('html', 'uploading '+inputEl.get('value')+'...');
-    		// Display a new input element
-			var currentForm=inputEl.getParent();
+        // Empty the log and show the spinning indicator.
+        inputEl.getNext().empty().addClass('ajax-loader').set('html', 'uploading '+inputEl.get('value')+'...');
+        // Display a new input element
+        var currentForm=inputEl.getParent();
     		var currentLi=currentForm.getParent();
     		if (!currentLi.getNext() || currentLi.getNext().get('id').substring(0, 3)!="li_") {
         		this.index++;
@@ -210,7 +210,7 @@ var SwDragndrop = new Class({
         		var newInputEls = this.createInputEls();
         		currentLi.grab(newInputEls, 'after');
         		this.initInput(newInputEls.getElement('input'));
-    		}	
+    		}
     		// submit!!
 			currentForm.submit();
     		inputEl.disabled=1;
@@ -230,7 +230,7 @@ var SwDragndrop = new Class({
     // so we could push it back to the HTMLAREA editor
     this.uploadedfiles.push(filename);
 	},
-	
+
 	// Drag and drop (FF3.6 and +)
 	// the following functions are based on http://www.appelsiini.net/2009/10/html5-drag-and-drop-multiple-file-upload
 	// and http://www.thecssninja.com/javascript/fileapi
@@ -301,22 +301,22 @@ var SwDragndrop = new Class({
 					document.createElement('p'),
           document.createElement('p')
 				];
-			
+
 		progressDomElements[0].className = "progressBar";
 		progressDomElements[1].textContent = "0%";
     progressDomElements[2].textContent = filename;
     uploadedfiles[index] = filename;
 		progressDomElements[0].appendChild(progressDomElements[1]);
-		
+
 		container.appendChild(progressDomElements[0]);
-		
+
 		fileUpload.addEventListener("progress", this.uploadProgressXHR.bindWithEvent(container), false);
 		fileUpload.addEventListener("load", function(event){ container.className = "loaded"; }.bindWithEvent(container), false);
 		fileUpload.addEventListener("error", this.displayNotif.bind(this, 'upload failed'), false);
 
 		xhr.open("POST", this.options.url, true);
 		xhr.setRequestHeader('content-type', 'multipart/form-data; boundary='+ boundary);
-		
+
 		getBinaryDataReader.addEventListener("loadend", function(evt){
 			var dashdash = '--',
 		    crlf     = '\r\n',
@@ -324,13 +324,13 @@ var SwDragndrop = new Class({
 		    // set header
 	        builder += dashdash;
 		    builder += boundary;
-	        builder += crlf; 
+	        builder += crlf;
 	        builder += 'Content-Disposition: form-data; name="user_file"';
 	        builder += '; filename="' + filename + '"';
 		    builder += crlf;
 	        builder += 'Content-Type: application/octet-stream';
 	        builder += crlf;
-	        builder += crlf; 
+	        builder += crlf;
 
 	        // Append binary data.
 	        builder += evt.target.result;
@@ -341,7 +341,7 @@ var SwDragndrop = new Class({
 	        builder += boundary;
 	        builder += dashdash;
 	        builder += crlf;
-						    
+
 			xhr.sendAsBinary(builder);
 			}, false);
 		getBinaryDataReader.readAsBinaryString(file);

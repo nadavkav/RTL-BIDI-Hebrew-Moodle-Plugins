@@ -38,7 +38,7 @@ function __insertswf (editor) {
         echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertswf/dialog.php?id=$courseid";
     } else {
         //echo "insert_swf.php?id=$id";
-    }?>" ,1024,768, function (param) {
+    }?>" ,750,560, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;

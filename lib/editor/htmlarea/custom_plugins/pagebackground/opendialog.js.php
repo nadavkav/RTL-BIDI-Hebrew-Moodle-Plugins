@@ -45,8 +45,14 @@ function __pagebackground (editor) {
         if (!param) {   // user must have pressed Cancel
             return false;
         }
-        editor._doc.body.style.backgroundImage = "url("+param.f_url+")";
-        //editor._doc.body.style.backgroundColor = "beige";
+        var sel = editor._getSelection();
+        var range = editor._createRange(sel);
+        var wrapper = editor._doc.createElement("div");
+        //wrapper.setAttribute("style","background-image:"+ param.f_url +";");
+        wrapper.style.backgroundImage = "url("+param.f_url+")";
+        wrapper.appendChild (range.cloneContents());
+        editor.insertNodeAtSelection(wrapper );
+
 /*
         var img = image;
         if (!img) {
@@ -66,7 +72,7 @@ function __pagebackground (editor) {
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
                 //img = range.startContainer.previousSibling;
-                var img = editor._doc.createElement("embed"); //nurit img >embed
+                var img = editor._doc.createElement("embed");
 
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");
