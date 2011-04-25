@@ -10,5 +10,5 @@
 
 $string['pluginname'] = 'Embed PDF Document';
 $string['title'] = 'Embed PDF Document';
-$string['notswf'] = 'The selected file is not a PDF Document. please choose another file';
+$string['notpdf'] = 'The selected file is not a PDF Document. please choose another file';
 ?>

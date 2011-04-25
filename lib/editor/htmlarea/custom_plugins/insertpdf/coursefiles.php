@@ -73,13 +73,14 @@
                     for(field in params) {
                         var value = params[field];
                         switch(field) {
-                            case "url"   :   upper.document.getElementById('f_url').value = value;
-                                     upper.ipreview.location.replace('preview.php?id='+ <?php print($course->id);?> +'&imageurl='+ value);
+                            case "url"   :  upper.document.getElementById('f_url').value = value;
+					    upper.document.getElementById('f_alt').value = params['alt'];
+					    upper.ipreview.location.replace('preview.php?id='+ <?php print($course->id);?> +'&imageurl='+ value);
                                 break;
                             case "isize" :   upper.document.getElementById('isize').value = value; break;
                             case "itype" :   upper.document.getElementById('itype').value = value; break;
-                            case "iwidth":    upper.document.getElementById('f_width').value = value; break;
-                            case "iheight":   upper.document.getElementById('f_height').value = value; break;
+                            case "iwidth":    upper.document.getElementById('f_width').value = 300; break;
+                            case "iheight":   upper.document.getElementById('f_height').value = 500; break;
                         }
                     }
                 } else {
@@ -770,7 +771,7 @@ function displaydir ($wdir) {
                                   480, 640);
             $file_size = filesize($filename);
 
-            echo "<a onclick=\"return set_value(info = {url: '".$ffurl."',";
+            echo "<a onclick=\"return set_value(info = {url: '".$ffurl."',alt: '".$file."',";
             echo " isize: '".$file_size."', itype: '".$imgtype."', iwidth: '".$imgwidth."',";
             echo " iheight: '".$imgheight."', imodified: '".$filedate."' })\" href=\"#\">$file</a>";
             echo "</td>\n";

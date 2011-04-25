@@ -13,7 +13,7 @@ $string['jqto'] = ' the ';
 $string['jqtocreate'] = ' to create ';
 $string['jqworkinggroupsof'] = '. Work in groups of ';
 
-$string['okimdone'] = 'Instruction is read! I am done';
+$string['okimdone'] = 'Instruction is ready! I am done';
 $string['cancel'] = 'Cancel';
 
 $string['tabthinkingskills'] = '1. Thinking Skills';

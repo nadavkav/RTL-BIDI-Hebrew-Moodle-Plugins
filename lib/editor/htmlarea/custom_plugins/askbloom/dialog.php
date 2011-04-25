@@ -503,5 +503,5 @@ function onCancel() {
 	</div>
 </div> <!--End Of Tabs-->
 
-
+ <div style="color:gray;">AskBloom HTMLAREA custom plugin is heavily based on Ian Byrd's work: "<a href="http://www.byrdseed.com/the-differentiator/">The Differentiator</a>"</div>
 </body></html>
