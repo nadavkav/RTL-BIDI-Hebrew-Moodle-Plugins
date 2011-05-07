@@ -26,7 +26,7 @@ require_once("map_security_check.php");
 /// Submit any new data if there is any
 // Only the user location will be submitted on this page.
 if ($form = data_submitted() && has_capability('mod/map:setownlocation', $context) && isset($USER->id)) {
-	
+
 	$timenow = time();
 	$action = required_param('action', PARAM_ALPHA);
 	if($action=="resetlocation"){
@@ -59,9 +59,10 @@ if ($form = data_submitted() && has_capability('mod/map:setownlocation', $contex
 /// Display the map and locations
 
 
-print_header_simple(format_string($map->name), "",
-"<a href=\"index.php?id=$course->id\">$strmaps</a> -> ".format_string($map->name), "", "", true,
-update_module_button($cm->id, $course->id, $strmap), navmenu($course, $cm));
+//print_header_simple(format_string($map->name), "","<a href=\"index.php?id=$course->id\">$strmaps</a> -> ".format_string($map->name), "", "", true,
+//update_module_button($cm->id, $course->id, $strmap), navmenu($course, $cm));
+$navigation = build_navigation('', $cm);
+print_header_simple(format_string($map->name), "",$navigation, "", "", true,update_module_button($cm->id, $course->id, $strmap), navmenu($course, $cm));
 
 add_to_log($course->id, "map", "view", "view.php?id=$cm->id", $map->id, $cm->id);
 
