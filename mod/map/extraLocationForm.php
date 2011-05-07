@@ -1,7 +1,7 @@
 <?php
 /**
  * extraLocationForm.php
- * 
+ *
  * @package map
  * @author Ted Bowman <ted@tedbow.com>
  * @version 0.2
@@ -19,16 +19,17 @@ $locationid     = optional_param('locationid', '', PARAM_INT);
 require_once("map_security_check.php");
 
 
-print_header_simple(format_string($map->name), "",
-"<a href=\"index.php?id=$course->id\">$strmaps</a> -> ".format_string($map->name), "", "", true);
+//print_header_simple(format_string($map->name), "","<a href=\"index.php?id=$course->id\">$strmaps</a> -> ".format_string($map->name), "", "", true);
+print_header_simple(format_string($map->name), "","", "", "", true); // nadavkav
+//print_header(format_string($map->name));
 //make sure map allows extra locations and user has the right to add
 if(($map->extralocations == 1 && has_capability('mod/map:setextralocation', $context))  || has_capability('mod/map:alwayssetextralocation', $context)){
-	
+
 	$lForm = new mod_map_extralocation_form();
 	if (data_submitted()){
 		$lForm = new mod_map_extralocation_form();
 		//$lForm->_form->removeElement("country");
-		
+
 		if($lForm->is_validated()){
 			$locationSuccess = map_save_location($lForm->get_data());
 			if($locationSuccess===true){
@@ -37,9 +38,9 @@ if(($map->extralocations == 1 && has_capability('mod/map:setextralocation', $con
 			}else{
 				redirect("view.php?id=$cm->id",get_string("actionfailed","map") ." - " . $locationSuccess);
 				exit;
-			}	
+			}
 		}
-	
+
 	}
 	if($action == "delete"){
 		if(delete_records("map_locations","id",$locationid)===false){

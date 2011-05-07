@@ -19,7 +19,7 @@ function makeLocationHTML(l){
         return "<div class='student-pic' >" + l.picHTML + "</div><div class='map_info_text'><span class='student-title' ><a href=\""+getDetailURL(l.picHTML)+"\" >"+ l.firstname + " " + l.lastname + "</a></span><br />"+ l.city + ", " + l.state+ ", " + l.country + "<p>" + l.description + "</p></div>";
         //return "<div>" + l.picHTML + "</div><div class='map_info_text'><p>"+ l.firstname + " " + l.lastname + "</p><p>"+ l.city + ", " + l.state+ ", " + l.country + "</p><p>" + l.description + "</p></div>";
     }else{
-        return "<div class='map_info_text'><h2>"+ l.title + "</h2><p>" + l.description + "</p><p>Posted by: " + l.firstname + " " + l.lastname + "</p></div>";
+        return "<div class='map_info_text'><h2>"+ l.title + "</h2><p>" + l.description + "</p><p>@ " + l.firstname + " " + l.lastname + "</p></div>";
     }
 }
 function makeLocationTitle(l){
@@ -45,7 +45,7 @@ function createPopUpHTML(loc){
                     //newContent += "<a href=\"javascript:showUserDetails("+ i +","+nedsCurrentLocIndex+");\" >"+ imageTag + " "+ loc[i].title+ "</a><br />";//showUserDetails(loc,"+i+");
                     newContent += "<option value='"+ i + "' >"+ loc[i].title+ "</option>";
                 }
-                newContent = "<select name='localSector' onchange='$(\"nedsInnerDiv"+ nedsCurrentLocIndex + "\").innerHTML = nedsCurrentLoc[" + nedsCurrentLocIndex + "][this.options[this.selectedIndex].value].html;' ><option>(Choose a location)</option>" + newContent + "</select>";
+                newContent = "<select name='localSector' onchange='$(\"nedsInnerDiv"+ nedsCurrentLocIndex + "\").innerHTML = nedsCurrentLoc[" + nedsCurrentLocIndex + "][this.options[this.selectedIndex].value].html;' ><option>(Choose a User)</option>" + newContent + "</select>";
                 newContent ="<div class='multi-loc'>"+newContent+"<div id='nedsInnerDiv"+ nedsCurrentLocIndex++ + "' class='inner-loc'  ><img src='" + baseMapURL + "img/blank.gif' height='190'></div>";
                 return newContent;
     }

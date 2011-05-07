@@ -56,4 +56,5 @@ $string['longitude'] = 'Longitude';
 $string['pointerrorfill'] = "You must enter both a longitude and latitude";
 $string['errorvalid'] = "This is not a valid entry.";
 $string['errorrequired'] = "This is a required field";
+$string['pointtitle'] = "Title for this Point";
 ?>

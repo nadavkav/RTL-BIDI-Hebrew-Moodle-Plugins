@@ -2,10 +2,11 @@
 
 
 
-$string['modulename'] = 'מפה';
-$string['modulenameplural'] = 'מפות';
+$string['modulename'] = 'מפה גאוגרפית';
+$string['modulenameplural'] = 'מפות גאוגרפיות';
 $string['mapname'] = 'כותרת המפה';
 $string['maptext'] = 'תאור המפה';
+$string['pointtitle'] = 'כותרת נקודת הציון על המפה';
 $string['locations'] = 'נקודות ציון במפה';
 $string['requireok'] = 'דרושה הסכמת התלמיד להופיע על המפה?';
 $string['configuration'] = 'הגדרות';
@@ -22,7 +23,7 @@ $string['profilestatefield_info'] = 'This profile field will be used to determin
 $string['emptymap'] = 'לא קיימות נקודות ציון על מפה זו.';
 $string['hidelocation'] = 'אל תציג את המיקום שלי על המפה.';
 $string['consentshow'] = 'אני מעוניין להופיע על המפה';
-$string['usernolocation'] = 'תרם מיקמתם את עצמכם על המפה.';
+$string['usernolocation'] = 'טרם מיקמתם את עצמכם על המפה.';
 $string['nolocationsupdated'] = 'לא קיימות נקודות ציון הדורשות עדכון';
 $string['mylocation'] = 'המקום שלי';
 $string['state'] = 'מדינה/מחוז (ארהב)';
@@ -50,7 +51,7 @@ $string['shownoaddress'] = "כתובת חסרה";
 $string['showaddressonly'] = "כתובת בלבד";
 $string['showaddressandpoint'] = "כתובת, נקודת ציון רוחבית ואופקית";
 $string['coordinates'] = "נקודות ציון (גאוגרפיות)";
-$string['coordinatesinfo'] = "If using longitude and latitude the location information above will not be used.";
+$string['coordinatesinfo'] = "אם תציינו מיקום רוחב ואורך גאוגרפים, המידע אשר הזנתם להעיל לא יבוא לידי שימוש";
 $string['latitude'] = 'נקודת ציון ניצבת';
 $string['longitude'] = 'נקודת ציון אופקית';
 $string['pointerrorfill'] = "יש להזין את נקודות הציון הניצבות והאופקיות";
