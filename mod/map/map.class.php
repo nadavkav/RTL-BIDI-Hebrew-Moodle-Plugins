@@ -26,8 +26,8 @@ class mod_map_user_location_form extends moodleform {
 		$mform->addElement('text', 'city', get_string('city'), array('size'=>'64'));
 		$mform->setType('city', PARAM_TEXT);
 		$mform->addRule('city', null, 'required', null, 'client');
-		$mform->addElement('text', 'state', get_string('state', 'map'), array('size'=>'64'));
-		$mform->setType('state', PARAM_TEXT);
+//		$mform->addElement('text', 'state', get_string('state', 'map'), array('size'=>'64'));
+//		$mform->setType('state', PARAM_TEXT);
 
 		$choices = get_list_of_countries();
 		$choices= array(''=>get_string('selectacountry').'...') + $choices;
@@ -56,7 +56,7 @@ class mod_map_user_location_form extends moodleform {
 			return $errors;
 		}
 		return true;
-			
+
 	}
 }
 /**
@@ -72,7 +72,7 @@ class mod_map_reset_location_form extends moodleform {
 		$mform->addElement('hidden', 'action', 'resetlocation');
 		$mform->addElement('hidden', 'id', 0);
 		$mform->setType('id', PARAM_INT);
-			
+
 	}
 }
 /**
@@ -85,11 +85,10 @@ class mod_map_extralocation_form extends moodleform {
 	function definition() {
 		$mform =& $this->_form;
 
-
 		// visible elements
 		$mform->addElement('header', 'general', get_string('extralocation', 'map'));
 
-		$mform->addElement('text', 'title', get_string('name'), array('size'=>'64'));
+		$mform->addElement('text', 'title', get_string('pointtitle','map'), array('size'=>'64'));
 		$mform->addRule('title', null, 'required', null, 'server');
 
 		$mform->addElement('text', 'address', get_string('address'), array('size'=>'64'));
@@ -97,8 +96,8 @@ class mod_map_extralocation_form extends moodleform {
 		$mform->addElement('text', 'city', get_string('city'), array('size'=>'64'));
 		$mform->setType('city', PARAM_TEXT);
 		//$mform->addRule('city', null, 'required', null, 'server');
-		$mform->addElement('text', 'state', get_string('state', 'map'), array('size'=>'64'));
-		$mform->setType('state', PARAM_TEXT);
+//		$mform->addElement('text', 'state', get_string('state', 'map'), array('size'=>'64'));
+//		$mform->setType('state', PARAM_TEXT);
 
 		$choices = get_list_of_countries();
 		$choices= array(''=>get_string('selectacountry').'...') + $choices;
@@ -111,7 +110,7 @@ class mod_map_extralocation_form extends moodleform {
 		$mform->addElement('static','info',get_string('coordinates','map').':',get_string('coordinatesinfo','map'));
 		$mform->addElement('text', 'latitude', get_string('latitude','map'), array('size'=>'20'));
 		$mform->addElement('text', 'longitude', get_string('longitude','map'), array('size'=>'20'));
-		$mform->addElement('htmleditor', 'text', get_string('description'));
+		$mform->addElement('htmleditor', 'text', get_string('description'), array('rows' => '24'));
 		$mform->addRule('text', null, 'required', null, 'server');
 		// hidden params
 		$mform->addElement('hidden', 'id', 0);
@@ -153,7 +152,7 @@ class mod_map_extralocation_form extends moodleform {
 			return $errors;
 		}
 		return true;
-			
+
 	}
 	/**
 	 * Remove address field from the form.
