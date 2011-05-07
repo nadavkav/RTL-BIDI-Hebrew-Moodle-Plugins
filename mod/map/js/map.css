@@ -10,6 +10,11 @@
 .multi-loc .map_info_text{
 height:190px;
 }
+
+.dir-rtl .map_info_text {
+    direction: rtl;
+    text-align: right;
+}
 #map .student-title{
     font-size:16px;
     color:#0000ff;

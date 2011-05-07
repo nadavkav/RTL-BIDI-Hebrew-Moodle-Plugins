@@ -11,6 +11,8 @@
 
 /// Standard functions /////////////////////////////////////////////////////////
 
+require("GTranslate.php"); // nadavkav
+
 function map_user_outline($course, $user, $mod, $map) {
 	if ($locations = get_records('map_locations', 'mapid', $map->id, 'userid', $user->id)) {
 		$result->time = 0;
@@ -241,19 +243,27 @@ function map_get_latlong(&$data,$map){
 	// Your Google Maps API key
 	// Desired address
 	$provider = map_get_map_provider($map);
-	$address = "$data->city,+$data->state,+$data->country";
+	//$address = "$data->city,+$data->state,+$data->country";
+
+    // Translate Hebrew City name to English. will not work 100% of the time (nadavkav)
+    try {
+        $gt = new Gtranslate;
+        $heCityName = $gt->hebrew_to_english($data->city);
+    } catch (GTranslateException $ge) {
+        echo $ge->getMessage();
+    }
+
+    $address = urlencode($heCityName)."&country=$data->country"; // Encode Hebrew translated to "Englished" city name (nadavkav)
 	if(isset($data->address)){
 		$address = str_replace(" ","+",",$data->address+" . $address);
 
 	}
 
 	if($provider=="google"){
-
 		$address = urlencode($address);
 		return map_get_latlong_google($data,$address);
 	}else{
-
-		return map_get_latlong_geonames($data,$address);
+        return map_get_latlong_geonames($data,$address);
 	}
 
 }
@@ -266,9 +276,13 @@ function map_get_latlong(&$data,$map){
  * @return boolean
  */
 function map_get_latlong_geonames(&$data,$address){
-	$url = "http://ws.geonames.org/search?q=$address&maxRows=1";
+	$url = "http://ws.geonames.org/search?q=$address&maxRows=1&username=demo";
 	$xml = cURL_XML($url);
+
 	if($xml->totalResultsCount > 0){
+        foreach ($xml->geoname as $geoloc) {
+            if ($geoloc->countryCode !=  $data->country) unset($geoloc);
+        }
 		$data->longitude = $xml->geoname[0]->lng;
 		$data->latitude = $xml->geoname[0]->lat;
 
