@@ -51,18 +51,21 @@ if(count($users)==0){
 	foreach($users as $user){
 		require_once($CFG->dirroot.'/user/profile/lib.php');
 		profile_load_data($user);
-		$user->userid = $user->id;
-		$user->state = map_get_user_state($user);
-		$user->action = "insertlocation";
-		$user->mapid = $map->id;
-		$user->id = $id;
-		if($resultLocation = map_save_location($user)===true){
-			//was able to set users location
-			print_box("User: $user->firstname $user->lastname - " . get_string("locationset","map"));
-		}else{
-			//was not able to set user location
-			print_box("User: $user->firstname $user->lastname - " . get_string("errorsetlocation","map") . " - " . $resultLocation);
-		}
+    $context = get_context_instance(CONTEXT_COURSE, $COURSE->id); // only display students on the map (nadavkav patch)
+    if (!has_capability('moodle/legacy:admin', $context)) {
+      $user->userid = $user->id;
+      $user->state = map_get_user_state($user);
+      $user->action = "insertlocation";
+      $user->mapid = $map->id;
+      $user->id = $id;
+      if($resultLocation = map_save_location($user)===true){
+        //was able to set users location
+        print_box("User: $user->firstname $user->lastname - " . get_string("locationset","map"));
+      }else{
+        //was not able to set user location
+        print_box("User: $user->firstname $user->lastname - " . get_string("errorsetlocation","map") . " - " . $resultLocation);
+      }
+    }
 	}
 }
 
