@@ -136,7 +136,7 @@ function ouwiki_get_subwiki($course,$ouwiki,$cm,$context,$groupid,$userid,$creat
             if(!($subwiki->id=insert_record('ouwiki_subwikis',$subwiki))) {
                 ouwiki_dberror();
             }
-            ouwiki_set_extra_subwiki_fields($subwiki,$ouwiki,$context);
+            ouwiki_set_extra_subwiki_fields($subwiki,$ouwiki,$context, $othergroup);
             ouwiki_init_pages($course,$cm,$ouwiki,$subwiki,$ouwiki);
             return $subwiki;
         }
@@ -386,8 +386,10 @@ function ouwiki_get_parameter($name,$value,$type) {
  * @param object $ouwiki Wiki object
  * @param object $cm Course-module object
  * @param object $context Context for permissions
+ * @param object $course Course object
  */
-function ouwiki_display_subwiki_selector($subwiki,$ouwiki,$cm,$context) {
+function ouwiki_display_subwiki_selector($subwiki, $ouwiki, $cm, $context,
+        $course) {
     global $USER,$CFG;
     if($ouwiki->subwikis==OUWIKI_SUBWIKIS_SINGLE) {
         return '';
@@ -432,7 +434,8 @@ ORDER BY
             $choicefield='user';
             $choices=array();
             // User allowed to view people in same group
-            $theirgroups=groups_get_all_groups($cm->course,$USER->id);
+            $theirgroups=groups_get_all_groups($cm->course, $USER->id,
+                    $course->defaultgroupingid);
             if(!$theirgroups) {
                 $theirgroups=array();
             }
@@ -440,7 +443,7 @@ ORDER BY
                 $members=groups_get_members($group->id,'u.id,u.firstname,u.lastname');
                 foreach($members as $member) {
                     $member->name=fullname($member);
-                    $choices[]=$member;
+                    $choices[$member->id] = $member;
                 }
             }
         } else {
@@ -822,7 +825,10 @@ function ouwiki_internal_display_heading_bit($headingnumber,$pagename,$subwiki,$
     global $CFG;
     $params=ouwiki_display_wiki_parameters($pagename,$subwiki,$cm);
     $result=' <div class="ouw_byheading">';
-    if ($subwiki->canedit && !$locked) {
+
+// next link, seems to be, redundent. since it shows up in the Tabs links
+// so it is not enabled on Page level with: "&& !empty($xhtmlid)"    (nadavkav 8-5-2011)
+    if ($subwiki->canedit && !$locked && !empty($xhtmlid)) {
         $result.='<a class="ouw_editsection" href="edit.php?'.$params.($xhtmlid ? '&amp;section='.$xhtmlid : '').'">'.
             get_string($xhtmlid ? 'editsection' : 'editpage','ouwiki').'</a> ';
     }
@@ -856,10 +862,10 @@ function ouwiki_internal_display_heading_bit($headingnumber,$pagename,$subwiki,$
 
     // output the annotate link if using annotation comment system
     if (ouwiki_get_commenting($subwiki->commenting) == OUWIKI_COMMENTS_ANNOTATION || ouwiki_get_commenting($subwiki->commenting) == OUWIKI_COMMENTS_BOTH){
-        if ($subwiki->canannotate) {
-            $result.='<a class="ouw_annotate" href="annotate.php?'.$params.'">'.
-                    get_string('annotate','ouwiki').'</a>';
-        }
+//        if ($subwiki->canannotate) {
+//            $result.='<a class="ouw_annotate" href="annotate.php?'.$params.'">'.
+//                    get_string('annotate','ouwiki').'</a>';
+//        }
 
         if ($annotations != false) {
             $orphancount = 0;
@@ -1260,7 +1266,8 @@ function ouwiki_print_start($ouwiki,$cm,$course,$subwiki,$pagename,$context,$aft
          $navigation, "", $head, true, $buttontext, navmenu($course, $cm));
 
     // Print group selector
-    $selector=ouwiki_display_subwiki_selector($subwiki,$ouwiki,$cm,$context);
+    $selector = ouwiki_display_subwiki_selector($subwiki, $ouwiki, $cm,
+            $context, $course);
     print $selector;
 
     // Print index link
@@ -2747,8 +2754,7 @@ function ouwiki_setup_annotation_markers(&$content) {
  */
 function ouwiki_get_annotation_marker($position) {
     global $CFG;
-    // change images folder (nadavkav patch)
-    $icon = '<img src="' . $CFG->wwwroot . '/mod/ouwiki/images/annotation-marker.gif" alt="'.get_string('annotationmarker', 'ouwiki').'" title="'.get_string('annotationmarker', 'ouwiki').'" />';
+    $icon = '<img src="annotation-marker.gif" alt="'.get_string('annotationmarker', 'ouwiki').'" title="'.get_string('annotationmarker', 'ouwiki').'" />';
     return '<span class="ouwiki-annotation-marker" id="marker'.$position.'">'.$icon.'</span>';
 }
 
@@ -2761,8 +2767,7 @@ function ouwiki_get_annotation_marker($position) {
  */
 function ouwiki_highlight_existing_annotations(&$content,$annotations,$page) {
     global $CFG;
-    // change images folder (nadavkav patch)
-    $icon = '<img src="' . $CFG->wwwroot . '/mod/ouwiki/images/annotation.gif" alt="'.get_string('annotation', 'ouwiki').'" title="'.get_string('annotation', 'ouwiki').'" />';
+    $icon = '<img src="annotation.gif" alt="'.get_string('annotation', 'ouwiki').'" title="'.get_string('annotation', 'ouwiki').'" />';
 
     usort($annotations, "ouwiki_internal_position_sort");
     // we only need the used annotations, not the orphaned ones.

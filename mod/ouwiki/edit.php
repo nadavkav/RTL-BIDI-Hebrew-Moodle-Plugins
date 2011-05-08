@@ -91,7 +91,16 @@ $wikiformfields=ouwiki_display_wiki_parameters($pagename,$subwiki,$cm,OUWIKI_PAR
 $pageversion=ouwiki_get_current_page($subwiki,$originalpagename);
 
 if ($createnewpage) {
-    
+
+    if (trim($pagename)!=='') {
+        if (get_field('ouwiki_pages','id', 'title', addslashes($pagename), 'subwikiid', $subwiki->id)) {
+            print_error('duplicatepagetitle', 'ouwiki' ,'view.php?'.ouwiki_display_wiki_parameters($originalpagename,$subwiki,$cm,OUWIKI_PARAMS_URL)); 
+        } 
+    } else {
+        // blank page title
+        print_error('emptypagetitle', 'ouwiki', 'view.php?'.ouwiki_display_wiki_parameters($originalpagename,$subwiki,$cm,OUWIKI_PARAMS_URL)); 
+    }
+
     $wikiformfields .= ouwiki_get_parameter('originalpagename',$originalpagename,OUWIKI_PARAMS_FORM);
     
     // Get the current page version, creating page if needed
@@ -335,7 +344,7 @@ if($content) {
 
 // Get the annotations and add prepare them for editing
 $annotations = ouwiki_get_annotations($pageversion);
-ouwiki_highlight_existing_annotations(&$existing, $annotations, 'edit');
+ouwiki_highlight_existing_annotations($existing, $annotations, 'edit');
 
 $a ='
 <span class="helplink">
@@ -345,7 +354,7 @@ $a ='
 </span>';
 print get_string('advice_edit','ouwiki', $a);
 
-if($ouwiki->timeout && $js) {
+if($ouwiki->timeout) {
     $countdowntext=get_string('countdowntext','ouwiki',$ouwiki->timeout/60);
     print "<script type='text/javascript'>
 document.write('<p><div id=\"ouw_countdown\"></div>$countdowntext<span id=\"ouw_countdownurgent\"></span></p>');

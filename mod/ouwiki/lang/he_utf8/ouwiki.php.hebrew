@@ -1,8 +1,8 @@
 <?php
  // updated on (date):2010-09-10
 
-$string['modulename'] = 'ויקי משותף/אישי';
-$string['modulenameplural'] = 'ויקי משותף/אישי';
+$string['modulename'] = 'ויקי (מבוזר, אישי)';
+$string['modulenameplural'] = 'ויקי';
 $string['subwikis'] = 'סוג ויקי';
 $string['subwikis_single'] = 'ויקי אחד לכולם';
 $string['subwikis_groups'] = 'ויקי לכל קבוצה';
@@ -22,7 +22,7 @@ $string['tab_view'] = 'מצב תצוגה';
 $string['tab_edit'] = 'עריכת דף';
 $string['tab_annotate'] = 'הערה־למילה';
 $string['tab_discuss'] = 'דיון';
-$string['tab_history'] = 'היסטוריית הדף';
+$string['tab_history'] = 'היסטוריה';
 $string['preview'] = 'תצוגה מקדימה';
 $string['previewwarning'] = 'התצוגה הבאה של השינויים שלך טרם נשמרה.
 <strong>אם השינויים לא ישמרו, העבודה תאבד.</strong> יש לשמור בעזרת המקש שבתחתית הדף.';
@@ -269,7 +269,7 @@ $string['pagenametoolong'] = 'שם הדף ארוך מידי. יש לבחור ש�
 $string['pagenameisstartpage'] = 'שם הדף זהה לשם הדף הראשי. אנא בחרו שם שונה.';
 $string['nocommentsystem'] = 'מנגנון ההערות לא פעיל';
 $string['annotationsystem'] = 'מנגנון הערות־למילים';
-$string['persectionsystem'] = 'מנגנון הערות עבור כל פסקאה';
+$string['persectionsystem'] = 'מנגנון הערות עבור כל פסקה';
 $string['bothcommentsystems'] = 'שני מנגנוניי הטיוט';
 $string['commenting'] = 'מנגנון כתיבת הערות';
 $string['commentsystemdesc'] = 'Choose the default comment system to be used thoughout this site. Each wiki is able

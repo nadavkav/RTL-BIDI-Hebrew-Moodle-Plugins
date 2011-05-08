@@ -14,9 +14,9 @@ require_once("ouwiki.php");
 
 $lockid=required_param('lockid',PARAM_INT);
 if($lock=get_record('ouwiki_locks','id',$lockid)) {
-    $lock->seenat=time()+OUWIKI_LOCK_NOJS;
+    $lock->seenat = time()+OUWIKI_LOCK_NOJS;
+    $lock->expiresat = null;
     update_record('ouwiki_locks',$lock);
-    
     header('Content-Type: image/png');
     readfile('dot.png');
     exit;

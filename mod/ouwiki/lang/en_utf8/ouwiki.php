@@ -368,7 +368,9 @@ $string['annotate'] = 'Annotate';
 $string['annotation'] = 'Annotation';
 $string['annotationmarker'] = 'Annotation marker';
 $string['cannotlockpage'] = 'The page could not be locked, your changes have not been saved.';
-$string['thispageislocked'] = 'This wiki page is locked and cannot be edited';
+$string['thispageislocked'] = 'This wiki page is locked and cannot be edited.';
+$string['emptypagetitle'] = 'The new page title must not be blank.';
+$string['duplicatepagetitle'] = 'The new page title must not be the same as one of the existing page titles.';
 
 
 //computing guide
@@ -387,8 +389,4 @@ $string['displayversion'] = 'OU wiki version: <strong>$a</strong>';
 // OU only
 $string['externaldashboardadd'] = 'Add wiki to dashboard';
 $string['externaldashboardremove'] = 'Remove wiki from dashboard';
-
-$string['showallannotations'] = 'Show all annotations';
-$string['hideallannotations'] = 'Hide all annotations';
-
 ?>
