@@ -51,7 +51,7 @@ IE 6 and earlier, but the browser will degrade nicely */
 .ygtvtm + td, .ygtvtmh + td,
 .ygtvlm + td, .ygtvlmh + td {
     /* dots behind the section menus */
-    background: url(<?php echo "$skin/l.gif" ?>) 10% bottom no-repeat;
+    background: url(<?php echo "$skin/l.gif" ?>) 12% bottom no-repeat;
 }
 
 .yui_menu_tree .highlight {
@@ -153,13 +153,15 @@ width:220px !important;
 .dir-rtl .ygtvtm + td, .ygtvtmh + td,
 .dir-rtl .ygtvlm + td, .ygtvlmh + td {
     /* dots behind the section menus */
-    background: url(<?php echo "$skin/l.gif" ?>) 90% bottom no-repeat;
+    background: url(<?php echo "$skin/l.gif" ?>) 92% bottom no-repeat;
 }
 
 .dir-rtl .block_yui_menu div.column.c0 {
     float: right;
 }
 
-.dir-rtl .block_yui_menu .yui_menu_js_tree div.column.c0 {
-    padding: 0 10px;
+
+
+.block_yui_menu .list li {
+line-height: 1.5;
 }

@@ -150,7 +150,7 @@ tree.subscribe('expandComplete', addTreeIcons);";
             $expand = $item->expand ? 'true':'false';
             //$html = "<div class='icon column c0'>{$item->icon()}</div>"."<div class='column c1'>{$item->html()}</div>";
 	    //$html = "<div class='column c0'>{$item->html()}</div>"."<div class='icon column c1'>{$item->icon()}</div>";
-	    $html = "<div class='icon column c0'> &#8226; {$item->icon()} {$item->html()}</div>";
+	    $html = "<div class='icon column c0'>{$item->icon()} {$item->html()}</div>";
             $html = str_replace('"', '\"', $html);
             $script .= "var $childname = new YAHOO.widget.HTMLNode(\"$html\", $parent, $expand);";
             if (isset($item->style)) {
@@ -262,6 +262,7 @@ class yui_menu_item {
         $this->children = array();
     }
     function icon() {
+        if (empty($this->icon_url)) return '';
         $ico = htmlspecialchars($this->icon_url);
         return "<img src='$ico' alt='' />";
     }

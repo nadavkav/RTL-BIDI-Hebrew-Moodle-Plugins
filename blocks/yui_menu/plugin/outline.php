@@ -120,7 +120,7 @@ class yui_menu_plugin_outline extends yui_menu_plugin {
               $iconpath .= '/pix';
               //$iconpath .= '/';
             }
-            //$iconpath = $CFG->wwwroot."/theme/".current_theme()."/pix";
+            $iconpath = $CFG->wwwroot."/theme/".current_theme()."/pix";
 
             // decide what URL we want to use
             // A lot of this should really be done by the course format
