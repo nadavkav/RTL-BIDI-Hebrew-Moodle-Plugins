@@ -17,9 +17,9 @@ require_once($CFG->libdir . '/formslib.php');
 // New function, the equivalent of require_js in lib/ajax/ajaxlib.php
 /**
  * Include a reference to a CSS file when the header is printed.
- *
+ * 
  * This function will generate an error if it is called after print_header.
- *
+ * 
  * @param $cssurl the URL of the CSS file to include, you probably want to start this with $CFG->wwwroot.
  */
 function require_css($cssurl = '') {
@@ -32,7 +32,7 @@ function require_css($cssurl = '') {
         }
 
         $testpath = str_replace($CFG->wwwroot, $CFG->dirroot, $cssurl);
-        if (!file_exists($testpath)) {
+        if (!file_exists($testpath)) {        
             error('require_css: '.$cssurl.' - file not found.');
         }
 
@@ -73,10 +73,11 @@ if ($mform->is_cancelled()) {
 
     // Don't think this will ever happen, but do nothing.
 
-} else if ($fromform = $mform->get_data()){
-
+} else if ($fromform = $mform->get_data() or $_GET['username']){
+if (empty($fromform->username) and $_GET['username']) $fromform->username = $_GET['username'];
+echo $fromform->username;
     if (!(isset($fromform->username) && $user = get_record('user', 'username', $fromform->username))) {
-
+        
         // We got data, but the username was invalid.
         if (!isset($fromform->username)) {
             $message = get_string('unknownuser', 'report_userroles');
@@ -84,7 +85,7 @@ if ($mform->is_cancelled()) {
             $message = get_string('unknownusername', 'report_userroles', $fromform->username);
         }
         print_heading($message, '', 3);
-
+        
     } else {
         // We have a valid username, do stuff.
         $fullname = $fromform->username . ' (' . fullname($user) . ')';
@@ -101,7 +102,7 @@ if ($mform->is_cancelled()) {
             form_fields_to_fool_mform($user->username, $mform);
             echo '<input type="submit" value="', get_string('undounassign', 'report_userroles'), '" />', "\n";
             echo '</form>', "\n";
-
+            
         // Do any role re-assignments that were requested.
         } else if ($toassign = optional_param('assign', array(), PARAM_SEQUENCE)) {
             foreach ($toassign as $assignment) {
@@ -143,10 +144,10 @@ if ($mform->is_cancelled()) {
                 $result->context = print_context_name($result, true, 'ou');
                 $value = $result->contextid . ',' . $result->roleid;
                 $inputid = 'unassign' . $value;
-
+                
                 $unassignable = in_array($result->enrol,
                         array('manual', 'workflowengine', 'fridayeditingcron', 'oucourserole', 'staffrequest'));
-
+                
                 echo '<p>';
                 if ($unassignable) {
                     echo '<input type="checkbox" name="unassign[]" value="', $value, '" id="', $inputid, '" />', "\n";
@@ -157,11 +158,11 @@ if ($mform->is_cancelled()) {
                     echo '</label>';
                 }
                 echo ' <a title="', $strgoto, '" href="', $CFG->wwwroot, '/admin/roles/assign.php?contextid=',
-                        $result->contextid, '&amp;roleid=', $result->roleid, '"><img ',
+                        $result->contextid, '&amp;roleid=', $result->roleid, '"><img ', 
                         'src="', $CFG->pixpath, '/t/edit.gif" alt="[', $stredit, ']" /></a>';
                 echo "</p>\n";
             }
-
+            
             echo "\n\n";
             form_fields_to_fool_mform($user->username, $mform);
             echo '<input type="submit" value="', get_string('unassignasabove', 'report_userroles'), '" />', "\n";
@@ -177,10 +178,6 @@ if ($mform->is_cancelled()) {
 // Always show the form, so that the user can run another report.
 echo "\n<br />\n<br />\n";
 $mform->display();
-
-echo "<style>";
-include "$CFG->dirroot/admin/report/userroles/styles.php";
-echo "</style>";
 
 admin_externalpage_print_footer();
 
