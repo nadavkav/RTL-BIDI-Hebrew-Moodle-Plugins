@@ -1,0 +1,7 @@
+For this plugin to work, you need to install (just copy) WIRIS filter into your Moodle filter folder.
+
+Please extract it from the attached zip file and copy it to the filters folder in your Moodle's root folder
+Then, navigate your browser to the main Admin block and press Notifications to install and enable the
+WIRIS CAS and Formula plugins.
+
+Then, Enable the plugin in the Appearance >> HTMLAREA Custom plugins settings page.

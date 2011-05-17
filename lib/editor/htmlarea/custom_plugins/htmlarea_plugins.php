@@ -28,13 +28,14 @@ $temp->add(new admin_setting_configmultiselect('editor_customplugins', get_strin
   get_string('editor_customplugins_info', 'customplugins','',$langfolder ), array(), $plugins));
 
 $glossaries = get_records('glossary','course',1);
-foreach ($glossaries as $glossary) {
-  $templatebank[$glossary->id] = $glossary->name;
+if ($glossaries ){
+  foreach ($glossaries as $glossary) {
+    $templatebank[$glossary->id] = $glossary->name;
+  }
+
+  $temp->add(new admin_setting_configselect('editor_templateglossary', get_string('editor_templateglossary', 'customplugins','',$langfolder),
+    get_string('editor_templateglossary_info', 'customplugins','',$langfolder ), array(), $templatebank));
 }
-
-$temp->add(new admin_setting_configselect('editor_templateglossary', get_string('editor_templateglossary', 'customplugins','',$langfolder),
-  get_string('editor_templateglossary_info', 'customplugins','',$langfolder ), array(), $templatebank));
-
 $temp->add(new admin_setting_configcheckbox('editor_showtableoperations', get_string('editor_showtableoperations', 'customplugins','',$langfolder),
                    get_string('editor_showtableoperations_info', 'customplugins','',$langfolder), 0));
 

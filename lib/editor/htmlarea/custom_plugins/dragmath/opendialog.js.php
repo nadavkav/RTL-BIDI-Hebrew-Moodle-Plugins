@@ -21,8 +21,10 @@ function __dragmath (editor) {
     editor.focusEditor();
     var sel = editor._getSelection();
     var range = editor._createRange(sel);
+    var formula = new String(range);
+    //formula.replace('`','');
 
-    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/dragmath/dialog.php?id=$courseid&exp="; ?>"+encodeURIComponent(range) ,570,420, function (param) {
+    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/dragmath/dialog.php?id=$courseid&exp="; ?>"+encodeURIComponent(formula) ,570,420, function (param) {
 
     if (!param) {   // user must have pressed Cancel
         return false;

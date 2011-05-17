@@ -70,7 +70,7 @@ function getExportAndInsert(){
     codebase="<?php echo $urlforcodebase; ?>"
     name="DragMath">
     <param name="language" value="<?php echo $drlang; ?>" />
-    <param name= openWithExpression value= "<?php echo $exp; ?>" >
+    <param name= openWithExpression value= "<?php echo str_replace('`','',$exp); ?>" >
     <!--param name="outputFormat" value="MoodleTex" /-->
     <param name="outputFormat" value="ASCIIMathML" />
     To use this page you need a current Java-enabled browser.
