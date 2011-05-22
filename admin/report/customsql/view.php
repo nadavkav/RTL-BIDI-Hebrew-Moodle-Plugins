@@ -107,6 +107,7 @@ if (is_null($cvstimestamp)) {
         fclose($handle);
         print_table($table);
 
+        echo "<br/>".get_string('recordcount', 'report_customsql')." = $count<br/>";
         if ($count >= REPORT_CUSTOMSQL_MAX_RECORDS) {
             echo '<p class="admin_note">' . get_string('recordlimitreached', 'report_customsql', REPORT_CUSTOMSQL_MAX_RECORDS) . '</p>';
         }
