@@ -8,31 +8,14 @@
  *  Insert an EMBED of a PDF document into the HTML
  */
 
-require_once("../../../../../config.php");
+  require_once("../../../../../config.php");
 
- $courseid = optional_param('id', SITEID, PARAM_INT);
+  $courseid = optional_param('id', SITEID, PARAM_INT);
 
 ?>
 
 function __insertpdf (editor) {
 
-<!--    var outparam = null;
-    if (typeof image == "undefined") {
-        image = editor.getParentElement();
-        if (image && !/^img$/i.test(image.tagName))
-            image = null;
-    }
-    if (image) outparam = {
-        f_url    : HTMLArea.is_ie ? editor.stripBaseURL(image.src) : image.getAttribute("src"),
-        f_alt    : image.alt,
-        f_border : image.border,
-        f_align  : image.align,
-        f_vert   : image.vspace,
-        f_horiz  : image.hspace,
-        f_width  : image.width,
-        f_height : image.height
-    };
--->
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
         echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertpdf/dialog.php?id=$courseid";
@@ -43,7 +26,6 @@ function __insertpdf (editor) {
         if (!param) {   // user must have pressed Cancel
             return false;
         }
-//        var img = image;
         if (!img) {
             var sel = editor._getSelection();
             var range = editor._createRange(sel);

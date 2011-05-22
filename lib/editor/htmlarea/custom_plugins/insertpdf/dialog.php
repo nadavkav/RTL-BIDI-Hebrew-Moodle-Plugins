@@ -11,11 +11,11 @@
 
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
-    if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
-        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
-    } else {
-        $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
-    }
+//     if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
+//         $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
+//     } else {
+//         $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
+//     }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
