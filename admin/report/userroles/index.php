@@ -179,6 +179,9 @@ echo $fromform->username;
 echo "\n<br />\n<br />\n";
 $mform->display();
 
+echo "<style>";
+include "$CFG->dirroot/admin/report/userroles/styles.php";
+echo "</style>";
 admin_externalpage_print_footer();
 
 function form_fields_to_fool_mform($username, $mform) {
