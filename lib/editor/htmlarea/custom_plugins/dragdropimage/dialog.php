@@ -156,7 +156,8 @@ function onOK() {
   var param = new Object();
   //var inputs = document.getElementsByTagName('input');
   for(var i = 0; i < uploadedfiles.length; i++) {
-     param[i] = '<img src="<?php echo $CFG->wwwroot; ?>/file.php/<?php echo "$courseid/users/$userid/"; ?>'+uploadedfiles[i]+'">';
+    //param[i] = '<img src="<?php echo $CFG->wwwroot; ?>/file.php/<?php echo "$courseid/users/$userid/"; ?>'+uploadedfiles[i]+'">';
+    param[i] = '<img src="'+uploadedfiles[i]+'">';
   }
 
   opener.nbWin.retFunc(param);

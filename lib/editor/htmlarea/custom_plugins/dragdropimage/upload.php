@@ -68,13 +68,16 @@
     $tmpname = $arrfile['tmp_name'];
     $error=$arrfile['error'];
     $upload_file = $upload_dir . "/" . basename($filename);
+    $img_file = $CFG->wwwroot."/file.php/{$_GET['courseid']}/users/{$_GET['userid']}/".basename($filename);
     if (!preg_match("/(gif|jpg|jpeg|png)$/i",$filename)) {
         if ($logIt) $log->lwrite("error #2: Failed: the file is not an image");
           uploadFinished ("Failed: the file is not an image", null);
       } else {
           if (is_uploaded_file($tmpname)) {
               if (move_uploaded_file($tmpname, $upload_file)) {
-                  $filenames[]=array($ids[$index++], $upload_file);
+                  //$filenames[]=array($ids[$index++], $upload_file);
+		  //echo $img_file;
+		  $filenames[]=array($ids[$index++], $img_file );
               } else {
             if ($logIt) $log->lwrite("error #3:".$error_message[$error]);
                 uploadFinished ($error_message[$error], null);

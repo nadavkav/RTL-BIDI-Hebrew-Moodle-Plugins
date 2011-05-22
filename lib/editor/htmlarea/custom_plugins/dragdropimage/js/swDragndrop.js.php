@@ -228,7 +228,7 @@ var SwDragndrop = new Class({
 		}
 		liEl.empty().grab(imgEl);
     // so we could push it back to the HTMLAREA editor
-    this.uploadedfiles.push(filename);
+    parent.uploadedfiles.push(filename);
 	},
 
 	// Drag and drop (FF3.6 and +)
@@ -299,13 +299,13 @@ var SwDragndrop = new Class({
 			progressDomElements = [
 					document.createElement('div'),
 					document.createElement('p'),
-          document.createElement('p')
+					document.createElement('p')
 				];
 
 		progressDomElements[0].className = "progressBar";
 		progressDomElements[1].textContent = "0%";
-    progressDomElements[2].textContent = filename;
-    uploadedfiles[index] = filename;
+		progressDomElements[2].textContent = filename;
+		uploadedfiles[index] = '<?php echo $CFG->wwwroot.'/file.php/'.$_GET['courseid']."/users/".$_GET['userid']."/"; ?>' + filename;
 		progressDomElements[0].appendChild(progressDomElements[1]);
 
 		container.appendChild(progressDomElements[0]);
