@@ -228,7 +228,7 @@ TOOLMAN;
     }
 
     if (empty($courses)) {
-        print_simple_box(get_string('nocourses','my'),'center');
+        print_simple_box(get_string('nocourses','myview','',$CFG->dirroot.'/myview/lang/'),'center');
     } else {
         if (empty($filtermodule) || $filtermodule=='all') {
           my_print_overview($courses);
@@ -247,6 +247,7 @@ TOOLMAN;
                 if (array_key_exists($course->id,$htmlarray)) {
                 echo '<br/><h3><a title="'. format_string($course->fullname).'" '.$linkcss.
                   ' href="'.$CFG->wwwroot.'/course/view.php?id='.$course->id.'">'. format_string($course->fullname).'</a></h3><br/>';
+		echo '<div class="summary">'.format_string($course->summary).'</div>';
                   foreach ($htmlarray[$course->id] as $modname => $html) {
                     echo $html;
                   }
@@ -259,7 +260,7 @@ TOOLMAN;
 
     // if more than 20 courses
     if (count($courses) > 20) {
-        echo '<br />...';
+        echo '<br /><a href="/moodle/course">...</a>';
     }
 
     print_container_end();
@@ -355,6 +356,7 @@ function my_print_overview($courses) {
         echo $coursecategories . "<br/>";
 
         print_heading('<a title="'. format_string($course->fullname).'" '.$linkcss.' href="'.$CFG->wwwroot.'/course/view.php?id='.$course->id.'">'. format_string($course->fullname).'</a>');
+	echo '<div class="summary">'.format_string($course->summary).'</div>'; // remove format_string to enable HTML tags on the summary display (nadavkav 19-5-11)
         if (array_key_exists($course->id,$htmlarray)) {
         echo "<a href=\"#modulesoverview$course->id\" onclick=\"toggle_visibility('modulesoverview".$course->id."');\">";
         echo "<img class=\"icon\" src=\"$CFG->wwwroot/myview/images/bookmark.png\">".get_string('waitingyourattention','myview','',$CFG->dirroot.'/myview/lang/')."</a>";
