@@ -34,7 +34,7 @@
     <!-- Most microphones are monophonic so use 1 channel. -->
     <param name="numChannels" value="1">
     <!-- Set maximum message length to whatever you want. -->
-    <param name="maxRecordTime" value="20.0">
+    <param name="maxRecordTime" value="60.0">
 
 	<!-- Specify URL and file to be played after upload. -->
   <param name="refreshURL" value="play_message.php?AudioFile=<?php echo $CFG->wwwroot.'/file.php/'.$uploads_dir.'/'.$filename; ?>">
