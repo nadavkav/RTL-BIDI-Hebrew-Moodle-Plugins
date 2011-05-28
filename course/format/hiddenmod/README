@@ -1,0 +1,14 @@
+HiddenMod course format
+
+To hide a Module or a Resource, indent it once (one level)
+After you turn course editing Off, it will be hidden (using css styling)
+BUT available for students!
+so you can link a beautiful and meaningful image to it 
+from anywhere in the course (ex. Labels)
+
+Turning course editing On, will display the hidden Activity or Resource 
+with a Beige background and a Dashed border.
+
+Feedback is very much welcome (and appreciated)
+Nadav Kavalerchik
+nadavkav@gmail.com
