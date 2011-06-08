@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<localization>
+	<messGenerationVideo> 
+		Generating video file.. 
+	</messGenerationVideo>
+
+	<messLoadDllError> 
+		Video module could not be loaded
+	</messLoadDllError>
+
+	<messParamServerScriptError> 
+		Please check ServerScript parameter
+	</messParamServerScriptError>
+
+	<messLoadDll> 
+		Loading video module
+	</messLoadDll>
+
+	<messKeyFileError> 
+		Please, check key file on the server
+	</messKeyFileError>
+
+	<messIPError> 
+		Incorrect domain name
+	</messIPError>
+
+	<messLicenseExpired> 
+		License is expired
+	</messLicenseExpired>
+
+	<messLoadingModulePerc> 
+		Loading video module:
+	</messLoadingModulePerc>
+
+	<messModuleDownloaded> 
+		Video module downloaded
+	</messModuleDownloaded>
+
+	<messUploadingVideo> 
+		Uploading video
+	</messUploadingVideo>
+
+	<messUploadingAudio> 
+		Uploading audio
+	</messUploadingAudio>
+
+	<messUploadingPhoto> 
+		Uploading photo
+	</messUploadingPhoto>
+
+	<messStopped> 
+		Stopped
+	</messStopped>
+
+	<messPlayError> 
+		Error while playing
+	</messPlayError>
+
+	<messStartRecord> 
+		Recording
+	</messStartRecord>
+
+	<messStartPlay> 
+		Playing
+	</messStartPlay>
+
+	<messVideoErased> 
+		video erased
+	</messVideoErased>
+
+
+	<messPauseSet> 
+		Paused. Press again to continue
+	</messPauseSet>
+
+	<messUploadError> 
+		Video could not be uploaded
+	</messUploadError>
+
+	<messUploadDone> 
+		Uploaded
+	</messUploadDone>
+
+	<messRecordBeforeSend> 
+		You must record the track before send it
+	</messRecordBeforeSend>
+
+	<messEnterFileName> 
+		Please, enter the file name
+	</messEnterFileName>
+
+	<messStartUpload> 
+		Uploading
+	</messStartUpload>
+
+	<messModuleNotLoaded> 
+		Video module could not be loaded
+	</messModuleNotLoaded>
+
+	<messScriptParamerterError> 
+		Wrong ServerScript parameter specified. ServerScript URL \nand Applet CodeBase should have the same Host. Upload is not \npossible. Please, change ServerScript parameter value.
+	</messScriptParamerterError>
+
+	<messScriptParamerterErrorTitle> 
+		Wrong ServerScript parameter
+	</messScriptParamerterErrorTitle>
+
+	<messFolderParameterError> 
+		Wrong VideoServerFolder parameter specified. VideoServerFolder \nURL and ServerScript URL should have the same Host. Upload is not \npossible. Please, change VideoServerFolder parameter value.
+	</messFolderParameterError>
+	
+	<messFolderParameterErrorTitle> 
+		Wrong VideoServerFolder parameter
+	</messFolderParameterErrorTitle>
+
+	<messPhotoErased> 
+		Erased
+	</messPhotoErased>
+
+	<messQTError> 
+		Couldn't init QuickTime. Possibly QuickTime \nis not installed or old version is installed.\nPlayback is impossible, but you still can record\nand upload your video.
+	</messQTError>
+
+	<messQTErrorTitle> 
+		QuickTime initialization failed
+	</messQTErrorTitle>
+
+    <messVideoDeviceInit>
+        Camera is not detected or used by other application.\nRecording is not possible. 
+   </messVideoDeviceInit>
+
+    <messVideoDeviceInitTitle>
+        Error
+    </messVideoDeviceInitTitle>
+
+    <messAudioDeviceInit>
+        Sound card is not detected.\nRecording is not possible.    
+</messAudioDeviceInit>
+
+    <messAudioDeviceInitTitle>
+        Error
+    </messAudioDeviceInitTitle>
+
+    <messLowDiskSpace>
+        Low disk space
+    </messLowDiskSpace>
+
+    <messLowDiskSpaceTitle>
+        Error
+    </messLowDiskSpaceTitle>
+
+    <messMicNotDetected>
+		Microphone is captured by other application\nRecording is not possible.	
+</messMicNotDetected>
+
+	<messMicNotDetectedTitle> 
+		Error
+	</messMicNotDetectedTitle>
+
+	<messCamNotDetected> 
+		Web camera is captured by other application.\nRecording is not possible.
+	</messCamNotDetected>
+
+	<messCamNotDetectedTitle> 
+		Error
+	</messCamNotDetectedTitle>
+
+        <messCamUnsupportedFormat> 
+		Applet does not support this video camera.
+	</messCamUnsupportedFormat>
+
+	<messCamUnsupportedFormatTitle> 
+		UnsupportedFormat
+	</messCamUnsupportedFormatTitle>
+
+
+    <messLowMemory>
+        Not enough memory
+    </messLowMemory>
+
+    <messLowMemoryTitle>
+        Error
+    </messLowMemoryTitle>
+
+    <messCreatingFile>
+        Can not create video file
+    </messCreatingFile>
+
+    <messCreatingFileTitle>
+        Error
+    </messCreatingFileTitle>
+
+    <messInternal>
+        Internal unknown error\nRecording is not possible.
+    </messInternal>
+
+    <messInternalTitle>
+        Error
+    </messInternalTitle>
+
+    <messOpenFile>
+        Can not open  file
+    </messOpenFile>
+
+    <messOpenFileTitle>
+        Error
+    </messOpenFileTitle>
+
+    <messRewriteVideo>
+		You are about to overwrite the video that you have recorded. Are you sure?
+	</messRewriteVideo>
+
+	<messCheckName> 
+		Use for file name letters and digits 
+	</messCheckName>
+
+        <low>
+		Low
+	</low>
+
+	<normal>
+		Normal
+	</normal>
+
+	<high>
+		High
+	</high>
+
+	<help>
+		Help
+	</help>
+
+	<helpItem>
+		Help
+	</helpItem>
+
+
+	<audioDevice>
+		AudioDevice
+	</audioDevice>
+
+	<videoDevice>
+		VideoDevice
+	</videoDevice>
+
+
+
+	<about>
+		About
+	</about>
+
+	<options>
+		Options
+	</options>
+
+	<quality>
+		Quality
+	</quality>
+	<framesize>
+		Frame size
+	</framesize>
+	<noDevice>
+		no video device
+	</noDevice>
+	<messAppletReady>
+		ready
+	</messAppletReady>
+	<messYes>
+		yes
+	</messYes>
+	<messNo>
+		no
+	</messNo>
+</localization>

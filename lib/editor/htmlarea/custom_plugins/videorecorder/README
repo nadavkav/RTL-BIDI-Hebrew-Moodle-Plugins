@@ -1,0 +1,20 @@
+This plugin is based on several technologies: Java, JavaScript, PHP (of course!) Flash.
+
+This plugins is mostly based on the Video Java Recorder applet from viMas (http://www.vimas.com/video.php)
+current viMas (no)license allows for 20 sec recording for a demo/no-license website use.
+For commercial use and longer recording times, please contact viMas.
+
+"The video recording applet allows to record video in mp4 format ( H.264 video and AAC audio) 
+on the web page and uploads it to the web server via HTTP. Also, it allows to capture still 
+images and save them on the server in JPEG format.
+
+First, the applet records the video in the temp file on the customer's computer, 
+then the user can upload the video to the web server. The server script receives 
+the mp4 or JPEG file on the server and saves it into a specified folder. " 
+(quoted from: http://www.vimas.com/video.php)
+
+Users mush have a W3C standard compliant browser to use this plugin with updated Java 1.6 and Flash 10.x installed.
+
+Feedback and Support: nadavkav@gmail.com (Nadav Kavalerchik)
+
+Enjoy :-)
