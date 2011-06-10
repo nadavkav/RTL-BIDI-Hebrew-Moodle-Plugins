@@ -14,19 +14,26 @@ Plugins, included with this patch
     * Resize editor - Extend the size of the editor when it is very small
     * AudioRecorder - Records Audio comments and embed this into the text (+Flash player)
     * Marker - mark text
-    * InserSWF - Insert Flash movies into the text
-    * InserEmbed - Insert EMBED element anywhere in the text (no need to switch/know html)
+    * Inser SWF - Insert Flash movies into the text
+    * Inser Embed - Insert EMBED element anywhere in the text (no need to switch/know html)
     * Dropbox - support Public sharing of dropbox files
     * FileManager - Support for embeding Block FileManager files inside the text
     * IconGallery - Embed Icons (free sets)
     * CellWith - Change the width of a table's column
     * DrawSVG - Vector Graphics editing tool + Insert SVG drawing into the textarea
-    * Paint (Disabled) - Pixlr.com editor + Insert image into the textarea
+    * Paint - Pixlr.com editor + Insert image into the textarea
     * RemoveNOLINK - remove nolink TAG
     * PageBackground - load an image as background to the entire textarea
     * InsertImage - Drag and Drop image(s) to upload them into the textarea (any user)
     * LineHeight - Set Line Height of current paragraph
     * TableSupport (Disabled) - Table rows and cells configuration
+    * Insert PDF - Embed a PDF viewer into the webpage
+    * DragAndDropImage - Opens a popup window, into which a user (students) can Drag and Drop Images from their Desktop
+    * TinyMCE editor - Enables editing of the current content within a TinyMCE editor using a popup window.
+    * DragMath - wrapper for the DragMath Math equation editor plugin + plugin code DragMath 0.7.9 released 10/10/2010 (uses java)(see readme file for install instructions)
+    * WIRIS Formula and CAS - wrapper for the WIRIS Math equation editor plugin + plugin code 2.3 beta (uses java) (see readme file for install instructions)
+    * VideoRecorder - The video recording applet allows to record video in mp4 format ( H.264 video and AAC audio) and embed it into the text (Inspired by Kevin Brake @ eLearningShow.com)
+    * HTMLPurify - Clean the text using HTMLPurifier library
 
 The Framework
 

@@ -3,6 +3,7 @@ This plugin is based on several technologies: Java, JavaScript, PHP (of course!)
 This plugins is mostly based on the Video Java Recorder applet from viMas (http://www.vimas.com/video.php)
 current viMas (no)license allows for 20 sec recording for a demo/no-license website use.
 For commercial use and longer recording times, please contact viMas.
+(Inspired by Kevin Brake @ eLearningShow.com)
 
 "The video recording applet allows to record video in mp4 format ( H.264 video and AAC audio) 
 on the web page and uploads it to the web server via HTTP. Also, it allows to capture still 
