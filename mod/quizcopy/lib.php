@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once($CFG->dirroot.'/mod/quiz/lib.php');
 
@@ -13,7 +13,10 @@ function quizcopy_add_instance(&$quizcopy) {
     }
     $origquiz = $quiz->id;
     unset($quiz->id);
-    $quiz->name = $name;
+    // remove single quote to prevent SQL errors (nadavkav 11-6-11)
+    $quiz->name = str_replace("'",'',$name );
+    $quiz->intro = str_replace("'",'',$quiz->intro );
+
     if (!$quiz->id = insert_record('quiz', $quiz)) {
         print_error('error','quizcopy');
     }
