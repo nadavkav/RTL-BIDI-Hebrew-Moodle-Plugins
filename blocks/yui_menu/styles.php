@@ -163,5 +163,5 @@ width:220px !important;
 
 
 .block_yui_menu .list li {
-line-height: 1.5;
+line-height: 1.6;
 }
