@@ -1,0 +1,102 @@
+<p><img alt="" src="<?php echo $CFG->wwwroot?>/mod/flv/icon.gif" />&nbsp;<b>JW FLV Player </b><strong>Parameters</strong></p>
+<div class="indent">
+<p><strong>Supported variables for Flash (flashvars)</strong></p>
+<p>Here's a list of all flashvars the player uses. Check the <a href="http://developer.longtailvideo.com/trac/browser/trunk/as3/player.pdf" target="_blank">player setup PDF</a> for a one-page overview of all these flashvars. The setting of all these flashvars can be accessed by plugins/javascript through the view.config/player.getConfig() call <a href="http://developer.longtailvideo.com/trac/wiki/FlashAPI" target="_blank">of the API</a>.</p>
+<p>All flashvars can also be listed in an XML file and then fed to the player with a single flashvar:</p>
+<ul>
+  <li><strong>config</strong> (undefined): location of a XML file with flashvars. Useful for short embed codes or CDN stream redirecting. <a href="http://developer.longtailvideo.com/files/config.xml" target="_blank">See an example</a>. </li>
+</ul>
+<p><strong>File properties</strong></p>
+<ul>
+  <li><strong>author</strong> (undefined): author of the video, shown in the display or playlist.</li>
+  <li><strong>date</strong> (undefined): publish date of the media file.</li>
+  <li><strong>description</strong> (undefined): text description of the file.</li>
+  <li><strong>duration</strong> (0): duration of the file in seconds.</li>
+  <li><strong>file</strong> (undefined): location of the mediafile or playlist to play.</li>
+  <li><strong>image</strong> (undefined): location of a preview image; shown in display and playlist.</li>
+  <li><strong>link</strong> (undefined): url to an external page the display, controlbar and playlist can link to.</li>
+  <li><strong>start</strong> (0): position in seconds where playback has to start.</li>
+  <li><strong>tags</strong> (undefined): keywords associated with the media file.</li>
+  <li><strong>title</strong> (undefined): title of the video, shown in the display or playlist.</li>
+  <li><strong>type</strong> (undefined): this is determines what type of mediafile this item is, and thus which model the player should use to determine playback. Supported values are sound, image, video, youtube, camera, http, lighttpd or rtmp. More info <a href="http://developer.longtailvideo.com/trac/wiki/FlashOverview#Fileloading" target="_blank">here</a>. </li>
+</ul>
+<p>All these file properties can be loaded as flashvars into the player, but they can also be assigned to every entry in <a href="help.php?module=swf&amp;file=index.html" target="_blank">playlists</a>.</p>
+<p>  <strong>Colors</strong></p>
+<ul>
+  <li><strong>backcolor</strong> (undefined): background color of the controlbar and playlist. This is white with the default skin.</li>
+  <li><strong>frontcolor</strong> (undefined): color of all icons and texts in the controlbar and playlist.<br />
+    </li>
+  <li><strong>lightcolor</strong> (undefined): color of an icon or text when you rollover it with the mouse.<br />
+    </li>
+  <li><strong>screencolor</strong> (undefined): background color of the display. </li>
+</ul>
+<p>All these colors are in so-called hexadecimal values as is common for <a href="http://en.wikipedia.org/wiki/Web_colours" target="_blank">web colors</a>. The <a href="http://www.longtailvideo.com/support/jw-player-setup-wizard" target="_blank">wizard</a> contains a colorpicker you can use if you're not proficient with web colors. Colorization is only supported if the <a href="http://developer.longtailvideo.com/trac/wiki/FlashSkinning" target="_blank">skin supports it too</a>.</p>
+<p>  <strong>Layout</strong></p>
+<ul>
+  <li><strong>controlbar</strong> (bottom): position of the controlbar. Can be set to bottom, over and none.<br />
+    </li>
+  <li><strong>height</strong> (400): height of the display in pixels. When <a href="http://developer.longtailvideo.com/trac/wiki/FlashVars#External" target="_blank">resizing</a> is set to false, this is the overall player height.<br />
+    </li>
+  <li><strong>playlist</strong> (none): position of the playlist. Can be set to bottom, over, right or none.<br />
+    </li>
+  <li><strong>playlistsize</strong> (180): when below this refers to the height, when right this refers to the width of the playlist.<br />
+    </li>
+  <li><strong>skin</strong> (undefined): location of a SWF file with the player graphics. Here's a <a href="http://developer.longtailvideo.com/trac/wiki/SkinningThePlayer" target="_blank">skinning tutorial</a>, <a href="http://developer.longtailvideo.com/trac/wiki/FlashSkinning" target="_blank">an overview of supported elements</a> and <a href="http://developer.longtailvideo.com/trac/browser/skins" target="_blank">a couple of example skins</a>.    </li>
+  <li><strong>width</strong> (280): width of the display in pixels. When <a href="http://developer.longtailvideo.com/trac/wiki/FlashVars#External" target="_blank">resizing</a> is set to false, this is the overall player width.</li>
+</ul>
+<p><strong>Behaviour</strong></p>
+<ul>
+  <li><strong>autostart</strong> (false): automatically start the player on load.<br />
+    </li>
+  <li><strong>bufferlength</strong> (1): number of seconds of the file that has to be loaded before starting. Set this to a low value to enable instant-start and to a high value to get less mid-stream buffering.<br />
+    </li>
+  <li><strong>displayclick</strong> (play): what to do when one clicks the display. Can be play, link, fullscreen, none, mute, next. When set to none, the handcursor is also not shown.<br />
+    </li>
+  <li><strong>fullscreen</strong> (false): fullscreen state of the player. This is a read-only flashvar, useful for plugins.<br />
+    </li>
+  <li><strong>icons</strong> (true): set this to false to hide the play button and buffering icon in the middle of the video.<br />
+    </li>
+  <li><strong>item</strong> (0): playlistitem that should start to play. Use this to set a specific start-item.<br />
+    </li>
+  <li><strong>linktarget</strong> (_blank): browserframe where the links from display are opened in. Some possibilities are '_self' (same frame) , '_blank' (new browserwindow) or 'none' (links are ignored in the player, so javascript can handle it).<br />
+    </li>
+  <li><strong>logo</strong> (undefined): location of an external jpg, png or gif image to show in a corner of the display. With the default skin, this is top-right, but every skin can freely place the logo.<br />
+    </li>
+  <li><strong>mute</strong> (false): mute all sounds on startup. Is saved in a cookie.<br />
+    </li>
+  <li><strong>quality</strong> (true): enables smoothed playback. This sets the smoothing and deblocking of videos on/off. Is saved in a cookie.<br />
+    </li>
+  <li><strong>repeat</strong> (none): set to list to play the entire playlist once, to always to continously play the song/video/playlist and to single to continue repeating the selected file in a playlist.<br />
+    </li>
+  <li><strong>resizing</strong> (true): by default, the player will resize itself to fill the entire canvas. Set this to false if you don't want the player to resize (e.g. when you <a href="http://developer.longtailvideo.com/trac/wiki/FlexEmbedding" target="_blank">load the player in a Flex application</a>).<br />
+    </li>
+  <li><strong>shuffle</strong> (false): shuffle playback of playlist items.<br />
+    </li>
+  <li><strong>state</strong> (IDLE): current playback state of the player. Can be IDLE (no file loaded), BUFFERING (loading a file), PLAYING (playing a file), PAUSED (pausing playback; loading continues), COMPLETED (same as IDLE, but the file is player and loaded completely).<br />
+    </li>
+  <li><strong>stretching</strong> (uniform): defines how to resize images in the display. Can be none (no stretching), exactfit (disproportionate), uniform (stretch with black borders) or fill (uniform, but completely fill the display).<br />
+    </li>
+  <li><strong>volume</strong> (90): startup volume of the player. Can be 0 to 100. Is saved in a cookie. </li>
+</ul>
+<p><strong>External</strong></p>
+<ul>
+  <li><strong>abouttext</strong> (undefined): text to show in the rightclick menu. Please do not change this if you don't have a <a href="http://www.longtailvideo.com/players/order/license" target="_blank">commercial license</a>! When undefined it shows the player version.<br />
+    </li>
+  <li><strong>aboutlink</strong> (<a href="http://www.longtailvideo.com/players/" target="_blank">http://www.longtailvideo.com/players/</a>): url to link to from the rightclick menu. Do not change this if you don't have a commercial license!    </li>
+  <li><strong>client</strong> (Flash MAC X,0,XXX,0): Version and platform of the Flash client plugin. Useful to check for e.g. MP4 playback or fullscreen capabilities.<br />
+    </li>
+  <li><strong>id</strong> (ply): ID of the player within the javascript DOM. Useful for <a href="http://developer.longtailvideo.com/trac/wiki/FlashAPI" target="_blank">javascript interaction</a>. This is automatically set for Windows / MAC, but under Linux you'll have to set the flashvar.<br />
+    </li>
+  <li><strong>plugins</strong> (undefined): a powerful new feature, this is a comma-separated list of swf plugins to load (e.g. yousearch,viral). Each plugin has a unique ID and resides at plugins.longtailvideo.com. Go to the <a href="http://www.longtailvideo.com/AddOns/" target="_blank">LongTailVideo AddOns section</a> to see all available plugins.<br />
+    </li>
+  <li><strong>streamer</strong> (undefined): location of a server to use for streaming. Can be an RTMP application (<a href="http://www.jeroenwijering.com/?page=wizard&amp;example=4" target="_blank">here's an example</a>) or external PHP/ASP file to use for <a href="http://www.jeroenwijering.com/?item=HTTP_Video_Streaming" target="_blank">HTTP streaming</a>. If set to lighttpd, the player presumes a <a href="http://lighttpd.net/" target="_blank">Lighttpd</a> server is used to stream videos.<br />
+    </li>
+  <li><strong>tracecall</strong> (undefined): name of a javascript function that can be used for tracing the player activity. All events from the view, model and controller are sent there. Set this to flash to utilize the internal Flash tracing mechanism and to arthropod to use the <a href="http://arthropod.stopp.se/" target="_blank">Arthropod debugger</a>.<br />
+    </li>
+  <li><strong>version</strong> (4.x.rrr): exact major release, minor release and revision number of the player. sent to javascript with every call. The revision number is always upped no matter the release, so 4.2.51 is the revision right after 4.1.50. </li>
+</ul>
+<p></p>
+<p><strong>Moodle Plugin Activity Module Developed by Matt Bury - <a href="http://matbury.com/" target="_blank">http://matbury.com/</a></strong></p>
+<p><strong>FLV Player Developed By Jeroen Wijering - <a href="http://www.longtailvideo.com/" target="_blank">http://www.longtailvideo.com/</a></strong></p>
+<p align="center"><a href="help.php?module=swf&amp;file=index.html">Help Files Index</a></p>
+</div>

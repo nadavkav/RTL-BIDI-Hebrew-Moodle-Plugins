@@ -1,0 +1,28 @@
+<p><img alt="" src="<?php echo $CFG->wwwroot?>/mod/mplayer/icon.gif" />&nbsp;<strong>Media Source</strong></p>
+<div class="indent">
+  <p><strong>Note:</strong> If Sound, Image or Video are selected, the player will automatically look for the video file in the Moodle course files directory. Use &quot;Choose or upload a file...&quot;.</p>
+  <p><strong>Media File:</strong> The source or location of the media file to be played. </p>
+  <ul>
+    <li>Click on the &quot;Choose or upload a file...&quot; button to play videos from the Moodle course files directory. </li>
+    <li>Video file types can be an FLV, F4V, MOV, MP4 or any file type supported by Flash Player. </li>
+    <li>If the video file is on a different domain to your Moodle, there must be a crossdomain.xml policy file on that domain. i.e. If your site URL is &quot;http://mymoodle.com/&quot;, and the video file URL is &quot;http://someotherserver.com/videos/sample_video.flv&quot;, then there must be a crossdomain.xml file at &quot;http://someotherserver.com/crossdomain.xml&quot;. Some video hosting sites such as YouTube.com already have a &quot;catchall&quot; crossdomain.xml policy file installed, allowing you to consume media from them without any configuration being necessary. For further details, see: <a href="http://kb2.adobe.com/cps/142/tn_14213.html">http://kb2.adobe.com/cps/142/tn_14213.html</a></li>
+    <li>You can also link to an XML playlist here. For more information about playlists, see:   <a href="http://code.google.com/p/moodle-flv-player/wiki/UsingXMLPlaylists">http://code.google.com/p/moodle-flv-player/wiki/UsingXMLPlaylists</a></li>
+  </ul>
+  <p><strong>Type:</strong> The type of media and type of delivery to be used for the Video URL provided. The settings are:</p>
+  <ul>
+    <li><strong>default</strong> - a URL link to a video file available over the Internet. Must start with http://...</li>
+    <li><strong>Sound</strong> - a link to an MP3 or AAC file in the Moodle course files directory</li>
+    <li><strong>Image</strong> - a link to an image file in the Moodle course files directory</li>
+    <li><strong>Video</strong> - a link to a video file in the Moodle course files directory</li>
+    <li><strong>YouTube</strong> - a URL link to a video file hosted on YouTube</li>
+    <li><strong>Camera</strong> -  (advanced) accesses the user's web camera if present and turned on</li>
+    <li><strong>HTTP Streaming</strong> - (advanced) consume media streams from an HTTP media server</li>
+    <li><strong>Lighttpd Streaming</strong> - (advanced) consume media streams from a Lighttpd media server</li>
+    <li><strong>RTMP Streaming</strong> - (advanced) consume media streams from an RTMP media server such Red5, Flash Media Server or Wowza. Please note: Do not include file extensions when using RTMP, i.e. &quot;myvideofile&quot; not &quot;myvideofile.flv&quot;.</li>
+  </ul>
+  <p><strong>Streamer:</strong> (advanced) the gateway of the streaming server to be used (requires configuration by a developer). More than one streaming server configuration is possible.</p>
+  <p>&nbsp;</p>
+  <p>Activity Module Developed by Matt Bury - <a href="http://matbury.com/" target="_blank">http://matbury.com/</a></p>
+<p>JW FLV Player Developed By Jeroen Wijering - <a href="http://www.longtailvideo.com/" target="_blank">http://www.longtailvideo.com/</a></p>
+<p align="center"><a href="help.php?module=swf&amp;file=index.html">Help Files Index</a></p>
+</div>

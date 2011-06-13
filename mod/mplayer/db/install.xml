@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/mplayer/db" VERSION="20070401" COMMENT="XMLDB file for Moodle mod/mplayer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="mplayer" COMMENT="Wrapper for Jeroen Wijering FLV Player">
+		<FIELDS>
+			<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id" NEXT="course"/>
+			<FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="course" PREVIOUS="id" NEXT="name"/>
+			<FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name" PREVIOUS="course" NEXT="intro"/>
+			<FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="intro" PREVIOUS="name" NEXT="introformat"/>
+			<FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="introformat" PREVIOUS="intro" NEXT="timecreated"/>
+			<FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="timecreated" PREVIOUS="introformat" NEXT="timemodified"/>
+			<FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="timemodified" PREVIOUS="timecreated" NEXT="configxml"/>
+			<FIELD NAME="configxml" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="configxml" PREVIOUS="timemodified" NEXT="author"/>
+			<FIELD NAME="author" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="author" PREVIOUS="configxml" NEXT="mplayerdate"/>
+			<FIELD NAME="mplayerdate" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="mplayerdate" PREVIOUS="author" NEXT="description"/>
+			<FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="description" PREVIOUS="mplayerdate" NEXT="infoboxcolor"/>
+			<FIELD NAME="infoboxcolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="infoboxcolor" PREVIOUS="description" NEXT="infoboxposition"/>
+			<FIELD NAME="infoboxposition" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="infoboxposition" PREVIOUS="infoboxcolor" NEXT="infoboxsize"/>
+			<FIELD NAME="infoboxsize" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="infoboxsize" PREVIOUS="infoboxposition" NEXT="duration"/>
+			<FIELD NAME="duration" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="duration" PREVIOUS="infoboxsize" NEXT="mplayerfile"/>
+			<FIELD NAME="mplayerfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="mplayerfile" PREVIOUS="duration" NEXT="hdbitrate"/>
+			<FIELD NAME="hdbitrate" TYPE="int" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" UNSIGNED="true" COMMENT="hdbitrate" PREVIOUS="mplayerfile" NEXT="hdfile"/>
+			<FIELD NAME="hdfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="hdfile" PREVIOUS="hdbitrate" NEXT="hdfullscreen"/>
+			<FIELD NAME="hdfullscreen" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="hdfullscreen" PREVIOUS="hdfile" NEXT="hdstate"/>
+			<FIELD NAME="hdstate" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="hdstate" PREVIOUS="hdfullscreen" NEXT="livestreamfile"/>
+			<FIELD NAME="livestreamfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="livestreamfile" PREVIOUS="hdstate" NEXT="livestreamimage"/>
+			<FIELD NAME="livestreamimage" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="livestreamimage" PREVIOUS="livestreamfile" NEXT="livestreaminterval"/>
+			<FIELD NAME="livestreaminterval" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false" ENUM="false" UNSIGNED="true" COMMENT="livestreaminterval" PREVIOUS="livestreamimage" NEXT="livestreammessage"/>
+			<FIELD NAME="livestreammessage" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="livestreammessage" PREVIOUS="livestreaminterval" NEXT="livestreamstreamer"/>
+			<FIELD NAME="livestreamstreamer" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="livestreamstreamer" PREVIOUS="livestreammessage" NEXT="livestreamtags"/>
+			<FIELD NAME="livestreamtags" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="livestreamtags" PREVIOUS="livestreamstreamer" NEXT="image"/>
+			<FIELD NAME="image" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="image" PREVIOUS="livestreamtags" NEXT="audiodescriptionfile"/>
+			<FIELD NAME="audiodescriptionfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="audiodescriptionfile" PREVIOUS="image" NEXT="audiodescriptionstate"/>
+			<FIELD NAME="audiodescriptionstate" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="audiodescriptionstate" PREVIOUS="audiodescriptionfile" NEXT="audiodescriptionvolume"/>
+			<FIELD NAME="audiodescriptionvolume" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="audiodescriptionvolume" PREVIOUS="audiodescriptionstate" NEXT="mplayerstart"/>
+			<FIELD NAME="mplayerstart" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="mplayerstart" PREVIOUS="audiodescriptionvolume" NEXT="tags"/>
+			<FIELD NAME="tags" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="tags" PREVIOUS="mplayerstart" NEXT="title"/>
+			<FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="title" PREVIOUS="tags" NEXT="type"/>
+			<FIELD NAME="type" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" DEFAULT="undefined" ENUM="false" COMMENT="type" PREVIOUS="title" NEXT="backcolor"/>
+			<FIELD NAME="backcolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="backcolor" PREVIOUS="type" NEXT="frontcolor"/>
+			<FIELD NAME="frontcolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="frontcolor" PREVIOUS="backcolor" NEXT="lightcolor"/>
+			<FIELD NAME="lightcolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="lightcolor" PREVIOUS="frontcolor" NEXT="screencolor"/>
+			<FIELD NAME="screencolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="screencolor"	PREVIOUS="lightcolor" NEXT="controlbar"/>
+			<FIELD NAME="controlbar" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="controlbar" PREVIOUS="screencolor" NEXT="smoothing"/>
+			<FIELD NAME="smoothing" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="smoothing" PREVIOUS="controlbar" NEXT="height"/>
+			<FIELD NAME="height" TYPE="char" LENGTH="4" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="height" PREVIOUS="smoothing" NEXT="playlist"/>
+			<FIELD NAME="playlist" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="playlist" PREVIOUS="height" NEXT="playlistsize"/>
+			<FIELD NAME="playlistsize" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="playlistsize" PREVIOUS="playlist" NEXT="skin"/>
+			<FIELD NAME="skin" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="skin" PREVIOUS="playlistsize" NEXT="width"/>
+			<FIELD NAME="width" TYPE="char" LENGTH="4" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="width" PREVIOUS="skin" NEXT="autostart"/>
+			<FIELD NAME="autostart" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="autostart" PREVIOUS="width" NEXT="bufferlength"/>
+			<FIELD NAME="bufferlength" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="bufferlength" PREVIOUS="autostart" NEXT="fullscreen"/>
+			<FIELD NAME="fullscreen" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="fullscreen" PREVIOUS="bufferlength" NEXT="icons"/>
+			<FIELD NAME="icons" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="icons" PREVIOUS="fullscreen" NEXT="item"/>
+			<FIELD NAME="item" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="item" PREVIOUS="icons" NEXT="logoboxalign"/>
+			<FIELD NAME="logoboxalign" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logoboxalign" PREVIOUS="item" NEXT="logoboxfile"/>
+			<FIELD NAME="logoboxfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logoboxfile" PREVIOUS="logoboxalign" NEXT="logoboxlink"/>
+			<FIELD NAME="logoboxlink" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logoboxlink" PREVIOUS="logoboxfile" NEXT="logoboxmargin"/>
+			<FIELD NAME="logoboxmargin" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="logoboxmargin" PREVIOUS="logoboxlink" NEXT="logoboxposition"/>
+			<FIELD NAME="logoboxposition" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logoboxposition" PREVIOUS="logoboxmargin" NEXT="logofile"/>
+			<FIELD NAME="logofile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logofile" PREVIOUS="logoboxposition" NEXT="logolink"/>
+			<FIELD NAME="logolink" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logolink" PREVIOUS="logofile" NEXT="logohide"/>
+			<FIELD NAME="logohide" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logohide" PREVIOUS="logolink" NEXT="logoposition"/>
+			<FIELD NAME="logoposition" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="logoposition" PREVIOUS="logohide" NEXT="mute"/>
+			<FIELD NAME="mute" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="mute" PREVIOUS="logoposition" NEXT="quality"/>
+			<FIELD NAME="quality" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="quality" PREVIOUS="mute" NEXT="mplayerrepeat"/>
+			<FIELD NAME="mplayerrepeat" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="mplayerrepeat" PREVIOUS="quality" NEXT="resizing"/>
+			<FIELD NAME="resizing" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="resizing" PREVIOUS="mplayerrepeat" NEXT="shuffle"/>
+			<FIELD NAME="shuffle" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="shuffle" PREVIOUS="resizing" NEXT="state"/>
+			<FIELD NAME="state" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="state" PREVIOUS="shuffle" NEXT="stretching"/>
+			<FIELD NAME="stretching" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="stretching" PREVIOUS="state" NEXT="volume"/>
+			<FIELD NAME="volume" TYPE="char" LENGTH="3" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="volume" PREVIOUS="stretching" NEXT="plugins"/>
+			<FIELD NAME="plugins" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="plugins" PREVIOUS="volume" NEXT="streamer"/>
+			<FIELD NAME="streamer" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="streamer" PREVIOUS="plugins" NEXT="tracecall"/>
+			<FIELD NAME="tracecall" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="tracecall" PREVIOUS="streamer" NEXT="captionsback"/>
+			<FIELD NAME="captionsback" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="captionsback" PREVIOUS="tracecall" NEXT="captionsfile"/>
+			<FIELD NAME="captionsfile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="captionsfile" PREVIOUS="captionsback" NEXT="captionsfontsize"/>
+			<FIELD NAME="captionsfontsize" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="captionsfontsize" PREVIOUS="captionsfile" NEXT="captionsstate"/>
+			<FIELD NAME="captionsstate" TYPE="char" LENGTH="12" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="captionsstate" PREVIOUS="captionsfontsize" NEXT="fpversion"/>
+			<FIELD NAME="fpversion" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="fpversion" PREVIOUS="captionsstate" NEXT="notes"/>
+			<FIELD NAME="notes" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="notes" PREVIOUS="fpversion" NEXT="metaviewerposition"/>
+			<FIELD NAME="metaviewerposition" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="metaviewerposition" PREVIOUS="notes" NEXT="metaviewersize"/>
+			<FIELD NAME="metaviewersize" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="metaviewersize" PREVIOUS="metaviewerposition" NEXT="searchbarcolor"/>
+			<FIELD NAME="searchbarcolor" TYPE="char" LENGTH="7" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="searchbarcolor" PREVIOUS="metaviewersize" NEXT="searchbarlabel"/>
+			<FIELD NAME="searchbarlabel" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="searchbarlabel" PREVIOUS="searchbarcolor" NEXT="searchbarposition"/>
+			<FIELD NAME="searchbarposition" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="searchbarposition" PREVIOUS="searchbarlabel" NEXT="searchbarscript"/>
+			<FIELD NAME="searchbarscript" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="searchbarscript" PREVIOUS="searchbarposition" NEXT="snapshotbitmap"/>
+			<FIELD NAME="snapshotbitmap" TYPE="char" LENGTH="6" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="snapshotbitmap" PREVIOUS="searchbarscript" NEXT="snapshotscript"/>
+			<FIELD NAME="snapshotscript" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="snapshotscript" PREVIOUS="snapshotbitmap"/>
+		</FIELDS>
+		<KEYS>
+			<KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+		</KEYS>
+		<INDEXES>
+			<INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+		</INDEXES>
+	</TABLE>
+  </TABLES>
+</XMLDB>
