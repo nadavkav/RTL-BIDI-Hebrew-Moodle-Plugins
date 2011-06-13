@@ -1,0 +1,34 @@
+<style>
+	.colourBox {
+		border: 1px solid black;
+		margin: 0 5px;
+		display: inline;
+	}
+	.colourLabel {
+		text-align: right;
+	}
+</style>
+<table width="100%"><tr><td align="center">
+<table cellpadding="5" cellspacing="0">
+<?php
+    // Get default values
+    require_once($CFG->dirroot.'/blocks/progress/common.php');
+    require_once($CFG->dirroot.'/blocks/progress/lib.php');
+
+    // Show the column headers with help buttons
+    print('<tr><th class="colourLabel">'.get_string('config_header_status','block_progress').'</th><th>'.get_string('config_header_colour','block_progress'));
+    helpbutton('whyChangeColours',get_string('why_change_colours','block_progress'),'block_progress');
+    print('</th></tr>');
+
+    // Show the config controls
+    print('<tr><td class="colourLabel">'.get_string('status_attempted','block_progress').'</td><td><input type="text" size="10" id="blockProgressBarAttemptedColour" name="blockProgressBarAttemptedColour" value="'.progress_default_value($CFG->blockProgressBarAttemptedColour, $defaultColours['attempted']).'" onchange="document.getElementById(\'attemptedColour\').style.backgroundColor=this.value;" /> <span class="colourBox" id="attemptedColour" style="background-color:'.progress_default_value($CFG->blockProgressBarAttemptedColour, $defaultColours['attempted']).'">&nbsp;&nbsp;&nbsp;</span> <a href="#null" onclick="document.getElementById(\'blockProgressBarAttemptedColour\').value=\''.$defaultColours['attempted'].'\';document.getElementById(\'attemptedColour\').style.backgroundColor=\''.$defaultColours['attempted'].'\';">'.get_string('default_colour','block_progress').'</a></td></tr>');
+    print('<tr><td class="colourLabel">'.get_string('status_not_attempted','block_progress').'</td><td><input type="text" size="10" id="blockProgressBarNotAttemptedColour" name="blockProgressBarNotAttemptedColour" value="'.progress_default_value($CFG->blockProgressBarNotAttemptedColour, $defaultColours['notAttempted']).'" onchange="document.getElementById(\'notAttemptedColour\').style.backgroundColor=this.value;" /> <span class="colourBox" id="notAttemptedColour" style="background-color:'.progress_default_value($CFG->blockProgressBarAttemptedColour, $defaultColours['notAttempted']).'">&nbsp;&nbsp;&nbsp;</span> <a href="#null" onclick="document.getElementById(\'blockProgressBarNotAttemptedColour\').value=\''.$defaultColours['notAttempted'].'\';document.getElementById(\'notAttemptedColour\').style.backgroundColor=\''.$defaultColours['notAttempted'].'\';">'.get_string('default_colour','block_progress').'</a></td></tr>');
+    print('<tr><td class="colourLabel">'.get_string('status_future_not_attempted','block_progress').'</td><td><input type="text" size="10" id="blockProgressBarFutureNotAttemptedColour" name="blockProgressBarFutureNotAttemptedColour" value="'.progress_default_value($CFG->blockProgressBarFutureNotAttemptedColour, $defaultColours['futureNotAttempted']).'" onchange="document.getElementById(\'futureNotAttemptedColour\').style.backgroundColor=this.value;" /> <span class="colourBox" id="futureNotAttemptedColour" style="background-color:'.progress_default_value($CFG->blockProgressBarAttemptedColour, $defaultColours['futureNotAttempted']).'">&nbsp;&nbsp;&nbsp;</span> <a href="#null" onclick="document.getElementById(\'blockProgressBarFutureNotAttemptedColour\').value=\''.$defaultColours['futureNotAttempted'].'\';document.getElementById(\'futureNotAttemptedColour\').style.backgroundColor=\''.$defaultColours['futureNotAttempted'].'\';">'.get_string('default_colour','block_progress').'</a></td></tr>');
+?>
+<tr>
+<td colspan="5" align="center">
+<input type="submit" value="<?php print_string('savechanges') ?>" />
+</td>
+</tr>
+</table>
+</td></tr></table>

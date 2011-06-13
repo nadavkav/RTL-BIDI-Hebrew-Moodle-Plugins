@@ -1,0 +1,180 @@
+<script>
+<!--
+function disableDateAndTime(id,state) {
+    document.getElementById('menuday_'+id).disabled=state;
+    document.getElementById('menumonth_'+id).disabled=state;
+    document.getElementById('menuyear_'+id).disabled=state;
+    document.getElementById('menuhour_'+id).disabled=state;
+    document.getElementById('menuminute_'+id).disabled=state;
+}
+// -->
+</script>
+<table width="100%"><tr><td align="center">
+
+<?php
+	global $CFG, $COURSE;
+    $using_weekly_format = $COURSE->format=='weeks' || $COURSE->format=='weekscss' || $COURSE->format=='weekcoll';
+    
+    // Get dafault values and list of block/module types and associated details
+    include($CFG->dirroot.'/blocks/progress/common.php');
+    include_once($CFG->dirroot.'/blocks/progress/lib.php');
+	include_once($CFG->libdir.'/ddllib.php');
+
+    $count = 0; // of activity/resource found
+    
+    // Allow the title of each block instance to be changed
+    print('<table>');
+    print('<tr><td align="right">'.get_string('title','block_progress'));
+    helpbutton('settingTitle',get_string('setting_title','block_progress'),'block_progress');
+    print('&nbsp;</td><td><input type="text" name="progressTitle" value="'.(isset($this->progressTitle)?$this->config->progressTitle:get_string('default_title','block_progress')).'" /></td></tr>');
+
+    // Allow icons to be turned on/off on the block
+    print('<input name="progressBarIcons" type="hidden" value="0" />');
+    print('<tr><td align="right">'.get_string('config_icons','block_progress').'&nbsp;<img src="'.$CFG->wwwroot.'/blocks/progress/img/tick.gif" />&nbsp;<img src="'.$CFG->wwwroot.'/blocks/progress/img/cross.gif" />&nbsp;');
+    helpbutton('whyUseIcons',get_string('why_use_icons','block_progress'),'block_progress');
+    print('&nbsp;</td><td><select name="progressBarIcons" /><option value="0"'.(!isset($this->config->progressBarIcons) || $this->config->progressBarIcons=='0'?' selected':'').'>'.get_string('no').'</option><option value="1"'.(isset($this->config->progressBarIcons) && $this->config->progressBarIcons=='1'?' selected':'').'>'.get_string('yes').'</option></select></td></tr>');
+    
+    // Allow V NOW to be turned on or off
+    print('<input name="displayNow" type="hidden" value="1" />');
+    print('<tr><td align="right">'.get_string('config_now','block_progress').'&nbsp;<img src="'.$CFG->wwwroot.'/blocks/progress/img/left.gif" />').get_string('now_indicator','block_progress');
+    helpbutton('whyDisplayNow',get_string('why_display_now','block_progress'),'block_progress');
+    print('&nbsp;</td><td><select name="displayNow" /><option value="0"'.(isset($this->config->displayNow)&& $this->config->displayNow=='0'?' selected':'').'>'.get_string('no').'</option><option value="1"'.(!isset($this->config->displayNow) || $this->config->displayNow=='1'?' selected':'').'>'.get_string('yes').'</option></select></td></tr>');
+    print('</table>');
+    
+    // Show table headers with help buttons
+    print('<h3 style="margin:30px;">'.get_string('title_monitored','block_progress'));
+    helpbutton('whatCanBeMonitored',get_string('what_can_be_monitored','block_progress'),'block_progress');
+    print('</h3>');
+    print('<table cellpadding="5" cellspacing="0">');
+    print('<tr>');
+    print('<th align="left">'.get_string('config_header_monitored','block_progress'));
+    helpbutton('whatDoesMonitoredMean',get_string('what_does_monitored_mean','block_progress'),'block_progress');
+    print('</th>');
+    print('<th align="left">'.get_string('config_header_name','block_progress').'</th>');
+    print('<th>'.get_string('config_header_locked','block_progress'));
+    helpbutton('whatLockedMeans',get_string('what_locked_means','block_progress'),'block_progress');
+    print('</th>');
+    print('<th>'.get_string('config_header_expected','block_progress'));
+    helpbutton('whatExpectedByMeans',get_string('what_expected_by_means','block_progress'),'block_progress');
+    print('</th>');
+    print('<th>'.get_string('config_header_action','block_progress'));
+    helpbutton('whatActionsCanBeMonitored',get_string('what_actions_can_be_monitored','block_progress'),'block_progress');
+    print('</th>');
+    print('</tr>');
+    
+    // Go through each type of activity/resource that can be monitored
+    foreach($modules as $module=>$details) {
+    
+        // Get data about activities/resources if this type
+		unset($instances);
+        if($module == 'resource') {
+            $countOfResourceTypes = count($resourcesMonitorable);
+            $sql = 'SELECT id,type,name FROM '.$CFG->prefix.'resource WHERE course=\''.$this->instance->pageid.'\' AND (';
+            for($i=0; $i<$countOfResourceTypes; $i++) {
+                $sql .= 'type=\''.$resourcesMonitorable[$i].'\''.($i<$countOfResourceTypes-1?' OR ':'');
+            }
+            $sql .= ') ORDER BY name';
+            $instances = get_records_sql($sql);
+        }
+        else {
+			$table = new XMLDBTable($module);
+			if(table_exists($table)) {
+				$instances = get_records_sql('SELECT id, name'.(array_key_exists('defaultTime',$details)?', '.$details['defaultTime'].' as due':'').' FROM '.$CFG->prefix.$module.' WHERE course=\''.$this->instance->pageid.'\' ORDER BY name');
+			}
+		}
+
+        // If there are activities/resources of this type, show them
+        if (isset($instances) && $instances) {
+
+            // Display a separator line
+            print('<tr><td colspan="5" style="border-top:2px dashed #cccccc;color:#999999;">'.get_string('config_header_type','block_progress').': '.($module=='resource'?get_string('resource','block_progress'):get_string($module,'block_progress').' ('.get_string('activity','block_progress').')').'</td></tr>');
+
+            // Display each monitorable activity/resource as a row
+            foreach($instances as $i=>$instance) {
+                $count++;
+                print('<tr>');
+
+                // Button to determine if the activity/resource is to be monitored
+                $monitored = progress_default_value($this->config->{'monitor_'.$module.$instance->id});
+                print('<td align="center"><input name="monitor_'.$module.$instance->id.'" type="hidden" value="0" /><input name="monitor_'.$module.$instance->id.'" type="checkbox" id="monitor_'.$module.$instance->id.'"'.(isset($monitored) && $monitored=='on'?' checked="checked"':''). '/></td>');
+
+                // Output name type and action for activity/resource
+                print('<td align="left">'.$instance->name.'</td>');
+
+                // Output name type and action for activity/resource
+                $locked = progress_default_value($this->config->{'locked_'.$module.$instance->id});
+                if(isset($details['defaultTime']) && $instance->due != 0) {
+                    print('<td align="center"><input name="locked_'.$module.$instance->id.'" type="hidden" value="1" /><input name="locked_'.$module.$instance->id.'" type="checkbox" id="locked_'.$module.$instance->id.'"'.(!isset($locked) || $locked=='on'?' checked="checked"':'').' onclick="disableDateAndTime(\''.$module.$instance->id.'\',this.checked);" /></td>');
+                }
+                else {
+                    print('<td></td>');
+                }
+                    
+                // Attempt to gather date-time info for monitored activity/resource
+                $day = progress_default_value($this->config->{'day_'.$module.$instance->id});
+                $month = progress_default_value($this->config->{'month_'.$module.$instance->id});
+                $year = progress_default_value($this->config->{'year_'.$module.$instance->id});
+                $hour = progress_default_value($this->config->{'hour_'.$module.$instance->id});
+                $minute = progress_default_value($this->config->{'minute_'.$module.$instance->id});
+                if(isset($details['defaultTime']) && $instance->due != 0) {
+                    $expected = progress_default_value($instance->due);
+                }
+                
+                // No date info yet, try to guess a date/time
+                else if($using_weekly_format) {
+                    $courseModule = get_coursemodule_from_instance($module, $instance->id, $COURSE->id);
+                    $expected = $COURSE->startdate + ($courseModule->section>1?$courseModule->section-1:1)*604800 - 300;
+                }
+                else {
+                    $currentTime = time();
+                    $timeArray = localtime($currentTime,true);
+                    $timeArray = localtime($currentTime + (7-$timeArray['tm_wday'])*86400,true);
+                    $expected = mktime(23,55,0,$timeArray['tm_mon']+1,$timeArray['tm_mday'],$timeArray['tm_year']+1900);
+                }
+                if($month) {
+                    $expected = mktime($hour,$minute,0,$month,$day,$year);
+                }
+
+                // Print the date selector
+                print('<td>'.print_date_selector('day_'.$module.$instance->id, 'month_'.$module.$instance->id, 'year_'.$module.$instance->id, $expected, true).print_time_selector('hour_'.$module.$instance->id, 'minute_'.$module.$instance->id, $expected,5, true).'</td>');
+                if(isset($details['defaultTime']) && $instance->due != 0 && (!isset($locked) || $locked=='on')) {
+                    print('<script>');
+                    print('disableDateAndTime(\''.$module.$instance->id.'\',true);');
+                    print('</script>');
+                }
+                
+                // Print the action selector for the event
+                print('<td style="text-align:center;">');
+                if(count($details['actions']) > 1) {
+                    print('<select name="action_'.$module.$instance->id.'">');
+                    foreach($details['actions'] as $action=>$sql) {
+                        $selectedAction = isset($this->config->{'action_'.$module.$instance->id})?$this->config->{'action_'.$module.$instance->id}:$details['defaultAction'];
+                        print('<option value="'.$action.'" '.($selectedAction==$action?' selected':'').'>');
+                        print_string($action,'block_progress');
+                        print('</option>');
+                    }
+                    print('</select>');
+                }
+                else {
+                    print(get_string(key($details['actions']),'block_progress'));
+                    print('<input type="hidden" name="action_'.$module.$instance->id.'" value="'.key($details['actions']).'" />');
+                }
+                print('</td>');
+                print('</tr>');
+            }
+        }
+    }
+    print('<table>');
+    
+    // When there are no activities/resources that can be monitored, prompt teacher to create some
+    if($count==0) {
+        print('<tr><td colspan="5" align="center">'.get_string('no_events_message','block_progress').'</td></tr>');
+    }
+?>
+<tr>
+<td colspan="5" align="center">
+<input type="submit" value="<?php print_string('savechanges') ?>" />
+</td>
+</tr>
+</table>
+</td></tr></table>
