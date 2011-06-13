@@ -16,15 +16,17 @@ $string['plot'] = "גרפים";
 $string['filters'] = "מסננים";
 $string['calcs'] = "חישובים";
 $string['ordering'] = "סידור";
-$string['customsql'] = "דוחות SQL מותאמים";
+$string['customsql'] = "שאילתת SQL";
 $string['addreport'] = "הוספת דוח חדש";
 $string['type'] = "סוג דוח";
 $string['columncalculations'] = "חישובי עמודות";
 $string['newreport'] = "דוח חדש";
 $string['column'] = "עמודה";
 $string['confirmdeletereport'] = "Are you sure you want to delete this report?";
-$string['noreportsavailable'] = "No reports available";
-$string['downloadreport'] = "Download report";
+$string['noreportsavailable'] = "לא קיימים דוחות";
+$string['downloadreport'] = "הורדת דוחות למחשב האישי";
+
+$string['totalitems'] = "מספר רשומות:";
 
 $string['configurable_reports:manageownreports'] = "Manage own reports";
 $string['configurable_reports:managereports'] = "Mange reports";

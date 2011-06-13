@@ -26,6 +26,8 @@ $string['confirmdeletereport'] = "Are you sure you want to delete this report?";
 $string['noreportsavailable'] = "No reports available";
 $string['downloadreport'] = "Download report";
 
+$string['totalitems'] = "Total Records:";
+
 $string['configurable_reports:manageownreports'] = "Manage own reports";
 $string['configurable_reports:managereports'] = "Mange reports";
 $string['configurable_reports:managesqlreports'] = "Manage SQL reports";
