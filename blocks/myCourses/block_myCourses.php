@@ -494,6 +494,7 @@ class block_myCourses extends block_base {
         $treeMenu = &new HTML_TreeMenu_DHTML($this->navTree, array('images' => $images_folder,
                                                 'defaultClass' => 'treeMenuDefault'));
 
+		if (right_to_left()) {$bidialignment = 'float:right;';} else {$bidialignment = 'float:left;';}
         ob_start();
         $treeMenu->printMenu();
         $output = '
@@ -501,6 +502,7 @@ class block_myCourses extends block_base {
         .treeMenuDefault {
             font-size: 90%;
             font-style: normal;
+			'.$bidialignment.'
         }
 
         .treeMenuBold {
