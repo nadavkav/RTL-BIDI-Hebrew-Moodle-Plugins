@@ -1,4 +1,4 @@
-<?PHP //$Id: backuplib.php,v 1.3 2007/10/03 09:33:32 sarjona Exp $
+<?PHP //$Id: backuplib.php,v 1.4 2011-05-25 12:13:03 sarjona Exp $
     //This php script contains all the stuff to backup/restore
     //jclic mods
 

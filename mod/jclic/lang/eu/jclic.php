@@ -1,4 +1,4 @@
-<?PHP // $Id: jclic.php,v 1.2 2008/11/10 16:39:54 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.3 2011-05-25 12:13:03 sarjona Exp $
 // Translator: Abel Camacho - date: 2008/11/10 17:04:57
 // e-mail: didaktika@santurtzieus.com
 

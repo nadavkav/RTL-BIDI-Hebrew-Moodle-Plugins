@@ -1,4 +1,4 @@
-<?php //$Id: access.php,v 1.2 2008/01/24 15:31:25 sarjona Exp $
+<?php //$Id: access.php,v 1.3 2011-05-25 12:13:03 sarjona Exp $
 //
 // Capability definitions for the jclic module.
 //

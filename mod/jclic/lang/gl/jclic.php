@@ -1,4 +1,4 @@
-<?PHP // $Id: jclic.php,v 1.3 2008/11/10 16:39:54 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.4 2011-05-25 12:13:03 sarjona Exp $
 // Tradución ao galego feita por Xosé Luis Barreiro Cebey - data: 2008/11/10 17:04:57
 // e-mail: xoseluis@edu.xunta.es
 

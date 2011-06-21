@@ -1,5 +1,5 @@
-<?PHP // $Id: jclic.php,v 1.3 2008/11/10 16:39:54 sarjona Exp $
-// Tradución ao galego feita por Xosé Luis Barreiro Cebey - data: 2008/11/10 17:04:57
+<?PHP // $Id: jclic.php,v 1.6 2011-05-26 08:12:36 sarjona Exp $
+// Tradución ao galego feita por Xosé Luis Barreiro Cebey - data: 2011/05/26 09:20:35
 // e-mail: xoseluis@edu.xunta.es
 
 $string['activitydone'] = 'Actividades realizadas';
@@ -45,5 +45,12 @@ $string['header_score']='Axustes de avaluaci&oacute;n';
 
 /* Revision 20081110 */
 $string['preview_jclic']='Amosar a actividade JClic';
+
+/* Revision 20091026 */
+$string['deleteallsessions'] = 'Borrar t&oacute;dalas sesi&oacute;ns';
+
+/* Revision 20110119  - version 0.1.0.11 */
+$string['lang']='Idioma';
+$string['exiturl']='Enlace de saída';
 
 ?>

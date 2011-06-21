@@ -1,4 +1,4 @@
-<?php //$Id: mod_form.php,v 1.1 2007/10/03 09:33:32 sarjona Exp $
+<?php //$Id: mod_form.php,v 1.4 2011-05-25 12:13:03 sarjona Exp $
 require_once ($CFG->dirroot.'/course/moodleform_mod.php');
 
 class mod_jclic_mod_form extends moodleform_mod {
@@ -30,9 +30,18 @@ class mod_jclic_mod_form extends moodleform_mod {
         $mform->setType('url', PARAM_RAW);
         $mform->addRule('url', null, 'required', null, 'client');
         
+        $mform->addElement('text', 'exiturl', get_string('exiturl', 'jclic'), array('size'=>75));
+        $mform->setHelpButton('exiturl', array('exiturl',get_string('exiturl', 'jclic'), 'jclic'), false, 'helpbutton');
+        $mform->setDefault('exiturl', '');
+        $mform->setType('exiturl', PARAM_RAW);
+
+        $options = jclic_get_languages();
+        $mform->addElement('select', 'lang', get_string('lang', 'jclic'), $options);
+        $mform->setDefault('lang', substr($CFG->lang, 0, -5));
+
         $options = jclic_get_skins();
         $mform->addElement('select', 'skin', get_string('skin', 'jclic'), $options);
-                
+
         $mform->addElement('text', 'width', get_string('width', 'jclic'), array('size'=>'5'));
         $mform->setDefault('width', '600');
         
@@ -41,6 +50,14 @@ class mod_jclic_mod_form extends moodleform_mod {
         
 //-------------------------------------------------------------------------------
         $mform->addElement('header', 'header_score', get_string('header_score', 'jclic'));
+
+        /*$mform->addElement('modgrade', 'maxxgrade', get_string('grade'));
+        $mform->setDefault('grade', 100);
+
+        $mform->addElement('date_time_selector', 'timeavailable', get_string('availabledate', 'jclic'), array('optional'=>true));
+        $mform->setDefault('timeavailable', time());
+        $mform->addElement('date_time_selector', 'timedue', get_string('duedate', 'jclic'), array('optional'=>true));
+        $mform->setDefault('timedue', time()+7*24*3600);*/
 
         $options = array(-1 => get_string('unlimited','jclic'), 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 10 => 10);
         $mform->addElement('select', 'maxattempts', get_string('maxattempts', 'jclic'), $options);
@@ -52,6 +69,7 @@ class mod_jclic_mod_form extends moodleform_mod {
 
         $mform->addElement('text', 'maxgrade', get_string('maxgrade', 'jclic'), array('size'=>'5'));
         $mform->addRule('maxgrade', null, 'numeric', null, 'client');
+        $mform->setDefault('maxgrade', '100');
         
         
 //-------------------------------------------------------------------------------

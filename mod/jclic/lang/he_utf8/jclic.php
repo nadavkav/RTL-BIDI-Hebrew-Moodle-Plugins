@@ -1,4 +1,5 @@
-<?PHP // $Id: jclic.php,v 1.2 2008/11/07 14:37:24 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.3 2011-05-25 12:13:03 sarjona Exp $
+// Translator: Nadav Kavalerchik - nadavkav@gmail.com
 
 $string['activitydone'] = 'פעילויות אשר הסתיימו';
 $string['activitysolved'] = 'פעילויות אשר הסתיימו בהצלחה';
@@ -13,8 +14,8 @@ $string['jclicpluginjs']='כתובת אתר אינטרנט אשר בה מצוי�
 $string['lastaccess']='ביקרו לאחרונה';
 $string['maxattempts'] = 'מספר נסיונות מירבי';
 $string['maxgrade'] = 'ציון/פעילויות אשר יש לסיים';
-$string['modulename'] = 'משחקי JClic';
-$string['modulenameplural'] = 'משחקי JClic';
+$string['modulename'] = 'JClic';
+$string['modulenameplural'] = 'JClic';
 $string['msg_noattempts']= 'התנסתם במספר המירבי של האפשרויות לפתור פעילות זו';
 $string['score']='ציון';
 $string['sessions']='ניסיונות';
@@ -43,5 +44,12 @@ $string['header_score']='מאפייני הערכה';
 
 /* Revision 20081107 */
 $string['preview_jclic']='תצוגת פעילות JClic &nbsp;&nbsp;';
+
+/* Revision 20091023 */
+$string['deleteallsessions'] = 'מחיקת כל הפעילויות';
+
+/* Revision 20110119  - version 0.1.0.11 */
+$string['lang']='שפה';
+$string['exiturl']='כתובת עמוד סיום';
 
 ?>

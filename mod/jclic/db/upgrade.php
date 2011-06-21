@@ -1,4 +1,4 @@
-<?php  //$Id: upgrade.php,v 1.1 2007/10/03 09:33:32 sarjona Exp $
+<?php  //$Id: upgrade.php,v 1.3 2011-05-25 12:13:03 sarjona Exp $
 
 // This file keeps track of upgrades to 
 // the jclic module
@@ -21,6 +21,20 @@ function xmldb_jclic_upgrade($oldversion=0) {
     global $CFG;
 
     $result = true;
+
+    if ($oldversion < 2011011900) {
+        $table = new XMLDBTable('jclic');
+        /// Define lang field format to be added to jclic
+        $field = new XMLDBField('lang');
+        $field->setAttributes(XMLDB_TYPE_CHAR, '10', null, XMLDB_NOTNULL, null, null, null, 'ca', 'url');
+        $result = $result && add_field($table, $field);
+
+        /// Define exiturl field format to be added to jclic
+        $field = new XMLDBField('exiturl');
+        $field->setAttributes(XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null, null, null, 'url');
+        $result = $result && add_field($table, $field);
+    }
+
     return $result;
 }
 

@@ -1,4 +1,4 @@
-<?PHP // $Id: jclic.php,v 1.2 2008/11/10 16:39:54 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.5 2011-05-26 08:07:15 sarjona Exp $
 // Translator: Abel Camacho - date: 2008/11/10 17:04:57
 // e-mail: didaktika@santurtzieus.com
 
@@ -8,10 +8,10 @@ $string['activitydone'] = 'Bukatutako jarduerak';
 $string['activitysolved'] = 'Ebatzitako jarduerak';
 $string['attempts'] = 'Saiakerak';
 $string['avaluation'] = 'Ebaluazio-irizpideak';
-$string['avaluation_score'] = 'Jarduera guztien arteko batez bestekoa egin';
+$string['avaluation_score'] = 'Jarduera guztien arteko batezbestekoa egin';
 $string['avaluation_solved'] = 'Jarduera ezberdinen kopuru bat ongi ebatzi';
 $string['description'] = 'Deskribapena';
-$string['height'] = 'Garaiera';
+$string['height'] = 'Altuera';
 $string['hideall'] = 'Laburpenak baino ez erakutsi';
 $string['jclicpluginjs'] = '<b>Jclicplugin.js</b> fitxategiaren URL helbidea';
 $string['lap'] = 'Bezeroaren eta zerbitzariaren arteko transakzioetarako uzten den denbora (segundutan)';
@@ -21,7 +21,7 @@ $string['maxgrade'] = 'Iritsi beharreko jarduera/puntuazioa';
 $string['modulename'] = 'JClic';
 $string['modulenameplural'] = 'JClic';
 $string['msg_noattempts'] = 'Jarduera hau ahal zen aldi guztietan egin duzu';
-$string['msg_nosessions'] = 'Jarduera honetarako gehienezko saiakera-kopurua  gainditu duzu';
+$string['msg_nosessions'] = 'Jarduera honetarako gehienezko saiakera-kopurua gainditu duzu';
 $string['score'] = 'Puntuazioa';
 $string['sessions'] = 'Saioak';
 $string['show_results'] = 'Emaitzak erakutsi';
@@ -52,5 +52,12 @@ $string['header_score']='Ebaluazio-ezarpenak';
 
 /* Revision 20081107 */
 $string['preview_jclic']='JClic jarduera erakutsi';
+
+/* Revision 20091023 */
+$string['deleteallsessions'] = 'Saio guztiak ezabatu';
+
+/* Revision 20110119  - version 0.1.0.11 */
+$string['lang']='Hizkuntza';
+$string['exiturl']='Irteera-esteka';
 
 ?>

@@ -1,11 +1,11 @@
-<?PHP  // $Id: preview_jclic.php,v 1.2 2008/11/11 10:24:26 sarjona Exp $
+<?PHP  // $Id: preview_jclic.php,v 1.4 2011-05-25 12:13:03 sarjona Exp $
 /// This page prints jclic activity
 
     require_once("../../../config.php");
     require_once("../lib.php");
     $id = required_param('id', PARAM_INT);             // Course Module ID
     $jclic_project = required_param('project');  // JClic URL
-    $jclic_name = optional_param('name', 'JClic');  
+    $jclic_name = str_replace('\\\'', '\'', (optional_param('name', 'JClic')));
     $jclic_width = optional_param('width', '600');  
     $jclic_height = optional_param('height', '400');  
     
@@ -22,7 +22,7 @@
             error("Course module is incorrect");
         }
     } 
-    require_login($course->id);    
+    require_login($course->id);  
     print_header("$course->shortname: $jclic_name", "$jclic_name", "");
 
     echo "<script language=\"JavaScript\" src=\"$CFG->jclic_jclicpluginjs\" type=\"text/javascript\"></script>";

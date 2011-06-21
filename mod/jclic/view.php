@@ -1,4 +1,4 @@
-<?PHP  // $Id: view.php,v 1.11 2008/11/11 10:24:26 sarjona Exp $
+<?PHP  // $Id: view.php,v 1.15 2011-05-25 12:13:03 sarjona Exp $
 
 /// This page prints a particular instance of jclic
 
@@ -22,7 +22,7 @@
   if (! $jclic = get_record("jclic", "id", $cm->instance)) {
       error("JClic id was incorrect");
   }
-    
+
   add_to_log($course->id, "jclic", "view", "view.php?id=$cm->id", "$jclic->id");
     
 /// Print the page header
@@ -62,9 +62,9 @@
   
   if (isteacher($course->id) && (!function_exists('has_capability') || has_capability('mod/jclic:viewjclic', $context)) ){
   	// Preview the JClic activity
-    echo '<div style="padding-right:10%; float:right"><a href="#" onclick="window.open(\'action/preview_jclic.php?id='.$id.'&amp;project='.urlencode($jclic_url).'&amp;name='.$jclic->name.'&amp;width='.$jclic->width.'&amp;height='.$jclic->height.'\',\'JClic\',\'navigation=0,toolbar=0,resizable=1,scrollbars=1,width='.($jclic->width+80).',height='.($jclic->height+80).'\');" >'.$strpreview_jclic.'</a></div>';
+    echo '<div style="padding-right:10%; float:right"><a href="#" onclick="window.open(\'action/preview_jclic.php?id='.$id.'&amp;project='.urlencode($jclic_url).'&amp;name='.urlencode($jclic->name).'&amp;width='.$jclic->width.'&amp;height='.$jclic->height.'\',\'JClic\',\'navigation=0,toolbar=0,resizable=1,scrollbars=1,width='.($jclic->width+80).',height='.($jclic->height+80).'\');" >'.$strpreview_jclic.'</a></div>';
 
-//    echo "<div style=\"padding-right:10%; float:right\"><a href=\"#\" onclick=\"launchApplet('http://clic.xtec.net/db/jclicApplet.jsp?project=".urlencode($jclic_url)."&amp;title=".urlencode(utf8_decode($jclic->name))."')\" >$strpreview_jclic</a></div>"; 
+//    echo "<div style=\"padding-right:10%; float:right\"><a href=\"#\" onclick=\"launchApplet('http://clic.xtec.cat/db/jclicApplet.jsp?project=".urlencode($jclic_url)."&amp;title=".urlencode(utf8_decode($jclic->name))."')\" >$strpreview_jclic</a></div>";
    
     $showall=optional_param('showall', false, PARAM_BOOL);
     $strshow=$showall?$strhideall:$strshowall;
@@ -78,6 +78,7 @@
     // Print sessions and activities of all students
     if ($students=jclic_get_students($cm, $course, $jclic->id)){
       foreach($students as $student){
+        $student->id=$student->userid;
         if ($showall){
         // Print sessions for each student    				
           $sessions=jclic_get_sessions($jclic->id,$student->userid);
@@ -87,7 +88,8 @@
               $sessiontime='<a href="#" onclick="Element.toggle(\''.$session->session_id.'\')">'.date('d/m/Y H:i',strtotime($session->starttime)).'</a>';
               if ($first_session){
                 $first_session=false;
-                $table_data = array($student->firstname.' '.$student->lastname, $sessiontime, $session->done,$session->solved, $session->totaltime, $session->score.'%', $session->attempts.($jclic->maxattempts>0?'/'.$jclic->maxattempts:''));
+                $student_info = print_user_picture($student, $course->id, NULL, 0, true).$student->firstname.' '.$student->lastname;
+                $table_data = array($student_info, $sessiontime, $session->done,$session->solved, $session->totaltime, $session->score.'%', $session->attempts.($jclic->maxattempts>0?'/'.$jclic->maxattempts:''));
                 $table_props = array('rowspan="'.(sizeof($sessions)*2+1).'"','','','','','','');
                 $table_align=$general_align;
               }else{
@@ -109,10 +111,11 @@
         else $starttime='-';
         if (!$showall || sizeof($sessions)<=0){
           $table_align=$general_align;
-          jclic_print_row(array ($student->firstname.' '.$student->lastname, !$showall?$starttime:(sizeof($sessions)<=0?'-':'<b>'.$strtotals.'</b>'), '<b>'.$sessions_summary->done.'</b>','<b>'.$sessions_summary->solved.'</b>','<b>'.$sessions_summary->totaltime.'</b>','<b>'.$sessions_summary->score.' %</b>', '<b>'.$sessions_summary->attempts.'</b>'), $table_align);
+          $student_info = print_user_picture($student, $course->id, NULL, 0, true).$student->firstname.' '.$student->lastname;
+          jclic_print_row(array ($student_info, !$showall?$starttime:(sizeof($sessions)<=0?'-':'<b>'.$strtotals.'</b>'), '<b>'.$sessions_summary->done.'</b>','<b>'.$sessions_summary->solved.'</b>','<b>'.$sessions_summary->totaltime.'</b>','<b>'.$sessions_summary->score.' %</b>', '<b>'.$sessions_summary->attempts.($jclic->maxattempts>0?'/'.$jclic->maxattempts:'').'</b>'), $table_align);
         }else {
           $table_align=array('center','center','center','center','center','center');
-          jclic_print_row(array (!$showall?$starttime:(sizeof($sessions)<=0?'-':'<b>'.$strtotals.'</b>'), '<b>'.$sessions_summary->done.'</b>','<b>'.$sessions_summary->solved.'</b>', '<b>'.$sessions_summary->totaltime.'</b>','<b>'.$sessions_summary->score.' %</b>','<b>'.$sessions_summary->attempts.'</b>'), $table_align);
+          jclic_print_row(array (!$showall?$starttime:(sizeof($sessions)<=0?'-':'<b>'.$strtotals.'</b>'), '<b>'.$sessions_summary->done.'</b>','<b>'.$sessions_summary->solved.'</b>', '<b>'.$sessions_summary->totaltime.'</b>','<b>'.$sessions_summary->score.' %</b>','<b>'.$sessions_summary->attempts.($jclic->maxattempts>0?'/'.$jclic->maxattempts:'').'</b>'), $table_align);
         }
       }
     }
@@ -124,21 +127,26 @@
       jclic_delete_instance($delid);
     }
   }else{
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
     echo "<script language=\"JavaScript\" src=\"$CFG->jclic_jclicpluginjs\" type=\"text/javascript\"></script>";
     echo '<br><A href="#" onclick="window.open(\'action/student_results.php?id='.$id.'\',\'JClic\',\'navigation=0,toolbar=0,resizable=1,scrollbars=1,width=700,height=400\');" >'.$strshow_results.'</A>';
-
+    
+    $sessions=jclic_get_sessions($jclic->id,$USER->id);
+    $attempts=sizeof($sessions);
     if ($jclic->maxattempts<0 || $attempts < $jclic->maxattempts){
       //$jclic_url = (substr($jclic->url, 0, 4)=='http')?$jclic->url:'http://'.jclic_get_server().jclic_get_path().'/file.php/'.$course->id.'/'.$jclic->url;
       echo '<div style="text-align:center;padding-top:10px;">';
       echo '<script language="JavaScript">';
       //echo "setJarBase('./dist');";
-      echo "setReporter('TCPReporter','path=".jclic_get_server().";service=".jclic_get_path()."/mod/jclic/action/beans.php;user=$USER->id;key=$jclic->id;lap=$CFG->jclic_lap');";
+      echo "setReporter('TCPReporter','path=".jclic_get_server().";service=".jclic_get_path()."/mod/jclic/action/beans.php;user=$USER->id;key=$jclic->id;lap=$CFG->jclic_lap;protocol=$protocol');";
       echo "setSkin('$jclic->skin');";
+      echo "setLanguage('$jclic->lang');";
+      echo "setExitUrl('$jclic->exiturl');";
       echo "writePlugin('$jclic_url', '$jclic->width', '$jclic->height');";
       echo "</script>";
       echo '</div>';
     }else{
-      echo $strnoattempts;
+      echo "<br/><br/>".$strnoattempts;
     }
   }
   echo "</p>";

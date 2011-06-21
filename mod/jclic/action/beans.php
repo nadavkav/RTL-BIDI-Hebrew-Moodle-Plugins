@@ -1,4 +1,4 @@
-<?PHP // $Id: beans.php,v 1.5 2008/11/03 14:39:45 sarjona Exp $
+<?PHP // $Id: beans.php,v 1.6 2011-05-25 12:13:03 sarjona Exp $
 header('Content-type: text/xml');
 
 /////////////////////////////////////////////////////////////////////////////////

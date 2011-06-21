@@ -1,4 +1,4 @@
-<?PHP // $Id: jclic.php,v 1.1 2007/10/03 09:33:41 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.2 2011-05-25 12:13:03 sarjona Exp $
 
 $string['activitydone'] = 'Actividades realizadas';
 $string['activitysolved'] = 'Activitades acertadas';

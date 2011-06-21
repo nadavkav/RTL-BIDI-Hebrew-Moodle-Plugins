@@ -1,4 +1,4 @@
-<?PHP // $Id: jclic.php,v 1.2 2008/11/07 14:37:24 sarjona Exp $
+<?PHP // $Id: jclic.php,v 1.5 2011-05-25 12:13:03 sarjona Exp $
 
 $string['activitydone'] = 'Activitats fetes';
 $string['activitysolved'] = 'Activitats encertades';
@@ -15,7 +15,7 @@ $string['maxattempts'] = 'Nombre m&agrave;xim d\'intents';
 $string['maxgrade'] = 'Puntuaci&oacute;/activitats que cal assolir';
 $string['modulename'] = 'JClic';
 $string['modulenameplural'] = 'JClic';
-$string['msg_noattempts']= 'Ja has fet aquesta activitat el nombre m&agrave;xim de vegades';
+$string['msg_noattempts']= 'Ja has fet aquesta activitat el nombre m&agrave;xim de vegades perm&egrave;s.';
 $string['score']='Puntuaci&oacute;';
 $string['sessions']='Sessions';
 $string['showall']='Mostra el detall de les sessions';
@@ -43,4 +43,12 @@ $string['header_score']='Par&agrave;metres d\'avaluaci&oacute;';
 
 /* Revision 20081107 */
 $string['preview_jclic']='Mostra l\'activitat JClic';
+
+/* Revision 20091023 */
+$string['deleteallsessions'] = 'Suprimeix totes les sessions';
+
+/* Revision 20110119  - version 0.1.0.11 */
+$string['lang']='Idioma';
+$string['exiturl']='Enllaç de sortida';
+
 ?>

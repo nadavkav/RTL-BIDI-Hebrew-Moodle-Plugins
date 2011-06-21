@@ -1,7 +1,7 @@
 <!-- This page defines the form to create or edit an instance of this module -->
 <!-- It is used from /course/mod.php.  The whole instance is available as $form. -->
 
-<?php // $Id: mod.html,v 1.3 2007/10/03 09:33:32 sarjona Exp $
+<?php // $Id: mod.html,v 1.5 2011-05-25 12:13:03 sarjona Exp $
 require_once("../mod/jclic/lib.php");
 
 /// First we check that form variables have been initialised
@@ -28,7 +28,7 @@ if (!isset($form->skin)) {
 <tr valign="top">
     <td align="right"><b><?php  print_string("description", "jclic") ?>:</b></td>
     <td>
-        <?php print_textarea($usehtmleditor, 10, 50, 680, 400, "description", $form->description); ?>
+        <?php print_textarea($usehtmleditor, 10, 50, 680, 400, "description", (property_exists('form', 'description')!==FALSE?$form->description:"") ); ?>
     </td>
 </tr>
 
@@ -61,8 +61,8 @@ if (!isset($form->skin)) {
 <tr valign="top">
     <td align="right"><b><?php  print_string("size", "jclic") ?>:</b></td>
     <td align="left">
-        <?php  print_string("width", "jclic") ?>: <input type="text" name="width" size="5" value="<?php  p($form->width!=''?$form->width:'600') ?>">
-        <?php  print_string("height", "jclic") ?>: <input type="text" name="height" size="5" value="<?php  p($form->height!=''?$form->height:'400') ?>">
+        <?php  print_string("width", "jclic") ?>: <input type="text" name="width" size="5" value="<?php  p(property_exists('form', 'width')!==FALSE?$form->width:'600') ?>">
+        <?php  print_string("height", "jclic") ?>: <input type="text" name="height" size="5" value="<?php  p(property_exists('form', 'height')!==FALSE?$form->height:'400') ?>">
 	
     </td>
 </tr>
@@ -70,7 +70,7 @@ if (!isset($form->skin)) {
     <td align="right"><b><?php  print_string("maxattempts", "jclic") ?>:</b></td>
     <td align="left">
         <?php $array = array(-1 => get_string('unlimited','jclic'), 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 10 => 10);
-        $selected= $form->maxattempts!=''?$form->maxattempts:-1;
+        $selected= property_exists('form', 'maxattempts')!==FALSE?$form->maxattempts:-1;
 	echo choose_from_menu($array, 'maxattempts', $selected, '');?>
     </td>
 </tr>
@@ -78,14 +78,14 @@ if (!isset($form->skin)) {
     <td align="right"><b><?php  print_string("avaluation", "jclic") ?>:</b></td>
     <td align="left">
         <?php $array = array('score' => get_string('avaluation_score','jclic'),'solved' => get_string('avaluation_solved','jclic'));
-        $selected= $form->avaluation!=''?$form->avaluation:-1;
+        $selected= property_exists('form', 'avaluation')!==FALSE?$form->avaluation:-1;
 	echo choose_from_menu($array, 'avaluation', $selected, '');?>
     </td>
 </tr>
 <tr valign="top">
     <td align="right"><b><?php  print_string("maxgrade", "jclic") ?></span>:</b></td>
     <td align="left">
-	 <input type="text" name="maxgrade" size="5" value="<?php  p($form->maxgrade) ?>">
+	 <input type="text" name="maxgrade" size="5" value="<?php  p(property_exists('form', 'maxgrade')!==FALSE?$form->maxgrade:100) ?>">
     </td>
 </tr>
 

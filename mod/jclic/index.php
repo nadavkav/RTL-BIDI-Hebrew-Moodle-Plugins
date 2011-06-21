@@ -1,4 +1,4 @@
-<?PHP // $Id: index.php,v 1.3 2007/10/03 09:33:32 sarjona Exp $
+<?PHP // $Id: index.php,v 1.4 2011-05-25 12:13:03 sarjona Exp $
 
 /// This page lists all the instances of jclic in a particular course
 
