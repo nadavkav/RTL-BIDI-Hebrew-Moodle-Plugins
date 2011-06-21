@@ -8,5 +8,6 @@
  */
 
 $string['formathiddenmod'] = 'Topics - Indented Modules are Hidden';
+$string['namehiddenmod'] = 'Topic';
 
 ?>

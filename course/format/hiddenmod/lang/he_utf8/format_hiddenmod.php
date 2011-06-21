@@ -8,5 +8,6 @@
  */
 
 $string['formathiddenmod'] = 'נושאים - פעילויות מוזחות מוסתרות';
+$string['namehiddenmod'] = 'יחידת הוראה';
 
 ?>
