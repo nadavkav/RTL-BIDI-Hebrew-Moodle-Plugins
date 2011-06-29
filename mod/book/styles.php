@@ -134,6 +134,22 @@ img.bigicon {
     list-style: none;
 }
 
+.book_toc_none {
+font-size:12px;
+}
+
+.book_content {
+padding-right:30px;
+}
+
+.book_toc_none li li {
+margin-right:5px;
+}
+
+/* fixes BOOK module background image (nadavkav pach) */
+div#content div.ccbox {
+background-repeat:repeat !important;
+}
 <?php
 if (right_to_left()) { 
 ?>
@@ -150,4 +166,6 @@ text-align:right;
 }
 <?php
 }
-?>
+?>.dir-rtl .book_toc_none ul {
+  padding-right: 0;
+}

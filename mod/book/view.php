@@ -126,6 +126,8 @@ $buttons = $allowedit ? '<table cellspacing="0" cellpadding="0"><tr><td>'.update
                 );
     }
 
+// print Book Header
+echo $book->header;// (nadavkav)
 /// prepare chapter navigation icons
 $previd = null;
 $nextid = null;
@@ -211,6 +213,11 @@ $generateimscp = ($allowexport) ? '<a title="'.get_string('generateimscp', 'book
 // Book display HTML code
 // =====================================================
 
+if (right_to_left()) { // (TOC menu alignment (nadavkav 26-6-2011)
+  $alignment = 'right';
+} else {
+  $alignment = 'left';
+}
 ?>
 <table class="booktable" width="100%" cellspacing="0" cellpadding="2">
 
@@ -230,7 +237,7 @@ $generateimscp = ($allowexport) ? '<a title="'.get_string('generateimscp', 'book
 
 <!-- toc and chapter row //-->
 <tr class="tocandchapter">
-    <td style="width:<?php echo $tocwidth ?>px" align="left"><div class="clearer">&nbsp;</div>
+    <td style="width:<?php echo $tocwidth ?>px" align="<?php echo $alignment; ?>"><div class="clearer">&nbsp;</div>
         <?php
         print_box_start('generalbox');
         echo $toc;
@@ -270,6 +277,8 @@ $generateimscp = ($allowexport) ? '<a title="'.get_string('generateimscp', 'book
 
 <?php
 
+// print Book Header
+echo $book->footer; // (nadavkav)
     if ($clean==1) {
         //no footer today
     } else {

@@ -16,9 +16,9 @@ class mod_book_mod_form extends moodleform_mod {
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
-        $mform->addElement('htmleditor', 'summary', get_string('summary'));
+        $mform->addElement('htmleditor', 'summary', get_string('summary'),array('rows'=>'20'));
         $mform->setType('summary', PARAM_RAW);
-        $mform->addRule('summary', null, 'required', null, 'client');
+        //$mform->addRule('summary', null, 'required', null, 'client'); // (nadavkav)
         $mform->setHelpButton('summary', array('writing', 'questions', 'richtext'), false, 'editorhelpbutton');
 
         $mform->addElement('select', 'numbering', get_string('numbering', 'book'), book_get_numbering_types());
@@ -32,6 +32,15 @@ class mod_book_mod_form extends moodleform_mod {
         $mform->setHelpButton('customtitles', array('customtitles', get_string('customtitles', 'book'), 'book'));
         $mform->setDefault('customtitles', 0);
 
+        $mform->addElement('htmleditor', 'header', get_string('header','book'),array('rows'=>'20')); // (nadavkav)
+        //$mform->setType('header', PARAM_RAW);
+        //$mform->addRule('summary', null, 'required', null, 'client'); // (nadavkav)
+        $mform->setHelpButton('header', array('writing', 'questions', 'richtext'), false, 'editorhelpbutton');
+
+        $mform->addElement('htmleditor', 'footer', get_string('footer','book'),array('rows'=>'20')); // (nadavkav)
+        //$mform->setType('footer', PARAM_RAW);
+        //$mform->addRule('summary', null, 'required', null, 'client'); // (nadavkav)
+        $mform->setHelpButton('footer', array('writing', 'questions', 'richtext'), false, 'editorhelpbutton');
         $this->standard_coursemodule_elements(array('groups'=>false, 'groupmembersonly'=>true, 'gradecat'=>false));
 
 //-------------------------------------------------------------------------------
