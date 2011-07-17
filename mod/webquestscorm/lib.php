@@ -361,7 +361,7 @@ function webquestscorm_user_outline($course, $user, $mod, $webquestscorm) {
        $result->time = $submission->timemodified;
        return $result;
    }
-	 return $return;
+	return '';
 }
 
 
@@ -857,4 +857,32 @@ function webquestscorm_get_all_submissions($webquestscorm, $sort="", $dir="DESC"
                           ORDER BY $sort");
 }
 
+/**
+ * Return all webquestscorm submissions by User id
+ *
+ * There are also webquestscorm type methods get_submissions() wich in the default
+ * implementation simply call this function.
+ * @param $uid integer - user id
+ * @param $sort string optional field names for the ORDER BY in the sql query
+ * @param $dir string optional specifying the sort direction, defaults to DESC
+ * @return array The submission objects indexed by id
+ */
+function webquestscorm_get_submission($webquestscorm, $uid ,$sort="", $dir="DESC") {
+    global $CFG;
+
+    if ($sort == "lastname" or $sort == "firstname") {
+        $sort = "u.$sort $dir";
+    } else if (empty($sort)) {
+        $sort = "a.timemodified DESC";
+    } else {
+        $sort = "a.$sort $dir";
+    }
+
+    return get_records_sql("SELECT a.*
+                              FROM {$CFG->prefix}webquestscorm_submissions a
+                              JOIN {$CFG->prefix}user u ON u.id = a.userid
+                             WHERE a.userid = $uid
+                               AND a.webquestscorm = '$webquestscorm->id'
+                          ORDER BY $sort");
+}
 ?>
