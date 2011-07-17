@@ -99,6 +99,9 @@ function tab_delete_instance($id) {
  * @todo Finish documenting this function
  **/
 function tab_user_outline($course, $user, $mod, $tab) {
+  $sql = "SELECT * FROM mdl_log WHERE course = '$course->id' AND userid = '$user->id' AND module LIKE 'tab' AND action LIKE 'view'";
+  $items = get_records_sql($sql);
+  $return->info = count($items)." ".get_string('views');
     return $return;
 }
 
