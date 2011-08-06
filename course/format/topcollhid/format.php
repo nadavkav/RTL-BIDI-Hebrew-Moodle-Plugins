@@ -1,0 +1,612 @@
+<?php
+// $Id: format.php,v 1.6.2.12 2011/05/30 17:08:17 gb2048 Exp $
+
+/**
+ * Collapsed Topics Information
+ *
+ * @package    course/format
+ * @subpackage topcollhid
+ * @copyright  2009-2011 @ G J Barnard in respect to modifications of standard topics format.
+ * @link       http://docs.moodle.org/en/Collapsed_Topics_course_format
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+ */
+
+// Display the whole course as "topics" made of of modules
+// In fact, this is very similar to the "weeks" format, in that
+// each "topic" is actually a week.  The main difference is that
+// the dates aren't printed - it's just an aesthetic thing for
+// courses that aren't so rigidly defined by time.
+// Included from "view.php"
+
+require_once($CFG->libdir.'/ajax/ajaxlib.php');
+
+// For persistence of toggles.
+require_js(array('yui_yahoo', 'yui_cookie', 'yui_event'));
+// Now get the css and JavaScript Lib.  The call to topcollhid_init sets things up for JavaScript to work by understanding the particulars of this course.
+?>
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+    @import url(<?php echo $CFG->wwwroot ?>/course/format/topcollhid/topics_collapsed.css);
+/* ]]> */
+</style>
+<!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="<?php echo $CFG->wwwroot ?>/course/format/topcollhid/ie-7-hacks.css" media="screen" />
+<![endif]-->
+
+<script type="text/javascript" src="<?php echo $CFG->wwwroot ?>/course/format/topcollhid/lib_min.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+    topcollhid_init('<?php echo $CFG->wwwroot ?>',
+                 '<?php echo preg_replace("/[^A-Za-z0-9]/", "", $SITE->shortname) ?>',
+                 '<?php echo $course->id ?>',
+                 null); <!-- Expiring Cookie Initialisation - replace 'null' with your chosen duration. -->
+//]]>
+</script>
+
+
+<?php
+    $topic = optional_param('topic', -1, PARAM_INT);
+
+    // Bounds for block widths
+    // more flexible for theme designers taken from theme config.php
+    $lmin = (empty($THEME->block_l_min_width)) ? 100 : $THEME->block_l_min_width;
+    $lmax = (empty($THEME->block_l_max_width)) ? 210 : $THEME->block_l_max_width;
+    $rmin = (empty($THEME->block_r_min_width)) ? 100 : $THEME->block_r_min_width;
+    $rmax = (empty($THEME->block_r_max_width)) ? 210 : $THEME->block_r_max_width;
+
+    define('BLOCK_L_MIN_WIDTH', $lmin);
+    define('BLOCK_L_MAX_WIDTH', $lmax);
+    define('BLOCK_R_MIN_WIDTH', $rmin);
+    define('BLOCK_R_MAX_WIDTH', $rmax);
+
+    $preferred_width_left  = bounded_number(BLOCK_L_MIN_WIDTH, blocks_preferred_width($pageblocks[BLOCK_POS_LEFT]),
+                                            BLOCK_L_MAX_WIDTH);
+    $preferred_width_right = bounded_number(BLOCK_R_MIN_WIDTH, blocks_preferred_width($pageblocks[BLOCK_POS_RIGHT]),
+                                            BLOCK_R_MAX_WIDTH);
+
+    $context = get_context_instance(CONTEXT_COURSE, $course->id);
+
+    if ($topic != -1) {
+        $displaysection = course_set_display($course->id, $topic);
+    } else {
+        if (isset($USER->display[$course->id])) {       // for admins, mostly
+            // If we are editing then we can show only one section.
+            if (isediting($course->id) && has_capability('moodle/course:update', $context))
+            {
+                $displaysection = $USER->display[$course->id];
+            }
+            else
+            {
+                // Wipe out display section so that when we finish editing and then return we are not confused by
+                // only a single section being displayed.
+                $displaysection = course_set_display($course->id, 0);
+            }
+        } else {
+            $displaysection = course_set_display($course->id, 0);
+        }
+    }
+
+    if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
+        $course->marker = $marker;
+        if (! set_field("course", "marker", $marker, "id", $course->id)) {
+            error("Could not mark that topic for this course");
+        }
+    }
+
+    $streditsummary   = get_string('editsummary');
+    $stradd           = get_string('add');
+    $stractivities    = get_string('activities');
+    $strshowalltopics = get_string('showalltopics');
+    $strtopic         = get_string('topic');
+    $strgroups        = get_string('groups');
+    $strgroupmy       = get_string('groupmy');
+    $editing          = $PAGE->user_is_editing();
+
+    if ($editing) {
+        $strstudents = moodle_strtolower($course->students);
+        $strtopichide = get_string('topichide', '', $strstudents);
+        $strtopicshow = get_string('topicshow', '', $strstudents);
+        $strmarkthistopic = get_string('markthistopic');
+        $strmarkedthistopic = get_string('markedthistopic');
+        $strmoveup = get_string('moveup');
+        $strmovedown = get_string('movedown');
+    }
+
+
+/// Layout the whole page as three big columns.
+    echo '<table id="layout-table" cellspacing="0" summary="'.get_string('layouttable').'"><tr>';
+
+/// The left column ...
+    $lt = (empty($THEME->layouttable)) ? array('left', 'middle', 'right') : $THEME->layouttable;
+    foreach ($lt as $column) {
+        switch ($column) {
+            case 'left':
+
+    if (blocks_have_content($pageblocks, BLOCK_POS_LEFT) || $editing) {
+        echo '<td style="width:'.$preferred_width_left.'px" id="left-column">';
+        print_container_start();
+        blocks_print_group($PAGE, $pageblocks, BLOCK_POS_LEFT);
+        print_container_end();
+        echo '</td>';
+    }
+
+            break;
+            case 'middle':
+/// Start main column
+    echo '<td id="middle-column">';
+    print_container_start();
+    echo skip_main_destination();
+
+    print_heading_block(get_string('topicoutline'), 'outline');
+
+/// Establish the table for the topics with the colgroup and col tags to allow css to set the widths of the columns correctly and fix them in the browser so
+/// that the columns do not magically resize when the toggle is used or we go into editing mode.
+    echo '<table id="thetopics" class="topics" summary="'.get_string('layouttable').'">';
+    echo '<colgroup><col class="left" /><col class="content" /><col class="right" style="'.get_string('topcollhidtogglewidth','format_topcollhid').'" /></colgroup>';
+    // The string 'topcollhidtogglewidth' above can be set in the language file to allow for different lengths of words for different languages.
+    // For example $string['topcollhidtogglewidth']='width: 42px;' - if not defined, then the default '#thetopics col.right' in topics_collapsed.css applies.
+
+/// If currently moving a file then show the current clipboard
+    if (ismoving($course->id)) {
+        $stractivityclipboard = strip_tags(get_string('activityclipboard', '', addslashes($USER->activitycopyname)));
+        $strcancel= get_string('cancel');
+        echo '<tr class="clipboard">';
+        echo '<td colspan="3">';
+        echo $stractivityclipboard.'&nbsp;&nbsp;(<a href="mod.php?cancelcopy=true&amp;sesskey='.$USER->sesskey.'">'.$strcancel.'</a>)';
+        echo '</td>';
+        echo '</tr>';
+    }
+
+/// Print Section 0
+    $section = 0;
+    $thissection = $sections[$section];
+
+    if ($thissection->summary or $thissection->sequence or isediting($course->id)) {
+        echo '<tr id="section-0" class="section main">';
+        echo '<td id="sectionblock-0" class="left side">&nbsp;</td>'; // MDL-18232
+        echo '<td class="content">';
+
+        echo '<div class="summary">';
+        $summaryformatoptions->noclean = true;
+        echo format_text($thissection->summary, FORMAT_HTML, $summaryformatoptions);
+
+        if (isediting($course->id) && has_capability('moodle/course:update', $context)) {
+            echo '<a title="'.$streditsummary.'" '.
+                 ' href="editsection.php?id='.$thissection->id.'"><img src="'.$CFG->pixpath.'/t/edit.gif" '.
+                 ' alt="'.$streditsummary.'" /></a><br /><br />';
+        }
+        echo '</div>';
+
+        print_section($course, $thissection, $mods, $modnamesused);
+
+        if (isediting($course->id)) {
+            print_section_add_menus($course, $section, $modnames);
+        }
+
+        echo '</td>';
+        echo '<td class="right side">&nbsp;</td>';
+        echo '</tr>';
+        echo '<tr class="section separator"><td colspan="3" class="spacer"></td></tr>';
+    }
+
+
+/// Now all the normal modules by topic
+/// Everything below uses "section" terminology - each "section" is a topic.
+    $section = 1;
+    $sectionmenu = array();
+
+    // Get the specific words from the language files.
+    $topictext = get_string('topic');
+    $toggletext = get_string('topcollhidtoggle','format_topcollhid'); // This is defined in lang/en_utf8 of the formats installation directory - basically, the word 'Toggle'.
+    while ($section <= $course->numsections) {
+
+        if (!empty($sections[$section])) {
+            $thissection = $sections[$section];
+
+        } else {
+            unset($thissection);
+            $thissection->course = $course->id;   // Create a new section structure
+            $thissection->section = $section;
+            $thissection->summary = '';
+            $thissection->visible = 1;
+            if (!$thissection->id = insert_record('course_sections', $thissection)) {
+                notify('Error inserting new topic!');
+            }
+        }
+
+        $showsection = (has_capability('moodle/course:viewhiddensections', $context) or $thissection->visible or !$course->hiddensections);
+
+        if (isediting($course->id) && has_capability('moodle/course:update', $context)) {
+            // Only contemplate allowing a single viewable section when editing, other situations confusing!
+            if (!empty($displaysection) and $displaysection != $section) {
+                if ($showsection) {
+                    $strsummary = strip_tags(format_string($thissection->summary,true));
+                    if (strlen($strsummary) < 57) {
+                        $strsummary = ' - '.$strsummary;
+                    } else {
+                        $strsummary = ' - '.substr($strsummary, 0, 60).'...';
+                    }
+                    $sectionmenu['topic='.$section] = s($section.$strsummary);
+                }
+                $section++;
+                continue;
+            }
+        }
+
+        if ($showsection) {
+            $currenttopic = ($course->marker == $section);
+
+            $currenttext = '';
+            if (!$thissection->visible) {
+                $sectionstyle = ' hidden';
+            } else if ($currenttopic) {
+                $sectionstyle = ' current';
+                $currenttext = get_accesshide(get_string('currenttopic','access'));
+            } else {
+                $sectionstyle = '';
+            }
+
+            echo '<tr class="cps" id="sectionhead-'.$section.'">'; // The table row of the toggle.
+            // Have a different look depending on if the section summary has been completed.
+            if (empty($thissection->summary)) {
+                $thissection->summary='';
+                echo '<td colspan="3"><a id="sectionatag-'.$section.'" class="cps_nosumm" href="#" onclick="toggle_topic(this,'.$section.'); return false;">'.$topictext.' '.$currenttext.$section.' - '.$toggletext.'</a></td>';
+            } else {
+                //echo '<td colspan="2"><a id="sectionatag-'.$section.'" href="#" onclick="toggle_topic(this,'.$section.'); return false;"><span>'.html_to_text($thissection->summary).'</span> - '.$toggletext.'</a></td><td class="cps_centre">'.$topictext.'<br />'.$currenttext.$section.'</td>';
+                // Comment out the above line and uncomment the line below if you do not want 'Topic x' displayed on the right hand side of the toggle.
+                echo '<td colspan="3"><a id="sectionatag-'.$section.'" href="#" onclick="toggle_topic(this,'.$section.'); return false;"><span>'.html_to_text($thissection->summary).'</span></a></td>';
+            }
+            echo '</tr>';
+
+            // Now the section itself.  The css class of 'hid' contains the display attribute that manipulated by the JavaScript to show and hide the section.  It is defined in js-override-topcollhid.css which
+            // is loaded into the DOM by the JavaScript function topcollhid_init.  Therefore having a logical separation between static and JavaScript manipulated css.  Nothing else here differs from
+            // the standard Topics format in the core distribution.  The next change is at the bottom.
+            echo '<tr id="section-'.$section.'" class="section main'.$sectionstyle.' hid">';
+            //echo '<td id="sectionblock-'.$section.'" class="left side">&nbsp;'.$currenttext.$section.'</td>'; // MDL-18232
+            // Comment out the above line and uncomment the line below if you do not want the section number displayed on the left hand side of the section.
+            echo '<td class="left side">&nbsp;</td>';
+
+            echo '<td class="content">';
+            if (!has_capability('moodle/course:viewhiddensections', $context) and !$thissection->visible) {   // Hidden for students
+                // Do not show anything!
+                // echo get_string('notavailable');
+            } else {
+                echo '<div class="summary">';
+
+                if (isediting($course->id) && has_capability('moodle/course:update', $context)) {
+                    $summaryformatoptions->noclean = true;
+                    echo format_text($thissection->summary, FORMAT_HTML, $summaryformatoptions);
+                    echo ' <a title="'.$streditsummary.'" href="editsection.php?id='.$thissection->id.'">'.
+                         '<img src="'.$CFG->pixpath.'/t/edit.gif" alt="'.$streditsummary.'" /></a><br /><br />';
+                }
+                echo '</div>';
+
+                print_section_custom($course, $thissection, $mods, $modnamesused);
+
+                if (isediting($course->id)) {
+                    print_section_add_menus($course, $section, $modnames);
+                }
+            }
+            echo '</td>';
+
+            echo '<td class="right side">';
+            if (isediting($course->id) && has_capability('moodle/course:update', $context)) {
+            // Only contemplate allowing a single viewable section when editing, other situations confusing!
+                if ($displaysection == $section) {      // Show the zoom boxes
+                    echo '<a href="view.php?id='.$course->id.'&amp;topic=0#section-'.$section.'" title="'.$strshowalltopics.'">'.
+                        '<img src="'.$CFG->pixpath.'/i/all.gif" class="icon topicall" alt="'.$strshowalltopics.'" /></a><br />'; // MDL-20757
+                } else {
+                    $strshowonlytopic = get_string('showonlytopic', '', $section);
+                    echo '<a href="view.php?id='.$course->id.'&amp;topic='.$section.'" title="'.$strshowonlytopic.'">'.
+                        '<img src="'.$CFG->pixpath.'/i/one.gif" class="icon topicone" alt="'.$strshowonlytopic.'" /></a><br />'; // MDL-20757
+                }
+            }
+
+            if (isediting($course->id) && has_capability('moodle/course:update', $context)) {
+                if ($course->marker == $section) {  // Show the "light globe" on/off
+                    echo '<a href="view.php?id='.$course->id.'&amp;marker=0&amp;sesskey='.$USER->sesskey.'#section-'.$section.'" title="'.$strmarkedthistopic.'">'.
+                         '<img src="'.$CFG->pixpath.'/i/marked.gif" alt="'.$strmarkedthistopic.'" /></a><br />';
+                } else {
+                    echo '<a href="view.php?id='.$course->id.'&amp;marker='.$section.'&amp;sesskey='.$USER->sesskey.'#section-'.$section.'" title="'.$strmarkthistopic.'">'.
+                         '<img src="'.$CFG->pixpath.'/i/marker.gif" alt="'.$strmarkthistopic.'" /></a><br />';
+                }
+
+                if ($thissection->visible) {        // Show the hide/show eye
+                    echo '<a href="view.php?id='.$course->id.'&amp;hide='.$section.'&amp;sesskey='.$USER->sesskey.'#section-'.$section.'" title="'.$strtopichide.'">'.
+                         '<img src="'.$CFG->pixpath.'/i/hide.gif" alt="'.$strtopichide.'" /></a><br />';
+                } else {
+                    echo '<a href="view.php?id='.$course->id.'&amp;show='.$section.'&amp;sesskey='.$USER->sesskey.'#section-'.$section.'" title="'.$strtopicshow.'">'.
+                         '<img src="'.$CFG->pixpath.'/i/show.gif" alt="'.$strtopicshow.'" /></a><br />';
+                }
+
+                if ($section > 1) {                       // Add a arrow to move section up
+                    echo '<a href="view.php?id='.$course->id.'&amp;random='.rand(1,10000).'&amp;section='.$section.'&amp;move=-1&amp;sesskey='.$USER->sesskey.'#section-'.($section-1).'" title="'.$strmoveup.'">'.
+                         '<img src="'.$CFG->pixpath.'/t/up.gif" alt="'.$strmoveup.'" /></a><br />';
+                }
+
+                if ($section < $course->numsections) {    // Add a arrow to move section down
+                    echo '<a href="view.php?id='.$course->id.'&amp;random='.rand(1,10000).'&amp;section='.$section.'&amp;move=1&amp;sesskey='.$USER->sesskey.'#section-'.($section+1).'" title="'.$strmovedown.'">'.
+                         '<img src="'.$CFG->pixpath.'/t/down.gif" alt="'.$strmovedown.'" /></a><br />';
+                }
+
+            }
+
+            echo '</td></tr>';
+            echo '<tr class="section separator"><td colspan="3" class="spacer"></td></tr>';
+        }
+
+        $section++;
+    }
+    echo '</table>';
+
+    if (!empty($sectionmenu)) {
+        echo '<div align="center" class="jumpmenu">';
+        echo popup_form($CFG->wwwroot.'/course/view.php?id='.$course->id.'&amp;', $sectionmenu,
+                   'sectionmenu', '', get_string('jumpto'), '', '', true);
+        echo '</div>';
+    }
+
+    print_container_end();
+    echo '</td>';
+
+            break;
+            case 'right':
+    // The right column
+    if (blocks_have_content($pageblocks, BLOCK_POS_RIGHT) || $editing) {
+        echo '<td style="width:'.$preferred_width_right.'px" id="right-column">';
+        print_container_start();
+        blocks_print_group($PAGE, $pageblocks, BLOCK_POS_RIGHT);
+        print_container_end();
+        echo '</td>';
+    }
+
+            break;
+        }
+    }
+    echo '</tr></table>';
+
+    // The magic! ... css hide module
+    if (isediting()) {
+        echo "<style>#course-view.editing .section .activity.hidden {background-color: #f5f5dc;border: 1px dashed ;}</style>";
+    } else {
+        echo "<style>#course-view .section .activity.hidden {display:none;}</style>";
+    }
+
+// Special override to course/lib.php::print_section function
+// So we could manipulate the display of each single module and resource
+function print_section_custom($course, $section, $mods, $modnamesused, $absolute=false, $width="100%") {
+    /// Prints a section full of activity modules
+    global $CFG, $USER;
+
+    static $initialised;
+    static $groupbuttons;
+    static $groupbuttonslink;
+    static $isediting;
+    static $ismoving;
+    static $strmovehere;
+    static $strmovefull;
+    static $strunreadpostsone;
+    static $usetracking;
+    static $groupings;
+
+
+    if (!isset($initialised)) {
+        $groupbuttons     = ($course->groupmode or (!$course->groupmodeforce));
+        $groupbuttonslink = (!$course->groupmodeforce);
+        $isediting        = isediting($course->id);
+        $ismoving         = $isediting && ismoving($course->id);
+        if ($ismoving) {
+            $strmovehere  = get_string("movehere");
+            $strmovefull  = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
+        }
+        include_once($CFG->dirroot.'/mod/forum/lib.php');
+        if ($usetracking = forum_tp_can_track_forums()) {
+            $strunreadpostsone = get_string('unreadpostsone', 'forum');
+        }
+        $initialised = true;
+    }
+
+    $labelformatoptions = new object();
+    $labelformatoptions->noclean = true;
+
+/// Casting $course->modinfo to string prevents one notice when the field is null
+    $modinfo = get_fast_modinfo($course);
+
+
+    //Acccessibility: replace table with list <ul>, but don't output empty list.
+    if (!empty($section->sequence)) {
+
+        // Fix bug #5027, don't want style=\"width:$width\".
+        echo "<ul class=\"section img-text\">\n";
+        $sectionmods = explode(",", $section->sequence);
+
+        foreach ($sectionmods as $modnumber) {
+            if (empty($mods[$modnumber])) {
+                continue;
+            }
+
+            $mod = $mods[$modnumber];
+
+            if ($ismoving and $mod->id == $USER->activitycopy) {
+                // do not display moving mod
+                continue;
+            }
+
+            if (isset($modinfo->cms[$modnumber])) {
+                if (!$modinfo->cms[$modnumber]->uservisible) {
+                    // visibility shortcut
+                    continue;
+                }
+            } else {
+                if (!file_exists("$CFG->dirroot/mod/$mod->modname/lib.php")) {
+                    // module not installed
+                    continue;
+                }
+                if (!coursemodule_visible_for_user($mod)) {
+                    // full visibility check
+                    continue;
+                }
+            }
+
+            // The magic! ... if indent == 1 then ... hide module
+            if ($mod->indent == 1) {
+                $hiddemodule = 'hidden';
+            } else {
+                $hiddemodule = '';
+            }
+            echo '<li class="activity '.$mod->modname.' '.$hiddemodule.'" id="module-'.$modnumber.'">';  // Unique ID
+
+            if ($ismoving) {
+                echo '<a title="'.$strmovefull.'"'.
+                     ' href="'.$CFG->wwwroot.'/course/mod.php?moveto='.$mod->id.'&amp;sesskey='.$USER->sesskey.'">'.
+                     '<img class="movetarget" src="'.$CFG->pixpath.'/movehere.gif" '.
+                     ' alt="'.$strmovehere.'" /></a><br />
+                     ';
+            }
+
+            if ($mod->indent) {
+                print_spacer(12, 20 * $mod->indent, false);
+            }
+
+            $extra = '';
+            if (!empty($modinfo->cms[$modnumber]->extra)) {
+                $extra = $modinfo->cms[$modnumber]->extra;
+            }
+
+            if ($mod->modname == "label") {
+                echo "<span class=\"";
+                if (!$mod->visible) {
+                    echo 'dimmed_text';
+                } else {
+                    echo 'label';
+                }
+                echo '">';
+                echo format_text($extra, FORMAT_HTML, $labelformatoptions);
+                echo "</span>";
+                if (!empty($CFG->enablegroupings) && !empty($mod->groupingid) && has_capability('moodle/course:managegroups', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                    if (!isset($groupings)) {
+                        $groupings = groups_get_all_groupings($course->id);
+                    }
+                    echo " <span class=\"groupinglabel\">(".format_string($groupings[$mod->groupingid]->name).')</span>';
+                }
+
+            } else { // Normal activity
+                $instancename = format_string($modinfo->cms[$modnumber]->name, true,  $course->id);
+
+                if (!empty($modinfo->cms[$modnumber]->icon)) {
+                    $icon = "$CFG->pixpath/".$modinfo->cms[$modnumber]->icon;
+                } else {
+                    $icon = "$CFG->modpixpath/$mod->modname/icon.gif";
+                }
+
+                //Accessibility: for files get description via icon.
+                $altname = '';
+                if ('resource'==$mod->modname) {
+                    if (!empty($modinfo->cms[$modnumber]->icon)) {
+                        $possaltname = $modinfo->cms[$modnumber]->icon;
+
+                        $mimetype = mimeinfo_from_icon('type', $possaltname);
+                        $altname = get_mimetype_description($mimetype);
+                    } else {
+                        $altname = $mod->modfullname;
+                    }
+                } else {
+                    $altname = $mod->modfullname;
+                }
+                // Avoid unnecessary duplication.
+                if (false!==stripos($instancename, $altname)) {
+                    $altname = '';
+                }
+                // File type after name, for alphabetic lists (screen reader).
+                if ($altname) {
+                    $altname = get_accesshide(' '.$altname);
+                }
+
+                $linkcss = $mod->visible ? "" : " class=\"dimmed\" ";
+                echo '<a '.$linkcss.' '.$extra.        // Title unnecessary!
+                     ' href="'.$CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">'.
+                     '<img src="'.$icon.'" class="activityicon" alt="" /> <span>'.
+                     $instancename.$altname.'</span></a>';
+
+                if (!empty($CFG->enablegroupings) && !empty($mod->groupingid) && has_capability('moodle/course:managegroups', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                    if (!isset($groupings)) {
+                        $groupings = groups_get_all_groupings($course->id);
+                    }
+                    echo " <span class=\"groupinglabel\">(".format_string($groupings[$mod->groupingid]->name).')</span>';
+                }
+            }
+            if ($usetracking && $mod->modname == 'forum') {
+                if ($unread = forum_tp_count_forum_unread_posts($mod, $course)) {
+                    echo '<span class="unread"> <a href="'.$CFG->wwwroot.'/mod/forum/view.php?id='.$mod->id.'">';
+                    if ($unread == 1) {
+                        echo $strunreadpostsone;
+                    } else {
+                        print_string('unreadpostsnumber', 'forum', $unread);
+                    }
+                    echo '</a></span>';
+                }
+            }
+
+            if ($isediting) {
+                // TODO: we must define this as mod property!
+                if ($groupbuttons and $mod->modname != 'label' and $mod->modname != 'resource' and $mod->modname != 'glossary') {
+                    if (! $mod->groupmodelink = $groupbuttonslink) {
+                        $mod->groupmode = $course->groupmode;
+                    }
+
+                } else {
+                    $mod->groupmode = false;
+                }
+                echo '&nbsp;&nbsp;';
+                echo make_editing_buttons($mod, $absolute, true, $mod->indent, $section->section);
+            }
+            echo "</li>\n";
+        }
+
+    } elseif ($ismoving) {
+        echo "<ul class=\"section\">\n";
+    }
+
+    if ($ismoving) {
+        echo '<li><a title="'.$strmovefull.'"'.
+             ' href="'.$CFG->wwwroot.'/course/mod.php?movetosection='.$section->id.'&amp;sesskey='.$USER->sesskey.'">'.
+             '<img class="movetarget" src="'.$CFG->pixpath.'/movehere.gif" '.
+             ' alt="'.$strmovehere.'" /></a></li>
+             ';
+    }
+    if (!empty($section->sequence) || $ismoving) {
+        echo "</ul><!--class='section'-->\n\n";
+    }
+}
+
+    // Establish persistance when  we have loaded!
+    ?>
+    <script type="text/javascript" defer="defer"> // Defer running of the script until all HMTL has been passed.
+//<![CDATA[
+    <?php
+    echo 'set_number_of_toggles('.$course->numsections.');'; // Tell JavaScript how many Toggles to reset.
+    // Restore the state of the toggles from the cookie if not in 'Show topic x' mode, otherwise show that topic.
+    if ($displaysection == 0)
+    {
+        echo 'YAHOO.util.Event.onDOMReady(reload_toggles);';
+        // TODO: Use below later instead of above, for reason see below for save_toggles.
+        //echo 'window.addEventListener("load",reload_toggles,false);';
+    }
+    else
+    {
+        echo 'show_topic('.$displaysection.');';
+    }
+    // Save the state of the toggles when the page unloads.  This is a stopgap as toggle state is saved every time
+    // they change.  This is because there is no 'refresh' event yet which would be the best implementation.
+    // TODO: Comment line 51 (save_toggles call in togglebinary function) of lib.js and make into lib_min.js when
+    //       IE9 fully established with proper DOM event handling -
+    //       http://blogs.msdn.com/ie/archive/2010/03/26/dom-level-3-events-support-in-ie9.aspx &
+    //       http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#event-types-list
+    //echo 'window.addEventListener("unload",save_toggles,false);';  TODO Comment
+
+    ?>
+//]]>
+</script>
+
+
