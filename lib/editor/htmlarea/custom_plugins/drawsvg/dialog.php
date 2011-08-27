@@ -75,7 +75,7 @@ form { margin-bottom: 0px; margin-top: 0px; }
 </head>
 <body onload="Init()">
 
-<div class="title"><?php print_string("insertsvg","editor") ?></div>
+<div class="title"><?php echo get_string("title","drawsvg",'',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/drawsvg/lang/");?></div>
 
 <form action="" method="get">
 
