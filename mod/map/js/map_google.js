@@ -113,6 +113,7 @@ function reCenterMap(){
 }
 function loadGoogleMap () {
     if (google.maps.BrowserIsCompatible()) {
+	google.load("maps", "2",{"other_params":"sensor=true"});
         $('map').addClassName("googlemap");
         map = createSimpleGMap("map");
 

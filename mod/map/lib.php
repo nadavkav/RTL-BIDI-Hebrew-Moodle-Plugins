@@ -397,6 +397,7 @@ function map_load_js_scripts($map){
 	$provider = map_get_map_provider($map);
 	map_insert_script($CFG->wwwroot . "/mod/map/js/prototype.js");
 	if($provider == 'google'){
+		map_insert_script("http://maps.google.com/maps?file=api&allow_bidi=true&v=2&hl=iw&key=" . $CFG->map_google_api_key);
 		map_insert_script("http://www.google.com/jsapi?key=" . $CFG->map_google_api_key);
 		map_insert_script($CFG->wwwroot . "/mod/map/js/map.js");
 		map_insert_script($CFG->wwwroot . "/mod/map/js/map_google.js");
