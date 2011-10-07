@@ -1,0 +1,82 @@
+/* Core */
+
+a:link {
+    color: #02416D;
+}
+
+a:visited {
+    color:#02416D;
+}
+
+a:hover {
+    color: #83c8ff;
+	text-decoration:none;
+}
+
+a.dimmed:link,
+a.dimmed:visited {
+  color:#AAAAAA;
+}
+
+/***
+ *** Top Menu
+ ***/
+
+
+#top_menu {
+	background:url('images/default/top_menu.gif') repeat-x top center;
+}
+
+#top_menu ul li {
+	background:url('images/default/top_menu_line.gif') right top no-repeat;
+}	
+
+/***
+ *** Header
+ ***/
+
+#logo {
+background: url('images/default/logo.png') no-repeat left top; 
+height: 90px;
+}
+
+#header-home, #header {
+  background: url('images/default/header-grad.jpg') repeat-x;
+}
+
+h1.headermain {
+  background-color: transparent;
+}
+
+.header-profilename, .header-profilename a {
+	background-color: transparent;
+	color:#999999;
+
+}
+
+.header-profilename, .header-profilename a:hover {
+	background-color: transparent;
+	color: #83c8ff;
+	text-decoration:none;
+
+}
+
+.header-profileoptions {
+	background-color: transparent;
+	color:#dfdfdf;
+
+}
+
+.header-profileoptions, .header-profileoptions a {
+	background-color: transparent;
+	color:#999999;
+
+}
+
+
+.header-profileoptions a:hover {
+	background-color: transparent;
+	color: #83c8ff;
+	text-decoration:none;
+
+}

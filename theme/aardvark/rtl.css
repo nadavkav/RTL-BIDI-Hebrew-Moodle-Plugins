@@ -1,0 +1,11 @@
+#top_menu ul li {
+float:right;
+}
+
+#top_menu ul {
+float:right;
+}
+
+div#top_menu_date {
+float:left;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html<?php echo $direction ?>>
+<head>
+    <?php echo $meta ?>
+    <meta name="keywords" content="moodle, <?php echo $title ?> " />
+    <title><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.ico" />
+    <LINK REL="StyleSheet" title="default" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/aardvark_default.css" TYPE="text/css" MEDIA=screen>
+	<LINK REL="alternate stylesheet" title="default2" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/aardvark_default.css" TYPE="text/css" MEDIA=screen>
+	
+	<LINK REL="StyleSheet" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/styles_print.css" TYPE="text/css" MEDIA=print>
+	
+	<?php include("$CFG->javascript"); ?>
+	
+<style type="text/css">
+  body {visibility:hidden;}
+<?php
+echo "#logo { background: url('$CFG->wwwroot/file.php/$COURSE->id/logo.png') no-repeat left top; }";
+?>
+</style>
+
+<script type="text/javascript" src="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/js/styleswitch.js"></script>
+<script type="text/javascript" src="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/js/jquery/jquery.dropdown.js"></script>
+
+<!--[if lt IE 7]>
+<script type="text/javascript" src="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/js/ie6png.js"></script>
+<![endif]-->
+
+<script Xlanguage="javascript" type="text/javascript">
+$(document).ready(function(){
+$("body").css("visibility","visible");
+});
+</script>
+
+<script>
+function clearDefaultandCSS(el) {
+	if (el.defaultValue==el.value) el.value = ""
+	// If Dynamic Style is supported, clear the style
+	if (el.style) el.style.cssText = ""
+}
+</script>
+
+
+    <?php include("$CFG->javascript"); ?>
+</head>
+
+<body<?php
+    echo " $bodytags";
+    if ($focus) {
+        echo " onload=\"setfocus()\"";
+    }
+    ?>>
+<DIV class="surround">
+<div id="page">
+
+<?php //Accessibility: warning: ALT text will need editing if logo changes. 'headermain' is now H1, see theme/standard/styles_layout.css: .headermain
+if ($heading) {  // This is what gets printed on any page with a heading
+?>
+                      
+
+    <?php print_container_start(true, '', 'header'); ?>
+        <div class="headermain" id="header-home"><a href="<?php echo $CFG->wwwroot.'/' ?>" style="display: block; width: 247px; height: 96px;"><div id="logo"></div> 
+</a></div>
+		<div class="header-profileblock" id="header-profileblock"><?php
+
+        {
+        include('profileblock.php'); 
+        }   
+?></div>
+
+
+       
+    <?php print_container_end(); ?>
+     <div id="top_menu">
+     <?php
+
+        {
+        include('topmenu.php'); 
+        }   
+?>					
+			</div>
+<?php } ?>
+<?php //Accessibility: breadcrumb trail/navbar now a DIV, not a table.
+      if ($navigation) { // This is the navigation bar with breadcrumbs  ?>
+    <div class="navbar clearfix">
+        <div class="breadcrumb"><?php print_navigation($navigation); ?></div>
+        <div class="navbutton"><?php echo $button; ?></div>
+    </div>
+
+<?php } ?>
+    <!-- END OF HEADER -->
+    <?php print_container_start(false, '', 'content'); ?>
