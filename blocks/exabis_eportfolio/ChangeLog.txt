@@ -1,5 +1,8 @@
 Exabis E-Portfolio ChangeLog
 
+2011-10-15 3.2.4 (nadavkav)
+* When sharing portfolios with courses... clicking the course name, will get the userlist (json) performance improvements for large course
+
 2010-12-02 3.2.3 (nadavkav)
 * send email notification to user that got comments
 * remove Essay preview from items list
