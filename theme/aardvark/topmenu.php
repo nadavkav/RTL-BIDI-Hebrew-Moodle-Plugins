@@ -7,7 +7,8 @@
 
 <?php
 // Include HTML based menu from each course, if exists
-include($CFG->dataroot.'/'.$COURSE->id.'/menu.txt'); ?>
+if (file_exists($CFG->dataroot.'/'.$COURSE->id.'/menu.txt')) {
+include($CFG->dataroot.'/'.$COURSE->id.'/menu.txt'); } ?>
 
   <li><div><a href="<?php echo $CFG->wwwroot.'/' ?>">מרחביי הלימוד שלי</a>
         <ul>

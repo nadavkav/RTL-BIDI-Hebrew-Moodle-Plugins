@@ -30,9 +30,11 @@ echo '<a href="'.$CFG->wwwroot.'/user/view.php?id='.$USER->id.'&amp;course='.$CO
  <?PHP
 				
 if (!isloggedin() or isguestuser()) {
-echo '<ul><form class="loginform" id="login" method="post" action="'.$wwwroot.'/login/index.php">';
+echo '<ul><form class="loginform" id="login" method="post" action="'.$CFG->wwwroot.'/login/index.php">';
 echo '<li><label for="login_username">'.get_string('username').'</label><input class="loginform" type="text" name="username" id="login_username" value="" /></li>';
 echo '<li><label for="login_password">'.get_string('password').'</label><input class="loginform" type="password" name="password" id="login_password" value="" /></li>';
+$SESSION->wantsurl = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id;
+//echo '<input type="hidden" name="redirect" id="redirect" value="" />';
 echo '<li><input type="submit" value="&nbsp;&nbsp;'.get_string('login').'&nbsp;&nbsp;" /></li>';
 echo '</form></ul>';
 
