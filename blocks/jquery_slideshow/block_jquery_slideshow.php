@@ -198,7 +198,7 @@ class block_jquery_slideshow extends block_base {
                    //$imagelist[] = $block->instance->pageid."/".$block->config->imagedir."/".$file;
                    mtrace("{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}");
                    $ok = gd_resize_image("{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}" ,
-                       "{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}" ,640,480 );
+                       "{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}" ,800,600 );
                }
 
             }
