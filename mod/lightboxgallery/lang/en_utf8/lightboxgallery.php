@@ -64,5 +64,6 @@
     $string['thumbnailoffset'] = 'Offset';
 $string['linktofilesandfolders'] = 'manage images and folders';
 $string['openinnewwindow'] = 'click here: to open "Images and Folders manager" in a new window';
+$string['upload'] = 'upload';
 
 ?>

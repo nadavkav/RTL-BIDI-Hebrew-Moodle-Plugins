@@ -43,12 +43,14 @@
             $autoresizegroup[] = &$mform->createElement('checkbox', 'autoresizedisabled', null, get_string('disable'));
             $mform->addGroup($autoresizegroup, 'autoresizegroup', get_string('autoresize', 'lightboxgallery'), ' ', false);
             $mform->setType('autoresize', PARAM_INTEGER);
+			$mform->setDefault('autoresize', 3);
             $mform->disabledIf('autoresizegroup', 'autoresizedisabled', 'checked');
             $mform->setAdvanced('autoresizegroup');
             $mform->setHelpButton('autoresizegroup', array('autoresize', get_string('autoresize', 'lightboxgallery'), 'lightboxgallery'));
 
             $mform->addElement('select', 'resize', sprintf('%s (%s)', get_string('edit_resize', 'lightboxgallery'), strtolower(get_string('upload'))), lightboxgallery_resize_options());
             $mform->setType('resize', PARAM_INTEGER);
+			$mform->setDefault('resize', 3);
             $mform->setAdvanced('resize');
             $mform->disabledIf('resize', 'autoresize', 'eq', 1);
             $mform->disabledIf('resize', 'autoresizedisabled', 'checked');
@@ -97,7 +99,7 @@
         }
 
         function data_preprocessing(&$defaults){
-            $defaults['autoresizedisabled'] = ($defaults['autoresize'] ? 0 : 1);
+            $defaults['autoresizedisabled'] = 0;//($defaults['autoresize'] ? 0 : 1);
         }
 
         // Custom functions
@@ -123,7 +125,7 @@
 
         function get_autoresize_options() {
             $screen = get_string('screen', 'lightboxgallery');
-            $upload = get_string('upload');
+            $upload = get_string('upload', 'lightboxgallery');
             return array(AUTO_RESIZE_SCREEN => $screen,
                          AUTO_RESIZE_UPLOAD => $upload,
                          AUTO_RESIZE_BOTH   => $screen . ' &amp; ' . $upload);

@@ -104,11 +104,11 @@
 // } else {
 //   echo "<div style=\"text-align:center;\"><a href=\"view.php?id=$id&l=$l&action=slideshow\">מצגת תמונות</a></div>";
 // }
-echo '<div style="text-align:center;">';
-echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/nivoslider/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshownivoslider','lightboxgallery'),520,700);
-echo ' <<>> ';
-echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/galleryffic/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshowgalleryffic','lightboxgallery'),768,1024);
-echo '</div>';
+// echo '<div id="extragalleries" style="text-align:center;">';
+// echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/nivoslider/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshownivoslider','lightboxgallery'),520,700);
+// echo ' <<>> ';
+// echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/galleryffic/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshowgalleryffic','lightboxgallery'),768,1024);
+// echo '</div>';
 
     print_simple_box_start('center');
 
@@ -150,11 +150,11 @@ echo '</div>';
                 $imageextra = sprintf('<br />%s<br />%s, %dx%d', $iobj->modified, $iobj->filesize, $iobj->imagesize[0], $iobj->imagesize[1]);
             }
             $imagetitle = (isset($captions[$image]) ? $captions[$image] : $image);
-            //echo('<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagelabel.$imageextra.'</div>');
-	    echo '<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.'<br />';
-	    echo "<input type=\"button\" name=\"pixlreditor\" title=\"$stredit\" value=\"$stredit\" id=\"pixlreditor\" class=\"linkz buttonz\" ";
-      echo "onclick=\"return window.open('http://www.pixlr.com/editor/?image={$CFG->wwwroot}/sendfile.php/{$course->id}/{$gallery->folder}/{$image}', 'pixlreditor', 'width=1024,height=768,menubar=0,location=0,scrollbars,resizable', 'yes');\" />";
-      echo "$imageextra</div>";
+            echo('<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagelabel.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.$imageextra.'</div>');
+// 			echo '<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.'<br />';
+// 			echo "<input type=\"button\" name=\"pixlreditor\" title=\"$stredit\" value=\"$stredit\" id=\"pixlreditor\" class=\"linkz buttonz\" ";
+// 			echo "onclick=\"return window.open('http://www.pixlr.com/editor/?image={$CFG->wwwroot}/sendfile.php/{$course->id}/{$gallery->folder}/{$image}', 'pixlreditor', 'width=1024,height=768,menubar=0,location=0,scrollbars,resizable', 'yes');\" />";
+// 			echo "$imageextra</div>";
 	    // i removed the filenames .$imagelabel.$imageextra.
         }
     } else {

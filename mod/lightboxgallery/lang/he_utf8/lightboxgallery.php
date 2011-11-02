@@ -62,7 +62,7 @@ $string['selectthumbpos'] = 'קביעת מיקום תמונה מקדימה';
 $string['showall'] = 'כל התמונות';
 $string['rsssubscribe'] = 'הזנת RSS של אוסף התמונות';
 $string['saveimage'] = 'שמירת $a';
-$string['screen'] = 'מסך';
+$string['screen'] = 'תצוגה';
 $string['thumbnailoffset'] = 'מיקום חדש';
 $string['tagspopular'] = 'תוויות אהודות';
 $string['tagsrelated'] = 'תוויות קשורות';
@@ -72,4 +72,5 @@ $string['openinnewwindow'] = 'פתיחת ניהול תמונות בחלון חד
 $string['slideshownivoslider'] = ' NivoSlider מצגת תמונות ';
 $string['slideshowgalleryffic'] = ' Galleryffic מצגת תמונות ';
 $string['coursefp'] = 'תצוגת תמונות, בדף מרחב הלימוד הראשי';
+$string['upload'] = 'העלאה';
 ?>
