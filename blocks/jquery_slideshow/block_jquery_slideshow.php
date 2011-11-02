@@ -15,7 +15,8 @@ class block_jquery_slideshow extends block_base {
 
   function init() {
     $this->title = get_string('jqueryslideshow', 'block_jquery_slideshow');
-    $this->version = 2010060604;
+    $this->version = 2010110101;
+    $this->cron = 1;
   }
 
   function get_content() {
@@ -50,7 +51,7 @@ class block_jquery_slideshow extends block_base {
 //     if ($this->config->includegif) {
 //         $this->config->filesfilter .= "|gif";
 //     }
-// 
+//
 //     $this->config->filesfilter = ltrim($this->config->filesfilter,'|');
 
     if (!empty($this->config->imagedir)) {
@@ -149,5 +150,147 @@ class block_jquery_slideshow extends block_base {
 //     );
 //   }
 
+    /**
+     * Function to be run periodically according to the moodle cron
+     * This function searches for things that need to be done, such
+     * as sending out mail, toggling flags etc ...
+     *
+     * @uses $CFG
+     * @return boolean
+     * @todo Finish documenting this function
+     **/
+    function cron() {
+
+       global $CFG;
+
+        // Get the block type from the name
+        $blocktype = get_record('block', 'name', 'jquery_slideshow');
+        $ok = set_field('block','lastcron',time(),'name','jquery_slideshow');
+
+        if (time() - $blocktype->lastcron < 8640) return; // run only one time per 24h
+
+        // Get the instances of the block
+        $instances = get_records('block_instance','blockid',$blocktype->id);
+
+        // Iterate over the instances
+        foreach ($instances as $instance) {
+
+            // Recreate block object
+            $block = block_instance('jquery_slideshow', $instance);
+
+            // $block is now the equivalent of $this in 'normal' block
+            // usage, e.g.
+            //$someconfigitem = $block->config->imagedir;
+            mtrace('Course ID:'.$block->instance->pageid);
+
+            $directory = opendir($CFG->dataroot."/".$block->instance->pageid."/".$block->config->imagedir);
+            //$imagelist = array();
+            $pregfilesfilter = "/{$this->config->filesfilter}/i";
+            $maxfilescounter = 0;
+            while (false !== ($file = readdir($directory))) {
+               if ($file == "." || $file == ".." || $maxfilescounter++ >= $block->config->maxfiles) {
+               continue;
+               }
+               // notice : function mime-content-type() is depricated in php 5.3
+               // http://us3.php.net/manual/en/function.mime-content-type.php
+               // this IF should change in the near future :-)
+               if ( is_file("$CFG->dataroot/{$block->instance->pageid}/{$block->config->imagedir}/$file") and preg_match($pregfilesfilter , $file) ) {
+                   //$imagelist[] = $block->instance->pageid."/".$block->config->imagedir."/".$file;
+                   mtrace("{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}");
+                   $ok = gd_resize_image("{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}" ,
+                       "{$CFG->dataroot}/{$block->instance->pageid}/{$block->config->imagedir}/{$file}" ,640,480 );
+               }
+
+            }
+            closedir($directory);
+        }
+
+    }
+
+
 }
+
+function gd_resize_image($image, $newimage, $newwidth, $newheight) {
+    global $CFG;
+
+    if (filesize($image) < 250000) return false;  // no need to resize
+
+     $gdversion = check_gd_version();
+
+     if ( $gdversion < 1 ) {
+         return false;
+     }
+
+     $size = getimagesize($image);
+
+     $width  = $size[0];
+     $height = $size[1];
+     $type   = $size[2];
+
+     if ($im = read_image_from_file($image, $type)) {
+         if ($newheight && ($width < $height)) {
+             $newwidth = ($newheight / $height) * $width;
+         } else {
+             $newheight = ($newwidth / $width) * $height;
+         }
+
+            echo get_string('originaldimentions','files','',$CFG->dirroot.'/files/lang/').": ".get_string('width','files','',$CFG->dirroot.'/files/lang/')." = $width , ".get_string('height','files','',$CFG->dirroot.'/files/lang/')." = $height \n";
+            echo get_string('newdimentions','files','',$CFG->dirroot.'/files/lang/').": ".get_string('width','files','',$CFG->dirroot.'/files/lang/')." = $newwidth , ".get_string('height','files','',$CFG->dirroot.'/files/lang/')." = $newheight \n";
+
+
+         if ($gdversion > 1) {
+             $im2 = ImageCreateTrueColor($newwidth,$newheight);
+         } else {
+             $im2 = ImageCreate($newwidth,$newheight);
+         }
+
+         if ($gdversion > 1) {
+             ImageCopyResampled($im2,$im,0,0,0,0,$newwidth,$newheight,$width,$height);
+         } else {
+             ImageCopyResized($im2,$im,0,0,0,0,$newwidth,$newheight,$width,$height);
+         }
+
+            echo get_string('originalsize','files','',$CFG->dirroot.'/files/lang/')." = ".filesize($image)." \n";
+            clearstatcache();
+         unlink($image); // delete image before overwrite
+         if (write_image_to_file($im2, $newimage, $type)) {
+            echo get_string('newsize','files','',$CFG->dirroot.'/files/lang/')." = ".filesize($newimage)." \n";
+            return true;
+         }
+     }
+     return false;
+ }
+
+ function read_image_from_file ($filename, $type) {
+     $imagetypes = ImageTypes();
+
+     switch ($type) {
+         case 1 :
+             if ($imagetypes & IMG_GIF) {
+                 return $im = ImageCreateFromGIF($filename);
+             }
+         break;
+         case 2 :
+             if ($imagetypes & IMG_JPEG) {
+                 return ImageCreateFromJPEG($filename);
+             }
+             break;
+         case 3 :
+             if ($imagetypes & IMG_PNG)
+                 return ImageCreateFromPNG($filename);
+             break;
+         default:
+         return 0;
+     }
+ }
+
+function write_image_to_file ($im, $filename, $type) {
+     switch ($type) {
+         case 1 : return ImageGIF($im, $filename); break;
+         case 2 : return ImageJpeg($im, $filename,75); break;
+         case 3 : return ImagePNG($im, $filename); break;
+         default: return false;
+     }
+ }
+
 ?>
