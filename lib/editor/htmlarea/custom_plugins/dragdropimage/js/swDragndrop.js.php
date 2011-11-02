@@ -295,7 +295,7 @@ var SwDragndrop = new Class({
 			container = document.getElementById("item"+index),
 			fileUpload = xhr.upload,
 			boundary = 'multipartformboundary' + (new Date).getTime(),
-			filename = file.fileName,
+			filename = file.name, //file.fileName,
 			progressDomElements = [
 					document.createElement('div'),
 					document.createElement('p'),
