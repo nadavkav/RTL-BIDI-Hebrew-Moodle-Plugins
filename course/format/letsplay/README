@@ -1,0 +1,23 @@
+LetsPlay - Course format
+
+This course format, display Gems on a scrolling ground with varaying "block" level heights.
+Students are asked to run through the scrolling game play and collect Gems,
+Which are actual activities from Moodle's course topics.
+Successfully, completing the Activities, increses game's score.
+
+When in studens mode, Course activities and topics do not show. only the game.
+Teahcers see game + topics and activities.
+
+Use the keyboard to play the game.
+<LEFT> and <RIGHT> arrow keys to move (run) left or right and <SPACE> to jump
+
+Developers:
+You can change the Avatar's animation, the background images, the Block's images...
+(It's all in the folders) and of course...the code!
+
+This course format id based on Matthew Casperson tutorial of building HTML5 games
+http://www.brighthub.com/hubfolio/matthew-casperson/blog/archive/2009/06/29/game-development-with-javascript-and-the-canvas-element.aspx
+
+Support: nadavkav@gmail.com
+
+Enjoy :-)

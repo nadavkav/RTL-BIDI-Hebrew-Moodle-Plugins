@@ -20,7 +20,8 @@ function Level()
 
             $road = 77;
             for ($i = 1; $i <= $road ; $i++) {
-                echo "this.blocks[$i] = 1;";
+
+                echo "this.blocks[$i] = ".rand(1,3).";";
             }
 
 //        this.blocks[0] = 3;
@@ -81,7 +82,7 @@ function Level()
             if (this.powerups[x])
             {
                 var xPosition = x * this.blockWidth + this.blockWidth / 2;
-                var yPosition = canvasHeight - this.groundHeight(x);
+                var yPosition = canvasHeight - this.groundHeight(x) - this.blockHeight;
 
                 switch(this.powerups[x])
                  {
