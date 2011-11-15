@@ -72,7 +72,8 @@ function Player()
     this.keyDown = function(event)
     {
         var updateRequired = false;
-
+		//console.log(event.keyCode ); // keycodes: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+		
         // left
         if (event.keyCode == 37 && !this.left)
         {
@@ -85,7 +86,7 @@ function Player()
             this.right = true;
             updateRequired = true;
         }
-        if (event.keyCode == 32 && this.grounded)
+        if (event.keyCode == 16 && this.grounded)
         {
             this.grounded = false;
             this.jumpSinWavePos = 0;
