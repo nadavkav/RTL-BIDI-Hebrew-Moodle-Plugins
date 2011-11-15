@@ -123,7 +123,7 @@ function updateTemplate(glitemid){
       $templates = get_records('glossary_entries','glossaryid',$CFG->editor_templateglossary);
       echo '<option value="0">'.get_string('choosetemplate',"inserttemplate",'',$langpath).'</option>';
       foreach ($templates as $template) {
-        echo '<option onclick="updateTemplate('.$template->id.')" value="('.$template->id.'">'.$template->concept.'</option>';
+        echo '<option onclick="updateTemplate('.$template->id.')" value="'.$template->id.'" >'.$template->concept.'</option>';
       }
 
     ?>
