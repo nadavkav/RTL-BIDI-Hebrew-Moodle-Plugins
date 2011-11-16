@@ -9,7 +9,7 @@
 function __cellwidth (editor) {
 
     // Make sure that editor has focus
-    //editor.focusEditor();
+    editor.focusEditor();
     //var sel = editor._getSelection();
     //var range = editor._createRange(sel);
 
@@ -49,18 +49,14 @@ function __cellwidth (editor) {
         if(!param) {
             return false;
         }
-        if (HTMLArea.is_ie) {
-            range.pasteHTML(param);
-        } else {
-            //editor.insertHTML(param['cellwidth']);
-            //ret.width = param['cellwidth'];
-            // get tbody of cell
-            var tablebody = ret.parentNode.parentNode;
-            // set width of all cells in the column
-            for (var i =0; i<tablebody.rows.length; i++){
+
+         // get tbody of cell
+         var tablebody = ret.parentNode.parentNode;
+         // set width of all cells in the column
+         for (var i =0; i<tablebody.rows.length; i++){
               tablebody.rows[i].cells[ret.cellIndex].width = param['cellwidth'];
-            }
-        }
+         }
+        
         return true;
     });
 
