@@ -15,6 +15,10 @@
 
 function __audiorecorder (editor) {
 
+    editor.focusEditor();
+    var sel = editor._getSelection();
+    var range = editor._createRange(sel);
+
     nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/dialog.php?id=$courseid" ?>",550,500, function (param) {
 
         if (!param) {   // user must have pressed Cancel
