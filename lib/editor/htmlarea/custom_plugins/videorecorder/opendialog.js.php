@@ -17,6 +17,9 @@
 ?>
 
 function __videorecorder (editor) {
+    editor.focusEditor();
+    var sel = editor._getSelection();
+    var range = editor._createRange(sel);
 
     nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/videorecorder/dialog.php?id=$courseid" ?>",450,380, function (param) {
 
