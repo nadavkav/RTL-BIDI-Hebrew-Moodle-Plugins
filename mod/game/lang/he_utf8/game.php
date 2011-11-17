@@ -51,8 +51,8 @@ $string[ 'hangman_loose'] = '<BIG><B>המשחק הסתיים</B></BIG>';
 $string[ 'hangman_restletters_many'] = 'יש לכם <b>$a</b> נסיונות';
 $string[ 'hangman_restletters_one'] = 'יש לכם ניסיון <b>אחד</b> בלבד';
 $string[ 'hangman_restletters'] = 'יש לכם <b>$a</b> ניסיונות';
-$string[ 'lettersall1'] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-$string[ 'lettersall2'] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$string[ 'lettersall1'] = "אבגדהוזחטיכלמנסעפצקרשתךףץןם ";
+$string[ 'lettersall2'] = 'אבגדהוזחטיכלמנסעפצקרשתךףץןם';
 $string[ 'letters'] = 'אותיות';
 $string[ 'letter'] = 'אות';
 $string[ 'millionaire_info_people'] = 'אנשים אומרים';
@@ -281,4 +281,6 @@ $string[ 'print'] = 'הדפסה';
 $string[ 'html_title'] = 'כותרת מעוצבת:';
 $string[ 'html_hascheckbutton'] = 'קיים כפתור אישור:';
 $string[ 'html_hasprintbutton'] = 'קיים כפתור הדפסה:';
+
+$string[ 'lastmovewas'] = 'מספר הצעדים שבצעתם <br/>עבור התשובה הנכונה';
 ?>
