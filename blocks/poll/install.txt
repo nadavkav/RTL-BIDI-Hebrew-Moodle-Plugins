@@ -1,0 +1,10 @@
+To install this block you should:
+
+ (a) copy the /poll folder and all it's contents to your Moodle /blocks directory
+
+     e.g.: /websrv/moodle/blocks/
+           C:\wwwroot\moodle\blocks\
+
+ (b) Visit the admin page of your Moodle install
+
+     e.g.: http://{YOURHOST}/moodle/admin/index.php

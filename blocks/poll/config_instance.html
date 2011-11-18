@@ -1,0 +1,29 @@
+<?php
+	// Paul Holden 24th July, 2007
+	// this file contains the tab definitions that are used to configure the block and polls
+
+
+	global $USER, $COURSE;	
+
+	$action = optional_param('action', 'configblock', PARAM_ALPHA);
+
+	$page = page_create_object($this->instance->pagetype, $this->instance->pageid);
+
+	$url = $page->url_get_full(array('instanceid' => $this->instance->id, 'sesskey' => $USER->sesskey, 'blockaction' => 'config', 'action' => ''));
+
+	$tabs = array();
+	$tabnames = array('configblock', 'editpoll', 'managepolls', 'responses');
+	foreach ($tabnames as $tabname) {
+		$tabs[] = new tabObject($tabname, $url . $tabname, get_string('tab' . $tabname, 'block_poll'));
+	}
+
+	if (!in_array($action, $tabnames)) {
+		$action = 'configblock';
+	}
+
+	print_tabs(array($tabs), $action);
+
+	echo('<br />');
+	include("tab_$action.php");
+
+?>
