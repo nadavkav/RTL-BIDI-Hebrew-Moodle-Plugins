@@ -237,7 +237,7 @@
           <td width="321" valign="top">
     <fieldset class="invisiblefieldset">
     <p><input type=radio name="r11" id="r11" value="1"
-    onfocus ="getElementById('menuform').subselect.disabled=true; getElementById('menuform').main.disabled=false; getElementById('menuform').addurl.disabled=true; getElementById('menuform').mainselect.disabled=false;" checked="checked" />
+    onclick ="getElementById('menuform').subselect.disabled=true; getElementById('menuform').main.disabled=false; getElementById('menuform').addurl.disabled=true; getElementById('menuform').mainselect.disabled=false;" checked="checked" />
      <select name="mainselect" id="mainselect" />
               <?php
               // Print out the HTML for the topic selection drop down list
@@ -245,9 +245,9 @@
               ?>
           </select>
     </p> <?php print_string('or','block_menu_flyout'); ?> <p>
-    <input type=radio name="r11" id="r22" value="2" onfocus ="getElementById('menuform').addurl.disabled=false; getElementById('menuform').mainselect.disabled=true;"/><?php print_string('externalurl','block_menu_flyout'); ?>:
+    <input type=radio name="r11" id="r22" value="2" onclick ="getElementById('menuform').addurl.disabled=false; getElementById('menuform').mainselect.disabled=true;"/><?php print_string('externalurl','block_menu_flyout'); ?>:
      <input type="text" name="addurl" id="addurl" size="50" disabled="disabled" value="http://"
-		  onfocus ="getElementById('menuform').mainselect.disabled=true;"
+		  onclick ="getElementById('menuform').mainselect.disabled=true;"
                             onkeydown = "var keyCode = event.which ? event.which : event.keyCode;
                              //  if (keyCode == 13) {
                                //    getElementById('menuform').submit();
@@ -272,7 +272,7 @@
         <td valign="top"><?php print_string('linktitle','block_menu_flyout'); ?></td>
         <td valign="top">
                  <input type="text" name="addmenu" id="addmenu" size="30"
-                  onfocus ="getElementById('menuform').main.disabled=false;"
+                  onclick ="getElementById('menuform').main.disabled=false;"
                                     onkeydown = "var keyCode = event.which ? event.which : event.keyCode;
                                        if (keyCode == 13) {
                                            getElementById('menuform').submit();
@@ -293,10 +293,10 @@
         <td>
         <fieldset class="invisiblefieldset">
         <p>
-            <input type=radio name="r1" id="r1" value="1" onfocus ="getElementById('menuform').subselect.disabled=true; getElementById('menuform').main.disabled=false;" checked="checked" />
+            <input type=radio name="r1" id="r1" value="1" onclick ="getElementById('menuform').subselect.disabled=true; getElementById('menuform').main.disabled=false;" checked="checked" />
             <?php print_string('addasmenu','block_menu_flyout'); ?></p> <?php print_string('or','block_menu_flyout'); ?> <p>
             <input type=radio name="r1" id="r2" value="2"
-             onfocus ="getElementById('menuform').subselect.disabled=false;"
+             onclick ="getElementById('menuform').subselect.disabled=false;"
                             /><?php print_string('or','block_menu_flyout'); ?> <?php print_string('addassubmenu','block_menu_flyout'); ?></p></fieldset>
             <br>
 <?php
@@ -308,18 +308,18 @@
                     while ($rs = rs_fetch_next_record($menumembers)) {
                             // Change URL's topic of 999 from the DB to state URL
                             if ($rs->topic_id == 999 || $rs->topic_id == 0) {
-                                $rs->topic_id = "URL";
-                            }
-                        $menumembersoptions .= "<option value=\"$rs->id\">&#9500;".$rs->topic_id.'-'.$rs->name."</option>\n";
+                                $rs->topic_id = get_string('link','block_menu_flyout');
+                            } else { $rs->topic_id = get_string('topic','block_menu_flyout')." {$rs->topic_id}"; }
+                        $menumembersoptions .= "<option value=\"$rs->id\">&#9512;".$rs->name." ({$rs->topic_id})</option>\n";
                          $sql2="select * from {$CFG->prefix}menu_flyout where parent='$rs->id' order by id";
                          $menumembers1 = get_recordset_sql($sql2);
                                 if ($menumembers1 != false) {
                                 while ($rs1 = rs_fetch_next_record($menumembers1)) {
                                         // Change URL's topic of 999 from the DB to state URL
                                         if ($rs1->topic_id == 999 || $rs1->topic_id == 0) {
-                                            $rs1->topic_id = "URL";
-                                        }
-                                    $menumembersoptions.="<option value=\"$rs1->id\">&#9500;&#9472;".$rs1->topic_id.'-'.$rs1->name."</option>\n";
+                                            $rs1->topic_id = get_string('link','block_menu_flyout');
+                                        } else { $rs1->topic_id = get_string('topic','block_menu_flyout')." {$rs1->topic_id}"; }
+                                    $menumembersoptions.="<option value=\"$rs1->id\">&#9512;&#9472;".$rs1->name." ({$rs1->topic_id})</option>\n";
 
                                     // Level Three
                                     $sql3="select * from {$CFG->prefix}menu_flyout where parent='$rs1->id' order by id";
@@ -328,9 +328,9 @@
                                         while ($rs2 = rs_fetch_next_record($menumembers2)) {
                                             // Change URL's topic of 999 from the DB to state URL
                                             if ($rs2->topic_id == 999 || $rs2->topic_id == 0) {
-                                                $rs2->topic_id = "URL";
-                                            }
-                                        $menumembersoptions.="<option value=\"$rs2->id\">&#9500;&#9472;&#9472;&#9472;".$rs2->topic_id.'-'.$rs2->name."</option>\n";
+                                                $rs2->topic_id = get_string('link','block_menu_flyout');
+                                            } else { $rs2->topic_id = get_string('topic','block_menu_flyout')." {$rs2->topic_id}"; }
+                                        $menumembersoptions.="<option value=\"$rs2->id\">&#9512;&#9472;&#9472;&#9472;".$rs2->name." ({$rs2->topic_id})</option>\n";
                                             // Level Three
                                              $sql4="select * from {$CFG->prefix}menu_flyout where parent='$rs2->id' order by id";
                                              $menumembers3 = get_recordset_sql($sql4);
@@ -339,9 +339,9 @@
                                                 while ($rs3 = rs_fetch_next_record($menumembers3)) {
                                                     // Change URL's topic of 999 from the DB to state URL
                                                     if ($rs3->topic_id == 999 || $rs3->topic_id == 0) {
-                                                        $rs3->topic_id = "URL";
-                                                    }
-                                                   $menumembersoptions.="<option value=\"$rs3->id\">&#9500;&#9472;&#9472;&#9472;&#9472;&#9472;".$rs3->topic_id.'-'.$rs3->name."</option>\n";
+                                                        $rs3->topic_id = get_string('link','block_menu_flyout');
+                                                    } else { $rs3->topic_id = get_string('topic','block_menu_flyout')." {$rs3->topic_id}"; }
+                                                   $menumembersoptions.="<option value=\"$rs3->id\">&#9512;&#9472;&#9472;&#9472;&#9472;&#9472;".$rs3->name." ($rs3->topic_id)</option>\n";
                                                 }
                                                 // End Level Four
                                             }
@@ -393,7 +393,7 @@
                 ?>
          </td>
          <td>
-            <?php echo '<div class="loginfo"><input type="button" value="'.get_string('addmenutocourse','block_menu_flyout').'" onclick="window.location.href=\''.$CFG->wwwroot.'/course/view.php?id='.$courseid.'\'"></div>'; ?>
+            <?php echo '<div class="loginfo"><input type="button" value="'.get_string('gotocourse','block_menu_flyout').'" onclick="window.location.href=\''.$CFG->wwwroot.'/course/view.php?id='.$courseid.'\'"></div>'; ?>
          </td>
      </tr>
    </table>
@@ -415,7 +415,7 @@
 			// Check whether a menu arrow is needed
 			$sql_2="select * from {$CFG->prefix}menu_flyout where parent='$rs_1->id' order by id";
 			$cnt=count_records_sql($sql_2);
-			$menu_bullet_img = '<img src="'.$CFG->wwwroot.'/blocks/menu_flyout/course.gif" />';
+			$menu_bullet_img = '<img src="'.$CFG->wwwroot.'/blocks/menu_flyout/course.png" />';
 			$atag='<a ';
 			if ($cnt != 0)
 				$atag='<a class="MenuBarItemSubmenu" ';
@@ -526,22 +526,22 @@
 
 	//position:absolute; left: 600px;
 	echo '<script src="'.$CFG->wwwroot.'/blocks/menu_flyout/flyoutmenu.js" type="text/javascript"></script>';
-	echo '<div style="float:left; margin-left:30px;"><fieldset class="visiblefieldset">Menu Preview:</br>'."\n";
-	echo 'PLEASE NOTE:</br>Clicking on a link will remove that link from the menu.</br></br><fieldset class="visiblefieldset" style="width:160px;"><div id="flyoutmenu">';
+	echo '<div style="float:right; margin-left:30px;"><fieldset class="visiblefieldset">תצוגה מקדימה של התפריט</br>'."\n";
+	echo 'שימו לב!</br>הקלקה על פריט בתפריט, תמחוק אותו</br></br><fieldset class="visiblefieldset" style="width:160px;"><div id="flyoutmenu">';
 	echo $menumembersoptions;
 	echo '</div></fieldset></fieldset></div></div>';
 	echo '</div>';
 
 	//Delete All Form
 	echo '<div style="clear:both"><br /></div>';
-	echo '<div style="float:right;"><form name=frmdelmenu action="menueditor.php" method="post">';
+	echo '<div class="actions"><form name=frmdelmenu action="menueditor.php" method="post">';
 	echo '<input type="hidden" name=courseid value="'.$courseid.'" />';
 	echo '<input name="delall" id="delall" type="submit" value="'.get_string('deleteall','block_menu_flyout').'" />';
 	echo '<input type="hidden" name="sesskey" value="'.sesskey().'" />';
 	echo '</form></div>';
 
 	// End Delete All Form
-	echo '<div class="loginfo"><input type="button" value="'.get_string('addmenutocourse','block_menu_flyout').'" onclick="window.location.href=\''.$CFG->wwwroot.'/course/view.php?id='.$courseid.'\'"></div>';
+	//echo '<div class="loginfo"><input type="button" value="'.get_string('gotocourse','block_menu_flyout').'" onclick="window.location.href=\''.$CFG->wwwroot.'/course/view.php?id='.$courseid.'\'"></div>';
 	echo '<script src="'.$CFG->wwwroot.'/blocks/menu_flyout/flyout.js" type="text/javascript"></script>';
 
 	print_footer();

@@ -3,10 +3,18 @@
 class block_menu_flyout extends block_base {
     function init() {
         $this->title = get_string('menu_flyout','block_menu_flyout');
-        $this->version = 2007101545; // 2007101541;
+        $this->version = 2007101546; // 2007101541;
     }
 
     function has_config() {return true;}
+
+    function instance_allow_multiple() {
+        return true;
+    }
+
+    function specialization() {
+        $this->title = isset($this->config->title) ? format_string($this->config->title) : format_string(get_string('menu_flyout', 'block_menu_flyout'));
+    }
 
     function get_content() {
         global $USER, $CFG, $COURSE;
@@ -22,7 +30,7 @@ class block_menu_flyout extends block_base {
         if (empty($this->instance)) {
             return $this->content;
         }
-$menumembersoptions='';
+		$menumembersoptions='';
 
 	$SQL="select * from {$CFG->prefix}menu_flyout where courseid='$COURSE->id' and parent=0 order by id";
 	$menumembers = get_recordset_sql($SQL);
@@ -32,7 +40,7 @@ $menumembersoptions='';
 		while ($rs = rs_fetch_next_record($menumembers)) {
 			$sql1="select * from {$CFG->prefix}menu_flyout where parent='$rs->id' order by id";
 			$cnt=count_records_sql($sql1);
-			$menu_bullet_img = '<img src="'.$CFG->wwwroot.'/blocks/menu_flyout/course.gif" />';
+			$menu_bullet_img = '<img src="'.$CFG->wwwroot.'/blocks/menu_flyout/course.png" />';
 			$atag='<a ';
 			if ($cnt != 0)
 				$atag='<a class="MenuBarItemSubmenu" ';

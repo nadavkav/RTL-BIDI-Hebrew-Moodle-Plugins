@@ -7,4 +7,8 @@ $string['menu_flyout'] = 'Menu Flyout';
 $string['leaveblanktohide'] = 'Leave blank to hide the title';
 $string['newhtmlblock'] = '(new Menu block)';
 
+$string['gotocourse'] = 'Back to Course';
+$string['link'] = 'Link';
+$string['topic'] = 'Topic';
+
 ?>

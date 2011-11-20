@@ -22,4 +22,8 @@ $string['externalurl'] = 'כתובת אתר אינטרנט';
 $string['addassubmenu'] = 'הוספה לתת־תפריט';
 $string['addasmenu'] = 'הוספה לתפריט';
 
+$string['gotocourse'] = 'חזרה למרחב הלימוד';
+$string['link'] = 'קישור';
+$string['topic'] = 'יחידה';
+
 ?>
