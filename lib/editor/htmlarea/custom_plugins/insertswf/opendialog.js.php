@@ -33,6 +33,10 @@ function __insertswf (editor) {
         f_height : image.height
     };
 
+    // Make sure that editor has focus
+    editor.focusEditor();
+    var sel = editor._getSelection();
+    var range = editor._createRange(sel);
     nbDialog("<?php
     if(true or !empty($courseid) and has_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid)) ) {
         echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/insertswf/dialog.php?id=$courseid";
@@ -43,20 +47,15 @@ function __insertswf (editor) {
         if (!param) {   // user must have pressed Cancel
             return false;
         }
-        var img = image;
-        if (!img) {
-            var sel = editor._getSelection();
-            var range = editor._createRange(sel);
-                if (HTMLArea.is_ie) {
-                editor._doc.execCommand("insertimage", false, param.f_url);
-                }
-            if (HTMLArea.is_ie) {
-                img = range.parentElement();
-                // wonder if this works...
-                if (img.tagName.toLowerCase() != "img") {
-                    img = img.previousSibling;
-                }
-            } else {
+
+        if (HTMLArea.is_ie){
+
+            range.pasteHTML("<embed src='" + param.f_url + "' \
+                                    alt='" + param.f_alt + "' \
+                                    width='" + param.f_width +"' \
+                                    height='" + param.f_height + "'></embed>");
+
+        } else {
                 // MOODLE HACK: startContainer.perviousSibling
                 // Doesn't work so we'll use createElement and
                 // insertNodeAtSelection
@@ -66,10 +65,7 @@ function __insertswf (editor) {
                 img.setAttribute("src",""+ param.f_url +"");
                 img.setAttribute("alt",""+ param.f_alt +"");
                 editor.insertNodeAtSelection(img);
-            }
-        } else {
-            img.src = param.f_url;
-        }
+
         for (field in param) {
             var value = param[field];
             switch (field) {
@@ -93,6 +89,7 @@ function __insertswf (editor) {
                     }
                     break;
             }
+        }
         }
     });
 }
