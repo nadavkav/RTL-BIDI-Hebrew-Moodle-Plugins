@@ -1,0 +1,21 @@
+Install:
+copy preview-qst.php to /moodle/question folder
+copy filter.php to /moodle/filter/qst folder
+Click the Notifications link in the main Admin block
+
+Follow the proper syntax for embedding a question into the text:
+// This filter allows you to display a single question from
+// the "question bank".
+//
+// Syntax for videos is:
+//     [[q:course_id:question_id:height:width|title]]
+// where:
+//     q:        acronym of "question", must be always present.
+//     course_id:    you can see it when you hover with the mouse pointer over the
+//                         question's preview icon in the quesion bank page.
+//     question_id:    you can see it when you hover with the mouse pointer over the
+//                         question's preview icon in the quesion bank page.
+//     height : height of the frame that is embeded inside the resource's page.
+//     width : width of the frame that is embeded inside the resource's page.
+//     title:     free text to be displayed before the quesiotn's frame
+//
