@@ -56,11 +56,11 @@ Attached is a SysAdmin global setting form "htmlarea_plugins.php" which must be 
 
 Installation
 
-1. Apply the patch.
-2. Unzip custom_plugins.zip into "lib/editor/htmlarea/custom_plugins"
+0. Download custom_plugins.zip and custom_plugins_all_plugins.tar.gz from the GIT repo (https://github.com/nadavkav/RTL-BIDI-Hebrew-Moodle-Plugins/tree/master/lib/editor/htmlarea)
+1. Unzip custom_plugins.zip and apply the patch file (htmlarea_custom_plugins.patch)
+2. Unzip custom_plugins_all_plugins.tar.gz into "lib/editor/htmlarea/custom_plugins"
 3. Copy "htmlarea_plugins.php" to "admin/settings"
-4. As SysAdmin, start a browser and open "http://youmoodle/admin/settings.php?section=htmlareasettings"
-select the plugins you wish to enable and save the settings.
+4. As SysAdmin, start a browser and open "http://your-moodle/admin/settings.php?section=htmlareasettings" select (SHIFT+CLICK) the plugins you wish to enable and save the settings.
 5. Open the HTMLAREA Editor (and checkout your new plugins!)
 
 I would love to get feedback on this patch and any of the attached plugins.
