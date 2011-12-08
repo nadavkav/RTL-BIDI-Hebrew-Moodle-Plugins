@@ -26,26 +26,17 @@ class mod_oublog_mod_form extends moodleform_mod {
 //-------------------------------------------------------------------------------
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-    /// Adding the standard "name" field
+        /// Adding the standard "name" field
         $mform->addElement('text', 'name', get_string('blogname', 'oublog'), array('size'=>'64'));
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
-    /// Adding the "summary" field
+        /// Adding the "summary" field
         $mform->addElement('htmleditor', 'summary', get_string('summary', 'oublog'));
         $mform->setType('summary', PARAM_RAW);
         $mform->setHelpButton('summary', array('writing', 'richtext'), false, 'editorhelpbutton');
 
         if (!defined('OUBLOG_EDIT_INSTANCE')) {
-        /// Adding the "allowcomments" field
-            $options = array(OUBLOG_COMMENTS_ALLOW   => get_string('logincomments', 'oublog'),
-                 OUBLOG_COMMENTS_ALLOWPUBLIC => get_string('publiccomments', 'oublog'),
-                             OUBLOG_COMMENTS_PREVENT => get_string('nocomments', 'oublog'));
-
-            $mform->addElement('select', 'allowcomments', get_string('allowcommentsmax', 'oublog'), $options);
-            $mform->setType('allowcomments', PARAM_INT);
-            $mform->setHelpButton('allowcomments', array('allowcomments', get_string('allowcomments', 'oublog'), 'oublog'));
-
             /// Adding the "individual" field
             $options = array(OUBLOG_NO_INDIVIDUAL_BLOGS       => get_string('no_blogtogetheroringroups', 'oublog'),
                              OUBLOG_SEPARATE_INDIVIDUAL_BLOGS => get_string('separateindividualblogs', 'oublog'),
@@ -55,10 +46,19 @@ class mod_oublog_mod_form extends moodleform_mod {
             $mform->setDefault('individual', OUBLOG_NO_INDIVIDUAL_BLOGS);
             $mform->setHelpButton('individual', array('individual', get_string('individualblogs', 'oublog'), 'oublog'));
 
+            /// Adding the "allowcomments" field
+            $options = array(OUBLOG_COMMENTS_ALLOW   => get_string('logincomments', 'oublog'),
+                 OUBLOG_COMMENTS_ALLOWPUBLIC => get_string('publiccomments', 'oublog'),
+                             OUBLOG_COMMENTS_PREVENT => get_string('nocomments', 'oublog'));
+
+            $mform->addElement('select', 'allowcomments', get_string('allowcommentsmax', 'oublog'), $options);
+            $mform->setType('allowcomments', PARAM_INT);
+            $mform->setHelpButton('allowcomments', array('allowcomments', get_string('allowcomments', 'oublog'), 'oublog'));
+
             //disable "maxvisibility" field when "individual" field is set (not default)
             $mform->disabledIf('maxvisibility', 'individual', OUBLOG_NO_INDIVIDUAL_BLOGS, OUBLOG_NO_INDIVIDUAL_BLOGS);
 
-       /// Adding the "maxvisibility" field
+            /// Adding the "maxvisibility" field
             $options = array(OUBLOG_VISIBILITY_COURSEUSER   => get_string('visiblecourseusers', 'oublog'),
                              OUBLOG_VISIBILITY_LOGGEDINUSER => get_string('visibleloggedinusers', 'oublog'),
                              OUBLOG_VISIBILITY_PUBLIC       => get_string('visiblepublic', 'oublog'));
@@ -84,10 +84,10 @@ class mod_oublog_mod_form extends moodleform_mod {
         $this->add_action_buttons();
 
     }
-    
+
     function add_completion_rules() {
         $mform =& $this->_form;
-    
+
         $group=array();
         $group[] =& $mform->createElement('checkbox', 'completionpostsenabled', ' ', get_string('completionposts','oublog'));
         $group[] =& $mform->createElement('text', 'completionposts', ' ', array('size'=>3));
@@ -95,7 +95,7 @@ class mod_oublog_mod_form extends moodleform_mod {
         $mform->addGroup($group, 'completionpostsgroup', get_string('completionpostsgroup','oublog'), array(' '), false);
         $mform->setHelpButton('completionpostsgroup', array('completion', get_string('completionpostshelp', 'oublog'), 'oublog'));
         $mform->disabledIf('completionposts','completionpostsenabled','notchecked');
-    
+
         $group=array();
         $group[] =& $mform->createElement('checkbox', 'completioncommentsenabled', ' ', get_string('completioncomments','oublog'));
         $group[] =& $mform->createElement('text', 'completioncomments', ' ', array('size'=>3));
@@ -103,15 +103,15 @@ class mod_oublog_mod_form extends moodleform_mod {
         $mform->addGroup($group, 'completioncommentsgroup', get_string('completioncommentsgroup','oublog'), array(' '), false);
         $mform->setHelpButton('completioncommentsgroup', array('completion', get_string('completioncommentshelp', 'oublog'), 'oublog'));
         $mform->disabledIf('completioncomments','completioncommentsenabled','notchecked');
-        
+
         return array('completionpostsgroup','completioncommentsgroup');
     }
-    
+
     function completion_rule_enabled($data) {
         return ((!empty($data['completionpostsenabled']) && $data['completionposts']!=0)) ||
             ((!empty($data['completioncommentsenabled']) && $data['completioncomments']!=0));
     }
-    
+
     function get_data() {
         $data=parent::get_data();
         if(!$data) {
@@ -127,7 +127,7 @@ class mod_oublog_mod_form extends moodleform_mod {
         }
         return $data;
     }
-    
+
     function data_preprocessing(&$default_values){
         // Set up the completion checkboxes which aren't part of standard data.
         // We also make the default value (if you turn on the checkbox) for those
@@ -146,7 +146,7 @@ class mod_oublog_mod_form extends moodleform_mod {
 
     function validation($data, $files) {
         $errors = array();
-        if (!empty($data['groupmode']) && isset($data['allowcomments']) && 
+        if (!empty($data['groupmode']) && isset($data['allowcomments']) &&
                 $data['allowcomments'] == OUBLOG_COMMENTS_ALLOWPUBLIC) {
             $errors['allowcomments'] = get_string('error_grouppubliccomments', 'oublog');
         }

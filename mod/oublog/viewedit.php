@@ -49,7 +49,7 @@
 
 /// Set-up groups
     $currentgroup = oublog_get_activity_group($cm, true);
-    $groupmode = oublog_get_activity_groupmode($cm);
+    $groupmode = oublog_get_activity_groupmode($cm, $course);
 
 /// Generate extra navigation
     $extranav = array();
@@ -62,6 +62,12 @@
 
 /// Print the header
     if ($oublog->global) {
+        if (!$oubloginstance = get_record('oublog_instances', 'id', $post->oubloginstancesid)) {
+            error('Blog instance not found');
+        }
+        if (!$oubloguser = get_record('user', 'id', $oubloginstance->userid)) {
+            error("User not found");
+        }
         $returnurl = 'view.php?user='.$oubloguser->id;
 
         $navlinks = array();
@@ -96,14 +102,14 @@
     ?>
     <div id="middle-column">
         <div class="oublog-post">
-            <h3><?= format_string($edit->oldtitle) ?></h3>
+            <h3><?php print format_string($edit->oldtitle) ?></h3>
             <div class="oublog-post-date">
-                <?= oublog_date($edit->timeupdated) ?>
+                <?php print oublog_date($edit->timeupdated) ?>
             </div>
-            <p><?= format_text($edit->oldmessage, FORMAT_HTML) ?></p>
+            <p><?php print format_text($edit->oldmessage, FORMAT_HTML) ?></p>
         </div>
     </div>
-    <?
+    <?php
 
 
 

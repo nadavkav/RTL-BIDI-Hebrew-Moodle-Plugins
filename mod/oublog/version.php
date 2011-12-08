@@ -12,5 +12,5 @@ $module->version  = 2010070101;
 $module->requires = 2007101508;
 $module->cron     = 60*60*4; // 4 hours
 
-$module->displayversion = 'Stable R1.5';
+$module->displayversion = 'Stable R2.2';
 ?>

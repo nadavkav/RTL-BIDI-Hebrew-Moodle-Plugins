@@ -70,7 +70,7 @@ if ($oublog->global) {
 
 // Set up groups
 $currentgroup = oublog_get_activity_group($cm, true);
-$groupmode = oublog_get_activity_groupmode($cm);
+$groupmode = oublog_get_activity_groupmode($cm, $course);
 // Note I am not sure this check is necessary, maybe it is handled by
 // oublog_get_activity_group? Or maybe more checks are needed? Not sure.
 if($currentgroup===0 && $groupmode==SEPARATEGROUPS) {

@@ -173,7 +173,7 @@ function oublog_can_post($oublog, $bloguserid=0, $cm=null) {
 
 /**
  * Determines whether the user can comment on the given blog post, presuming
- * that they are allowed to see
+ * that they are allowed to see it.
  * @param $cm Course-module (null if personal blog)
  * @param $oublog Blog object
  * @param $post Post object
@@ -187,13 +187,37 @@ function oublog_can_comment($cm, $oublog, $post) {
             has_capability('mod/oublog:contributepersonal',
                 get_context_instance(CONTEXT_SYSTEM));
     } else {
-        // Need specific comment permission in this blog, plus to be in the
-        // group; OR public comments.
-        $blogok = $oublog->allowcomments == OUBLOG_COMMENTS_ALLOWPUBLIC ||
-                (has_capability('mod/oublog:comment',
-                    get_context_instance(CONTEXT_MODULE,$cm->id)) &&
-                oublog_is_writable_group($cm));
+        $modcontext = get_context_instance(CONTEXT_MODULE, $cm->id);
+        
+        // Three ways you can comment to a course blog:
+        $blogok = 
+                // 1. Blog allows public comments
+                $oublog->allowcomments == OUBLOG_COMMENTS_ALLOWPUBLIC ||
+
+                // 2. Post is visible to all logged-in users, and you have the
+                // contributepersonal capabilty normally used for personal blogs
+                ($post->visibility >= OUBLOG_VISIBILITY_LOGGEDINUSER
+                    && $oublog->maxvisibility >= OUBLOG_VISIBILITY_LOGGEDINUSER
+                    && has_capability('mod/oublog:contributepersonal',
+                        $modcontext)) ||
+
+                // 3. You have comment permission in the specific context
+                // (= course member) and you are allowed to write to the blog
+                // group i.e. it's your group
+                (has_capability('mod/oublog:comment', $modcontext) &&
+                    oublog_is_writable_group($cm));
+
+        // Note this logic is still a bit weird with regard to groups. If
+        // there is a course blog with visible groups, users in other groups
+        // can't comment; there is a CONTRIB bug request for us to make an
+        // option for this. In that same situation, if a post is set to be
+        // visible to logged-in users, now people not in groups can suddenly
+        // comment. Hmmm. We might need another level of ->allowcomments to
+        // make this make sense, or some other changes.
     }
+
+    // If the blog allows comments, this post must allow comments and either
+    // it allows public comments or you're logged in (and not guest)
     return $blogok && $post->allowcomments &&
             ($post->allowcomments >= OUBLOG_COMMENTS_ALLOWPUBLIC ||
                 (isloggedin() && !isguestuser()));
@@ -1423,7 +1447,7 @@ function oublog_get_feed_comments($blogid, $bloginstancesid, $postid, $user, $al
     }
     if (!empty($CFG->enablegroupings) && !empty($cm->groupingid)) {
         if ($groups = get_records('groupings_groups', 'groupingid', $cm->groupingid, null, 'groupid')) {
-            $sqlwhere .= "AND p.groupid IN (".implode(',', array_keys($groups)).") ";
+            $sqlwhere .= "AND p.groupid IN (0,".implode(',', array_keys($groups)).") ";
         }
     }
 
@@ -1433,7 +1457,8 @@ function oublog_get_feed_comments($blogid, $bloginstancesid, $postid, $user, $al
             INNER JOIN {$CFG->prefix}oublog_posts p ON c.postid = p.id
             INNER JOIN {$CFG->prefix}oublog_instances i ON p.oubloginstancesid = i.id
             LEFT JOIN {$CFG->prefix}user u ON c.userid = u.id
-            WHERE c.deletedby IS NULL AND p.visibility >= $allowedvisibility $sqlwhere
+            WHERE c.deletedby IS NULL AND p.deletedby IS NULL
+            AND p.visibility >= $allowedvisibility $sqlwhere
             ORDER BY GREATEST(c.timeapproved, c.timeposted) DESC ";
 
     $rs = get_recordset_sql($sql, 0, OUBLOG_MAX_FEED_ITEMS);
@@ -1442,14 +1467,15 @@ function oublog_get_feed_comments($blogid, $bloginstancesid, $postid, $user, $al
         $item->link = $CFG->wwwroot.'/mod/oublog/viewpost.php?post='.$item->postid;
 
         if ($item->title) {
-            $item->description = "<h3> $item->title</h3>".$item->description;
+            $item->description = "<h3>" . s($item->title) . "</h3>"
+                    . $item->description;
         }
 
         //add post title if there, otherwise add shorten post message instead
         if ($item->posttitle) {
             $linktopost = get_string('re', 'oublog', $item->posttitle);
         } else {
-            $linktopost = get_string('re', 'oublog', shorten_text($item->postmessage));
+            $linktopost = get_string('re', 'oublog', html_to_text(shorten_text($item->postmessage)));
         }
         $item->title = $linktopost;
         $item->author = fullname($item);
@@ -1540,6 +1566,10 @@ function oublog_get_feed_posts($blogid, $bloginstance, $user, $allowedvisibility
         $item->author = fullname($item);
         $item->tags = array();
         $item->tagscheme = $scheme;
+        // Feeds do not allow blank titles
+        if ((string)$item->title === '') {
+            $item->title = html_to_text(shorten_text($item->description));
+        }
         $items[$item->id] = $item;
     }
     rs_close($rs);
@@ -2321,7 +2351,7 @@ function ou_print_mobile_navigation($id = null , $blogdets = null, $post = null,
 	global $CFG;
 
 	if($id){
-		$qs   = 'id='.$id.'&direct=1';
+		$qs   = 'id='.$id.'&amp;direct=1';
 		$file = 'view';
 	}
 	else if ($user){
@@ -2334,7 +2364,7 @@ function ou_print_mobile_navigation($id = null , $blogdets = null, $post = null,
 	}
 
     if($blogdets != 'show'){
-        $qs           .= '&blogdets=show';
+        $qs           .= '&amp;blogdets=show';
         $desc        = get_string('viewblogdetails','oublog');
         $class_extras = '';
     }

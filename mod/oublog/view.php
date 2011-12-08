@@ -17,13 +17,13 @@ require_once('locallib.php');
 
 if(class_exists('ouflags')) {
     require_once('../../local/mobile/ou_lib.php');
-    
+
     global $OUMOBILESUPPORT;
     $OUMOBILESUPPORT = true;
     ou_set_is_mobile(ou_get_is_mobile_from_cookies());
 
-    $blogdets = optional_param('blogdets', null, PARAM_TEXT); 
-	
+    $blogdets = optional_param('blogdets', null, PARAM_TEXT);
+
     $DASHBOARD_COUNTER=DASHBOARD_BLOG_VIEW;
 }
 
@@ -74,6 +74,13 @@ if ($id) {
 if ($oublog->global && empty($user)) {
     redirect('view.php?user='.$USER->id);
     exit;
+}
+
+// If viewing a course blog that requires login, but you're not logged in,
+// this causes odd behaviour in OU systems, so redirect to bloglogin.php
+if ($oublog->maxvisibility != OUBLOG_VISIBILITY_PUBLIC && !isloggedin()) {
+    redirect('bloglogin.php?returnurl=' .
+            substr($FULLME, strpos($FULLME, 'view.php')));
 }
 
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
@@ -174,7 +181,7 @@ if($oublog->individual) {
         && !has_capability('mod/oublog:viewindividual', $context)) {
         $showgroupselector = false;
     }
-    
+
     $canpost=true;
     $individualdetails = oublog_individual_get_activity_details($cm, $returnurl, $oublog, $currentgroup, $context);
     if ($individualdetails) {
@@ -210,22 +217,22 @@ if ($oublog->global) {
     if($hideunusedblog) {
         print_header();
     } else {
-        $navigation = oublog_build_navigation($cm, $oublog, $oubloginstance, 
+        $navigation = oublog_build_navigation($cm, $oublog, $oubloginstance,
             $oubloguser, $extranav);
         print_header_simple(format_string($oublog->name), "", $navigation, "", oublog_get_meta_tags($oublog, $oubloginstance, $currentgroup, $cm), true,
             $buttontext, navmenu($course, $cm));
     }
 } else {
-    $navigation = oublog_build_navigation($cm, $oublog, $oubloginstance, 
+    $navigation = oublog_build_navigation($cm, $oublog, $oubloginstance,
         null, $extranav);
     print_header_simple(format_string($oublog->name), "", $navigation, "", oublog_get_meta_tags($oublog, $oubloginstance, $currentgroup, $cm), true,
                   $buttontext, navmenu($course, $cm));
 }
 
-print '<div class="oublog-topofpage"></div>';    
+print '<div class="oublog-topofpage"></div>';
 
 require_once(dirname(__FILE__).'/pagelib.php');
- 
+
 // Initialize $PAGE, compute blocks
 $PAGE       = page_create_instance($oublog->id);
 $pageblocks = blocks_setup($PAGE);
@@ -259,7 +266,7 @@ if(!$hideunusedblog) {
         print_side_block($strtags, $tags, NULL, NULL, NULL, array('id' => 'oublog-tags'),$strtags);
     }
 
-/// Links
+    /// Links
     $links = oublog_get_links($oublog, $oubloginstance, $context);
     if ($links) {
         print_side_block($strlinks, $links, NULL, NULL, NULL, array('id' => 'oublog-links'),$strlinks);
@@ -269,6 +276,27 @@ if(!$hideunusedblog) {
     if ($feeds = oublog_get_feedblock($oublog, $oubloginstance, $currentgroup, false, $cm, $currentindividual)) {
         $feedicon = ' <img src="'.$CFG->pixpath.'/i/rss.gif" alt="'.get_string('blogfeed', 'oublog').'"  class="feedicon" />';
         print_side_block($strfeeds . $feedicon, $feeds, NULL, NULL, NULL, array('id' => 'oublog-feeds'), $strfeeds);
+    }
+
+    if (true and has_capability('moodle/legacy:editingteacher', $context, $USER->id, false)) {
+
+      $timestart = round(time() - COURSE_MAX_RECENT_PERIOD, -2); // better db caching for guests - 100 seconds
+
+      if (!has_capability('moodle/legacy:guest', $context, NULL, false)) {
+          if (!empty($USER->lastcourseaccess[$course->id])) {
+              if ($USER->lastcourseaccess[$course->id] > $timestart) {
+                  $timestart = $USER->lastcourseaccess[$course->id];
+              }
+          }
+      }
+
+      // Slightly hacky way to do it but...
+//         ob_start();
+//         oublog_print_recent_activity($COURSE,NULL,$timestart);
+//         $oublog_recent_activity = ob_get_contents();
+//         ob_end_clean();
+        $oublog_recent_activity = 'None';
+        print_side_block(get_string('recentactivity', 'oublog'), $oublog_recent_activity, NULL, NULL, NULL, array('id' => 'oublog-recent-activity'),get_string('recentactivity', 'oublog'));
     }
 }
 
@@ -290,11 +318,11 @@ if (!class_exists('ouflags') || !ou_get_is_mobile()){
 	$classes.=$hasleft ? 'has-left-column ' : '';
     $classes.='has-right-column ';
 }
-    
+
 $classes=trim($classes);
 if($classes) {
     print '<div id="middle-column" class="'.$classes.'">';
-} else {    
+} else {
     print '<div id="middle-column">';
 }
 
@@ -305,7 +333,7 @@ if (class_exists('ouflags') && ou_get_is_mobile()){
 print skip_main_destination();
 
 //adding a link to the computing guide
-if (class_exists('ouflags')) { 
+if (class_exists('ouflags')) {
     require_once($CFG->dirroot.'/local/utils_shared.php');
     $computingguidelink = get_link_to_computing_guide('oublog');
     print '<span class="computing-guide"> '.$computingguidelink.'</span>';
@@ -359,7 +387,7 @@ if ($posts) {
         print "<div class='oublog-olderposts'><a href=\"$returnurl&amp;offset=".($offset+OUBLOG_POSTS_PER_PAGE)."\">$strolderposts</a></div>";
     }
     echo '</div>';
-} 
+}
 
 // Print information allowing the user to log in if necessary, or letting
 // them know if there are no posts in the blog
@@ -390,7 +418,7 @@ if (class_exists('ouflags') && !$oublog->global) {
 echo "<div class=\"clearer\"></div><div class=\"oublog-views\">$strviews $views</div></div>";
 
 if(class_exists('ouflags')) {
-    completion_set_module_viewed($course,$cm);    
+    completion_set_module_viewed($course,$cm);
 }
 
 if (class_exists('ouflags') && ou_get_is_mobile()){

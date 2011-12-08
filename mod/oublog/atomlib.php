@@ -84,7 +84,7 @@ function atom_add_items($items) {
                 $result .= atom_full_tag('name',3,false, $item->author);
                 $result .= atom_end_tag('author',2,true);
             }
-            $result .= atom_full_tag('content',2,false,'<div xmlns="http://www.w3.org/1999/xhtml">'.purify_html($item->description).'</div>', $xhtmlattr);
+            $result .= atom_full_tag('content',2,false,'<div xmlns="http://www.w3.org/1999/xhtml">'.clean_text($item->description, FORMAT_HTML).'</div>', $xhtmlattr);
             $result .= atom_full_tag('id',2,false,$item->link);
             if (isset($item->tags)) {
                 $tagdata = array();

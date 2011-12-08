@@ -543,6 +543,7 @@ return false;
  */
 function oublog_ousearch_update_all($feedback=false,$courseid=0) {
     global $CFG;
+    require_once($CFG->dirroot . '/mod/oublog/locallib.php');
 
     // Get all existing blogs as $cm objects (which we are going to need to
     // do the updates). get_records is ok here because we're only taking a

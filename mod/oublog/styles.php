@@ -162,26 +162,26 @@
 
 #mod-oublog-view #left-column,
 #mod-oublog-allposts #left-column {
-  width:17em;
+  width:15em;
 	float:left;
 }
 #mod-oublog-view #right-column,
 #mod-oublog-viewpost #right-column,
 #mod-oublog-viewedit #right-column,
 #mod-oublog-allposts #right-column {
-  width:17em;
+  width:15em;
 	float:right;
 }
 #mod-oublog-view #middle-column.has-right-column,
 #mod-oublog-viewpost #middle-column.has-right-column,
 #mod-oublog-viewedit #middle-column.has-right-column,
 #mod-oublog-allposts #middle-column.has-right-column {
-  margin-right:19em;
+  margin-right:16em;
 }
 #mod-oublog-view #middle-column.has-left-column,
 #mod-oublog-viewpost #middle-column.has-left-column,
 #mod-oublog-allposts #middle-column.has-left-column {
-  margin-left:19em;
+  margin-left:16em;
 }
 
 .oublog-post.oublog-hasuserpic,
