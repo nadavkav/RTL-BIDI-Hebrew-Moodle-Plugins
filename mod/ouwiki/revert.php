@@ -18,8 +18,9 @@ if (!$pageversion || !empty($pageversion->deletedat)) {
     print_error('reverterrorversion', 'ouwiki');
 }
 
-// Check for cancel
-$cancelled = optional_param('cancel', null, PARAM_ALPHA);
+// Check for cancel. Note check must be PARAM_RAW so that it includes non-ascii
+// cahracters from language translations
+$cancelled = optional_param('cancel', null, PARAM_RAW); 
 if (isset($cancelled)) {
     redirect('history.php?'.ouwiki_display_wiki_parameters($pagename, $subwiki, $cm, OUWIKI_PARAMS_URL));
     exit;
@@ -32,8 +33,8 @@ if(!$canrevert) {
 }
 
 // Check if reverting to previous version has been confirmed
-$confirmed = optional_param('confirm', null, PARAM_ALPHA);
-if($confirmed or $_POST['confirm']) { // fix: did not revert to old versions since it was ignoring "confirm" POST value (nadavkav) 
+$confirmed = optional_param('confirm', null, PARAM_RAW);
+if($confirmed) {
 
     // Lock something - but maybe this should be the current version
     list($lockok, $lock) = ouwiki_obtain_lock($ouwiki, $pageversion->pageid);

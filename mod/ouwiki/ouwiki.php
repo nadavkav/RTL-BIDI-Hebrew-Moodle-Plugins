@@ -2534,6 +2534,7 @@ function ouwiki_create_new_page($course,$cm,$ouwiki,$subwiki,$pagename, $newpage
     if(empty($pagename)) {
         $pagename = null;
     }
+    add_to_log($course->id,'ouwiki',"add page",$pagename,$newpagename,$cm->id);
     ouwiki_save_new_version($course,$cm,$ouwiki,$subwiki,$pagename,$sourcecontent);
 }
 

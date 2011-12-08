@@ -389,4 +389,6 @@ $string['displayversion'] = 'OU wiki version: <strong>$a</strong>';
 // OU only
 $string['externaldashboardadd'] = 'Add wiki to dashboard';
 $string['externaldashboardremove'] = 'Remove wiki from dashboard';
+$string['showallannotations'] = 'Show all annotations';
+$string['hideallannotations'] = 'Hide all annotations';
 ?>
