@@ -7,7 +7,7 @@ $string['searchresultsfor'] = 'Search results for <strong>$a</strong>';
 $string['noresults'] = 'Could not find any matching results. Try using different words or removing words from your query.';
 $string['nomoreresults'] = 'Could not find any more results.';
 $string['previousresults']='Back to results $a';
-$string['findmoreresults']='Find more results';
+$string['findmoreresults']='More results';
 $string['searchtime']='Search time: {$a}s';
 $string['resultsfail']='Could not find any results including the word <strong>$a</strong>. Try using different words.';
 $string['configremote']='<div>IP addresses that are permitted to use the remote search facility, intended for integration with other search engines.</div><p>This should be a list of zero or more numeric IP addresses, comma-separated.</p><p>Be careful! Requests from these IP addresses can search (and see summary text) as if they were any user. The default, blank, prevents this access.</p>';  
@@ -24,4 +24,5 @@ $string['searchthiswebsitenotice']='<strong>Warning</strong>: This search featur
 $string['seachtypeisnotselected']='<strong>Search type not set.</strong> Click on the edit icon and choose a search type for this block.';
 
 $string['displayversion'] = 'OU search version: <strong>$a</strong>';
+$string['nowordsinquery'] = 'Enter some words in the search box.';
 ?>

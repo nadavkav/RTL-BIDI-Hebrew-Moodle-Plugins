@@ -5,6 +5,9 @@ require_once('searchlib.php');
 
 // User must be logged in
 $courseid=required_param('course',PARAM_INT);
+$plugin = optional_param('plugin', '',PARAM_RAW);
+
+// User must be logged in
 $coursecontext=get_context_instance(CONTEXT_COURSE,$courseid);
 require_login($courseid);
 
@@ -15,7 +18,12 @@ print_header_simple(get_string('searchresults'), "", $navigation);
 
 $querytext=stripslashes(required_param('query',PARAM_RAW));
 $query=new ousearch_search($querytext);
-$query->set_visible_modules_in_course($COURSE);
+if (strpos($plugin, 'mod/') === 0) {
+    $modname = substr($plugin, 4);
+} else {
+    $modname = null;
+}
+$query->set_visible_modules_in_course($COURSE, $modname);
 
 // Restrict them to the groups they belong to
 if (!isset($USER->groupmember[$courseid])) {
@@ -29,7 +37,6 @@ $query->set_group_exceptions(ousearch_get_group_exceptions($courseid));
 
 $query->set_user_id($USER->id);
 
-$plugin=optional_param('plugin', '',PARAM_RAW);
 $query->set_plugin($plugin);
 
 ousearch_display_results(

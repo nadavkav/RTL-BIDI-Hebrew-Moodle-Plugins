@@ -12,6 +12,10 @@ require_once(dirname(__FILE__).'/../../config.php');
 define('OUSEARCH_SUMMARYLENGTH',50);  // Number of words in summary
 define('OUSEARCH_RESULTSPERPAGE',10); // Number of results to display on default search result pages
 define('OUSEARCH_SUPPORTS_OR',false); // No you can't just set this to true to make it support OR
+// Maximum length of words stored in database. Note: Reducing this would
+// probably be a good idea but would require a possibly-complex database
+// update in order to reassign existing words.
+define('OUSEARCH_DB_MAX_WORD_LENGTH', 255);
 
 /** Class that handles documents */
 class ousearch_document {
@@ -266,6 +270,25 @@ class ousearch_document {
         if(count($wordset)==0) {
             return true;
         }
+
+        // Cut down all words to max db length
+        $tl = textlib_get_instance();
+        foreach($wordset as $word=>$count) {
+            // Check byte length just to save time
+            if (strlen($word) > OUSEARCH_DB_MAX_WORD_LENGTH) {
+                // Cut length of word
+                $short = $tl->substr($word, 0, OUSEARCH_DB_MAX_WORD_LENGTH);
+
+                // Combine with existing word if there are two with same prefix
+                if(array_key_exists($short, $wordset)) {
+                    $count += $wordset[$short];
+                }
+
+                // Save as short word and remove long one
+                $wordset[$short] = $count;
+                unset($wordset[$word]);
+            }
+        }
         
         // Get word IDs from database
         $list='';
@@ -517,9 +540,13 @@ class ousearch_search {
         // Refill those arrays from the query text        
         $words=ousearch_document::split_words($query,true);
         $currentquote=array(); $sign=false; $inquote=false;
+        $tl = textlib_get_instance();
         foreach($words as $word) {
             // Clean word to get rid of +, ", and - except if it's in the middle            
             $cleaned=preg_replace('/(^-)|(-$)/','',preg_replace('/[+"]/','',$word));
+
+            // Shorten word if necessary to db length
+            $cleaned = $tl->substr($cleaned, 0, OUSEARCH_DB_MAX_WORD_LENGTH);
             if($inquote) {
                 // Handle hyphenated words
                 if(strpos($cleaned,'-')!==false) {
@@ -603,11 +630,16 @@ class ousearch_search {
      * Restricts search to the course-modules that are visible to the current
      * user on the given course.
      * @param object $course Moodle course object
+     * @param string $modname If set, restricts to modules of certain name
+     *   e.g. forumng
      */
-    function set_visible_modules_in_course($course) {
+    function set_visible_modules_in_course($course, $modname = null) {
         $modinfo = get_fast_modinfo($course);
         $visiblecms = array();
         foreach ($modinfo->cms as $cm) {
+            if ($modname && $cm->modname != $modname) {
+                continue;
+            }
             if ($cm->uservisible) {
                 $visiblecms[$cm->id] = $cm;
             }
@@ -643,6 +675,9 @@ class ousearch_search {
      * @param object $cmarray Array of course-modules or null to cancel this requirement
      */
     function set_coursemodule_array($cmarray) {        
+        if (is_array($cmarray) && empty($cmarray)) {
+            $cmarray = array((object)array('id'=>-1,'course'=>-1));
+        }
         $this->cmarray=$cmarray;
         if($cmarray) {
             $this->courseid=0;
@@ -684,72 +719,93 @@ class ousearch_search {
         $this->allownouser=$ornone;
     }
     
+    /**
+     * @param array $ids Array of numbers
+     * @return String of form '= 4' or 'IN (1,2,3)'
+     */
+    static function internal_in_or_equals($ids) {
+        if (empty($ids)) {
+            return '= -1';
+        }
+        if (count($ids) == 1) {
+            return '= ' . reset($ids);
+        }
+        return 'IN (' . implode(',', $ids) . ')';
+    }
     function internal_get_restrictions() {
         $where='';
         if($this->courseid) {
-            $where.=' AND d.courseid='.$this->courseid;
+            $where .= "\nAND d.courseid = " . $this->courseid;
         }
-        if($this->plugin) {
-            $where.=" AND d.plugin='".addslashes($this->plugin)."'";
-        }        
+        if ($this->plugin) {
+            $where .= "\nAND d.plugin = '" . addslashes($this->plugin) . "'";
+        }
+        $cmrestrictions = false;
         if($this->coursemoduleid) {
-            $where.=' AND d.coursemoduleid='.$this->coursemoduleid;
+            $where .= "\nAND d.coursemoduleid = " . $this->coursemoduleid;
+            $cmrestrictions = array($this->coursemoduleid => true);
         }
         if($this->cmarray) {
             // The courses restriction is technically unnecessary except
             // that we don't have index on coursemoduleid alone, so 
             // it is probably better to use course.
-            $courses=''; $cms=''; $first=true;
-            foreach($this->cmarray as $cm) {
-                if($first) {
-                    $first=false;
-                } else {
-                    $courses.=',';
-                    $cms.=','; 
-                }
-                $courses.=$cm->course;
-                $cms.=$cm->id;
+            $uniquecourses = array();
+            $cmrestrictions = array();
+            foreach ($this->cmarray as $cm) {
+                $cmrestrictions[$cm->id] = true;
+                $uniquecourses[$cm->course] = true;
             }
-            $where.=' AND d.coursemoduleid IN ('.$cms.') AND d.courseid IN ('.$courses.')';
+            $where.= "\nAND d.coursemoduleid " .
+                    self::internal_in_or_equals(array_keys($cmrestrictions)) .
+                    "\nAND d.courseid " .
+                    self::internal_in_or_equals(array_keys($uniquecourses));
         }
         if(is_array($this->groupids)) {
             if($this->groupids==OUSEARCH_NONE) {
-                $where.=' AND d.groupid IS NULL';
+                $where .= "\nAND d.groupid IS NULL";
             } else {
-                $where.=' AND ';
+                $where .= "\nAND";
                 if($this->groupexceptions) {
-                    $gxcourses=''; $gxcms=''; $first=true;
+                    $gxcourses = array();
+                    $gxcms = array();
                     foreach($this->groupexceptions AS $cm) {
-                        if($first) {
-                            $first=false;
-                        } else {
-                            $gxcourses.=',';
-                            $gxcms.=','; 
+                        // If we are restricting to CMs, don't bother including
+                        // group exceptions for CMs that are not in that list
+                        if ($cmrestrictions) {
+                            if (!array_key_exists($cm->id, $cmrestrictions)) {
+                                continue;
+                            }
                         }
-                        $gxcourses.=$cm->course;
-                        $gxcms.=$cm->id;
+                        $gxcms[$cm->id] = true;
+                        $gxcourses[$cm->course] = true;
                     }
-                    $where.='((d.coursemoduleid IN ('.$gxcms.') AND d.courseid IN ('.$gxcourses.')) OR ';
+                    $where.="\n(\n (\n  d.coursemoduleid " .
+                            self::internal_in_or_equals(array_keys($gxcms)) .
+                            "\n  AND d.courseid " .
+                            self::internal_in_or_equals(array_keys($gxcourses)) .
+                            "\n )\n OR";
                 } 
                 if (count($this->groupids) == 0) {
-                    $where.='(FALSE';
+                    $where.="\n (\n FALSE";
                 } else {
-                    $where.='(d.groupid IN ('.implode(',',$this->groupids).')';
+                    $where.="\n (\n  d.groupid " .
+                            self::internal_in_or_equals($this->groupids);
                 }
                 if($this->allownogroup) {
                     $where.=' OR d.groupid IS NULL';
                 }
-                $where.=')';
                 if($this->groupexceptions) {
-                    $where.=')';
+                    $where .= "\n )\n)";
+                } else {
+                    $where .= "\n)";
                 }
             }
         }
         if($this->userid) {
             if($this->userid==OUSEARCH_NONE) {
-                $where.=' AND d.userid IS NULL';
+                $where .= "\nAND d.userid IS NULL";
             } else {
-                $where.=' AND (d.userid='.$this->userid;
+                $where .= "\nAND (d.userid=" . $this->userid;
                 if($this->allownouser) {
                     $where.=' OR d.userid IS NULL';
                 }
@@ -777,7 +833,7 @@ class ousearch_search {
         }
         $allwords=array_unique($allwords);
         if(count($allwords)===0) {
-            return array(false,'No words matched');
+            return array(false, null);
         }
         // OK, great, now let's build a query for all those words
         $wordlist='';
@@ -897,7 +953,7 @@ FROM $from
 INNER JOIN {$CFG->prefix}block_ousearch_documents d ON d.id=o0.documentid
 LEFT JOIN {$CFG->prefix}course c ON d.courseid=c.id
 LEFT JOIN {$CFG->prefix}groups g ON d.groupid=g.id
-WHERE $where ".$this->internal_get_restrictions()." AND $total>0
+WHERE $where ".$this->internal_get_restrictions()."\nAND $total>0
 ORDER BY totalscore DESC";
         $result=get_records_sql($query,$start,$limit);
         if(!$result) {
@@ -1367,10 +1423,16 @@ function ousearch_format_results($results, $title, $number=1,
     $prevlink=null, $prevrange=null, $nextlink=null,
     $searchtime=null) {
     $out = '<div class="ousearch_results">';
-    $out .= '<h2>' . $title . '</h2>';
+    if ($title === '') {
+        $out .= '<h2>' . $title . '</h2>';
+    }
 
     if (!$results->success) {
-        $out .= '<p>' . get_string('resultsfail', 'block_ousearch', $results->problemword) . '</p>';
+        if($results->problemword === null){
+            $out .= '<p>'.get_string('nowordsinquery', 'block_ousearch').'</p>'; 
+        } else {
+            $out .= '<p>' . get_string('resultsfail', 'block_ousearch', $results->problemword) . '</p>';
+        }
     }  else {
         if ($prevlink) {
             $out .= '<p>' . link_arrow_left(
