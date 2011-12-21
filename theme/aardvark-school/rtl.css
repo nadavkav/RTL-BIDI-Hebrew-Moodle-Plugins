@@ -1,0 +1,25 @@
+#top_menu ul li {
+float:right;
+}
+
+#top_menu ul {
+float:right;
+}
+
+div#top_menu_date {
+float:left;
+}
+
+body#files-index.files textarea#edit-text.form-textarea {
+  direction:ltr;
+}
+
+.header-profileblock {
+    left: 30px;
+    text-align: right;
+}
+
+#course-view .section td.left {
+  border-right:1px solid;
+  border-left:none;
+}

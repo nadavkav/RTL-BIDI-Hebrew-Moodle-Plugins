@@ -1,0 +1,516 @@
+/* Core */
+
+body {
+    margin: 5px;
+}
+
+.surround {
+  margin-left: auto; 
+  margin-right: auto;
+  max-width: 960px;
+  position: relative;
+}
+
+h1.main,
+h2.main,
+h3.main,
+h4.main,
+h5.main,
+h6.main {
+  text-align: left;
+  padding-left: 5px;
+} 
+
+h1, h2, h3, h4 {
+  text-align: left;
+}
+
+h1 {
+  padding: 6px;
+}
+
+h2 {
+  padding: 4px;
+
+}
+
+h2.headingblock.header  {
+border: 1px;
+	}
+
+h2.main  {
+border: 0px;
+	}
+h3 {
+  padding: 3px;
+  
+
+}
+
+#layout-table #left-column, #layout-table #right-column {
+    /*border: 1px solid;*/
+    border: none;
+
+
+}
+
+#left-column .hidden .header, #right-column .hidden .header {
+border-bottom-style:dashed;
+border-bottom-width:1px;
+}
+
+#layout-table {
+  border: none;
+}
+
+#content {
+clear:both;
+overflow: auto;
+}
+  
+h1, h2, h3, th.header {
+  border-width: 0px;
+  border-style: solid; 
+}
+
+h4 {
+  border-bottom-style: solid;
+  border-bottom-width:1px; 
+}
+
+input, select {
+  padding: 0px;
+}
+#layout-table #middle-column{
+  vertical-align:top;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+#layout-table #left-column{
+  vertical-align:top;
+  padding-left:5px;
+  padding-right:0px;
+}
+
+#layout-table #right-column{
+  vertical-align:top;
+  padding-left:0px;
+  padding-right:5px;
+}
+
+.sitetopic {
+  padding:0px;
+  margin: 0px;
+}
+
+.generaltable {
+  border-width:0px; 
+}
+
+.glossarytable {
+  border-width:1px; 
+  border-style:solid; 
+}
+
+
+.generalbox {
+  border-width:1px; 
+  border-style:solid; 
+  padding: 5px; 
+  margin-bottom:30px;
+
+}
+
+.sitetopiccontent {
+  border-width:1px;
+  border-style:solid;
+
+
+}
+
+.clearfix { 
+ min-width: 0; 
+ /* overflow: hidden; */ 
+}
+
+.clearfix:after {
+  /* content: "<!-- -->";  */
+  content: "."; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+/***
+ *** Header
+ ***/
+
+#header-home {
+  /* padding:1em 0.5em; */
+  height:90px;
+  border-width:0px;
+  border-style:solid;
+}
+
+#header {
+  /* height:50px; */
+  border-width:0px;
+  border-style:solid;
+}
+
+.headermain, h1.headermain {
+  float:left;
+  margin:0%;
+  padding:0%;
+  border-width: 0px;
+  padding-left: 5px;
+}
+
+.headermenu {
+  float:right;
+  text-align:right;
+}
+
+.header-profilepic {
+
+  text-align:right;
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  border: 1px solid #999999;
+
+}
+
+.header-profileblock {
+  float:right;
+  text-align:right;
+
+}
+
+.header-profilename {
+
+  text-align:right;
+  margin-right: 5px;
+
+}
+
+.header-profileoptions {
+  text-align:right;
+  margin-right: 5px;
+}
+
+.header-profileoptions ul li { 
+padding-left: 10px;
+display: inline; 
+}
+
+.header-profileoptions .loginform { 
+width: 5em;
+margin-left:4px;
+display: inline; 
+}
+
+.navbar {
+  width:100%;
+  padding:3px 0.5em;
+  border-width:0px;
+/*  border-style:solid; */
+}
+
+div.navbar {
+  width: auto;
+}
+
+table.navbar {
+  width: 100%;
+}
+
+.navbar .navbutton form {
+  float: left;
+}
+
+.navbar .navbutton {
+  margin-top: 3px;
+}
+
+.navbar .breadcrumb {
+  float:left;
+  margin:0.2em 0em;
+}
+
+.breadcrumb ul {
+  padding:0%;
+  margin:0%;
+  text-indent:0%;
+  list-style:none;
+}
+.breadcrumb li {
+  display:inline;
+}
+
+.navbar .navbutton,
+.navbar .menu {
+  float:right;
+}
+
+#footer .navbar {
+  margin-top: 4em;
+}
+
+
+/***
+ *** Login
+ ***/
+
+TABLE.loginbox {
+  margin-top: 40px;
+}
+
+.loginbox .header {
+  border-width:1px;
+  border-style:solid;
+  border-bottom-width: 0px;
+}
+
+.loginbox .content {
+  border-top-width: 1px;
+}
+
+
+/***
+ *** Footer
+ ***/
+ 
+#footer {
+  text-align:center;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  padding: 4px;
+  display:none;
+}
+
+ 
+#footer p.helplink {
+ margin-bottom: 0px;
+}
+
+
+/***
+ *** Blocks
+ ***/
+.sideblock {
+}
+
+.sideblock .content {
+  padding: 4px;
+  border-bottom: 1px;
+  border-top: 0px;
+  border-left: 1px;
+  border-right: 1px;
+  border-style: solid;
+}
+
+.sideblock .header, {
+  border-bottom: 0px;
+  border-top: 1px;
+  border-left: 1px;
+  border-right: 1px;
+  border-style: solid;
+ }
+
+.sideblock .header h2 {
+  border-width: 0px;
+  padding-top: 4px;
+ }
+
+.sideblock .header .hide-show-image {
+ padding-top: 4px;
+}
+ 
+.sideblock .footer {
+  border-top-width:1px;
+  border-top-style:dashed;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+  
+
+/***
+ *** Calendar
+ ***/
+ 
+ 
+#calendar .maincalendar,
+#calendar .sidecalendar,
+#calendar .maincalendar .event {
+  border:1px solid;
+  padding:4px;
+}
+ 
+#calendar .sideblock .header {
+  border-left:0px solid !important;
+  border-top:0px solid !important;
+  border-right:0px solid !important;
+  border-bottom:0px solid !important;
+
+}
+ 
+ 
+#calendar .today,
+.minicalendar .today {
+  border:1px solid !important;
+}
+
+ 
+table.minicalendar {
+  width: 100%;
+  margin:10px auto;
+  padding:2px;
+  border-width:1px;
+  border-style:solid;
+  border-collapse:separate;
+  border-spacing:1px !important;
+}
+
+table.minicalendar tr.weekdays th {
+   border-style: none;
+}
+
+
+
+table.minicalendar tr td.day {
+  border-style: solid;
+  border-width: 1px;
+}
+
+table.minicalendar tr.weekdays th abbr {
+  border-style: none;
+
+  }
+  
+
+
+table.calendarmonth {
+  border-collapse:separate;
+  border-spacing:1px !important;
+  border: none;
+}
+
+
+
+table.calendarmonth tr td  {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.cal_popup_bg {
+position:relative;
+  left:-350px;
+  padding:0px;
+  margin:0px;
+  border:1px solid;
+}
+
+/***
+ *** Course
+ ***/
+ 
+.headingblock {
+  border-width:1px;
+  border-style:solid;
+  padding:4px;
+}
+
+
+.categorybox .category,
+.categorybox .category {
+  border-bottom: solid;
+  border-width: 1px;
+  padding-top: 7px;
+}
+
+#course-view .section .left {
+  border-right-width: 1px;
+  border-right-style: dashed;
+}
+
+#course-view .section.hidden .content,
+#course-view .section.hidden .side {
+  border-width: 1px;
+  border-style: dashed;
+}
+
+#course-view .section td.content ul.section.img-text {
+	line-height: 22px;
+}
+
+#course-view .section td.content ul.section.img-text li.activity.label {
+	line-height: 16px;
+	margin-bottom: 5px;
+}
+
+.coursebox .info .name {
+  padding-bottom: 5px;
+  }
+
+.tabrow0 { 
+   padding-top: 4px; 
+} 
+
+/***
+ *** Modules: glossary
+ ***/
+
+.entry .concept,
+.entryheader .concept {
+   margin-top: 5px;
+   margin-bottom: 10px;
+
+}
+
+.glossarypost.continuous {
+	padding: 5px;
+}
+
+/***
+ *** Error message
+ ***/
+
+.errorbox {
+/*   color:#ffffff; */
+   border-width: 2px;
+}
+
+div.summary {
+background-color:Cornsilk;
+}
+
+.header-profileblock {
+    background: none repeat scroll 0 0 white;
+	text-align:left;
+    padding: 3px;
+	border:1px outset gray;
+    position: absolute;
+    left: 30px;
+    top: -16px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+	background-color: #F8EFC2;
+    font-size: 14px;
+ 
+}
+
+.loginbox {
+  width:99%;
+}

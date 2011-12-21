@@ -1,0 +1,28 @@
+</div> <!-- end div containerContent -->
+<!-- START OF FOOTER -->
+<div id="footer">
+
+<div><P>
+	<a href="http://"><img src="<?php echo $CFG->httpswwwroot.'/theme/'.current_theme() ?>/images/dummylogo.png" width="82" height="50" border="0" hspace="10" align="absmiddle"></a> 
+	<a href="http://moodle.org"><img src="<?php echo $CFG->httpswwwroot.'/theme/'.current_theme() ?>/images/aardvarklogo.png" width="100" height="50" border="0" hspace="10" align="absmiddle"></a>
+	<a href="http://moodle.org"><img src="<?php echo $CFG->httpswwwroot.'/theme/'.current_theme() ?>/images/orglogo.png" width="100" height="50" border="0" hspace="10" align="absmiddle"></a>
+
+</P>
+
+<P><font size="1">This site is maintained and operated by [DEPARTMENT]. <BR>
+		  For more information please <a href="mailto:noreply@moodle.org">contact us</a>. [COLLEGE/SCHOOL] is not responsible for the content of external internet sites.</font></p>
+ <P><font size="1">Original theme created by Shaun Daubney (Newbury College).</font></P></div>
+ 
+</div>
+</div>
+
+<?php
+if (file_exists($CFG->dataroot.'/'.$COURSE->id.'/custom_theme_by_teacher.css')) {
+  echo "<style>";
+  echo file_get_contents($CFG->dataroot.'/'.$COURSE->id.'/custom_theme_by_teacher.css');
+  echo "</style>";
+}
+?>
+
+</body>
+</html>

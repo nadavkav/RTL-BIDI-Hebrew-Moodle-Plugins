@@ -1,0 +1,10 @@
+This theme, allow changing of Header image, menu and style from within the course file sections
+
+To make or change the main menu:
+Please copy the menu.txt file from the the theme's folder to the moodledata/1 folder
+
+To update the course's styles:
+Please create or copy the custom_style.css file from the theme's folder to the moodledata/1 folder
+
+To replace the current Header image:
+Please create a header-logo.jpeg file and place it inside theme's folder to the moodledata/1 folder
