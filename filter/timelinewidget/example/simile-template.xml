@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../simile-xml.css" type="text/css"?>
+<data
+  xml:lang="en"
+  wiki-url="http://my.school/moodle/mod/forum/discuss.php?d=2&amp;wiki-title="
+  wiki-section="Inventions"
+  >
+  <!--
+  Source:
+  -->
+  <event
+    start="868"
+    end="1468"
+    isDuration="true"
+    title="Printing: from Chinese woodblock printing, to Gutenberg"
+    link="http://en.wikipedia.org/wiki/Johannes_Gutenberg"
+    image="http://listverse.files.wordpress.com/2007/09/press-tm.jpg?w=129&amp;h=187"
+    icon=""> 
+    &lt;p>The &lt;a href="http://en.wikipedia.org/wiki/Four_Great_Inventions_of_Ancient_China#Printing">Chinese invention of Woodblock printing&lt;/a>, at some point before 
+    ...
+    &lt;/p>
+    </event>
+
+</data>

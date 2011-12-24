@@ -1,0 +1,15 @@
+@charset "UTF-8";
+/*
+ simile-xml.css Stylesheet for SIMILE Timeline data XML.
+ Copyright N.D.Freear, 28 August 2010.
+*/
+@namespace html url( http://www.w3.org/1999/xhtml );
+
+data  { font:1em Arial,sans-serif; }
+event { display:block; margin:1em; }
+event:before{ content:attr(start)' - 'attr(end)' : 'attr(title);
+    display:block; color:#00c; margin:.5em 0; font-size:1.1em; }
+event[class=dummy]:before{ content:''; }
+
+data html|a    { display:block; margin:1em; }
+data html|title{ display:block; font-size:1.7em; color:#00c;}

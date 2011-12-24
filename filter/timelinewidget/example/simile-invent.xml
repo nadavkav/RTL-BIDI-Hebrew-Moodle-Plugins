@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="/moodle/filter/timelinewidget/simile-xml.css" type="text/css" ?>
+<data
+    xml:lang="en"
+    xmlns="http://simile.mit.edu/"
+    wiki-url="/moodle/mod/forum/view.php?f=10&amp;title="
+    wiki-section="Inventions">
+    <!-- Source:
+    http://listverse.com/2007/09/13/top-10-greatest-inventions/
+    http://inventors.about.com/od/famousinventions/tp/topteninvention.htm
+    http://en.wikipedia.org/wiki/
+
+    Also: penicillin (antibiotics), telegraph-telephone-radio-TV, car/automobile, electricity, flight, paper, gunpowder, transistor, .
+
+    (c)Nick Freear 18 October 2010.
+    -->
+    <event class="dummy" start="-2800" title="Important Inventions timeline" icon="0.gif">
+      <!-- A dummy event, containing some HTML. -->
+      <html:html xmlns:html="http://www.w3.org/1999/xhtml">
+        <html:title>2800BC - 1970: Important Inventions timeline</html:title>
+        <html:a href="/moodle/mod/resource/view.php?id=35">Resource page</html:a>
+      </html:html>
+    </event>
+
+    <event start="-700" end="1875" isDuration="true"
+    title="Plumbing &amp; sanitation: from Mohenjo-Daro (2800BC), to Bazalgette"
+    link="http://en.wikipedia.org/wiki/Toilet#History"
+    image="http://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/The_Octagon%2C_Crossness_Pumping_Station.jpg/220px-The_Octagon%2C_Crossness_Pumping_Station.jpg">
+    &lt;a href="http://en.wikipedia.org/wiki/Toilet#History">Wikipedia: According to Teresi et al. (2002)&lt;/a>:[18]
+    &lt;blockquote>&lt;p>The third millennium B.C. was the "Age of Cleanliness." Toilets and sewers were invented in several parts of the world, and Mohenjo-Daro [Pakistan/Anc. India] circa 2800 B.C. had some of the most advanced, with lavatories built into the outer walls of houses. These were "Western-style" toilets made from bricks with wooden seats on top.&lt;/p>&lt;/blockquote>
+    &lt;p>&lt;a href="http://en.wikipedia.org/wiki/Joseph_Bazalgette">Sir Joseph William Bazalgette&lt;/a>, CB (28 March 1819 – 15 March 1891) was an English civil engineer whose major achievement was the creation of a sewer network for central London which was instrumental in relieving the city from cholera epidemics, while beginning the cleansing of the River Thames.&lt;/p>
+    &lt;p>&lt;a href="http://listverse.com/2007/09/13/top-10-greatest-inventions/#10">Listverse: The ability&lt;/a> to remove sewage from and bring clean water into places of dense human habitation makes the modern city possible. Without it, we’d still have cities, but not like the ones we know. A high-rise building would be impossible, really, without toilets and plumbing. Remove apartment buildings, office towers, and dense downtown cores from your picture of the world and you have to change the whole rest of your picture too, because the implications keep rippling.&lt;/p>
+    </event>
+
+    <event start="868" end="1468" isDuration="true"
+    title="Printing: from Chinese woodblock printing, to Gutenberg"
+    link="http://en.wikipedia.org/wiki/Johannes_Gutenberg"
+    image="http://listverse.files.wordpress.com/2007/09/press-tm.jpg?w=129&amp;h=187"> 
+    Wikipedia: The &lt;a href="http://en.wikipedia.org/wiki/Four_Great_Inventions_of_Ancient_China#Printing">Chinese invention of Woodblock printing&lt;/a>, at some point before the first dated book in 868 (the Diamond Sutra), produced the world's first print culture. According to A. Hyatt Mayor, curator at the Metropolitan Museum of Art, "it was the Chinese who really discovered the means of communication that was to dominate until our age."[24]
+    &lt;p>&lt;a href="http://en.wikipedia.org/wiki/Johannes_Gutenberg">Johannes Gensfleisch zur Laden zum Gutenberg&lt;/a> (c. 1398 – February 3, 1468) was a German goldsmith and printer who introduced modern book printing. His invention of mechanical movable type printing started the Printing Revolution and is widely regarded as the most important event of the modern period.[1] It played a key role in the development of the Renaissance, Reformation and the Scientific Revolution and laid the material basis for the modern knowledge-based economy and the spread of learning to the masses.[2]&lt;/p>
+    <!--&lt;p&gt;
+    The printing press was the first one of many communication mediums, changing how information was collected, stored, retrieved, criticized, discovered, and promoted. It has been implicated in the Reformation, the Renaissance and the Scientific Revolution. Johannes Gutenberg is credited with inventing the first printing press in the Western civilizations of Europe. Screw presses for olives and wine had been known in Europe since Roman times; presses for the binding of manuscript books  were also in use. Gutenberg was the first to convert the concept for printing uses. Gutenberg’s use of mechanical presses along with other innovations made printing a proto-industrial process with a far greater output compared to manuscripts made by copyists.&lt;/p&gt;
+    -->
+    </event>
+        
+    <event start="1822" end="1944" isDuration="true"
+    title="The Computer: from Charles Babbage, to Colossus"
+    link="http://en.wikipedia.org/wiki/Charles_Babbage"
+    image="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Colossus.jpg/300px-Colossus.jpg">
+    &lt;a href="http://en.wikipedia.org/wiki/Charles_Babbage">Wikipedia: Charles Babbage&lt;/a>, FRS (26 December 1791 – 18 October 1871)[2] was an English mathematician, philosopher, inventor, and mechanical engineer who originated the concept of a programmable computer.[3] He began in 1822 with what he called the &lt;strong>difference engine&lt;/strong>.
+    &lt;p>The &lt;a href="http://en.wikipedia.org/wiki/Colossus_computer">Colossus machines&lt;/a> were electronic computing devices used by British codebreakers to help read encrypted German messages during World War II. <!--These were the world's first programmable, digital, electronic, computing devices.--> They were designed by Tommy Flowers at Dollis Hill in 1943, and used at Bletchley Park from 1944.&lt;/p>
+    <!--In 1837, Charles Babbage was the first to conceptualize and design  a fully programmable mechanical computer that he called “The Analytical Engine”. Due to limited finance, and an inability to resist tinkering with the design, Babbage never actually built his Analytical Engine. Large-scale automated data processing of punched cards was performed for the U.S. Census  in 1890 by tabulating machines designed by Herman Hollerith and manufactured by the Computing Tabulating Recording Corporation, which later became IBM.
+    -->
+    </event>
+
+    <event start="1796" end="1970" isDuration="true"
+    title="Vaccines: from Edward Jenner, to the end of Smallpox in the 70s"
+    link="http://en.wikipedia.org/wiki/Vaccine#History"
+    image="http://upload.wikimedia.org/wikipedia/commons/c/cf/Edward_Jenner2.jpg">
+    Sometime during the 1770s &lt;a href="http://en.wikipedia.org/wiki/Edward_Jenner">Edward Jenner&lt;/a> heard a milkmaid boast that she would never have the often-fatal or disfiguring disease smallpox, because she had already had cowpox, which has a very mild effect in humans. In 1796, Jenner took pus from the hand of a milkmaid with cowpox, inoculated an 8-year-old boy with it, and six weeks later variolated the boy's arm with smallpox, afterwards observing that the boy did not catch smallpox.[1][2] Louis Pasteur generalized Jenner's idea by developing what he called a rabies vaccine (now termed an antitoxin), and in the nineteenth century vaccines were considered a matter of national prestige, and compulsory vaccination laws were passed.[1]
+    &lt;p>Major achievements included the development of the polio vaccine in the 1950s and the eradication of smallpox during the 1960s and 1970s. Maurice Hilleman was the most prolific of the developers of the vaccines in the twentieth century. As vaccines became more common, many people began taking them for granted. However, vaccines remain elusive for many important diseases, including malaria and HIV.[1]&lt;/p>
+    &lt;a href="http://www.funtrivia.com/askft/Question87262.html">Funtrivia, 2007: Who was the inventor of the first vaccine?&lt;/a>
+    </event>
+
+    <event start="1040" end="1736" isDuration="true"
+    title="Navigation aids: from the Chinese compass, to the Longitude prize"
+    image="http://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Grasshopper-escapement-005.gif/220px-Grasshopper-escapement-005.gif">
+    The earliest &lt;a href="http://en.wikipedia.org/wiki/Four_Great_Inventions_of_Ancient_China#Compass">reference to magnetism in Chinese literature&lt;/a> is found in a 4th century BC book called Book of the Devil Valley Master (鬼谷子): "The lodestone makes iron come or it attracts it."[10]
+    &lt;p>The earliest reference to a magnetic device used as a "direction finder" is in a Song Dynasty book dated to AD 1040-44. Here there is a description of an iron "south-pointing fish" floating in a bowl of water, aligning itself to the south.&lt;/p>
+    &lt;p>&lt;a href="http://en.wikipedia.org/wiki/John_Harrison">John Harrison&lt;/a> (24 March 1693 – 24 March 1776) was a self-educated English clockmaker. He invented the marine chronometer, a long-sought device in solving the problem of establishing the East-West position or longitude of a ship at sea, thus revolutionising and extending the possibility of safe long distance sea travel in the Age of Sail. The problem was considered so intractable that the British Parliament offered a prize of £20,000 (comparable to £2.87 million / €3.65 million / $4.72 million in modern currency) for the solution.[1][2]&lt;/p>
+    Note: These inventions helped the spread of trade and knowledge around the world.
+    </event>
+
+    <event start="1698" end="1775" isDuration="true"
+    title="Steam Engine: from Thomas Savery, to Watt &amp; Boulton"
+    link="http://en.wikipedia.org/wiki/Newcomen_steam_engine"
+    image="http://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Newcomen_atmospheric_engine_animation.gif/160px-Newcomen_atmospheric_engine_animation.gif">
+    Thomas Savery was an English military engineer and inventor who in 1698, patented the first crude steam engine. &lt;http://en.wikipedia.org/wiki/Newcomen_steam_engine">Thomas Newcomen&lt;/a> invented the atmospheric steam engine in 1712. &lt;a href="http://en.wikipedia.org/wiki/Watt_steam_engine">James Watt’s incarnation&lt;/a> of the steam engine ushered in the Industrial Revolution. His centrifugal governor kept the engine running at the desired rate, and is a modification so simple and elegant that it may be one of the best ideas of all time.
+    &lt;p>&lt;a href="http://animatedengines.com/watt.shtml">Watt engine - animated&lt;/a>.&lt;/p>
+    </event>
+
+    <!--<event start="1872" end="1873" isDuration="true"
+    title="I"
+    image="&base;impression-sunrise.png"
+    icon="green-circle.png"
+    link=""
+    >
+    .
+    </event>
+
+    <event start="1872" end="1873" isDuration="true"
+    title="I"
+    image="&base;impression-sunrise.png"
+    icon="green-circle.png"
+    link=""
+    >
+        .
+    </event>
+    -->
+</data>
+
