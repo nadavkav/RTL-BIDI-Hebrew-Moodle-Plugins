@@ -119,7 +119,7 @@ function print_weekly_activities_bar(&$course, &$sections, &$mods, $week=0) {
     $actbar .= '<table cellpadding="0" cellspacing="0" width="100%" class="fnweeklynav"><tr>';
     $width = (int)(100 / ($course->numsections+2));
     $actbar .= '<td width="4" align="center" height="25"></td>';
-    $actbar .= '<td height="25">'.$strtopicheading.':&nbsp;</td>';
+    //$actbar .= '<td height="25">'.$strtopicheading.':&nbsp;</td>';
     $isteacher = isteacher($course->id);
     for ($i = 1; $i <= $course->numsections; $i++) {
         if (!$sections[$i]->visible || ($timenow < $weekdate)) {
@@ -133,7 +133,7 @@ function print_weekly_activities_bar(&$course, &$sections, &$mods, $week=0) {
             } else {
                 $f = ' '.$i.' ';
             }
-            $actbar .= '<td class="'.$css.'" height="25" width="'.$width.'%">'.$f.'</td>';
+            //$actbar .= '<td class="'.$css.'" height="25" width="'.$width.'%">'.$f.'</td>';
         }
         else if ($i == $week) {
             if (!$isteacher && $course->activitytracking && is_section_finished($sections[$i], $mods)) {
@@ -142,7 +142,7 @@ function print_weekly_activities_bar(&$course, &$sections, &$mods, $week=0) {
             } else {
                 $f = '';
             }
-            $actbar .= '<td class="fnweeklynavselected" width="'.$width.'%" height="25">'.$f.$i.'</td>';
+            //$actbar .= '<td class="fnweeklynavselected" width="'.$width.'%" height="25">'.$f.$i.'</td>';
         }
         else {
             if (!$isteacher && $course->activitytracking && is_section_finished($sections[$i], $mods)) {

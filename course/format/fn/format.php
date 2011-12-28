@@ -296,7 +296,7 @@
                 } else {
                     $strmainheading = get_string('defaultmainheading', 'format_fn');
                 }
-                print_heading_block($strmainheading, 'fnoutlineheadingblock" style="margin-bottom:0;');
+                //print_heading_block($strmainheading, 'fnoutlineheadingblock" style="margin-bottom:0;');
                 if ($selected_week > 0 && !$isediting) {
                     echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">
             <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">
@@ -540,4 +540,7 @@
 
     echo "</tr>\n";
     echo "</table>\n";
+
+	// Set background color according to Moodle's selected Theme
+	echo file_get_contents($CFG->dirroot.'/course/format/'.$course->format.'/javascript.js');
 ?>

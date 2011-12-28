@@ -88,7 +88,7 @@
     font-weight: bold;
     text-align: center;
     border-right: solid 1px #9dbb61;
-    background-color: #FFFF33;
+    background-color: #CBCBCB;
     color: black;
 }
 
@@ -453,8 +453,3 @@ tr.oddrow {
     border-color:#888888;
 }
 
-/*
-#course-view #middle-column {
-    width: 0%;
-}
-*/
