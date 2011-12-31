@@ -185,7 +185,7 @@ function block_exabis_eportfolio_get_item($itemid, $access)
 
 		// comments allowed?
 		if ($item->access->request == 'extern') {
-			$item->allowComments = false;
+			$item->allowComments = $view->externcomment;//false;
 			$item->showComments = $view->externcomment;
 			// TODO: comments anhand view einstellung zeigen
 		} else {

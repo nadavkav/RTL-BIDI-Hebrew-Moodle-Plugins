@@ -92,10 +92,10 @@ for ($column_i = 1; $column_i<=2; $column_i++) {
 			$item = $block->item;
 
 			echo '<a class="view-item view-item-type-'.$item->type.'" href="shared_item.php?access=view/'.$access.'&itemid='.$item->id.'">';
-      date_default_timezone_set('UTC');
-      //echo '<span class="view-item-date"></span>';
+			date_default_timezone_set('UTC');
+			//echo '<span class="view-item-date"></span>';
 			echo '<span class="view-item-header" title="'.$item->type.'">'.$item->name.' ('.date("jS \of F Y",$item->timemodified).')</span>';
-			echo '<span class="view-item-text">'.$item->intro.'</span>';
+			echo '<span class="view-item-text">'.mb_substr(format_text($item->intro,FORMAT_HTML),0,1200).'</span>';
 			echo '<span class="view-item-link">'.block_exabis_eportfolio_get_string('show').'</span>';
 			echo '</a>';
 		} elseif ($block->type == 'personal_information') {

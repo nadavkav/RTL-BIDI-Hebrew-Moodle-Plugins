@@ -1,19 +1,23 @@
-
+﻿
 #view .view-column {
-	padding-left: 10px;
+	padding-left: 0;
 }
 #view .view-column-1 {
-	padding-left: 0;
+	padding-left: 10px;
 }
 
 #view .view-personal-information {
 	border: 1px solid #ddd;
 	padding: 4px 8px;
 	margin-bottom: 10px;
+	background-color: #91C86E;
 }
 #view .view-header {
-	padding: 14px 8px 3px 8px;
+	padding: 2px 8px;
 	margin: 0 0 10px 0;
+	border: 1px #CCCCCC solid;
+	background-color: #DEEFD3;
+	font-size: 18px;
 }
 #view .view-text {
 	border: 1px solid #ddd;
@@ -53,13 +57,23 @@
 	display: block;
 }
 #view .view-item-link {
-	display: block;
-	padding: 4px 8px;
-	text-align: right;
-	font-size: 12px;
+  background-color: #333333;
+  border: 0 none;
+  color: #FFFFFF;
+  display: block;
+  font-size: 12px;
+  margin: 5px 0;
+  text-align: center;
 }
 #view .view-item:hover .view-item-link {
 	text-decoration: underline;
 }
 
-
+/* Add by Nir 
+------------------------ */
+.forumpost .starter {
+	text-align: right !important;
+}
+.forumpost .content {
+  text-align: right !important;
+}
