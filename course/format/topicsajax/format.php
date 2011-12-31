@@ -93,11 +93,24 @@
     echo skip_main_destination();
 
     //print_heading_block(get_string('topicoutline'), 'outline');
-echo '
-<button id="next">Next Topic</button>
-<button id="prev">Previous Topic</button>
+    $topicbutton = '';
+
+    for ($topic = 0;  $topic < $COURSE->numsections ; $topic++) {
+        $topicbutton .= "<button id=\"topic{$topic}\">Topic {$topic}</button>";
+        $topicbuttonevent .= '
+            Event.on("topic'.$topic.'", "click", function(e) {
+                topic = '.$topic.';
+                console.log("topic: '.$topic.'");
+                var request = YAHOO.util.Connect.asyncRequest("GET", sUrl + "'.$topic.'", callback);
+            });
+        ';
+    }
+
+
+echo $topicbutton.'
 
 <div id="dynamictopic"></div>
+<div id="beforeme"></div>
 
 <script type="text/javascript">
 (function() {
@@ -117,6 +130,16 @@ echo '
 //	        div.innerHTML += "<li>Server response: " + o.responseText + "</li>"; 
 //	        div.innerHTML += "<li>Argument object: Object ( [foo] => " + o.argument.foo + 
 //	                         " [bar] => " + o.argument.bar +" )</li>"; 
+
+            var beforeme = document.getElementById("beforeme");
+
+            if ( beforeme.hasChildNodes() )
+            {
+                while ( beforeme.childNodes.length >= 1 )
+                {
+                    beforeme.removeChild( beforeme.firstChild );
+                }
+            }
 	    } 
 	} 
 	 
@@ -135,25 +158,69 @@ echo '
 	  argument: { foo:"foo", bar:"bar" } 
 	}; 
 
+    ////////////////////
+
+    var beforeme = document.getElementById("beforeme");
+
+    var handleSuccessMore = function(o){ 
+	    if(o.responseText !== undefined){ 
+	        var newdiv = document.createElement("div");
+            beforeme.insertBefore(newdiv,beforeme.previousSibling.lastChild);
+
+	        newdiv.innerHTML = o.responseText;
+	    } 
+	} 
+
+	var handleFailureMore = function(o){ 
+	    if(o.responseText !== undefined){ 
+	        newdiv.innerHTML = "<li>Transaction id: " + o.tId + "</li>"; 
+	        newdiv.innerHTML += "<li>HTTP status: " + o.status + "</li>"; 
+	        newdiv.innerHTML += "<li>Status code message: " + o.statusText + "</li>"; 
+	    } 
+	} 
+
+	var callbackmore = 
+	{ 
+	  success:handleSuccessMore, 
+	  failure: handleFailureMore, 
+	  argument: { foo:"foo", bar:"bar" } 
+	}; 
+
     Event.onDOMReady(function() {
 
+        // Display first Topic on first page load
+        var request = YAHOO.util.Connect.asyncRequest("GET", sUrl + "0", callback);
+
         Event.on("next", "click", function(e) {
-            topic += 1;
+            if (topic < '.$COURSE->numsections.') topic += 1;
             console.log("topic: " + topic);
             var request = YAHOO.util.Connect.asyncRequest("GET", sUrl + topic, callback);
 
         });
 
         Event.on("prev", "click", function(e) {
-            topic -= 1;
+            if (topic > 0) topic -= 1;
             console.log("topic: " + topic);
             var request = YAHOO.util.Connect.asyncRequest("GET", sUrl + topic, callback);
         });
+
+        Event.on("more", "click", function(e) {
+            if (topic < '.$COURSE->numsections.') topic += 1;
+            console.log("topic: " + topic);
+            var request = YAHOO.util.Connect.asyncRequest("GET", sUrl + topic, callbackmore);
+        });
+
+        '.$topicbuttonevent.'
     });
 
 })();
 </script>
 ';
+
+echo '
+    <button id="more">More...</button>
+    <button id="next">Next Topic</button>
+    <button id="prev">Previous Topic</button>';
 
     if(isediting($course->id)){
 
