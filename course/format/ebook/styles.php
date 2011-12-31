@@ -1,0 +1,10 @@
+.course-content ul.topics {margin:0;}
+.course-content ul.topics li.section {list-style: none;margin:5px 0 0 0;padding:0;}
+.course-content ul.topics li.section .content {margin:0 40px;}
+.course-content ul.topics li.section .left {width:40px;float:left;text-align:center;}
+.course-content ul.topics li.section .right {width:40px;float:right;text-align:center;}
+.jumpmenu {text-align:center;}
+
+input#ebookpage , input#ebookchapter { width:30px;}
+
+.selectedpage { background-color: #E2FBCE; font-size: 16px; padding-left: 5px;}
