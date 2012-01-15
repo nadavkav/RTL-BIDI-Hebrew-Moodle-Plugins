@@ -1,0 +1,33 @@
+﻿Moodle-FlashUpload von Helmut Geppl
+helmut.geppl@donau-uni.ac.at
+(erlaubt den Upload mehrerer Dateien im Browser mittels Flash)
+basiert auf SWFUpload v2.2.0 von http://www.swfupload.org
+(Open Source MIT License)
+
+Installationsanleitung:
+
+1. Den Ordner "flashupload" der Zip-Datei komplett nach $moodledir/files/ kopieren (z.B: /srv/www/htdocs/moodle/files ).
+
+2. Die Datei flashupload.php aus dem Ornder "de_utf8" nach $dataroot/lang/de_utf8/ kopieren
+   ($dataroot muss man durch das Moodledata-Verzeichnis z.B: "/srv/www/moodledata" unter Linux
+   bzw. "c:\moodledata" oder "c:\xampp\moodledata" unter Windows ersetzen).
+   Für Englisch die Datei aus dem Ordner "en_utf8" nach $dataroot/lang/en_utf8/ kopieren.
+   Andere Übersetzungen gibt es noch nicht. Daher muss man die Datei flashupload.php aus dem Ordner "en_utf8"
+   in das jeweilige Unterverzeichnis im Ordner $dataroot/lang/ (z.b: ru_utf8 für Russisch) kopieren und anpassen.
+
+3. Backup der Datei $moodledir/files/index.php (z.B: Kopie "index.php.orig" erstellen)
+
+4. $moodledir/files/index.php modifizieren:
+
+   a) die Datei index.php im Ordner
+      $moodledir/files öffnen
+   b) Nach "function html_header" suchen.
+   c) vor der Zeile 
+      echo "<table border=\"0\" ....
+	  folgenden Code einfügen:
+
+	  //MOD: FLASHUPLOAD - START
+	  require('flashupload/flashupload.php');
+	  //MOD: FLASHUPLOAD - END	
+
+Fertig!

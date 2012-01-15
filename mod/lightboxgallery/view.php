@@ -95,20 +95,24 @@
 /// http://www.maani.us/slideshow/index.php
 // if ($action == 'slideshow') {
 //   include_once("slideshow.php");
-// 
+//
 //   echo "<div style=\"text-align:center;\">";
 //   echo Insert_Slideshow ( "slideshow.swf", "slideshowdata.php?id=".$id, 640, 480 );
 //   echo "</div>";
 //   echo "<div style=\"text-align:center;\"><a href=\"view.php?id=$id&l=$l&action=\">חזרה, לתצוגת אלבום תמונות</a></div>";
-// 
+//
 // } else {
 //   echo "<div style=\"text-align:center;\"><a href=\"view.php?id=$id&l=$l&action=slideshow\">מצגת תמונות</a></div>";
 // }
-// echo '<div id="extragalleries" style="text-align:center;">';
-// echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/nivoslider/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshownivoslider','lightboxgallery'),520,700);
-// echo ' <<>> ';
-// echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/galleryffic/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshowgalleryffic','lightboxgallery'),768,1024);
-// echo '</div>';
+
+//
+// Unremark the following lines to enable extra special slideshow galleries
+//
+//echo '<div style="text-align:center;">';
+//echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/nivoslider/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshownivoslider','lightboxgallery'),520,700);
+//echo ' <<>> ';
+//echo link_to_popup_window($CFG->wwwroot.'/mod/lightboxgallery/galleryffic/slideshow.php?id='.$id.'&l='.$l,'slideshow',get_string('slideshowgalleryffic','lightboxgallery'),768,1024);
+//echo '</div>';
 
     print_simple_box_start('center');
 
@@ -150,11 +154,14 @@
                 $imageextra = sprintf('<br />%s<br />%s, %dx%d', $iobj->modified, $iobj->filesize, $iobj->imagesize[0], $iobj->imagesize[1]);
             }
             $imagetitle = (isset($captions[$image]) ? $captions[$image] : $image);
-            echo('<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagelabel.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.$imageextra.'</div>');
-// 			echo '<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.'<br />';
-// 			echo "<input type=\"button\" name=\"pixlreditor\" title=\"$stredit\" value=\"$stredit\" id=\"pixlreditor\" class=\"linkz buttonz\" ";
-// 			echo "onclick=\"return window.open('http://www.pixlr.com/editor/?image={$CFG->wwwroot}/sendfile.php/{$course->id}/{$gallery->folder}/{$image}', 'pixlreditor', 'width=1024,height=768,menubar=0,location=0,scrollbars,resizable', 'yes');\" />";
-// 			echo "$imageextra</div>";
+            //echo('<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagelabel.$imageextra.'</div>');
+	    echo '<div class="lightboxgalleryimage"><a href="'.$imageurl.'" rel="lightbox['.$gallery->name.']" title="'.$imagetitle.'">'.lightboxgallery_image_thumbnail($course->id, $gallery, $image).'</a><br />'.$imagetitle.'<br />';
+        //
+        // Unremark the following code to enable Edit this image button that uses a remote Pixlr.com image editing service
+        //
+	    //echo "<input type=\"button\" name=\"pixlreditor\" title=\"$stredit\" value=\"$stredit\" id=\"pixlreditor\" class=\"linkz buttonz\" ";
+        //echo "onclick=\"return window.open('http://www.pixlr.com/editor/?image={$CFG->wwwroot}/sendfile.php/{$course->id}/{$gallery->folder}/{$image}', 'pixlreditor', 'width=1024,height=768,menubar=0,location=0,scrollbars,resizable', 'yes');\" />";
+        echo "$imageextra</div>";
 	    // i removed the filenames .$imagelabel.$imageextra.
         }
     } else {

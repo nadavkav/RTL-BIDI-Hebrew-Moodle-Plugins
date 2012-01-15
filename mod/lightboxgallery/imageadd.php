@@ -32,6 +32,13 @@
     $mform = new mod_lightboxgallery_imageadd_form('imageadd.php');
     $mform->set_data(array('id' => $gallery->id));
 
+echo "<hr class=\"fullhr\">";
+//MOD: FLASHUPLOAD - START
+$wdir = '/'.$gallery->folder;
+require('flashupload.php');
+//MOD: FLASHUPLOAD - END
+echo "<hr class=\"middlehr\">";
+
     if ($mform->is_cancelled()) {
         redirect($galleryurl);
     } else if ($formdata = $mform->get_data()) {

@@ -1,0 +1,4 @@
+﻿/*
+ * moodle-flashupload (c) 2008 by Helmut Geppl under the MIT License: http://www.opensource.org/licenses/mit-license.php
+ * moodle-flashupload is based on version 2.1.0 of swfupload by http://www.swfupload.org
+ */

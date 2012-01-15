@@ -1,0 +1,34 @@
+﻿Moodle Flashupload - 2.2.0
+==========================
+
+  -- now uses swfupload 2.2.0  for the fileupload,
+     so it can be used with flashpplayer 10
+  -- Updated Translation: 
+     added hebrew translation (Thx to Nadav Kavalerchik)
+  -- a vew CSS style changes
+  -- added javascript to swfupload.js (forces user to install a newer version, if
+     a flashplayer older than 9.0.60 is used)
+     the code was added to those functions:
+     SWFUpload.prototype.appendFlash
+     SWFUpload.prototype.replaceWithFlash
+
+
+?Moodle Flashupload - 2.1.0
+==========================
+
+  -- now uses swfupload 2.1.0  for the fileupload
+  -- moved all files to folder "flashupload". Now only 3 lines of code 
+     have to be modified in $moodledir/files/index.php (Thx to Olaf Nöhring)
+  -- added display for upload speed and estimated remaining time (Code from Daem0nX )
+  -- Updated Translation
+  -- added history.txt
+
+Moodle Flashupload - 2.0.0
+==========================
+
+  -- now uses swfupload 2.0.0  for the fileupload
+
+Moodle Flashupload - 1.0.0
+==========================
+
+  -- first release of "Moodle Flashupload"
