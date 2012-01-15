@@ -93,10 +93,16 @@
     echo skip_main_destination();
 
     //print_heading_block(get_string('topicoutline'), 'outline');
-    $topicbutton = '';
+	echo '<div id="navbuttons" style="float:right;"><button id="next">הבאה</button><button id="prev">קודמת</button></div>';
+
+    $topicbutton = '<div id="navtopics" style="float:left;">';
 
     for ($topic = 0;  $topic < $COURSE->numsections ; $topic++) {
-        $topicbutton .= "<button id=\"topic{$topic}\">Topic {$topic}</button>";
+		  if ($topic == 0) {
+			$topicbutton .= "<button id=\"topic{$topic}\">מבוא</button>";
+		  } else {
+			$topicbutton .= "<button id=\"topic{$topic}\">יחידה {$topic}</button>";
+		  }
         $topicbuttonevent .= '
             Event.on("topic'.$topic.'", "click", function(e) {
                 topic = '.$topic.';
@@ -106,6 +112,7 @@
         ';
     }
 
+	$topicbutton .= '</div>';
 
 echo $topicbutton.'
 
@@ -217,10 +224,7 @@ echo $topicbutton.'
 </script>
 ';
 
-echo '
-    <button id="more">More...</button>
-    <button id="next">Next Topic</button>
-    <button id="prev">Previous Topic</button>';
+echo '<button id="more">היחידה הבאה...</button>';
 
     if(isediting($course->id)){
 
