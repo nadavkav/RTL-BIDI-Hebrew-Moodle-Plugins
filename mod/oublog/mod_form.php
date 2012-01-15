@@ -32,7 +32,7 @@ class mod_oublog_mod_form extends moodleform_mod {
         $mform->addRule('name', null, 'required', null, 'client');
 
         /// Adding the "summary" field
-        $mform->addElement('htmleditor', 'summary', get_string('summary', 'oublog'));
+        $mform->addElement('htmleditor', 'summary', get_string('summary', 'oublog'),array('rows'=>20));
         $mform->setType('summary', PARAM_RAW);
         $mform->setHelpButton('summary', array('writing', 'richtext'), false, 'editorhelpbutton');
 
