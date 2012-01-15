@@ -311,7 +311,7 @@ class modImagegallery {
              ':</strong></td>'."\n";
         echo '<td><input type="file" size="40" name="userfile" /></td></tr>'."\n";
         echo '<tr valign="top"><td align="right"><strong>'. get_string('description') .':</strong></td>'."\n";
-        echo '<td><textarea name="description" cols="40" rows="2"></textarea></td></tr>'."\n";
+        echo '<td><textarea name="description" cols="40" rows="4"></textarea></td></tr>'."\n";
         echo '<tr><td>&nbsp;</td><td>';
         echo '<input type="submit" value="'. get_string('upload') .'" />'."\n";
         echo '</td></tr></table>'."\n";
@@ -372,9 +372,9 @@ class modImagegallery {
 
                     $imgsrc = '<img src="image.php?id='.
                               $image->id .'&amp;thumb=true" '.
-                              $imginfo[3] . ' alt="'.$image->description.'" border="0" /><br />'.substr($image->description,0,30).'...<br />';
+                              $imginfo[3] . ' alt="'.$image->description.'" border="0" /><br />'.mb_substr($image->description,0,50).'...<br />';
                     if ($this->isteacher or $this->istadmin) { // display username, which uploaded the image (nadavkav)
-                        $imgsrc .= $this->get_user_fullname($image->userid);
+                        $imgsrc .= "(".$this->get_user_fullname($image->userid).")";
                     }
 
                     echo '<a href="details.php?id='. $this->cm->id .
