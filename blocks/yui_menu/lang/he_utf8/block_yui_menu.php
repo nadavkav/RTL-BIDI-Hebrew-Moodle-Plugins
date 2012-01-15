@@ -1,5 +1,5 @@
 <?php
-$string['outline'] = 'תפריט יחידות הוראה';
+$string['outline'] = 'תצוגת כל יחידות ההוראה';
 $string['blockname'] = 'תפריט נושאים, משאבים ופעילויות';
 
 // Config screen options
