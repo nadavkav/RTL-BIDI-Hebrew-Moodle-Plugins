@@ -83,7 +83,7 @@ padding:2px;
         }
     }
     // Should we display on Course's Frontpage?
-    if ($lightboxgallery->coursefp == 1 ) {
+    if (!empty($lightboxgallery->coursefp) && $lightboxgallery->coursefp == 1 ) {
         $donotshowacitivity = true;
 
         $dataroot = $CFG->dataroot . '/' . $course->id . '/' . $lightboxgallery->folder;

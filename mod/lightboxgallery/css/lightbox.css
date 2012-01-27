@@ -87,7 +87,8 @@
     background-color: #FFF;
     display: block;
     float: left;
-    padding: 3px;
+/*     padding: 3px; */
+	padding: 13px;
     margin: 2px;
     text-align: center;
 }
