@@ -21,7 +21,7 @@ function Level()
             $road = 77;
             for ($i = 1; $i <= $road ; $i++) {
 
-                echo "this.blocks[$i] = ".rand(1,3).";";
+                echo "this.blocks[$i] = ".rand(1,2).";";
             }
 
 //        this.blocks[0] = 3;
