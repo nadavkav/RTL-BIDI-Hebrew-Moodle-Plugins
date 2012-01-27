@@ -1,0 +1,25 @@
+<table cellpadding="9" cellspacing="0">
+<tr valign="top">
+    <td align="right"><?php print_string("block_calendar_hebrewdates", "block_calendar") ?><br/>hebrewdates:</td>
+    <td>
+
+	<?php if (isset($CFG->hebrewdates)) {
+                        $selected = $CFG->hebrewdates;
+                } else {
+                       $selected = '0';
+                }
+                $options = array ( '0' => get_string('no'),
+                                   '1' => get_string('yes') );
+                choose_from_menu ($options, 'hebrewdates', $selected);
+        ?>
+
+    </td>
+    <td>
+    <?php print_string("block_calendar_hebrewdates_info", "block_calendar") ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string("savechanges") ?>" /></td>
+</tr>
+</table>
