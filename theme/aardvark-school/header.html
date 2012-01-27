@@ -7,7 +7,7 @@
 	<link rel="shortcut icon" href="<?php echo $CFG->themewww .'/'. current_theme() ?>/favicon.ico" />
 	<LINK REL="StyleSheet" title="default" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/aardvark_default.css" TYPE="text/css" MEDIA=screen>
 	<!--<LINK REL="alternate stylesheet" title="default2" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/aardvark_default.css" TYPE="text/css" MEDIA=screen>-->
-	<LINK REL="StyleSheet" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/styles_print.css" TYPE="text/css" MEDIA=print>
+<!-- 	<LINK REL="StyleSheet" HREF="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/styles_print.css" TYPE="text/css" MEDIA=print> -->
 	<?php
 	if (file_exists($CFG->dataroot.'/1/custom_style.css')) {
 		echo '<LINK REL="StyleSheet" title="default" HREF="'.$CFG->wwwroot.'/sendfile.php/1/custom_style.css" TYPE="text/css" MEDIA=screen>';
@@ -17,7 +17,7 @@
 	<?php include("$CFG->javascript"); ?>
 
 <style type="text/css">
-  body {visibility:hidden;}
+/*   body {visibility:hidden;} */
 </style>
 
 <script type="text/javascript" src="<?php echo $CFG->httpsthemewww .'/'. current_theme() ?>/js/jquery/jquery.js"></script>
@@ -29,8 +29,9 @@
 <![endif]-->
 
 <script Xlanguage="javascript" type="text/javascript">
-$(document).ready(function(){
-$("body").css("visibility","visible");
+var $j = jQuery.noConflict();
+$j(document).ready(function(){
+$j("body").css("visibility","visible");
 });
 </script>
 
