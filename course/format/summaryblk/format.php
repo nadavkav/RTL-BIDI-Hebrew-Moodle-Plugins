@@ -80,13 +80,13 @@
     if (blocks_have_content($pageblocks, BLOCK_POS_LEFT) || $editing) {
         echo '<td style="width:'.$preferred_width_left.'px" id="left-column">';
 
-        $topicbutton = '<div id="navbuttons"><button id="next">הבאה</button><button id="prev">קודמת</button></div><hr/>';
+        $topicbutton = '<div id="navbuttons"><button id="next">'.get_string('next','format_summaryblk').'</button><button id="prev">'.get_string('prev','format_summaryblk').'</button></div><hr/>';
         $topicbutton .= '<div id="navtopics">';
 
         for ($topic = 0;  $topic < $COURSE->numsections ; $topic++) {
             if (empty($sections[$topic]->summary)) continue;
             if ($topic == 0) {
-                $topicbutton .= "<a id=\"topic{$topic}\" href=\"#\">מבוא</a><br/>";
+                $topicbutton .= "<a id=\"topic{$topic}\" href=\"#\">".get_string('overview','format_summaryblk')."</a><br/>";
             } else {
                 $topicbutton .= "<a id=\"topic{$topic}\" href=\"#\">".$sections[$topic]->summary."</a></br>";
             }
@@ -233,7 +233,7 @@ echo '
 </script>
 ';
 
-echo '<button id="more">היחידה הבאה...</button>';
+echo '<button id="more">'.get_string('nexttopic','format_summaryblk').'</button>';
 
     if(isediting($course->id)){
 

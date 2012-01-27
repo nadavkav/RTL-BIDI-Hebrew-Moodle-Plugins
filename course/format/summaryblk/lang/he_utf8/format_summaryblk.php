@@ -10,3 +10,7 @@
 $string['formatsummaryblk'] = 'תצוגת יחידת הוראה בודדת + תפריט מבואות צדדי';
 $string['namesummaryblk'] = 'יחידת הוראה';
 $string['navmenu'] = 'תפריט יחידות הוראה';
+$string['overview'] = 'מבוא';
+$string['prev'] = 'הקודמת';
+$string['next'] = 'הבאה';
+$string['nexttopic'] = 'היחידה הבאה...';
