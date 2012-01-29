@@ -7,7 +7,7 @@
  * Hiddenmod course format
  */
 
-$string['formathiddenmod'] = 'נושאים - פעילויות מוזחות מוסתרות';
+$string['formathiddenmod'] = 'נושאים - פעילויות מוזחות, מוסתרות';
 $string['namehiddenmod'] = 'יחידת הוראה';
 
 ?>

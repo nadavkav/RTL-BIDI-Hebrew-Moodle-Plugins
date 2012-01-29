@@ -1,6 +1,6 @@
 <?php
 
-$string['formattopsidesum'] = 'יחידות הוראה בעלות מבוא צדדי';
+$string['formattopsidesum'] = 'פסקת מבוא לצד פעילויות ומשאבים';
 $string['nametopsidesum'] = 'יחידת הוראה';
 
 ?>

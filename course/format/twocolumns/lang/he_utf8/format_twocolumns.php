@@ -1,6 +1,6 @@
 <?php 
 
-$string['formattwocolumns'] = 'יחידות הוראה - שתי עמודות';
+$string['formattwocolumns'] = 'יחידות הוראה - בשתי עמודות';
 $string['nametwocolumns'] = 'יחידת הוראה ';
 
 ?>

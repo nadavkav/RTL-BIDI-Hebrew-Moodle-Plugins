@@ -93,9 +93,10 @@
     echo skip_main_destination();
 
     //print_heading_block(get_string('topicoutline'), 'outline');
-	echo '<div id="navbuttons" style="float:right;"><button id="next">הבאה</button><button id="prev">קודמת</button></div>';
+	echo '<table style="width:100%;"><tbody><tr>';
+	echo '<td style="border:1px dashed grey;"><div id="navbuttons" style="float:right;"><button id="next">הבאה</button><button id="prev">קודמת</button></div></td>';
 
-    $topicbutton = '<div id="navtopics" style="float:left;">';
+    $topicbutton = '<td style="border:1px solid grey;float:left;"><div id="navtopics" style="float:left;">';
 
     for ($topic = 0;  $topic < $COURSE->numsections ; $topic++) {
 		  if ($topic == 0) {
@@ -112,9 +113,12 @@
         ';
     }
 
-	$topicbutton .= '</div>';
+	$topicbutton .= '</div></td>';
+	//echo '</tr></tbody></table>';
+
 
 echo $topicbutton.'
+</tr></tbody></table>
 
 <div id="dynamictopic"></div>
 <div id="beforeme"></div>

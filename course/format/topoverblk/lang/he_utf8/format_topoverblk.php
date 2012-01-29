@@ -1,4 +1,4 @@
 <?php
-$string['nametopoverblk'] = 'פסקאת מבוא בראש הדף';
-$string['formattopoverblk'] = 'פסקאת מבוא בראש הדף';
-?>
+
+$string['formattopoverblk'] = 'פסקת מבוא מעל יחידות הוראה ועמודת המשבצות השמאלית';
+$string['nametopoverblk'] = 'יחידת הוראה';

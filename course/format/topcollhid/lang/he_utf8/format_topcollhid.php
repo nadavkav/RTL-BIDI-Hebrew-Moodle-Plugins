@@ -10,8 +10,8 @@
  */
 
 // Used by the Moodle Core for identifing the format and displaying in the list of formats for a course in its settings.
-$string['nametopcollhid']='יחידות נחבות + פעילויות נסתרות';
-$string['formattopcollhid']='יחידות נחבות + פעילויות נסתרות';
+$string['nametopcollhid']='יחידות הוראה';
+$string['formattopcollhid']='יחידות הוראה נסתרות/נגלות + פעילויות מוזחות, נסתרות';
 
 // Used in format.php
 //$string['topcollhidtoggle']='תצוגה';

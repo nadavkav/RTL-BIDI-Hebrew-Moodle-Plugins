@@ -1,7 +1,7 @@
 <?php
 
-$string['nametopcoll']='יחידות הוראה חבויות';
-$string['formattopcoll']='תצורת יחידות הוראה חבויות';
+$string['nametopcoll']='יחידות הוראה נחבות';
+$string['formattopcoll']='יחידות הוראה נסתרות/נגלות';
 $string['toggle']='(הקליקו כאן להצגה או הסתרה)';
 
 

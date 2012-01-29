@@ -1,4 +1,4 @@
 <?php
 $string['nameletsplay'] = 'יחידות הוראה';
-$string['formatletsplay'] = 'יחידות הוראה במשחק';
+$string['formatletsplay'] = 'פעילויות מתוך יחידות הוראה כמשחק';
 ?>
