@@ -1,0 +1,95 @@
+<div id="q<?php echo $question->id; ?>" class="que <?php echo $question->qtype; ?> clearfix">
+  <div class="info">
+    <span class="edit"><?php echo $editlink; ?></span>
+  </div>
+  <div id="" class="content">
+    <div class="qtext">
+      <?php echo $questiontext; ?>
+    </div>
+
+    <?php if ($image) { ?>
+      <img class="qimage" src="<?php echo $image; ?>" alt="" />
+    <?php } ?>
+  </div>
+  <?php if ($generalfeedback) { ?>
+    <div class="generalfeedback">
+      <?php echo $generalfeedback ?>
+    </div>
+  <?php } ?>
+    <input id="overlayquestion" type="button" onclick="overlay_question<?php echo $question->id; ?>();" value="<?php echo get_string('followme','qtype_description') ?>">
+    <input id="pinquestion" type="button" onclick="pin_question<?php echo $question->id; ?>();" value="<?php echo get_string('pin','qtype_description') ?>">
+    <input id="hidequestion" type="button" onclick="hide_question<?php echo $question->id; ?>();" value="<?php echo get_string('stop','qtype_description') ?>">
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+var questionbox<?php echo $question->id; ?> = document.getElementById('q<?php echo $question->id; ?>');
+var btnoverlayquestion = document.getElementById('overlayquestion');
+var btnhidequestion = document.getElementById('hidequestion');
+var qtheTop = 20;
+var qold = qtheTop;
+var qTimerEvent; // TimerEvent object
+
+//btnoverlayquestion.display = 'none';
+
+    function overlay_question<?php echo $question->id; ?>(){
+
+        questionbox<?php echo $question->id; ?>.style.position = 'absolute';
+        questionbox<?php echo $question->id; ?>.style.right = '20px';
+        questionbox<?php echo $question->id; ?>.style.border = "2px solid blue";
+        questionbox<?php echo $question->id; ?>.style.backgroundColor = "white";
+
+        btnoverlayquestion.display = 'none';
+        btnhidequestion.display = 'block';
+        movedesciption<?php echo $question->id; ?>();
+    }
+
+    function hide_question<?php echo $question->id; ?>(){
+
+        questionbox<?php echo $question->id; ?>.style.position = 'static';
+        questionbox<?php echo $question->id; ?>.style.right = '';
+        questionbox<?php echo $question->id; ?>.style.border = '';
+
+        btnoverlayquestion.display = 'block';
+        btnhidequestion.display = 'none';
+        clearTimeout(qTimerEvent);
+    }
+
+    function pin_question<?php echo $question->id; ?>(){
+
+        questionbox<?php echo $question->id; ?>.style.position = 'none';
+        questionbox<?php echo $question->id; ?>.style.right = '';
+        questionbox<?php echo $question->id; ?>.style.border = '';
+
+        btnoverlayquestion.display = 'block';
+        btnhidequestion.display = 'none';
+        clearTimeout(qTimerEvent);
+    }
+
+    /* Use to keep the question type description on-screen as the user scrolls. */
+    function movedesciption<?php echo $question->id; ?>() {
+        var pos;
+
+        if (window.innerHeight) {
+            pos = window.pageYOffset
+        } else if (document.documentElement && document.documentElement.scrollTop) {
+            pos = document.documentElement.scrollTop
+        } else if (document.body) {
+            pos = document.body.scrollTop
+        }
+
+        if (pos < qtheTop) {
+            pos = qtheTop;
+        } else {
+            pos += 20;
+        }
+        if (pos == qold) {
+            questionbox<?php echo $question->id; ?>.style.top = pos + 'px';
+            console.log('pos'+ pos);
+        }
+        qold = pos;
+        qTimerEvent = setTimeout('movedesciption<?php echo $question->id; ?>()',100);
+    }
+
+//]]>
+</script>
