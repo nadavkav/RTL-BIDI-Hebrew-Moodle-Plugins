@@ -633,7 +633,8 @@ class HTML_TreeMenu_DHTML extends HTML_TreeMenu_Presentation
 //Cr:
 //Modification of Mario Schellenberger to adapt width and height of block.
 //This has to be modified according to the preferred block width and height
-$html = '<div style="width:198px; height:290px; overflow:auto; border:solid 0px">';
+//$html = '<div style="width:198px; height:290px; overflow:auto; border:solid 0px">';
+$html = '<div style="width:198px; height:auto; overflow:auto; border:solid 0px">';
 
         $html .= '<script language="javascript" type="text/javascript">' . "\n//<![CDATA[\n\t";
         $html .= sprintf('%s = new TreeMenu("%s", "%s", "%s", "%s", %s, %s);',

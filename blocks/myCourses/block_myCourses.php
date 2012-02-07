@@ -203,7 +203,7 @@ class block_myCourses extends block_base {
                                        //Maybe there are still older versions using new object() instead
 
         $this->content->text = '';   //Cr: initialize to empty string in which case the block is not displayed
-        $this->content->footer = ''; //according to MoodleDocs:Development:Blocks
+        $this->content->footer = '.'; //according to MoodleDocs:Development:Blocks
 
         if (empty($this->instance)) { //Cr: most blocks have this code, but I can not imagine a block not
             return $this->content;    //having been instantiated/added on the front or any other course page
