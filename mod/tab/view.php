@@ -82,35 +82,37 @@
 	echo '<style>'."\n";
 	echo $tab->css;
 	if (!$tab->displaymenu == 1) {
-	//This function is used to replace the margin-left from 211 to 5 when no menu is selected
-		str_replace($tab->menucss,"margin-left: 211px;","margin-left: 5px;");
+	  //This function is used to replace the margin-left from 211 to 5 when no menu is selected
+	  str_replace($tab->menucss,"margin-left: 211px;","margin-left: 5px;");
 	} else {
-	echo $tab->menucss;
+	  echo $tab->menucss;
 	}
 	echo '</style>'."\n";
 	echo '<div id="tab-menu-wrapper">'."\n";
 	if ($tab->displaymenu == 1) {
-	echo '<div id="left">'."\n";
-	echo '	<table class="menutable" width="100%" border="0" cellpadding="4">'."\n";
-	echo '  	<tr>'."\n";
-	echo '  	  <td class="menutitle">'.$tab->menuname.'</td>'."\n";
-	echo '  	</tr>'."\n";
-		$i = 0; ///needed to determine color change on cell
-	foreach ($results as $result){ /// foreach
-    echo '	<tr';
-		if ($i % 2) {
-			echo ' class="row">'."\n";
-			} else {
-			echo '>'."\n";
-			}
+	  echo '<div id="left">'."\n";
+	  echo '	<table class="menutable" width="100%" border="0" cellpadding="4">'."\n";
+	  echo '  	<tr>'."\n";
+	  echo '  	  <td class="menutitle">'.$tab->menuname.'</td>'."\n";
+	  echo '  	</tr>'."\n";
+	  $i = 0; ///needed to determine color change on cell
+	  foreach ($results as $result){ /// foreach
+		echo '	<tr';
+			if ($i % 2) {
+				echo ' class="row">'."\n";
+				} else {
+				echo '>'."\n";
+				}
 
-    echo 	'<td><a href="view.php?id='.$result->id.'">'.$result->name.'</a></td>'."\n";
-  	echo '	</tr>'."\n";
-	$i++;
+		echo 	'<td><a href="view.php?id='.$result->id.'">'.$result->name.'</a></td>'."\n";
+		echo '	</tr>'."\n";
+		$i++;
+	  }
+	  echo '	</table>'."\n";
+	  echo '</div>';
 	}
-	echo '	</table>'."\n";
 	echo '</div>';
-	}
+
     echo '<div id="tabcontent">'."\n";
 	echo '<div class=" yui-skin-sam">'."\n";
 	echo '<div id="Tabs" class="yui-navset">'."\n";
@@ -183,23 +185,24 @@
 	}
 	echo '<script type="text/javascript">'."\n";
 	echo "    var tabView = new YAHOO.widget.TabView('Tabs');"."\n";
-  echo "    var url = location.href.split('#');"."\n";
-  echo "     if (url[1]) {"."\n";
-  echo "         //We have a hash"."\n";
-  echo "         var tabHash = url[1];"."\n";
-  echo "         var tabs = tabView.get('tabs');"."\n";
-  echo "        for (var i = 0; i < tabs.length; i++) {"."\n";
-  echo "              if (tabs[i].get('href') == '#' + tabHash) {"."\n";
-  echo "                  tabView.set('activeIndex', i);"."\n";
-  echo "                  break;"."\n";
-  echo "              }"."\n";
-  echo "          }"."\n";
-  echo "      }"."\n";
+	echo "    var url = location.href.split('#');"."\n";
+	echo "     if (url[1]) {"."\n";
+	echo "         //We have a hash"."\n";
+	echo "         var tabHash = url[1];"."\n";
+	echo "         var tabs = tabView.get('tabs');"."\n";
+	echo "        for (var i = 0; i < tabs.length; i++) {"."\n";
+	echo "              if (tabs[i].get('href') == '#' + tabHash) {"."\n";
+	echo "                  tabView.set('activeIndex', i);"."\n";
+	echo "                  break;"."\n";
+	echo "              }"."\n";
+	echo "          }"."\n";
+	echo "      }"."\n";
 	echo '</script>'."\n";
-    echo '	</div>'."\n";
+    echo '	</div>'."\n"; // class="yui-content"
 
-	echo '</div>' ."\n";
-	echo '</div>';
+	echo '</div>' ."\n"; // #Tabs
+	echo '</div>'; // #tabcontent
+	echo '</div>'; // #content ?
 
 
 
