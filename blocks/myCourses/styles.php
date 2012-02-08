@@ -1,11 +1,10 @@
 .block_mycourses .content * {
   float: left;
   text-align: left;
-  overflow-y: overlay;
 }
 
 .block_mycourses .content {
-  overflow-y: overlay;
+  overflow-y: auto;
 }
 
 .dir-rtl .block_mycourses .content * {
