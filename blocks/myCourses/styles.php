@@ -11,6 +11,6 @@
   float: right;
 }
 
-<!--.treeMenuDefault {
-  width:400px;
-}-->
+.treeMenuDefault {
+  width:100%;
+}

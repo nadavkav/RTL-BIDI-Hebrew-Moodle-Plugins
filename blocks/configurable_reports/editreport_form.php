@@ -36,7 +36,7 @@ class report_edit_form extends moodleform {
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-		$mform->addElement('text', 'name', get_string('name'));
+		$mform->addElement('text', 'name', get_string('name'),array('size'=>'50'));
 		if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {

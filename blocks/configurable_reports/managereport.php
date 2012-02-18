@@ -136,7 +136,8 @@
 		echo print_heading(get_string('noreportsavailable','block_configurable_reports'));
 	}
 	
-	print_heading('<a href="'.$CFG->wwwroot.'/blocks/configurable_reports/editreport.php?courseid='.$course->id.'">'.get_string('addreport','block_configurable_reports').'</a>');
+	//print_heading('<a href="'.$CFG->wwwroot.'/blocks/configurable_reports/editreport.php?courseid='.$course->id.'">'.get_string('addreport','block_configurable_reports').'</a>');
+	echo '<div id="newreport"><a href="'.$CFG->wwwroot.'/blocks/configurable_reports/editreport.php?courseid='.$course->id.'">'.get_string('addreport','block_configurable_reports').'</a></div>';
 	
 	$mform->display();
 				

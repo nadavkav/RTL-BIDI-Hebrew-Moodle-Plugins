@@ -24,58 +24,57 @@
 
 require_once($CFG->dirroot.'/blocks/configurable_reports/plugin.class.php');
 
-class plugin_categories extends plugin_base{
+class plugin_semester extends plugin_base{
 
 	function init(){
 		$this->form = false;
 		$this->unique = true;
-		$this->fullname = get_string('filtercategories','block_configurable_reports');
-		$this->reporttypes = array('categories','sql');
+		$this->fullname = get_string('filtersemester','block_configurable_reports');
+		$this->reporttypes = array('semester','sql');
 	}
 
 	function summary($data){
-		return get_string('filtercategories_summary','block_configurable_reports');
+		return get_string('filtersemester_summary','block_configurable_reports');
 	}
 
 	function execute($finalelements, $data){
 
-		$filter_categories = optional_param('filter_categories',0,PARAM_INT);
-		if(!$filter_categories)
+		$filter_semester = optional_param('filter_semester','',PARAM_RAW);
+		if(!$filter_semester)
 			return $finalelements;
 
 		if($this->report->type != 'sql'){
-				return array($filter_categories);
+				return array($filter_semester);
 		}
 		else{
-            $nCategories = count($filter_categories);
-            if ($nCategories > 1) { // Multiple categories selected
-                $aggCategories = ' IN (';
-                for($i=0; $i < $nCategories; $i++) {
-                    $aggCategories .= $filter_categories[$i] . ",";
+            $nYears = count($filter_semester);
+            if ($nYears > 1) { // Multiple semester selected
+                $aggYears = " REGEXP '";
+                for($i=0; $i < $nYears; $i++) {
+                    $aggYears .= $filter_semester[$i] . "|";
                 }
-                $aggCategories = rtrim($aggCategories, ',');
-                $aggCategories .= ') ';
+                $aggYears = rtrim($aggYears, '|');
+                $aggYears .= "'";
 
-            } else { // Single category selected
-                $aggCategories = ' = '.$filter_categories[0];
+            } else { // Single year selected
+                $aggYears = " LIKE '%".$filter_semester[0]."%' ";
             }
 
-			if(preg_match("/%%FILTER_CATEGORIES:([^%]+)%%/i", $finalelements, $output)){
-				$replace = ' AND '.$output[1].$aggCategories;
-				$temp = str_replace('%%FILTER_CATEGORIES:'.$output[1].'%%',$replace,$finalelements);
+			if(preg_match("/%%FILTER_SEMESTERS:([^%]+)%%/i",$finalelements, $output)){
+				$replace = ' AND '.$output[1].$aggYears;
+				$temp = str_replace('%%FILTER_SEMESTERS:'.$output[1].'%%',$replace,$finalelements);
                 //echo '<div style="float:left;direction:ltr;">'.$temp.'</div><hr/>';
                 debugging('<div style="float:left;direction:ltr;">'.$temp.'</div><hr/>', DEBUG_DEVELOPER);
                 return $temp;
 			}
 		}
-
 		return $finalelements;
 	}
 
 	function print_filter(&$mform){
 		global $CFG;
 
-		$filter_categories = optional_param('filter_categories',0,PARAM_INT);
+		$filter_semester = optional_param('filter_semester',0,PARAM_INT);
 
 		$reportclassname = 'report_'.$this->report->type;
 		$reportclass = new $reportclassname($this->report);
@@ -84,26 +83,27 @@ class plugin_categories extends plugin_base{
 			$components = cr_unserialize($this->report->components);
 			$conditions = $components['conditions'];
 
-			$categorieslist = $reportclass->elements_by_conditions($conditions);
+			$semesterlist = $reportclass->elements_by_conditions($conditions);
 		}
 		else{
-			$categorieslist = array_keys(get_records('course'));
+			$semesterlist = true; //array_keys(get_records('course'));
 		}
 
 		$courseoptions = array();
 		$courseoptions[0] = get_string('choose');
 
-		if(!empty($categorieslist)){
-			$categories = get_records_select('course_categories','id in ('.(implode(',',$categorieslist)).')');
-
-			foreach($categories as $c){
-				$courseoptions[$c->id] = format_string($c->name);
+		//if(!empty($semesterlist)){
+			//$semester = get_records_select('course','id in ('.(implode(',',$semesterlist)).')');
+            $semester = explode(',',get_string('filtersemester_list','block_configurable_reports'));
+        //print_object($semester);die;
+			foreach($semester as $c){
+				$courseoptions[$c] = format_string($c);
 			}
-		}
+		//}
 
-		$select = &$mform->addElement('select', 'filter_categories', get_string('category'), $courseoptions);
+		$select = &$mform->addElement('select', 'filter_semester', get_string('filtersemester','block_configurable_reports'), $courseoptions);
         $select->setMultiple(true);
-		$mform->setType('filter_categories', PARAM_INT);
+		$mform->setType('filter_semester', PARAM_RAW);
 
 	}
 

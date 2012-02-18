@@ -68,7 +68,7 @@ $string['value'] = "Value";
 // Filter
 $string['filter'] = "מסנן";
 $string['nofilteryet'] = "No filters yet";
-$string['courses'] = "Courses";
+$string['courses'] = "קורסים";
 $string['nofiltersyet'] = "No filters yet";
 
 // Calcs
@@ -93,6 +93,14 @@ $string['roleusersn'] = "Number of users with role...";
 $string['coursecategory'] = "Course in category";
 $string['filtercourses'] = "Courses";
 $string['filtercourses_summary'] = "This filter shows a list of courses. Only one course can be selected at the same time";
+$string['filteryears_summary'] = "This filter shows a list of Academic Years";
+$string['filteryears_list'] = "תשעב,תשעא,תשע";
+$string['filteryears'] = "שנים";
+$string['years'] = "שנים";
+$string['filtersemester_summary'] = "This filter shows a list of Academic Semesters";
+$string['filtersemester_list'] = "סמסטר א,סמסטר ב";
+$string['filtersemester'] = "סמסטרים";
+$string['semester'] = "סמסטרים";
 $string['roleincourse'] = "User with the selected role/s in the current report course";
 $string['reportscapabilities'] = "Report Capabilities";
 $string['reportscapabilities_summary'] = "Users with the capability moodle/site:viewreports enabled";
@@ -148,9 +156,9 @@ $string['currentuser_summary'] = "The user that is viewing the report";
 $string['puserfield'] = "User field value";
 $string['puserfield_summary'] = "User with the selected value in the selected field";
 
-$string['startendtime'] = "Start / End date filter";
-$string['starttime'] = "Start date";
-$string['endtime'] = "End date";
+$string['startendtime'] = "מסנן טווח תאריכים";
+$string['starttime'] = "תאריך תחילה";
+$string['endtime'] = "תאריך סיום";
 
 $string['template'] = "תבנית";
 $string['availablemarks'] = "Available marks";
@@ -158,7 +166,7 @@ $string['header'] = "Header";
 $string['footer'] = "Footer";
 $string['templaterecord'] = "Record template";
 $string['querysql'] = "SQL Query";
-$string['filterstartendtime_summary'] = "Start / End date filter";
+$string['filterstartendtime_summary'] = "מסנן טווח תאריכים";
 
 $string['pagination'] = "ניווט בדפים";
 $string['disabled'] = "לא פעיל";
@@ -231,14 +239,14 @@ $string['statsactiveenrolments'] = 'Active (last week) enrolments';
 $string['youmustselectarole'] = 'At least a role is required';
 
 $string['report_categories'] = 'דוח קטגוריות';
-$string['categoryfield'] = 'Category field';
-$string['categoryfieldorder'] = 'Category field order';
-$string['categories'] = 'Categories';
-$string['parentcategory'] = 'Parent category';
-$string['filtercategories'] = 'Filter categories';
-$string['filtercategories_summary'] = 'To filter by category';
+$string['categoryfield'] = 'שדה קטגוריה';
+$string['categoryfieldorder'] = 'סדר הקטגוריות בשדה';
+$string['categories'] = 'קטגוריות';
+$string['parentcategory'] = 'קטגוריית אב';
+$string['filtercategories'] = 'קטגוריות קורסים';
+$string['filtercategories_summary'] = 'סינון תוצאות הדוח על־פי קטגוריה';
 
-$string['includesubcats'] = 'Include subcategories';
+$string['includesubcats'] = 'הכללת תת־קטגוריות';
 
 $string['coursededicationtime'] = 'Course dedication time';
 
