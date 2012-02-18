@@ -5,11 +5,11 @@
       // the dates aren't printed - it's just an aesthetic thing for
       // courses that aren't so rigidly defined by time.
       // Included from "view.php"
-      
+
 
     require_once($CFG->libdir.'/ajax/ajaxlib.php');
-	require_once($CFG->dirroot.'/course/format/teachbegin/lib.php');
-  
+	require_once($CFG->dirroot.'/course/format/sideblocks/lib.php');
+
     $topic = optional_param('topic', -1, PARAM_INT);
 
     // Bounds for block widths
@@ -77,7 +77,7 @@
 /// Start main column
     echo '<td id="middle-column">';
     echo skip_main_destination();
-	
+
 	/// CHANGE UPDATE (Lea) 2010/05/17 - remove h2 heading
     //print_heading_block(get_string('topicoutline'), 'outline');
 
@@ -309,7 +309,7 @@
         }
     }
     echo '</tr></table>';
-    
+
     // The magic! ... css hide module
     if (isediting()) {
         echo "<style>#course-view.editing .section .activity.hidden {background-color: #f5f5dc;border: 1px dashed ;}</style>";
