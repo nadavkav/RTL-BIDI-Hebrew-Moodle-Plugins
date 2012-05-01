@@ -11,7 +11,7 @@ class block_choice_to_group extends block_base {
     }
 
     function get_content() {
-		global $id,$CFG,$USER,$COURSE;
+		global $CFG,$USER,$COURSE;
 
 		if (!empty($COURSE)) {
             $this->courseid = $COURSE->id;
@@ -20,7 +20,7 @@ class block_choice_to_group extends block_base {
        		return $this->content;    	}
 
     	$this->content = new stdClass;
-    	$choices = get_records_sql("SELECT id, name FROM {$CFG->prefix}choice where course=$id");
+    	$choices = get_records_sql("SELECT id, name FROM {$CFG->prefix}choice where course=$COURSE->id");
     	if ($choices){
         	$this->content->text = "<SELECT id=\"selection\">";    
         
