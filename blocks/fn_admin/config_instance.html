@@ -1,0 +1,49 @@
+ <?php
+ $choices = array(0 => get_string('hide'), 1 => get_string('show'));
+ $this->config->showadminmenu = isset($this->config->showadminmenu) ? $this->config->showadminmenu :
+                                (isset($CFG->block_fn_admin_showadminmenu) ? $CFG->block_fn_admin_showadminmenu : 0);
+ $this->config->showunenrol   = isset($this->config->showunenrol) ? $this->config->showunenrol :
+                                (isset($CFG->block_fn_admin_showunenrol) ? $CFG->block_fn_admin_showunenrol : 0);
+ $this->config->showprofile   = isset($this->config->showprofile) ? $this->config->showprofile :
+                                (isset($CFG->block_fn_admin_showprofile) ? $CFG->block_fn_admin_showprofile : 0);
+ ?>
+
+ <table cellpadding="9" cellspacing="0">
+ <tr valign="top">
+     <td align="right">
+         <?php print_string('cfgdisplaytitle', 'block_fn_admin'); ?>:
+     </td>
+     <td>
+        <?php print_textfield ('displaytitle', !empty($this->config->displaytitle) ? $this->config->displaytitle : ''); ?>
+     </td>
+ </tr>
+ <tr valign="top">
+     <td align="right">
+         <?php print_string('showadminmenu', 'block_fn_admin'); ?>:
+     </td>
+     <td>
+        <?php choose_from_menu ($choices, 'showadminmenu', $this->config->showadminmenu, false); ?>
+     </td>
+ </tr>
+ <tr valign="top">
+     <td align="right">
+         <?php print_string('showunenrol', 'block_fn_admin'); ?>:
+     </td>
+     <td>
+        <?php choose_from_menu ($choices, 'showunenrol', $this->config->showunenrol); ?>
+     </td>
+ </tr>
+ <tr valign="top">
+     <td align="right">
+         <?php print_string('showprofile', 'block_fn_admin'); ?>:
+     </td>
+     <td>
+        <?php choose_from_menu ($choices, 'showprofile', $this->config->showprofile); ?>
+     </td>
+ </tr>
+ <tr>
+     <td colspan="2" align="center">
+         <input type="submit" value="<?php print_string('savechanges') ?>" />
+     </td>
+ </tr>
+ </table>

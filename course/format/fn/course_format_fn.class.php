@@ -258,6 +258,8 @@ class course_format_fn extends course_format {
     /// Prints a section full of activity modules
         global $CFG, $USER, $THEME;
 
+		static $initialised;
+
         static $groupbuttons;
         static $groupbuttonslink;
         static $isteacher, $isteacheredit;
@@ -265,6 +267,7 @@ class course_format_fn extends course_format {
         static $ismoving;
         static $strmovehere;
         static $strmovefull;
+		static $strunreadpostsone;
 
         $labelformatoptions = New stdClass;
 
@@ -280,6 +283,13 @@ class course_format_fn extends course_format {
                 $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
             }
         }
+		if (!isset($initialised)) {
+		  include_once($CFG->dirroot.'/mod/forum/lib.php');
+		  if ($usetracking = forum_tp_can_track_forums()) {
+			  $strunreadpostsone = get_string('unreadpostsone', 'forum');
+		  }
+		  $initialised = true;
+		}
 
     //  Replace this with language file changes (eventually).
         $link_title = array (
@@ -417,6 +427,18 @@ class course_format_fn extends course_format {
                              " <font size=2><a title=\"$alttext\" $linkcss $extra".
                              " href=\"$CFG->wwwroot/mod/$mod->modname/view.php?id=$mod->id\">$instancename</a></font>";
                     }
+						if ($usetracking && $mod->modname == 'forum') {
+							if ($unread = forum_tp_count_forum_unread_posts($mod, $this->course)) {
+								echo '<span class="unread"> <a href="'.$CFG->wwwroot.'/mod/forum/view.php?id='.$mod->id.'">';
+								if ($unread == 1) {
+									echo $strunreadpostsone;
+								} else {
+									print_string('unreadpostsnumber', 'forum', $unread);
+								}
+								echo '</a></span>';
+							}
+						}
+
                     if ($isediting) {
                         // TODO: we must define this as mod property!
                         if ($groupbuttons and $mod->modname != 'label' and $mod->modname != 'resource' and $mod->modname != 'glossary') {
