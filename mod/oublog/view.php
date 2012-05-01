@@ -31,6 +31,7 @@ $id     = optional_param('id', 0, PARAM_INT);       // Course Module ID
 $user   = optional_param('user', 0, PARAM_INT);     // User ID
 $offset = optional_param('offset', 0, PARAM_INT);   // Offset fo paging
 $tag    = optional_param('tag', null, PARAM_TAG);   // Tag to display
+$individual    = optional_param('individual', null, PARAM_TAG);   // Tag to display
 
 if ($id) {
     if (!$cm = get_coursemodule_from_id('oublog', $id)) {
@@ -192,6 +193,7 @@ if($oublog->individual) {
     }
 }
 
+If ($individual) $currentindividual = $individual;
 /// Get Posts
 list($posts, $recordcount) = oublog_get_posts($oublog, $context, $offset, $cm, $currentgroup, $currentindividual, $oubloguser->id, $tag, $canaudit);
 
@@ -295,8 +297,8 @@ if(!$hideunusedblog) {
 //         oublog_print_recent_activity($COURSE,NULL,$timestart);
 //         $oublog_recent_activity = ob_get_contents();
 //         ob_end_clean();
-        $oublog_recent_activity = 'None';
-        print_side_block(get_string('recentactivity', 'oublog'), $oublog_recent_activity, NULL, NULL, NULL, array('id' => 'oublog-recent-activity'),get_string('recentactivity', 'oublog'));
+        //$oublog_recent_activity = 'None';
+        //print_side_block(get_string('recentactivity', 'oublog'), $oublog_recent_activity, NULL, NULL, NULL, array('id' => 'oublog-recent-activity'),get_string('recentactivity', 'oublog'));
     }
 }
 
@@ -356,6 +358,35 @@ if($oublog->individual) {
 }
 echo '</div>';
 
+/// Shared Blog mode, display user names. to filter posts by user
+if ($oublog->individual == OUBLOG_NO_INDIVIDUAL_BLOGS) { 
+	$allowedindividuals = oublog_individual_get_all_users($cm->course, $cm->instance, 0 );
+
+	//setup the drop-down menu
+    $menu = array();
+    if (count($allowedindividuals) > 1) {
+        if ($currentgroup > 0) {//selected group
+            $menu[0] = get_string('viewallusersingroup', 'oublog');
+        } else {//no groups or all groups
+            $menu[0] = get_string('viewallusers', 'oublog');
+        }
+    }
+
+    if ($allowedindividuals) {
+        foreach ($allowedindividuals as $user) {
+            $menu[$user->id] = format_string($user->firstname . '&nbsp;' . $user->lastname);
+        }
+    }
+	$label = get_string('visibleindividual', 'oublog');
+    if (count($menu) == 1) {
+        $name = reset($menu);
+        $output = $label .':&nbsp;'.$name;
+    } else {
+        $output = popup_form($CFG->wwwroot.'/mod/oublog/view.php?id='.$cm->id.'&amp;individual=', $menu, 'selectindividual', $individual, '', '', '', true, 'self', $label);
+    }
+
+    echo $output = '<div class="oublog-individualselector">'.$output.'</div>';
+}
 /// Print the main part of the page
 
 // New post button - in group blog, you can only post if a group is selected
@@ -405,7 +436,8 @@ if (isguestuser() && $USER->id==$user) {
 }
 
 /// Log visit and bump view count
-add_to_log($course->id, "oublog", "view", $returnurl, $oublog->id, $cm->id);
+// UPDATE `mdl_log` SET `url` = CONCAT('/view.php?id=',mdl_log.cmid) WHERE `module` LIKE 'oublog' AND `action` LIKE 'view'
+add_to_log($course->id, "oublog", "view", '/view.php?id='.$id, $oublog->id, $cm->id);
 $views = oublog_update_views($oublog, $oubloginstance);
 
 // Show dashboard feature if enabled, if course blog

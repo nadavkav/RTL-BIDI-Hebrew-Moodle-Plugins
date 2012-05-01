@@ -188,9 +188,9 @@ function oublog_can_comment($cm, $oublog, $post) {
                 get_context_instance(CONTEXT_SYSTEM));
     } else {
         $modcontext = get_context_instance(CONTEXT_MODULE, $cm->id);
-        
+
         // Three ways you can comment to a course blog:
-        $blogok = 
+        $blogok =
                 // 1. Blog allows public comments
                 $oublog->allowcomments == OUBLOG_COMMENTS_ALLOWPUBLIC ||
 
@@ -728,7 +728,7 @@ function oublog_print_post($cm, $oublog, $post, $baseurl, $blogtype, $canmanagep
 
     $formattedtitle=format_string($post->title);
     if(trim($formattedtitle)!=='') {
-        echo '<h2 class="oublog-title">'.format_string($post->title).'</h2>';
+        echo '<h2 class="oublog-title"><a href="viewpost.php?post='.$post->id.'">'.format_string($post->title).'</a></h2>';
     }
 
     if ($post->deletedby) {
@@ -784,7 +784,8 @@ function oublog_print_post($cm, $oublog, $post, $baseurl, $blogtype, $canmanagep
     }
 
     echo '<div class="oublog-post-content">';
-    echo format_text($post->message, FORMAT_HTML);
+    //echo format_text($post->message, FORMAT_HTML); // Remove security checks and filtering of HTML tags (nadavkav 11-2-2012)
+    echo $post->message;
     echo '</div>';
 
     if (isset($post->tags)) {
@@ -1155,7 +1156,33 @@ function oublog_add_comment($course,$cm,$oublog,$comment) {
     return $id;
 }
 
+/**
+ * Update a blog comment
+ *
+ * @param object $comment
+ * @return mixed commentid on success or false
+ */
+function oublog_update_comment($course,$cm,$oublog,$comment) {
+    global $CFG;
 
+    if (!isset($comment->timeposted)) {
+        $comment->timeposted = time();
+    }
+
+    if ($comment->id) {
+        $ok = update_record('oublog_comments', $comment);
+    }
+    //$id=insert_record('oublog_comments', $comment);
+    if($ok) {
+        // Inform completion system, if available
+        if(class_exists('ouflags')) {
+            if(completion_is_enabled($course,$cm) && ($oublog->completioncomments)) {
+                completion_update_state($course,$cm,COMPLETION_COMPLETE);
+            }
+        }
+    }
+    return $ok;
+}
 
 /**
  * Update the hit count for a blog and return the current hits

@@ -17,17 +17,17 @@ $DISABLESAMS = 'opt';
     if(class_exists('ouflags')) {
         $DASHBOARD_COUNTER=DASHBOARD_BLOG_VIEW;
         require_once('../../local/mobile/ou_lib.php');
-        
+
         global $OUMOBILESUPPORT;
         $OUMOBILESUPPORT = true;
         ou_set_is_mobile(ou_get_is_mobile_from_cookies());
-    
+
         $blogdets = optional_param('blogdets', null, PARAM_TEXT);
     }
 
     $postid = required_param('post', PARAM_INT);       // Post id
 
-    // This query based on the post id is so that we can get the blog etc to 
+    // This query based on the post id is so that we can get the blog etc to
     // check permissions before calling oublog_get_post
     if (!$oublog = oublog_get_blog_from_postid($postid)) {
         error("Post ID is incorrect");
@@ -70,7 +70,8 @@ $DISABLESAMS = 'opt';
     $strcomments    = get_string('comments', 'oublog');
     $strlinks       = get_string('links', 'oublog');
     $strfeeds       = get_string('feeds', 'oublog');
-    
+    $strcomment     = get_string('comment', 'oublog');
+
 /// Set-up groups
     $groupmode = oublog_get_activity_groupmode($cm, $course);
     $currentgroup = oublog_get_activity_group($cm, true);
@@ -81,7 +82,7 @@ $DISABLESAMS = 'opt';
         $canpost=false;
         $canmanageposts=false;
         $canaudit=false;
-    } 
+    }
 
     /// Generate extra navigation
     $extranav = oublog_get_post_extranav($post, false);
@@ -90,7 +91,7 @@ $DISABLESAMS = 'opt';
     if (class_exists('ouflags') && ou_get_is_mobile()){
         ou_mobile_configure_theme();
     }
-    
+
     if ($oublog->global) {
         $blogtype = 'personal';
         $returnurl = 'view.php?user='.$oubloginstance->userid;
@@ -137,11 +138,11 @@ $DISABLESAMS = 'opt';
         // The right column, BEFORE the middle-column.
         print '<div id="right-column">';
     }
-    
+
 // Title & Print summary
     // Name, summary, related links
     oublog_print_summary_block($oublog, $oubloginstance, $canmanageposts);
-        
+
     // Tag Cloud
     if ($tags = oublog_get_tag_cloud($returnurl, $oublog, $currentgroup, $cm, $oubloginstance->id)) {
         print_side_block($strtags, $tags, NULL, NULL, NULL, array('id' => 'oublog-tags'));
@@ -163,24 +164,24 @@ $DISABLESAMS = 'opt';
     if (class_exists('ouflags') && ou_get_is_mobile() && $blogdets == 'show'){
         ou_print_mobile_navigation(null,$blogdets,$postid);
     }
-    
+
     print '</div>';
 
     if (class_exists('ouflags') && ou_get_is_mobile() && $blogdets == 'show'){
         print_footer($course);
         exit;
     }
-    
+
 // Print blog posts
     if (class_exists('ouflags') && ou_get_is_mobile()){
         echo '<div id="middle-column">';
-        
+
         ou_print_mobile_navigation(null,$blogdets,$postid);
     }
     else {
         echo '<div id="middle-column" class="has-right-column">';
     }
-    
+
     oublog_print_post($cm, $oublog, $post, $returnurl, $blogtype, $canmanageposts, $canaudit, false);
 
     if (!empty($post->comments)) {
@@ -228,7 +229,7 @@ $DISABLESAMS = 'opt';
                         fullname($comment) . '</a>');
             } else {
                 print get_string(
-                        $canaudit ? 'postedbymoderatedaudit' : 'postedbymoderated', 
+                        $canaudit ? 'postedbymoderatedaudit' : 'postedbymoderated',
                         'oublog', (object)array(
                         'commenter' => s($comment->authorname),
                         'approver' => '<a href="../../user/view.php?id=' .
@@ -239,15 +240,16 @@ $DISABLESAMS = 'opt';
             }
                 ?></div>
                 <div class="oublog-comment-content"><?php print format_text($comment->message, FORMAT_MOODLE); ?></div>
-                <div class="oublog-post-links">              
+                <div class="oublog-post-links">
             <?php
             if (!$comment->deletedby) {
                 // You can delete your own comments, or comments on your own
                 // personal blog, or if you can manage comments
-                if (($comment->userid && $comment->userid == $USER->id) || 
+                if (($comment->userid && $comment->userid == $USER->id) ||
                     ($oublog->global && $post->userid == $USER->id) ||
                     $canmanagecomments) {
                     echo '<a href="deletecomment.php?comment='.$comment->id.'">'.$strdelete.'</a>';
+                    echo " <a href=\"{$CFG->wwwroot}/mod/oublog/editcomment.php?blog={$post->oublogid}&amp;post={$post->id}&amp;comment={$comment->id}\">".get_string('update')."</a>";
                 }
             }
                 ?>
@@ -261,11 +263,11 @@ $DISABLESAMS = 'opt';
 // code with the incorrect initial indent
 
 // If it is your own post, then see if there are any moderated comments -
-// for security reasons, you must also be allowed to comment on the post in 
+// for security reasons, you must also be allowed to comment on the post in
 // order to moderate it (because 'approving' a comment is basically equivalent
 // to commenting)
-if ($post->userid == $USER->id && 
-        $post->allowcomments >= OUBLOG_COMMENTS_ALLOWPUBLIC && 
+if ($post->userid == $USER->id &&
+        $post->allowcomments >= OUBLOG_COMMENTS_ALLOWPUBLIC &&
         oublog_can_comment($cm, $oublog, $post)) {
     $moderated = oublog_get_moderated_comments($oublog, $post, $canaudit);
     $display = array();
@@ -301,26 +303,27 @@ if ($post->userid == $USER->id &&
                     $extramessage;
 
             // Title
-            if(trim(format_string($comment->title))!=='') { 
+            if(trim(format_string($comment->title))!=='') {
                 print '<h2 class="oublog-comment-title">' .
                         format_string($comment->title) . '</h2>';
             }
 
             // Date and author
-            print '<div class="oublog-comment-date">' . 
+            print '<div class="oublog-comment-date">' .
                     oublog_date($comment->timeposted) . ' </div>';
-            print '<div class="oublog-posted-by">' . 
+            print '<div class="oublog-posted-by">' .
                     get_string('moderated_postername', 'oublog',
                         s($comment->authorname)) .
                     ($canaudit ? ' (' . s($comment->authorip) . ')' : '') . '</div>';
 
             print '<div class="oublog-comment-content">' .
-                    format_text($comment->message, FORMAT_MOODLE) . '</div>';
+                    //format_text($comment->message, FORMAT_MOODLE) . '</div>'; // no content filtering (nadavkav 11-2-2012)
+					$comment->message. '</div>';
 
             // You can only approve/reject it once; and we don't let admins
             // approve/reject (because there's no way of tracking who did it
             // and it displays the post owner as having approved it)...
-            if ($comment->approval == OUBLOG_MODERATED_UNSET && 
+            if ($comment->approval == OUBLOG_MODERATED_UNSET &&
                     $post->userid == $USER->id) {
                 print '<form action="approve.php" method="post"><div>' .
                         '<input type="hidden" name="sesskey" value="' . sesskey() . '" />' .
@@ -348,7 +351,7 @@ if ($post->userid == $USER->id &&
 // End correct indentation
 
     echo '</div>';
-    
+
     if (class_exists('ouflags') && ou_get_is_mobile()){
         ou_print_mobile_navigation(null,$blogdets,$postid);
     }

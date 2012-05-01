@@ -23,14 +23,14 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
 
     if(class_exists('ouflags')) {
 	    require_once('../../local/mobile/ou_lib.php');
-	    
+
 	    global $OUMOBILESUPPORT;
 	    $OUMOBILESUPPORT = true;
 	    ou_set_is_mobile(ou_get_is_mobile_from_cookies());
-	
-	    $blogdets = optional_param('blogdets', null, PARAM_TEXT); 
+
+	    $blogdets = optional_param('blogdets', null, PARAM_TEXT);
     }
-    
+
     if (!$oublog = get_record("oublog", "id", $blog)) {
         error('Blog parameter is incorrect');
     }
@@ -88,6 +88,7 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
     $mform = new mod_oublog_comment_form('editcomment.php', array(
             'maxvisibility' => $oublog->maxvisibility,
             'edit' => !empty($commentid),
+            'commentid' => $commentid,
             'blogid' => $blog,
             'postid' => $postid,
             'moderated' => $moderated,
@@ -111,12 +112,12 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
         $extranav = array();
         $extranav[] = oublog_get_post_extranav($post);
         $extranav[] = array('name' => $comment->general, 'link' => '', 'type' => 'misc');
-        
+
 /// Print the header
         if (class_exists('ouflags') && ou_get_is_mobile()){
             ou_mobile_configure_theme();
         }
-        
+
         if ($blogtype == 'personal') {
             $navigation = oublog_build_navigation($cm, $oublog, $oubloginstance, $oubloguser, $extranav);
             print_header_simple(format_string($oublog->name), "", $navigation, "", "", true);
@@ -137,7 +138,7 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
         }
 
         // Prepare comment for database
-        unset($comment->id);
+        //unset($comment->id);
         $comment->userid = $USER->id;
         $comment->postid = $postid;
 
@@ -150,7 +151,7 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
 
             // Set the confirmed cookie if they haven't got it yet
             if (!$confirmed) {
-                setcookie(OUBLOG_CONFIRMED_COOKIE, $comment->confirm, 
+                setcookie(OUBLOG_CONFIRMED_COOKIE, $comment->confirm,
                         time() + 365 * 24 * 3600); // Expire in 1 year
             }
 
@@ -162,24 +163,32 @@ define('OUBLOG_CONFIRMED_COOKIE', 'OUBLOG_REALPERSON');
             $extranav = array();
             $extranav[] = oublog_get_post_extranav($post);
             $extranav[] = array(
-                'name' => get_string('moderated_submitted', 'oublog'), 
+                'name' => get_string('moderated_submitted', 'oublog'),
                 'link' => '', 'type' => 'misc');
-            $nav = oublog_build_navigation($cm, $oublog, $oubloginstance, 
+            $nav = oublog_build_navigation($cm, $oublog, $oubloginstance,
                 isset($oubloguser) ? $oubloguser : null, $extranav);
             print_header_simple(format_string($oublog->name), '', $nav);
             notice(get_string('moderated_addedcomment', 'oublog') .
-                    ($approvaltime ? ' ' .  
-                        get_string('moderated_typicaltime', 'oublog', $approvaltime) 
+                    ($approvaltime ? ' ' .
+                        get_string('moderated_typicaltime', 'oublog', $approvaltime)
                     : ''), 'viewpost.php?post=' . $postid, $course);
             // does not continue
         }
 
         $comment->userid = $USER->id;
-        
-        if (!oublog_add_comment($course,$cm,$oublog,$comment)) {
-            error('Could not add comment');
+
+        if ($comment->id) {
+            if (!oublog_update_comment($course,$cm,$oublog,$comment)) {
+                error('Could not update comment');
+            }
+            add_to_log($course->id, "oublog", "edit comment", $viewurl, $oublog->id, $cm->id);
+        } else {
+            unset($comment->id);
+            if (!oublog_add_comment($course,$cm,$oublog,$comment)) {
+                error('Could not add comment');
+            }
+            add_to_log($course->id, "oublog", "add comment", $viewurl, $oublog->id, $cm->id);
         }
-        add_to_log($course->id, "oublog", "add comment", $viewurl, $oublog->id, $cm->id);
         redirect($viewurl);
     }
 
