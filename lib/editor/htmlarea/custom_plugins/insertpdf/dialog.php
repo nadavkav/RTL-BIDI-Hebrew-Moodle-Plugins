@@ -11,8 +11,11 @@
 
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
-    $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertpdf/';
-
+//     if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
+//         $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
+//     } else {
+//         $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
+//     }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -39,10 +42,11 @@ function Init() {
       document.getElementById("f_horiz").value = param["f_horiz"] != -1 ? param["f_horiz"] : 0;
       document.getElementById("f_width").value = param["f_width"];
       document.getElementById("f_height").value = param["f_height"];
-      window.ipreview.location.replace('preview.php?id='+ <?php print($id);?> +'&imageurl='+ param.f_url);
+      window.ipreview.location.replace('preview.php?id='+ <?php print($id) ?> +'&imageurl='+ param.f_url);
   }
   document.getElementById("f_url").focus();
-};
+}
+
 
 function onOK() {
   var required = {
@@ -60,20 +64,29 @@ function onOK() {
   // pass data back to the calling window
   var fields = ["f_url", "f_alt", "f_align", "f_border",
                 "f_horiz", "f_vert","f_width","f_height"];
-  var param = new Object();
-  for (var i in fields) {
-    var id = fields[i];
-    var el = document.getElementById(id);
-    param[id] = el.value;
-  }
-  if (preview_window) {
-    preview_window.close();
-  }
 
-  opener.nbWin.retFunc(param);
-  window.close();
-  return false;
-};
+    try{
+        var param = new Object();
+        for (var i in fields) {
+          var id = fields[i];
+          var el = document.getElementById(id);
+          param[id] = el.value;
+        }
+        if (preview_window) {
+          preview_window.close();
+        }
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+
+    }
+    catch(e){
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+    }
+}
+
 
 function onCancel() {
   if (preview_window) {
@@ -82,14 +95,15 @@ function onCancel() {
 
   window.close();
   return false;
-};
+}
+
 
 function onPreview() {
   var f_url = document.getElementById("f_url");
   var url = f_url.value;
   if (!url) {
     alert("<?php print_string("enterurlfirst","editor");?>");
-    f_url.focus();
+    f_url.focus();;
     return false;
   }
   var img = new Image();
@@ -127,7 +141,8 @@ function onPreview() {
   }
   win.focus();
   return false;
-};
+}
+
 
 function checkvalue(elm,formname) {
     var el = document.getElementById(elm);
@@ -137,6 +152,7 @@ function checkvalue(elm,formname) {
         return false;
     }
 }
+
 
 function submit_form(dothis) {
     if(dothis == "delete") {
@@ -183,7 +199,7 @@ button { width: 70px; }
 form { margin-bottom: 0px; margin-top: 0px; }
 </style>
 </head>
-<body onload="Init()">
+<body onload="Init();">
   <div class="title"><?php print_string("insertimage","editor");?></div>
   <div class="space"></div>
   <div class="space"></div>
@@ -194,7 +210,9 @@ form { margin-bottom: 0px; margin-top: 0px; }
         <td width="15%" align="right"><?php print_string("imageurl","editor");?>:</td>
         <td width="60%"><input name="f_url" type="text" id="f_url" style="width: 100%;" /></td>
         <td width="23%" align="center">
-          <button name="btnOK" type="button" id="btnOK" onclick="return onOK();"><?php print_string("ok","editor") ?></button></td>
+          <!--button name="btnOK" type="button" id="btnOK" onclick="return onOK();"><?php print_string("ok","editor") ?></button-->
+<input name="btnOK" type="button" id="btnOK" onclick="return onOK();" value="<?php print_string("ok","editor") ?>">
+		</td>
       </tr>
       <tr>
         <td align="right"><?php print_string("alternatetext","editor");?>:</td>

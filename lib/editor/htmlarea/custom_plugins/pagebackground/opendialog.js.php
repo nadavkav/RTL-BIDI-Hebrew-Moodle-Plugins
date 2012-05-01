@@ -16,6 +16,9 @@ require_once("../../../../../config.php");
 
 function __pagebackground (editor) {
 
+	// Make sure that editor has focus
+    editor.focusEditor();
+
     var outparam = null;
     var image = editor._doc.body.style.backgroundImage;
 /*
@@ -48,19 +51,10 @@ function __pagebackground (editor) {
         var sel = editor._getSelection();
         var range = editor._createRange(sel);
         var wrapper = editor._doc.createElement("div");
-        //wrapper.setAttribute('style','background-image: url(\''+ param.f_url +'\');');
-        //wrapper.style.backgroundImage = 'url('+param.f_url+')';
-
-		var uniqueid = Math.floor(Math.random()*11)
-		wrapper.setAttribute('class','bgimg'+uniqueid);
+        //wrapper.setAttribute("style","background-image:"+ param.f_url +";");
+        wrapper.style.backgroundImage = "url("+param.f_url+")";
         wrapper.appendChild (range.cloneContents());
-
-		var wrapper_class = editor._doc.createElement("style");
-		wrapper_class.innerHTML = '.bgimg'+uniqueid+'{background-image: url('+param.f_url+');}';
-
-		wrapper.appendChild(wrapper_class);
-        editor.insertNodeAtSelection(wrapper);
-		
+        editor.insertNodeAtSelection(wrapper );
 
 /*
         var img = image;

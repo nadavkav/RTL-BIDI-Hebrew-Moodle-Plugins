@@ -13,7 +13,7 @@
     $courseid = optional_param('courseid', SITEID, PARAM_INT);
     $userid = optional_param('userid', -1, PARAM_INT);
 
-    require_login($id);
+    require_login($courseid);
     // uncomment the following line to support "moodle/course:managefiles" permission check
     //require_capability('moodle/course:managefiles', get_context_instance(CONTEXT_COURSE, $courseid,$userid));
 

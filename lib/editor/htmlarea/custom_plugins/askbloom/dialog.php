@@ -106,13 +106,21 @@ function onOK() {
       return false;
     }
   }
-  var fields = ["objective"];
-  var param = new Object();
-  for (var i in fields) {
-    var id = fields[i];
-    var el = document.getElementById(id);
-    param[id] = el.innerHTML;
-  }
+
+    try{
+        var fields = ["objective"];
+        var param = new Object();
+        for (var i in fields) {
+          var id = fields[i];
+          var el = document.getElementById(id);
+          param[id] = el.innerHTML;
+        }
+    }
+    catch(e){
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+    }
 
   opener.nbWin.retFunc(param);
   window.close();

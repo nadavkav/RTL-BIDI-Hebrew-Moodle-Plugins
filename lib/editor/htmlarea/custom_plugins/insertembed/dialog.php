@@ -35,15 +35,23 @@ function onOK() {
   }
   var fields = ["embedcode"];
   var param = new Object();
-  for (var i in fields) {
-    var id = fields[i];
-    var el = document.getElementById(id);
-    param[id] = el.value;
-  }
+    try{
+        for (var i in fields) {
+          var id = fields[i];
+          var el = document.getElementById(id);
+          param[id] = el.value;
+        }
 
-  opener.nbWin.retFunc(param);
-  window.close();
-  return false;
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+
+    } catch(e) {
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+
+    }
 };
 
 function onCancel() {
@@ -54,7 +62,6 @@ function onCancel() {
 //[[>
 </script>
 
-</script>
 <style type="text/css">
 html, body {
 margin: 2px;

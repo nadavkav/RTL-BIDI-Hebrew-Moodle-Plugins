@@ -11,8 +11,11 @@
 
     $upload_max_filesize = get_max_upload_file_size($CFG->maxbytes);
 
+    if ($httpsrequired or (!empty($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off')) {
+        $url = preg_replace('|https?://[^/]+|', '', $CFG->wwwroot).'/lib/editor/htmlarea/custom_plugins/insertswf/';
+    } else {
         $url = $CFG->wwwroot.'/lib/editor/htmlarea/custom_plugins/insertswf/';
-
+    }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -60,19 +63,26 @@ function onOK() {
   // pass data back to the calling window
   var fields = ["f_url", "f_alt", "f_align", "f_border",
                 "f_horiz", "f_vert","f_width","f_height"];
-  var param = new Object();
-  for (var i in fields) {
-    var id = fields[i];
-    var el = document.getElementById(id);
-    param[id] = el.value;
-  }
-  if (preview_window) {
-    preview_window.close();
-  }
+    try{
+        var param = new Object();
+        for (var i in fields) {
+            var id = fields[i];
+            var el = document.getElementById(id);
+            param[id] = el.value;
+        }
+        if (preview_window) {
+            preview_window.close();
+        }
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
 
-  opener.nbWin.retFunc(param);
-  window.close();
-  return false;
+    } catch (e) {
+        opener.nbWin.retFunc(param);
+        window.close();
+        return false;
+
+    }
 };
 
 function onCancel() {

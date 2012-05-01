@@ -15,6 +15,13 @@ require_once("../../../../../config.php");
 
 function __filemanager (editor) {
 
+	// Make sure that editor has focus
+    editor.focusEditor();
+
+	// Support for pasting the Content into IE7+
+	var sel = editor._getSelection();
+	var range = editor._createRange(sel);
+
     nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/filemanager/dialog.php?id=$courseid" ?>",1024,768, function (param) {
 
         if (!param) {   // user must have pressed Cancel

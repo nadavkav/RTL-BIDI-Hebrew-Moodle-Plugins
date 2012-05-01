@@ -64,8 +64,9 @@
       foreach($allfolders as $folder) {
         $date = "<font size=1>".userdate($folder->timemodified, "%m/%d/%Y  %H:%I")."</font>";
         $cbx = "<input type=\"checkbox\" name=\"".format_text($folder->name,FORMAT_PLAIN)."\" value=\"fold$folder->id\">";
-          $actions = "<a title=\"".get_string('edit')."\" href=\"folder_manage.php?id=$id&groupid=$groupid&foldid=$folder->id&rootdir=$rootdir\"><img border=\"0\" src=\"$CFG->pixpath/i/edit.gif\" alt=\"" . get_string("edit"). "\" /></a>&nbsp;
-              <a title=\"".get_string('delete')."\" href=\"conf_delete.php?id=$id&groupid=$groupid&from=folder&fromid=$folder->id&rootdir=$rootdir\"><img border=\"0\" src=\"../file_manager/pix/delete.gif\" alt=\"" . get_string("delete"). "\" /></a>";
+          $actions = "<a title=\"".get_string('edit')."\" href=\"folder_manage.php?id=$id&groupid=$groupid&foldid=$folder->id&rootdir=$rootdir\"><img border=\"0\" src=\"$CFG->pixpath/i/edit.gif\" alt=\"" . get_string("edit"). "\" /></a>&nbsp;";
+          // deleting shared resources is disabled, from this dialog
+          //<a title=\"".get_string('delete')."\" href=\"conf_delete.php?id=$id&groupid=$groupid&from=folder&fromid=$folder->id&rootdir=$rootdir\"><img border=\"0\" src=\"../file_manager/pix/delete.gif\" alt=\"" . get_string("delete"). "\" /></a>";
         // Determines if the user can view the share option in the main course (default is no)
         $userinttype = fm_get_user_int_type();
         $tmpcount = count_records('fmanager_shared',"sharedlink",$folder->id,"type",2,"course",$id);
@@ -122,8 +123,9 @@
         $catname = fm_get_user_categories($link->category);
         $date = "<font size=\"1\">".userdate($link->timemodified, "%m/%d/%Y  %H:%I")."</font>";
         $cbx = "<input type=\"checkbox\" name=\"".format_text($link->name,FORMAT_PLAIN)."\" value=\"{$link->id}\" />";
-        $actions = "<a title=\"".get_string('edit')."\" href=\"{$CFG->wwwroot}/blocks/file_manager/link_manage.php?id={$id}&groupid={$groupid}&linkid={$link->id}&rootdir={$rootdir}\"><img border=\"0\" src=\"{$CFG->pixpath}/i/edit.gif\" alt=\"" . get_string('edit'). "\" /></a>&nbsp;
-              <a title=\"".get_string('delete')."\" href=\"{$CFG->wwwroot}/blocks/file_manager/conf_delete.php?id=$id&groupid={$groupid}&from=link&fromid={$link->id}&rootdir={$rootdir}\"><img border=\"0\" src=\"../file_manager/pix/delete.gif\" alt=\"" . get_string('delete'). "\"></a>";
+        $actions = "<a title=\"".get_string('edit')."\" href=\"{$CFG->wwwroot}/blocks/file_manager/link_manage.php?id={$id}&groupid={$groupid}&linkid={$link->id}&rootdir={$rootdir}\"><img border=\"0\" src=\"{$CFG->pixpath}/i/edit.gif\" alt=\"" . get_string('edit'). "\" /></a>&nbsp;";
+        // deleting shared resources is disabled, from this dialog
+        //<a title=\"".get_string('delete')."\" href=\"{$CFG->wwwroot}/blocks/file_manager/conf_delete.php?id=$id&groupid={$groupid}&from=link&fromid={$link->id}&rootdir={$rootdir}\"><img border=\"0\" src=\"../file_manager/pix/delete.gif\" alt=\"" . get_string('delete'). "\"></a>";
         // Determines if the user can view the share option in the main course (default is no)
         $userinttype = fm_get_user_int_type();
         $tmpcount = count_records('fmanager_shared', 'sharedlink', $link->id, 'type', 0, 'course', $id);

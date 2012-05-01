@@ -16,6 +16,13 @@ require_once("../../../../../config.php");
 
 function __hocr (editor) {
 
+	// Make sure that editor has focus
+    editor.focusEditor();
+
+	// Support for pasting the Content into IE7+
+	var sel = editor._getSelection();
+	var range = editor._createRange(sel);
+
     var outparam = null;
     if (typeof image == "undefined") {
         image = editor.getParentElement();

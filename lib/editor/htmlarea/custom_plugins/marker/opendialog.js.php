@@ -17,6 +17,9 @@ require_once("../../../../../config.php");
 
 function __marker (editor) {
 
+	// Make sure that editor has focus
+    editor.focusEditor();
+
     //var sel = editor._getSelection();
     //var rng = editor._createRange(sel);
     editor.insertHTML('<span class="yellowmarker"><?php echo get_string("yourcomment","marker",'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/marker/lang/');?></span><style>.yellowmarker{background-color:yellow;}</style>');
