@@ -1,0 +1,161 @@
+.comment {
+    position: absolute;
+    border: black 1px solid;
+    font-family: helvetica, arial, sans;
+    font-size: 12px;
+    cursor: move;
+    width: 120px;
+    line-height: normal;
+    white-space: pre-wrap;
+}
+
+.comment p {
+    margin: 0px 1px;
+}
+
+.commentyellow {
+    background-color: #ffffb0;
+}
+
+.commentred {
+    background-color: #ffb0b0;
+}
+
+.commentgreen {
+    background-color: #b0ffb0;
+}
+
+.commentblue {
+    background-color: #d0d0ff;
+}
+
+.commentwhite {
+    background-color: #ffffff;
+}
+
+.commentclear {
+    background-color: transparent;
+    border-style: none;
+}
+
+.comment textarea {
+    font-family: arial, sans;
+    font-size: 12px;
+    width: 100%;
+    resize: none;
+    padding: 0px;
+    border: 0px;
+}
+
+.comment .resizehandle {
+    background-image: url('resize.gif');
+    width: 15px;
+    height: 15px;
+    top: 100%;
+    left: 100%;
+    margin-top: -15px;
+    margin-left: -15px;
+    position: absolute;
+    cursor: e-resize;
+    -moz-background-clip: -moz-initial;
+    -moz-background-origin: -moz-initial;
+    -moz-background-inline-policy: -moz-initial;
+}
+
+.comment-highlight {
+    border: red 2px dashed;
+    margin: -1px;
+}
+
+#pdfholder .pagewait {
+    background-image: url('pagewait.gif');
+    width: 24px;
+    height: 24px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    -moz-background-clip: -moz-initial;
+    -moz-background-origin: -moz-initial;
+    -moz-background-inline-policy: -moz-initial;
+}
+
+#pdfholder .hidden {
+    display: none;
+}
+
+.comment .wait {
+    background-image: url('wait.gif');
+    width: 16px;
+    height: 16px;
+    top: 0px;
+    left: 100%;
+    margin-left: -17px;
+    position: absolute;
+    -moz-background-clip: -moz-initial;
+    -moz-background-origin: -moz-initial;
+    -moz-background-inline-policy: -moz-initial;
+}
+
+#pdfholder {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.error {
+    border-width: 1px;
+    border-color: red;
+    border-style: dashed;
+}
+
+/* context menu specific */
+.contextmenu	{ border:1px solid #999; padding:0; background:#eee; width:221px; list-style-type:none; display:none; }
+.contextmenu .separatorie7 { border-top:1px solid #999; }
+.contextmenu .separator { border-bottom:1px solid #999; }
+.contextmenu li	{ margin:0; padding:0; clear: both; font-size:14px; }
+.contextmenu li a { display:block; padding:5px 5px 5px 5px; width:190px; font-size:12px; text-decoration:none; font-family:tahoma,arial,sans-serif; color:#000; float: left; }
+.contextmenu li a:hover	{ background-color:#ddd; }
+.contextmenu li a.disabled { color:#ccc; font-style:italic; }
+.contextmenu li a.disabled:hover { background-color:#eee; }
+.contextmenu li a.delete { width: 10px; }
+.contextmenu li a.delete:hover { background-color:#d00; }
+
+#toolbar-line2 button {
+    height: 35px;
+    line-height: normal;
+}
+
+#toolbar-line2  select {
+    height: 37px;
+    position: absolute;
+    top: 0px;
+}
+
+#saveoptions {
+    margin-bottom: 5px;
+}
+
+#saveoptions .yui-button button, #saveoptions .yui-button a {
+    line-height: 1.5;
+}
+
+#choosetoolgroup .yui-radio-button {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#saveoptions form {
+    display: inline;
+}
+
+#choosetoolgroup {
+    display: inline;
+    margin-left: 5px;
+}
+
+#toolbar-line2 select {
+    display: inline;
+}
