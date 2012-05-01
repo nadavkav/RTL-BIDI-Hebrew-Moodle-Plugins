@@ -9,7 +9,7 @@
  *
  * @package    course/format
  * @subpackage topcoll
- * @version    See the value of '$plugin->version' in version.php.
+ * @version    See the value of '$plugin->version' in below.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @link       http://docs.moodle.org/en/Collapsed_Topics_course_format
@@ -29,38 +29,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//
-// Optional course format configuration file
-//
-// This file contains any specific configuration settings for the 
-// format.
-//
-// The default blocks layout for this course format:
-    $format['defaultblocks'] = 'participants,activity_modules,search_forums,'.
-                               'admin,course_list:news_items,calendar_upcoming,'.
-                               'recent_activity';
-//
+/**
+ * Format's backup routine
+ *
+ * @param handler $bf Backup file handler
+ * @param object $preferences Backup preferences
+ * @return boolean Success
+ **/
+function topcoll_backup_format_data($bf, $preferences) {
+    $status = true;
 
-// Layout configuration.
-// Here you can see what numbers in the array represent what layout for setting the default value below.
-// 1 => Default.
-// 2 => No 'Topic x' / 'Week x'.
-// 3 => No section number.
-// 4 => No 'Topic x' / 'Week x' and no section number.
-// 5 => No 'Toggle' word.
-// 6 => No 'Toggle' word and no 'Topic x' / 'Week x'.
-// 7 => No 'Toggle' word, no 'Topic x' / 'Week x'  and no section number.
+    if ($layout = get_record('format_topcoll_layout', 'courseid',
+        $preferences->backup_course)) {
 
-// Default layout to use - used when a new Collapsed Topics course is created or an old one is accessed for the first time after installing this functionality introduced in CONTRIB-3378.
-$defaultlayoutelement = 1;
+        $status = $status and fwrite ($bf, start_tag('LAYOUT', 3, true));
+        $status = $status and fwrite ($bf, full_tag('LAYOUTELEMENT', 4, false, $layout->layoutelement));
+        $status = $status and fwrite ($bf, full_tag('LAYOUTSTRUCTURE', 4, false, $layout->layoutstructure));
+        $status = $status and fwrite ($bf, end_tag('LAYOUT',3, true));
+    }
+    return $status;
+}
 
-// Structure configuration.
-// Here so you can see what numbers in the array represent what structure for setting the default value below.
-// 1 => Topic
-// 2 => Week   
-// 3 => Latest Week First 
-// 4 => Current Topic First
+/**
+ * Return a content encoded to support interactivities linking. This function is
+ * called automatically from the backup procedure by {@link backup_encode_absolute_links()}.
+ *
+ * @param string $content Content to be encoded
+ * @param object $restore Restore preferences object
+ * @return string The encoded content
+ **/
+function topcoll_encode_format_content_links($content, $restore) {
+    global $CFG;
 
-// Default structure to use - used when a new Collapsed Topics course is created or an old one is accessed for the first time after installing this functionality introduced in CONTRIB-3378.
-$defaultlayoutstructure = 1;
-?>
+    $base = preg_quote($CFG->wwwroot, '/');
+
+    //TODO: Convert lins to universal id;
+    return $content;
+}

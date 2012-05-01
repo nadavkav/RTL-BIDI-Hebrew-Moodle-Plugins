@@ -9,7 +9,7 @@
  *
  * @package    course/format
  * @subpackage topcoll
- * @version    See the value of '$plugin->version' in version.php.
+ * @version    See the value of '$plugin->version' below.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @link       http://docs.moodle.org/en/Collapsed_Topics_course_format
@@ -28,39 +28,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+ $plugin->version = 2012031700;
+ //$plugin->maturity = MATURITY_STABLE; // Not in Moodle 1.9 but here as information to you.
 
-//
-// Optional course format configuration file
-//
-// This file contains any specific configuration settings for the 
-// format.
-//
-// The default blocks layout for this course format:
-    $format['defaultblocks'] = 'participants,activity_modules,search_forums,'.
-                               'admin,course_list:news_items,calendar_upcoming,'.
-                               'recent_activity';
-//
-
-// Layout configuration.
-// Here you can see what numbers in the array represent what layout for setting the default value below.
-// 1 => Default.
-// 2 => No 'Topic x' / 'Week x'.
-// 3 => No section number.
-// 4 => No 'Topic x' / 'Week x' and no section number.
-// 5 => No 'Toggle' word.
-// 6 => No 'Toggle' word and no 'Topic x' / 'Week x'.
-// 7 => No 'Toggle' word, no 'Topic x' / 'Week x'  and no section number.
-
-// Default layout to use - used when a new Collapsed Topics course is created or an old one is accessed for the first time after installing this functionality introduced in CONTRIB-3378.
-$defaultlayoutelement = 1;
-
-// Structure configuration.
-// Here so you can see what numbers in the array represent what structure for setting the default value below.
-// 1 => Topic
-// 2 => Week   
-// 3 => Latest Week First 
-// 4 => Current Topic First
-
-// Default structure to use - used when a new Collapsed Topics course is created or an old one is accessed for the first time after installing this functionality introduced in CONTRIB-3378.
-$defaultlayoutstructure = 1;
-?>
+  $plugin->requires = 2007101551; // 1.9.8 [nadavkav 9-4-2012]
+ //$plugin->requires = 2007101591.06; // 1.9.14
+ $plugin->component = 'format_topcoll';
+ $plugin->release = '1.9.9';
