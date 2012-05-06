@@ -561,11 +561,11 @@ class questionnaire_question {
         $currhbar = substr($currenttheme,0, strlen($currenttheme) - 4).'_';
         $filename = $image_url.'hbar_l.gif';
         $currthemehbarurl = $CFG->dirroot.'/mod/questionnaire/images/'.$currhbar;
-        if ( !file_exists($currthemehbarurl.'hbar.gif') 
-                || !file_exists($currthemehbarurl.'hbar_l.gif') 
+        if ( !file_exists($currthemehbarurl.'hbar.gif')
+                || !file_exists($currthemehbarurl.'hbar_l.gif')
                 || !file_exists($currthemehbarurl.'hbar_r.gif') ) {
             $currhbar = '';
-        } 
+        }
         return $currhbar;
     }
 
@@ -688,12 +688,12 @@ class questionnaire_question {
                     $this->counts[$this->choice] = $count;
                 }
 	    $response_pie_data .= $row->num.'*';
-	    $response_pie_data_label .= $row->num.'*'; 
+	    $response_pie_data_label .= $row->num.'*';
             }
 	    $response_pie_data = rtrim($response_pie_data,'*');
 	    $response_pie_data_label = rtrim($response_pie_data_label,'*');
             $this->mkrespercent(count($rids), $this->precise, $prtotal, $guicross);
-	    echo '<img src="/moodle/lib/makechart.php?data='.$response_pie_data.'&label='.$response_pie_data_label.'" />';
+	    echo '<img src="makechart.php?data='.$response_pie_data.'&label='.$response_pie_data_label.'" />';
         } else {
             print_string('noresponsedata', 'questionnaire');
         }
@@ -778,8 +778,8 @@ class questionnaire_question {
         if ($rows = $this->get_response_rank_results($rids)) {
             if($this->type_id == 8) { //Rank
 		////////////////////////////////////////////////////////////////////////////////////////////
-		//// pre calculation for std 
-//echo "<hr>found (n) choice rows = ".count($rows)."<hr>";      	
+		//// pre calculation for std
+//echo "<hr>found (n) choice rows = ".count($rows)."<hr>";
 		foreach ($rows as $row)
 		{
  		  //echo "choice id = ".$row->id."<br/>";
@@ -1011,7 +1011,7 @@ class questionnaire_question {
                 if ($horizontal) {
                     $output .= ' <span class="radioelement">';
                 }
-                $output .= '<input name="q'.$this->id.'" id="'.$htmlid.'" type="radio" value="'.$id.'"'. 
+                $output .= '<input name="q'.$this->id.'" id="'.$htmlid.'" type="radio" value="'.$id.'"'.
                     ' onclick="other_check_empty(name, value)"';
                 if ($id == $checked) {
                     $output .= ' checked="checked"';
@@ -1040,12 +1040,12 @@ class questionnaire_question {
                 $otherid = 'q'.$this->id.'_'.$checked;
                 if (substr($checked, 0, 6) == 'other_') { // fix bug CONTRIB-222
                     $checked = substr($checked,6);
-                } 
+                }
                 $htmlid = 'auto-rb'.sprintf('%04d', ++$idcounter);
                 if ($horizontal) {
                     $output .= ' <span style="white-space:nowrap;">';
                 }
-                $output .= '<input name="q'.$this->id.'" id="'.$htmlid.'" type="radio" value="other_'.$id.'"'. 
+                $output .= '<input name="q'.$this->id.'" id="'.$htmlid.'" type="radio" value="other_'.$id.'"'.
                     ' onclick="other_check_empty(name, value)"';
                 if (($id == $checked) || !empty($data->$cid)) {
                     $output .= ' checked="checked"';
@@ -1128,7 +1128,7 @@ class questionnaire_question {
             $other = strpos($choice->content, '!other');
             if ($other !== 0)  { // this is a normal check box
                 $contents = choice_values($choice->content);
-                print_checkbox ('q'.$this->id.'[]', $id, in_array($id, $data->{'q'.$this->id}), 
+                print_checkbox ('q'.$this->id.'[]', $id, in_array($id, $data->{'q'.$this->id}),
                                 format_text($contents->text, FORMAT_HTML).$contents->image);
                 echo '<br />';
             } else { // check box with associated !other text field
@@ -1199,7 +1199,7 @@ class questionnaire_question {
         $mods = array();
         foreach ($this->choices as $cid => $choice) {
             $content = $choice->content;
-            // check for number from 1 to 3 digits, followed by the equal sign = (to accomodate named degrees) 
+            // check for number from 1 to 3 digits, followed by the equal sign = (to accomodate named degrees)
              if (ereg("^([0-9]{1,3})=(.*)$", $content,$ndd)) {
                 $n[$nameddegrees] = $ndd[2];
                 $this->choices[$cid] = '';
@@ -1209,10 +1209,10 @@ class questionnaire_question {
                 if (!$osgood) {
                     $contents = choice_values($content);
                     if ($contents->modname) {
-                        $choice->content = $contents->text; 
+                        $choice->content = $contents->text;
                         $namedmodalities++;
                     }
-                }               
+                }
              }
         }
         // if we have named degrees, provide for wider degree columns (than for numbers)
@@ -1224,7 +1224,7 @@ class questionnaire_question {
         }
         for ($j = 0; $j < $this->length; $j++) {
             if (isset($n[$j])) {
-                $str = $n[$j]; 
+                $str = $n[$j];
             } else {
                 $str = $j+1;
             }
@@ -1257,7 +1257,7 @@ class questionnaire_question {
             if (isset($choice->content)) {
                 $str = 'q'."{$this->id}_$cid";
                 echo '<tr>';
-                $content = $choice->content;  
+                $content = $choice->content;
                 if ($osgood) {
                 	list($content, $contentright) = split('[|]', $content);
                 }
@@ -1576,7 +1576,7 @@ class questionnaire_question {
 
         for ($j = 0; $j < $this->length; $j++) {
             if (isset($n[$j])) {
-                $str = $n[$j]; 
+                $str = $n[$j];
             } else {
                 $str = $j+1;
             }
@@ -1700,16 +1700,16 @@ class questionnaire_question {
         $table->size = array();
         $table->align = array();
         $table->head = array();
-        $table->wrap = array(); 
+        $table->wrap = array();
         if ($guicross) {
             $table->size[] = '34';
             $table->align[] = 'center';
             $table->head[] = ' ';
-            $table->wrap[] = ''; 
+            $table->wrap[] = '';
         }
         $table->size = array_merge($table->size, array('*', '50%', '7%'));
         $table->align = array_merge($table->align, array('left', 'left', 'right'));
-        $table->wrap = array_merge($table->wrap, array('', 'nowrap', '')); 
+        $table->wrap = array_merge($table->wrap, array('', 'nowrap', ''));
         $table->head = array_merge($table->head, array(get_string('response', 'questionnaire'),
                        get_string('average', 'questionnaire'), get_string('total', 'questionnaire')));
 
@@ -1802,7 +1802,7 @@ class questionnaire_question {
 
     function mkreslistdate($total, $precision, $showTotals) {
         global $CFG;
-        $dateformat = get_string('strfdate', 'questionnaire'); 
+        $dateformat = get_string('strfdate', 'questionnaire');
 
         if($total == 0) {
             return;
@@ -1868,7 +1868,7 @@ class questionnaire_question {
         global $CFG;
 
         $stravg = '<div style="text-align:center">'.get_string('averagerank', 'questionnaire').'</div>';
-	$strstd = '<div style="text-align:center">'.get_string('stdrank', 'questionnaire').'</div>';
+        $strstd = '<div style="text-align:center">'.get_string('stdrank', 'questionnaire').'</div>';
         $isna = $this->precise == 1;
         $isnahead = '';
         $osgood = false;
@@ -1915,10 +1915,11 @@ class questionnaire_question {
                 $nameddegrees++;
             }
         }
+
         $align = 'center';
         for ($j = 0; $j < $this->length; $j++) {
             if (isset($n[$j])) {
-                $str = $n[$j]; 
+                $str = $n[$j];
             } else {
                 $str = $j+1;
             }
@@ -1926,7 +1927,7 @@ class questionnaire_question {
         $out = '<table style="width:100%" cellpadding="2" cellspacing="0" border="1"><tr>';
         for ($i = 0; $i <= $length - 1; $i++) {
             if (isset($n[$i])) {
-                $str = $n[$i]; 
+                $str = $n[$i];
             } else {
                 $str = $i + 1;
             }
