@@ -8,6 +8,7 @@
 
     require_once(dirname(__FILE__) . '/v2uploader/v2uploader.php');
     require_once($CFG->libdir.'/ajax/ajaxlib.php');
+    require_js(array('yui_yahoo','yui_dom','yui_event','yui_connection'));
 
     $topic = optional_param('topic', -1, PARAM_INT);
 
@@ -139,6 +140,62 @@
         echo '<tr class="section separator"><td colspan="3" class="spacer"></td></tr>';
     }
 
+    // Dynamic (AJAX) Activity and Resource course search / filter display
+    echo '<div style="text-align: center;">חיפוש משאבים ופעילויות: <input id="searchmodules" name="searchmodules" size="30"></div><br/>';
+    echo '
+
+<div id="dynamictopic" style="background-color: beige;border: 1px dashed gray;border-radius: 5px;padding: 5px;margin: 7px;display:none;"></div>
+
+<script type="text/javascript">
+(function() {
+    var Event = YAHOO.util.Event;
+
+    var sUrl = "' . $CFG->wwwroot . '/course/format/topicsadv/gettopic.php?courseid=' . $COURSE->id . '&searchfor=";
+    var div = document.getElementById("dynamictopic");
+
+    var handleSuccess = function(o){ 
+	    if(o.responseText !== undefined){ 
+	        div.innerHTML = o.responseText;
+	        div.style.display = "block";
+	    } else {
+            div.style.display = "none";
+        }
+	} 
+	 
+	var handleFailure  = function(o){ 
+	    if(o . responseText  !==  undefined){ 
+	        div . innerHTML  =  "<li>Transaction id: "  +  o . tId  +  "</li>"; 
+	        div . innerHTML  +=  "<li>HTTP status: "  +  o . status  +  "</li>"; 
+	        div . innerHTML  +=  "<li>Status code message: "  +  o . statusText  +  "</li>"; 
+	    } 
+	} 
+	 
+	var callback  =  
+	{ 
+	  success:handleSuccess, 
+	  failure: handleFailure, 
+	  argument: {
+         foo:"foo", bar:"bar" } 
+	}; 
+
+    Event . onDOMReady(function()
+    {
+
+        Event . on("searchmodules", "keyup", function(e) {
+            var
+            searchfor = document . getElementById("searchmodules");
+            console . log("search for: " + searchfor . value);
+            var
+            request = YAHOO . util . Connect . asyncRequest("GET", sUrl + searchfor . value, callback);
+
+        });
+
+    });
+
+})();
+
+</script >
+';
 
 /// Now all the normal modules by topic
 /// Everything below uses "section" terminology - each "section" is a topic.
@@ -194,7 +251,16 @@
             }
 
             echo '<tr id="section-'.$section.'" class="section main'.$sectionstyle.'">';
-            echo '<td class="left side">'.$currenttext.$section.'</td>';
+            echo '<td class="left side">'.$currenttext.$section;
+            // teachers can upload files that become resources
+            if (has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                echo '<hr/><span class="project_cursor" title="'.get_string('resourceuploadtitle', 'format_project').'">';
+                v2uploader_put_plugin('ruswf', $course->id, $thissection->id, true, $thissection->id);
+                echo '</span>';
+                echo '<span id="ruprgs'.$thissection->id.'"></span>';
+                echo '&nbsp;';
+            }
+            echo '</td>';
 
             echo '<td class="content">';
             if (!has_capability('moodle/course:viewhiddensections', $context) and !$thissection->visible) {   // Hidden for students
@@ -210,14 +276,6 @@
                 }
 
                 echo '</div>';
-                // teachers can upload files that become resources
-                if (isediting($course->id) && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
-                    echo '<span class="project_cursor" title="'.get_string('resourceuploadtitle', 'format_project').'">';
-                    v2uploader_put_plugin('ruswf', $course->id, $thissection->id, true, $thissection->id);
-                    echo '</span>';
-                    echo '<span id="ruprgs'.$thissection->id.'"></span>';
-                    echo '&nbsp;';
-                }
 
                 print_section($course, $thissection, $mods, $modnamesused);
 
