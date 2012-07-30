@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/ajax_marking/db" VERSION="20080529" COMMENT="XMLDB file for Moodle blocks/ajax_marking"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_ajax_marking" COMMENT="stores user preferences (if any) on which assessments they would like hidden and which groups they would like to display in the AJAX marking block.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" ENUM="false" COMMENT="the userid of the person to whom this preference applies" PREVIOUS="id" NEXT="assessmenttype"/>
+        <FIELD NAME="assessmenttype" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="this allows us to know what the next field, assessment id refers to i.e. aquiz, a forum etc." PREVIOUS="userid" NEXT="assessmentid"/>
+        <FIELD NAME="assessmentid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" ENUM="false" COMMENT="id of the assessment (quiz, forum, etc) that this preference refers to" PREVIOUS="assessmenttype" NEXT="showhide"/>
+        <FIELD NAME="showhide" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="1" SEQUENCE="false" ENUM="false" COMMENT="should this assessment be shown at all to this user? 0=no 1=yes default to yes" PREVIOUS="assessmentid" NEXT="groups"/>
+        <FIELD NAME="groups" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="comma separated list of group ids that should be displayed for this assessment and this user." PREVIOUS="showhide"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table, please edit me" NEXT="useridkey"/>
+        <KEY NAME="useridkey" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="links userid to the user table" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

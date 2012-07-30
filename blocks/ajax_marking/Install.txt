@@ -1,0 +1,11 @@
+This block is compatible with Moodle version 1.9.3 or later. Earlier versions will give an error
+because the YUI library was updated to version 2.6.0, meaning that I have had to alter the block
+in order for it to work.
+
+To install, place this directory in your /blocks/ folder as-is and then visit the Admin -> notifications 
+page (you will need to be logged in as an admin).
+
+Any problems, please file them in the tracker under Non-core contributed modules -> Block AJAX marking
+and/or contact me through my profile on moodle.org
+
+- Matt Gibson
