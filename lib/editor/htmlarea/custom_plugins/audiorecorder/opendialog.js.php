@@ -17,12 +17,11 @@ function __audiorecorder (editor) {
 
 	// Make sure that editor has focus
     editor.focusEditor();
-
 	// Support for pasting the Content into IE7+
-	var sel = editor._getSelection();
-	var range = editor._createRange(sel);
+    var sel = editor._getSelection();
+    var range = editor._createRange(sel);
 
-    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/dialog.php?id=$courseid" ?>",550,500, function (param) {
+    nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/dialog.php?id=$courseid" ?>",550,350, function (param) {
 
         if (!param) {   // user must have pressed Cancel
             return false;
@@ -31,17 +30,21 @@ function __audiorecorder (editor) {
         // create the DIV element  to hold the OBJECT embed inside of it
         newDiv = doc.createElement("div");
 
-        // assign the given arguments
+    var innerHTML = '';
+
+// assign the given arguments
         for (var field in param) {
             var value = param[field];
             if (!value) {
                 continue;
             }
             switch (field) {
-                case "audiofile"   : newDiv.innerHTML = value; break;
-                case "audioplayer" : newDiv.innerHTML = value; break;
+               case "audiofile"   : innerHTML += value; break;
+               case "audioplayer" : innerHTML += value; break;
             }
         }
+
+        newDiv.innerHTML = innerHTML;
 
         if (HTMLArea.is_ie) {
             range.pasteHTML(newDiv.outerHTML);

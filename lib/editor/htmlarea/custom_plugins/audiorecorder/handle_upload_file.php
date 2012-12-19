@@ -67,20 +67,18 @@ require_once("../../../../../config.php");
       $toFile = $CFG->dataroot . "/" . $uploads_dir . "/" . $upfile_name;
       $moveResult = move_uploaded_file( $fromFile, $toFile );
       if( $moveResult ) {
-          echo "SUCCESS - $upfile_name uploaded.\n";
-	  add_to_log($_GET['courseid'], "audiorecorder", "recorded", "/file.php/$uploads_dir/$upfile_name", 'wav Size='. $upfile_size,0,$_GET['userid']);
+            echo "SUCCESS - $upfile_name uploaded.\n";
+            add_to_log($_GET['courseid'], "audiorecorder", "recorded", "/file.php/$uploads_dir/$upfile_name", 'wav Size='. $upfile_size,0,$_GET['userid']);
 
-          if (file_exists('/usr/bin/ffmpeg')) {
-	    $exec_string = '/usr/bin/ffmpeg -i '.$toFile.' '.$toFile.'.mp3';
-	    exec($exec_string);
-	    add_to_log($_GET['courseid'], "audiorecorder", "recorded", "/file.php/$uploads_dir/$upfile_name", 'mp3',0, $_GET['userid']);
-	    // delete WAV file if we converted to MP3
-	    //unlink($toFile);
-	    exec('rm -rf '.$toFile); // Linux specific!
-          }
+            if (file_exists('/usr/bin/ffmpeg')) {
+                $exec_string = '/usr/bin/ffmpeg -i '.$toFile.' '.$toFile.'.mp3';
+                exec($exec_string);
+                add_to_log($_GET['courseid'], "audiorecorder", "recorded", "/file.php/$uploads_dir/$upfile_name", 'mp3',0, $_GET['userid']);
+                // delete WAV file if we converted to MP3
+                //unlink($toFile);
+                exec('rm -rf '.$toFile); // Linux specific!
+            }
         } else {
-          echo "ERROR - move_uploaded_file( $fromFile, $toFile ) failed! See Java Console.\n";
+            echo "ERROR - move_uploaded_file( $fromFile, $toFile ) failed! See Java Console.\n";
         }
     }
-
-?>

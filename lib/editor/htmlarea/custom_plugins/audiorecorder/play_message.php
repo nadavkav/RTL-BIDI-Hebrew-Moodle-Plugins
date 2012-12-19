@@ -26,17 +26,18 @@ require_once("../../../../../config.php");
   //param["audiofile"] = '<a href="<?php echo $_GET['AudioFile'].'.mp3' ?>"><?php echo get_string('clicktoplay','audiorecorder','',$CFG->dirroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/"); ?></a>';
   // see remarked code at the end of the file (nadavkav)
 
-  <?php if (file_exists('/usr/bin/ffmpeg')) { ?>
+  <?php if (file_exists('/usr/bin/ffmpeg')) {
+      $audiofile = $_GET['AudioFile'].'.mp3';
+  }else{
+      $audiofile = $_GET['AudioFile'];
+  }  ?>
 
-  param["audioplayer"] = '<span id="mp3palyer" style="border:1px dashed;"><img src="<?php echo $CFG->wwwroot; ?>/lib/editor/htmlarea/custom_plugins/audiorecorder/icon.png"><object height="15" width="200" type="application/x-shockwave-flash" data="<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/audiorecorder/"; ?>mp3player.swf?soundFile=<?php echo $_GET['AudioFile'].'.mp3'; ?>"><param name="quality" value="high"></object></span>';
+  param["audioplayer"] = <?php echo "'<a target=\"_new\" href=\"".$audiofile."\">".get_string('clicktoplay','audiorecorder','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/')."</a>';"; ?>
 
-  <?php } else { ?>
 
-  param["audioplayer"] = <?php echo "'<a target=\"_new\" href=\"".$_GET['AudioFile']."\">".get_string('clicktoplay','audiorecorder','',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/audiorecorder/lang/')."</a>';"; ?>
 
-  <?php } ?>
-  opener.nbWin.retFunc(param);
-  window.close();
+  parent.opener.nbWin.retFunc(param);
+  parent.window.close();
   return false;
 };
 

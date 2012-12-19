@@ -18,13 +18,6 @@
 
 function __videorecorder (editor) {
 
-	// Make sure that editor has focus
-    editor.focusEditor();
-
-	// Support for pasting the Content into IE7+
-	var sel = editor._getSelection();
-	var range = editor._createRange(sel);
-
     nbDialog("<?php echo $CFG->wwwroot."/lib/editor/htmlarea/custom_plugins/videorecorder/dialog.php?id=$courseid" ?>",450,380, function (param) {
 
         if (!param) {   // user must have pressed Cancel

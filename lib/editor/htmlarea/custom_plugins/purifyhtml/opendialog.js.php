@@ -21,10 +21,12 @@ function __purifyhtml (editor) {
 
     // Make sure that editor has focus
     editor.focusEditor();
-    var sel = editor._getSelection();
-    var range = editor._createRange(sel);
+    //var sel = editor._getSelection();
+    //var range = editor._createRange(sel);
 
+	//var sel = editor._getSelection();
 	//	sel.removeAllRanges();
+	//var range = editor._createRange();
 	//	range.selectNodeContents(editor._doc.body);
 	//	sel.addRange(range);
 
