@@ -53,16 +53,16 @@
 text-align:right;
 }
 
-.subsubcategory {
+#blocks-exabis_eportfolio .subsubcategory {
 background-color:#CFCECE;
 margin-right:100px;
 }
 
-td#subcategory {
+#blocks-exabis_eportfolio td#subcategory {
 background-color:#F9FBAE;
 }
 
-td#category {
+#blocks-exabis_eportfolio td#category {
 background-color:#FFD582;
 }
 
@@ -76,7 +76,7 @@ background-color:#FFD582;
     padding: 2px 20px;
 }
 
-.view-group-header .change {
+#blocks-exabis_eportfolio .view-group-header .change {
     background-color: beige;
     border: 2px outset Blue;
     font-size: 12px;
@@ -91,24 +91,24 @@ background-color:#FFD582;
   float: right;
 }
 
-.view-group-layout {
+#blocks-exabis_eportfolio .view-group-layout {
   background-color:#FCD99E;
 }
 
-#view .view-item-link {
+#blocks-exabis_eportfolio #view .view-item-link {
   background-color: beige;
   border: 1px outset;
   padding: 1px 4px !important;
   width: 65px;
 }
 
-#view .view-header {
+#blocks-exabis_eportfolio #view .view-header {
   background-color: beige;
   font-size: 2em;
 }
 
-.tabtree ul.tabrow0 li.selected,
-.tabtree ul.tabrow1 li.active {
+#blocks-exabis_eportfolio .tabtree ul.tabrow0 li.selected,
+#blocks-exabis_eportfolio .tabtree ul.tabrow1 li.active {
   background-color: #FFF7D6;
   background-image: none;
   border: 2px dotted gold;

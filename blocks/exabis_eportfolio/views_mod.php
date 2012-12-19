@@ -138,7 +138,7 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
 		$mform->updateAttributes(array('class'=>''));
 
 		$mform->addElement('hidden', 'items');
-        $mform->addElement('hidden', 'action');
+    $mform->addElement('hidden', 'action');
 		$mform->addElement('hidden', 'courseid');
 		$mform->addElement('hidden', 'viewid');
 
@@ -154,6 +154,8 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
         $themes[''] = get_string('forceno');
         $themes += get_list_of_themes();
         $mform->addElement('select', 'theme', get_string('forcetheme'), $themes);
+    } else {
+        $mform->addElement('static', 'notheme', get_string('notheme'));
     }
 
 		$mform->addElement('hidden', 'blocks');
@@ -186,16 +188,16 @@ class block_exabis_eportfolio_view_edit_form extends moodleform {
 
         $form = $this->_form->toArray();
 
-		$form['html_hidden_fields'] = '';
-		$form['elements_by_name'] = array();
+        $form['html_hidden_fields'] = '';
+        $form['elements_by_name'] = array();
 
-		foreach ($form['elements'] as $element) {
-			if ($element['type'] == 'hidden')
-				$form['html_hidden_fields'] .= $element['html'];
-			$form['elements_by_name'][$element['name']] = $element;
-		}
+        foreach ($form['elements'] as $element) {
+          if ($element['type'] == 'hidden')
+            $form['html_hidden_fields'] .= $element['html'];
+          $form['elements_by_name'][$element['name']] = $element;
+        }
 
-		return $form;
+        return $form;
     }
 }
 
@@ -317,8 +319,6 @@ switch ($action) {
 		print_error("unknownaction", "block_exabis_eportfolio");
 }
 
-
-
 if ($view) {
 	$query = "select b.*".
 		 " from {$CFG->prefix}block_exabeporviewblock b".
@@ -327,9 +327,6 @@ if ($view) {
 	$blocks = get_records_sql($query);
 	$postView->blocks = json_encode($blocks);
 }
-
-
-
 
 require_js($CFG->wwwroot.'/blocks/exabis_eportfolio/js/jquery.js');
 require_js($CFG->wwwroot.'/blocks/exabis_eportfolio/js/jquery.ui.js');
@@ -378,8 +375,12 @@ echo '<div class="view-data view-group'.(!$view?' view-group-open':'').'">';
 		echo '<div class="mform">';
 		echo '<fieldset class="clearfix"><legend class="ftoggler">'.get_string('viewinformation', 'block_exabis_eportfolio').'</legend>';
 			echo '<div class="fitem required"><div class="fitemtitle"><label for="id_name">'.get_string('viewtitle', 'block_exabis_eportfolio').'<img class="req" title="Required field" alt="Required field" src="'.$CFG->wwwroot.'/pix/req.gif" /> </label></div><div class="felement ftext">'.$form['elements_by_name']['name']['html'].'</div></div>';
-			echo '<div class="fitem"><div class="fitemtitle"><label for="id_name">'.get_string('viewdescription', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['description']['html'].'</div></div>';
-      echo '<div class="fitem"><div class="fitemtitle"><label for="id_theme">'.get_string('viewtheme', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['theme']['html'].'</div></div>';
+			echo '<div class="fitem"><div class="fitemtitle"><label for="id_description">'.get_string('viewdescription', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['description']['html'].'</div></div>';
+      if (!empty($form['elements_by_name']['theme'])) {
+        echo '<div class="fitem"><div class="fitemtitle"><label for="id_theme">'.get_string('viewtheme', 'block_exabis_eportfolio').'</label></div><div class="felement ftext">'.$form['elements_by_name']['theme']['html'].'</div></div>';
+      } else {
+        echo '<div class="fitem"><div class="fitemtitle"><label for="id_notheme"></label></div><div class="felement ftext">'.get_string('notheme','block_exabis_eportfolio').'</div></div>';
+      }
 		echo '</fieldset>';
 
 echo '<div style="padding-top: 20px; text-align: center;">';
