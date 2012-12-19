@@ -42,6 +42,10 @@
   display: block;
   float: left;
 }
+.dir-rtl .icon-course, .dir-rtl .icon-assignment, .dir-rtl .icon-workshop,
+.dir-rtl .icon-forum, .dir-rtl .icon-quiz, .dir-rtl .icon-quiz_question,
+.dir-rtl .icon-journal, .dir-rtl .icon-group {float: right;}
+
 .amb-icon {
   width: 20px;
   padding-right: 3px;
@@ -135,6 +139,8 @@ No longer needed.
   margin: 0px;
   padding: 0px;
 }
+.dir-rtl .block_ajax_marking #loader {float:right;}
+
 #hidden-icons {
   display: none;
 }
@@ -148,6 +154,9 @@ No longer needed.
   padding-bottom: 2px;
   margin-left: 3px;
 }
+.dir-rtl .block_ajax_marking #totalmessage,
+.dir-rtl .block_ajax_marking #count  {float:right;}
+
 .loaderimage {
   background: url(<?php echo $CFG->wwwroot ?>/blocks/ajax_marking/images/ajax-loader.gif) 0 0 no-repeat;
   width: 15px;
@@ -165,11 +174,13 @@ No longer needed.
   font:10pt tahoma;
   min-width: 150px;
 }
+.dir-rtl #treediv {float:right;}
+
 #mainIcon {
   float: left;
   margin-left: 8px;
 }
-
+.dir-rtl #mainIcon {float:right;margin-right: 8px;}
 
 
 
