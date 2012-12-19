@@ -23,12 +23,13 @@ class block_html_teachers extends block_base {
 		global $USER;
 
 		$isteacher = get_record('role_assignments','userid',$USER->id,'roleid','3'); // Is the $USER assigned as Teacher, anywhere in the system?
+		$iscoursecreator = get_record('role_assignments','userid',$USER->id,'roleid','2'); // Is the $USER assigned as Course Creator, anywhere in the system?
         if ($this->content !== NULL) {
             return $this->content;
         }
 		//echo "debug teacher=";print_r($isteacher);
 		if (!isadmin($USER->id)) {
-		  if (empty($isteacher)) return;
+		  if (empty($isteacher) AND empty($iscoursecreator)) return;
 		}
 
         if (!empty($this->instance->pinned) or $this->instance->pagetype === 'course-view') {
