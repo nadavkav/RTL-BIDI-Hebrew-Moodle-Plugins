@@ -85,28 +85,26 @@
 
   var param = new Object();
 
-param["videoplayer"] = <?php echo '<span class="mediaplugin mediaplugin_qt">
-<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-  codebase="http://www.apple.com/qtactivex/qtplugin.cab" width="182" height="165">
- <param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
- <param name="src" value="'.$url.'" />
- <param name="controller" value="true" />
- <param name="loop" value="true" />
- <param name="autoplay" value="true" />
- <param name="autostart" value="true" />
- <param name="scale" value="aspect" />
-<!--[if !IE]>-->
-  <object data="'.$url.'" type="video/mp4" width="182" height="165">
-   <param name="src" value="'.$url.'" />
-   <param name="pluginurl" value="http://www.apple.com/quicktime/download/" />
-   <param name="controller" value="true" />
-   <param name="loop" value="true" />
-   <param name="autoplay" value="true" />
-   <param name="autostart" value="true" />
-   <param name="scale" value="aspect" />
-  </object>
-<!--<![endif]-->
-</object></span>'; ?>
+param["videoplayer"] = <?php echo "'<span class=\"mediaplugin mediaplugin_qt\"> \
+<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" \
+  codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"182\" height=\"165\"> \
+ <param name=\"pluginspage\" value=\"http://www.apple.com/quicktime/download/\" /> \
+ <param name=\"src\" value=\"".$url."\" /> \
+ <param name=\"controller\" value=\"true\" /> \
+ <param name=\"loop\" value=\"true\" /> \
+ <param name=\"autoplay\" value=\"true\" /> \
+ <param name=\"autostart\" value=\"true\" /> \
+ <param name=\"scale\" value=\"aspect\" /> \
+  <object data=\"".$url."\" type=\"video/mp4\" width=\"182\" height=\"165\"> \
+   <param name=\"src\" value=\"".$url."\" /> \
+   <param name=\"pluginurl\" value=\"http://www.apple.com/quicktime/download/\" /> \
+   <param name=\"controller\" value=\"true\" /> \
+   <param name=\"loop\" value=\"true\" /> \
+   <param name=\"autoplay\" value=\"true\" /> \
+   <param name=\"autostart\" value=\"true\" /> \
+   <param name=\"scale\" value=\"aspect\" /> \
+   </object> \
+</object></span>';"; ?>
 
   opener.nbWin.retFunc(param);
   window.close();

@@ -16,6 +16,8 @@ require_once("../../../../../config.php");
 
 function __pagebackground (editor) {
 
+	// Make sure that editor has focus
+    editor.focusEditor();
     var outparam = null;
     var image = editor._doc.body.style.backgroundImage;
 /*

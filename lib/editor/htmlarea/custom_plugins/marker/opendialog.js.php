@@ -25,4 +25,7 @@ function __marker (editor) {
     editor.insertHTML('<span class="yellowmarker"><?php echo get_string("yourcomment","marker",'',$CFG->dirroot.'/lib/editor/htmlarea/custom_plugins/marker/lang/');?></span><style>.yellowmarker{background-color:yellow;}</style>');
     // had to use a class and a STYLE tag to overcome WIRIS plugin (bug?) that was "cleaning" the span background style !@?
 
+    var sel = editor._getSelection();
+    var rng = editor._createRange(sel);
+    editor.selectNodeContents(sel);
 }
