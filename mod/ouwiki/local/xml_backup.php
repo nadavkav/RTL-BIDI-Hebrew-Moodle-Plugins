@@ -53,7 +53,7 @@ class xml_backup {
      * @param bool $endline If true (default), adds newline after end tag
      * @throws Exception if there's an error writing 
      */
-    public function tag_full($tag,$content,$endline=true) {
+    public function tag_full($tag,$content,$endline=false) {
         if(!fwrite ($this->bf,full_tag($tag,$this->nestlevel,$endline,$content))) {
             throw new Exception('Failed to write backup data',EXN_LOCAL_BACKUPWRITE);
         }        
@@ -66,7 +66,7 @@ class xml_backup {
      * @param bool $endline If true (default), adds newline after end tag
      * @throws Exception if there's an error writing 
      */
-    public function tag_full_notnull($tag,$content,$endline=true) {
+    public function tag_full_notnull($tag,$content,$endline=false) {
         if(!is_null($content)) {
             $this->tag_full($tag,$content,$endline);
         }
@@ -78,7 +78,7 @@ class xml_backup {
      * @param bool $endline If true (default), adds newline after start tag
      * @throws Exception if there's an error writing 
      */
-    public function tag_start($tag,$endline=true) {
+    public function tag_start($tag,$endline=false) {
         if(!fwrite ($this->bf,start_tag($tag,$this->nestlevel,$endline))) {        
             throw new Exception('Failed to write backup data',EXN_LOCAL_BACKUPWRITE);
         }        
