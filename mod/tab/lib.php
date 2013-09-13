@@ -102,7 +102,7 @@ function tab_user_outline($course, $user, $mod, $tab) {
   $sql = "SELECT * FROM mdl_log WHERE course = '$course->id' AND userid = '$user->id' AND module LIKE 'tab' AND action LIKE 'view'";
   $items = get_records_sql($sql);
   $return->info = count($items)." ".get_string('views');
-    return $return;
+  return $return;
 }
 
 /**
@@ -202,5 +202,8 @@ function tab_scale_used ($tabid,$scaleid) {
 /// Any other tab functions go here.  Each of them must have a name that 
 /// starts with tab_
 
+function tab_get_view_actions() {
+    return array('view','view all');
+}
 
 ?>

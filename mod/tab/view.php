@@ -183,6 +183,12 @@
 	//echo '     <div id="tab8"><p>'.$tab->tab8content.'</p>'."\n";
 	echo '</div>'."\n";
 	}
+    echo '	</div>'."\n"; // class="yui-content"
+
+	echo '</div>' ."\n"; // #Tabs
+	echo '</div>'; // #tabcontent
+	echo '</div>'; // #content ?
+
 	echo '<script type="text/javascript">'."\n";
 	echo "    var tabView = new YAHOO.widget.TabView('Tabs');"."\n";
 	echo "    var url = location.href.split('#');"."\n";
@@ -198,11 +204,6 @@
 	echo "          }"."\n";
 	echo "      }"."\n";
 	echo '</script>'."\n";
-    echo '	</div>'."\n"; // class="yui-content"
-
-	echo '</div>' ."\n"; // #Tabs
-	echo '</div>'; // #tabcontent
-	echo '</div>'; // #content ?
 
 
 
